@@ -1,12 +1,13 @@
 import './App.css';
 import MonitorRegistration from './components/MonitorRegistration';
-import Moniteur from './components/MonitorRegistration';
+import NavbarHead from './components/NavbarHead';
 import StudentRegistration from './components/StudentRegistration';
 
 function App() {
   return (
-    <div class="container-fluid">
-      {/* <StudentRegistration/> */}
+    <div className="App">
+      <NavbarHead/>
+      <StudentRegistration/>
       <MonitorRegistration/>
     </div>
   );
