@@ -16,7 +16,7 @@ const MonitorRegistration = () =>{
     return (
         <>
             <form onSubmit={onSubmit}>
-                <h1 className="text-center">Formulaire d'inscription</h1>
+                <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
                 <div class="form-group">
                     <label for="lastName">Nom: </label>
                     <input type="text" class="form-control" id="lastName" placeholder="Entrez votre nom de famille" onChange={(e) => setMonitor({...monitor, lastName:e.target.value})}/>
