@@ -7,7 +7,7 @@ const StudentRegistration = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (!lastName && !firstName && !password && !matricule){
+        if (!student.lastName && !student.firstName && !student.password && !student.matricule){
             alert("Veuillez remplir tous les champs!")
             return
         }
@@ -23,15 +23,15 @@ const StudentRegistration = () => {
                 </div>
                 <div class="form-group">
                     <label for="firstName">Prénom: </label>
-                    <input type="firstName" class="form-control" id="firstName"  onChange={(e) => setStudent({....student, firstName: e.target.value})}/>
+                    <input type="firstName" class="form-control" id="firstName"  onChange={(e) => setStudent({...student, firstName: e.target.value})}/>
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe: </label>
-                    <input type="password" class="form-control" id="password"  onChange={(e) => setStudent({....student, password: e.target.value})}/>
+                    <input type="password" class="form-control" id="password"  onChange={(e) => setStudent({...student, password: e.target.value})}/>
                 </div>
                 <div class="form-group">
                     <label for="matricule">Matricule: </label>
-                    <input type="text" class="form-control" id="matricule"  onChange={(e) => setStudent({....student, firstName: e.target.value})}/>
+                    <input type="text" class="form-control" id="matricule"  onChange={(e) => setStudent({...student, firstName: e.target.value})}/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

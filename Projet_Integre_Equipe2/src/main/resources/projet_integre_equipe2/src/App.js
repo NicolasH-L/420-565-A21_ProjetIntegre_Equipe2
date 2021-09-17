@@ -1,6 +1,6 @@
 import './App.css';
 import NavbarHead from './components/NavbarHead';
-import NavbarHead from './components/StudentRegistration';
+import StudentRegistration from './components/StudentRegistration';
 
 
 function App() {
