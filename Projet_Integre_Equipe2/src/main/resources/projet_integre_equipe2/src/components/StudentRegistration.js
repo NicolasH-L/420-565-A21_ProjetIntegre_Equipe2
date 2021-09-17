@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState} from 'react'
 
-const StudentRegistration = () => {
+const StudentRegistration = ({onAdd}) => {
     const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""});
 
     const onSubmit = (e) => {
@@ -11,7 +11,7 @@ const StudentRegistration = () => {
             alert("Veuillez remplir tous les champs!")
             return
         }
-
+        onAdd({student})
     }
 
     return (
@@ -31,7 +31,7 @@ const StudentRegistration = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="matricule">Matricule: </label>
-                    <input type="text" className="form-control" id="matricule"  onChange={(e) => setStudent({...student, firstName: e.target.value})}/>
+                    <input type="text" className="form-control" id="matricule"  onChange={(e) => setStudent({...student, matricule: e.target.value})}/>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
