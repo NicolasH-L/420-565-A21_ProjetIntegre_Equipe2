@@ -31,12 +31,9 @@ const NavbarHead = () => {
                             <a className="dropdown-item" href="/">Something else here</a>
                             </div>
                         </li>
-<<<<<<< HEAD
-=======
                         <li className="nav-item">
                             <a className="nav-link disabled" href="/" tabIndex="-1" aria-disabled="true">Disabled</a>
                         </li>
->>>>>>> 1f36b378e567690f2e541e263e1e1233021a9d0d
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
                         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
