@@ -1,11 +1,12 @@
 import React from 'react'
 
+
 const NavbarHead = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="/">
-                    Navbar
+                    Navbar 
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -29,9 +30,6 @@ const NavbarHead = () => {
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="/">Something else here</a>
                             </div>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
