@@ -2,18 +2,16 @@ import React from 'react'
 import {useState} from 'react'
 
 const StudentRegistration = () => {
-    const [lastName, setLastName] = useState("")
-    const [firstName, setFirstName] = useState("")
-    const [password, setPassword] = useState("")
-    const [matricule, setMatricule] = useState("")
+    const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""});
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (!lastName && !firstName && !password && !matricule){
+        if (!student.lastName && !student.firstName && !student.password && !student.matricule){
             alert("Veuillez remplir tous les champs!")
             return
         }
+
     }
 
     return (
@@ -21,19 +19,19 @@ const StudentRegistration = () => {
             <form onSubmit={onSubmit}>
                 <div class="form-group">
                     <label for="lastName">Nom: </label>
-                    <input type="text" class="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                    <input type="text" class="form-control" id="lastName"  onChange={(e) => setStudent({...student, lastName: e.target.value})}/>
                 </div>
                 <div class="form-group">
                     <label for="firstName">Prénom: </label>
-                    <input type="firstName" class="form-control" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                    <input type="firstName" class="form-control" id="firstName"  onChange={(e) => setStudent({...student, firstName: e.target.value})}/>
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe: </label>
-                    <input type="password" class="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="password" class="form-control" id="password"  onChange={(e) => setStudent({...student, password: e.target.value})}/>
                 </div>
                 <div class="form-group">
                     <label for="matricule">Matricule: </label>
-                    <input type="text" class="form-control" id="matricule" value={matricule} onChange={(e) => setMatricule(e.target.value)}/>
+                    <input type="text" class="form-control" id="matricule"  onChange={(e) => setStudent({...student, firstName: e.target.value})}/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
