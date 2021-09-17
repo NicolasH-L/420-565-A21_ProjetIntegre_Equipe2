@@ -21,6 +21,7 @@ function App() {
     <div className="container-fluid">
       <NavbarHead/>
       <MonitorRegistration/>
+      {/* <StudentRegistration/> */}
       <Footer/>
       
     </div>
