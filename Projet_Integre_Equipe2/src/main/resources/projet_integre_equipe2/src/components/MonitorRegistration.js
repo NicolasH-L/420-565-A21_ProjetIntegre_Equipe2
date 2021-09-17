@@ -22,7 +22,6 @@ const MonitorRegistration = () => {
     const validateInput = (e) => {
         // let pattern = RegExp("[^a-zA-ZéÉèÈïÏêÊ-]");
         let pattern;
-        let pat = "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
         
         // changer pattern 
         if (e.target.type == "email") {
