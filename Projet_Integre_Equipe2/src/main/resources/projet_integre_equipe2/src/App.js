@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-
+import Moniteur from './components/Moniteur/Moniteur';
 function App() {
+  // const [Moniteur]
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +20,9 @@ function App() {
           Learn React
         </a>
       </header>
+      <Moniteur/>
+
+
     </div>
   );
 }
