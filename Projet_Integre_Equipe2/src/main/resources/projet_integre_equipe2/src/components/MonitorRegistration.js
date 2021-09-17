@@ -2,16 +2,12 @@ import React from 'react'
 import {useState} from 'react'
 
 const MonitorRegistration = () =>{
-    const [lastName, setLastName] = useState("")
-    const [firstName, setFirstName] = useState("")
-    const [password, setPassword] = useState("")
-    const [enterpriseName, setEnterpriseName] = useState("")
-    const [email, setEmail] = useState("")
+    const [monitor, setMonitor] = useState({lastName:"", firstName:"", password:"", enterpriseName:"", email:""});
     
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (!lastName && !firstName && !password && !enterpriseName && !email){
+        if (!monitor.lastName && !monitor.firstName && !monitor.password && !monitor.enterpriseName && !monitor.email){
             alert("Veuillez remplir tous les champs!")
             return
         }

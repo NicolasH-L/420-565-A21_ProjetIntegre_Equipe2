@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <NavbarHead/>
-      <StudentRegistration/>
+      {/* <StudentRegistration/> */}
       <MonitorRegistration/>
     </div>
   );
