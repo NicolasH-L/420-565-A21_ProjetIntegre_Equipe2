@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
+import background from "../images/background-01.jpg";
 
-const MonitorRegistration = () =>{
+
+const MonitorRegistration = ({onAdd}) =>{
     const [monitor, setMonitor] = useState({lastName:"", firstName:"", password:"", enterpriseName:"", email:""});
     
     const onSubmit = (e) => {
@@ -11,12 +13,13 @@ const MonitorRegistration = () =>{
             alert("Veuillez remplir tous les champs!")
             return
         }
+        onAdd({monitor})
     }
     
     return (
         <>
-            <form onSubmit={onSubmit}>
-                <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
+            <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
+            <form className="text-center col-md-3 container-fluid" style={{ backgroundImage: `url(${background})`}} onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="lastName">Nom: </label>
                     <input type="text" className="form-control" id="lastName" placeholder="Entrez votre nom de famille" onChange={(e) => setMonitor({...monitor, lastName:e.target.value})}/>

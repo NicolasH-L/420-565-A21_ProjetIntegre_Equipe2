@@ -5,11 +5,24 @@ import StudentRegistration from './components/StudentRegistration';
 import Footer from './components/Footer';
 
 function App() {
+  
+  const addStudents = async (task) => {
+    const res = await fetch('http://localhost:5000/students',
+    {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(task)
+    })
+  }
+  
   return (
     <div className="container-fluid">
       <NavbarHead/>
       <MonitorRegistration/>
       <Footer/>
+      
     </div>
   );
 }
