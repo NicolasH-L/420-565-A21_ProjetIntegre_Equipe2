@@ -7,7 +7,7 @@ const MonitorRegistration = () =>{
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (!monitor.lastName && !monitor.firstName && !monitor.password && !monitor.enterpriseName && !monitor.email){
+        if (!monitor.lastName || !monitor.firstName || !monitor.password || !monitor.enterpriseName || !monitor.email){
             alert("Veuillez remplir tous les champs!")
             return
         }

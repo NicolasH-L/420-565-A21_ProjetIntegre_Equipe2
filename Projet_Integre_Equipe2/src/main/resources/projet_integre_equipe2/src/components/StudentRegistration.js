@@ -7,7 +7,7 @@ const StudentRegistration = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if (!student.lastName && !student.firstName && !student.password && !student.matricule){
+        if (!student.lastName || !student.firstName || !student.password || !student.matricule){
             alert("Veuillez remplir tous les champs!")
             return
         }
