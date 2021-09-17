@@ -4,16 +4,6 @@ import styles from './Moniteur.module.css';
 
 const Moniteur = () => {
   return (
-<<<<<<< HEAD
-  <div className={styles.Moniteur}>
-    Moniteur Component
-    <h1>
-    Formulaire
-    </h1>
-    
-    
-  </div>
-=======
     <div className={styles.Moniteur}>
       Moniteur Component
       <h1>Formulaire</h1>
@@ -42,7 +32,6 @@ const Moniteur = () => {
         <input type="submit" value="Submit" />
       </form>
     </div>
->>>>>>> 318eb16050bf5728e98cbaa360ecd25e32ab7a99
   )
 }
 
