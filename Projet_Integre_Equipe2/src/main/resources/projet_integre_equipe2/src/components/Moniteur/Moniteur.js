@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Moniteur.module.css';
+import { useState } from 'react';
 
 const Moniteur = () => {
   return (
     <div className={styles.Moniteur}>
-      Moniteur Component
       <h1>Formulaire</h1>
       {/* <form onSubmit={}> */}
-      <form class="col-md-6">
+      <form class="col-md-3 ">
         <div class="form-group">
           <label>Nom:</label>
           <input type="text" className="form-control" />
