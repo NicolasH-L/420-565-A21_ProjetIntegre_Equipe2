@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Moniteur from './components/Moniteur/Moniteur';
+import MonitorRegistration from './components/MonitorRegistration';
 import StudentRegistration from './components/StudentRegistration';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div class="container-fluid">
-      <StudentRegistration/>
+      <MonitorRegistration/>
     </div>
   );
 }
