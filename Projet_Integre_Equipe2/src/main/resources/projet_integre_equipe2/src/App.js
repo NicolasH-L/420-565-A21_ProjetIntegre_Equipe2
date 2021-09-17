@@ -5,9 +5,9 @@ import StudentRegistration from './components/StudentRegistration';
 
 function App() {
   return (
-    <div className="App">
-      <NavbarHead></NavbarHead>
-      <StudentRegistration></StudentRegistration>
+    <div className="container-fluid">
+      <NavbarHead/>
+      <StudentRegistration/>
     </div>
   );
 }
