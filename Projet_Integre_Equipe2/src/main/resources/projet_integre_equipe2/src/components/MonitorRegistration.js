@@ -1,5 +1,5 @@
 import React from 'react'
-import {useState} from 'react'
+import { useState } from 'react'
 
 const MonitorRegistration = () =>{
     const [monitor, setMonitor] = useState({lastName:"", firstName:"", password:"", enterpriseName:"", email:""});
