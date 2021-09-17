@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div class="container-fluid">
+    <div className="container-fluid">
       <NavbarHead/>
       <MonitorRegistration/>
       <Footer/>
