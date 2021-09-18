@@ -29,15 +29,14 @@ const MonitorRegistration = () => {
         let patternEnterprise = /^[^ ]+([ ]{1}[^ ]+)+$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-        if (e.target.type === "email") {
+        if (e.target.type === "email")
             pattern = new RegExp(patternEmail);
-        } else if (e.target.id === "lastName" || e.target.id === "firstName") {
+        else if (e.target.id === "lastName" || e.target.id === "firstName") 
             pattern = new RegExp(patternName);
-        } else if (e.target.id === "enterpriseName") {
+        else if (e.target.id === "enterpriseName") 
             pattern = new RegExp(patternEnterprise)
-        } else if (e.target.id === "password") {
+        else if (e.target.id === "password") 
             pattern = new RegExp(patternPassword)
-        }
 
         if (pattern === undefined)
             return;
