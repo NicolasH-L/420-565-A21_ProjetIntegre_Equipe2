@@ -25,10 +25,10 @@ const MonitorRegistration = () => {
         
         // changer pattern 
         if (e.target.type == "email") {
-            pattern = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$');
+            pattern = new RegExp('[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$');
             console.log("s "+ pattern)
         }else{
-            pattern = new RegExp("[^a-zA-ZéÉèÈïÏêÊ-]");
+            pattern = new RegExp('^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$');
         }
 
         if (!pattern.test(e.target.value) || e.target.value == "") {
