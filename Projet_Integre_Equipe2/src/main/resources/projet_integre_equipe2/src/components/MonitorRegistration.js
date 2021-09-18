@@ -26,15 +26,15 @@ const MonitorRegistration = () => {
         
         // changer pattern 
         if (e.target.type == "email") {
-            pattern = new RegExp('^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$');
+            pattern = new RegExp(/^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/);
             console.log("s "+ pattern)
         }else if(e.target.id == "lastName" || e.target.id == "firstName"){
             pattern = new RegExp(/^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/);
             console.log(pattern)
         }else if(e.target.id == "enterpriseName"){
-            pattern = new RegExp('^[^ ]+[ ]*[^ ]*$')
+            pattern = new RegExp(/^[^ ]+([ ]{1}[^ ]+)+$/)
         }else if(e.target.id == "password"){
-            pattern = new RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$')
+            pattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
         }
 
         if(pattern === undefined) {
@@ -76,7 +76,7 @@ const MonitorRegistration = () => {
                         <label htmlFor="password">Mot de passe: </label>
                         {error.password !== "" ? error.password : ""}
                         {/* <input type="password" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={(e) => setMonitor({ ...monitor, password: e.target.value })} /> */}
-                        <input type="text" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                        <input type="password" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
