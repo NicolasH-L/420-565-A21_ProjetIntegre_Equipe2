@@ -4,7 +4,7 @@ import NavbarHead from './components/NavbarHead';
 import StudentRegistration from './components/StudentRegistration';
 import Footer from './components/Footer';
 
-function App() {
+function App() { 
   return (
     <div>
       <NavbarHead/>

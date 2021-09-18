@@ -12,7 +12,6 @@ const MonitorRegistration = () => {
             alert("Veuillez remplir tous les champs!")
             return
         }
-        
     }
 
     const [error, setError] = useState({
@@ -45,8 +44,7 @@ const MonitorRegistration = () => {
         if (!pattern.test(e.target.value) || e.target.value == "") {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-             inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
-            
+            inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
@@ -54,13 +52,9 @@ const MonitorRegistration = () => {
             setMonitor({...monitor, [e.target.id]: e.target.value})
             console.log("nom du target: " + e.target.name)
         }
-
-        
         setError({ ...error, [e.target.id]: inputError })
 
-
     }
-
     return (
         <>
             <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
@@ -72,7 +66,6 @@ const MonitorRegistration = () => {
                         {/* <input type="text" className="form-control" id="lastName" placeholder="Entrez votre nom de famille" onChange={(e) => setMonitor({ ...monitor, lastName: e.target.value })} /> */}
                         <input type="text" name="Nom" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
                     </div>
-
                     <div className="form-group">
                         <label htmlFor="firstName">Prénom: </label>
                         {error.firstName !== "" ? error.firstName : ""}
@@ -98,8 +91,6 @@ const MonitorRegistration = () => {
                         <input type="email" name="Nom de courriel" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
-
-
                 </form>
             </div>
         </>
