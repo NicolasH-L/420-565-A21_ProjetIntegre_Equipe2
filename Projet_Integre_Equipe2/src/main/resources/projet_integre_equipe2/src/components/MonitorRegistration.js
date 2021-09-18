@@ -38,6 +38,9 @@ const MonitorRegistration = () => {
             if (e.target.name === "Nom de courriel") {
                 setError({ ...error, errEmail: inputError })
             }
+            if (e.target.name === "Nom"){
+                setError({ ...error, errLastName: inputError })
+            }
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
