@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
 import work from '../images/background-01.jpg'
@@ -7,11 +8,11 @@ const MonitorRegistration = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!monitor.lastName || !monitor.firstName || !monitor.password || !monitor.enterpriseName || !monitor.email) {
+        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.enterpriseName) || !_.isEmpty(error.email) ||
+         _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs!")
             return
-        }
-        else {
+        } else {
             console.log(monitor)
         }
 
@@ -25,25 +26,26 @@ const MonitorRegistration = () => {
     const validateInput = (e) => {
         let pattern;
         let inputError;
+        let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/;
+        let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
+        let patternEnterprise = /^[^ ]+([ ]{1}[^ ]+)+$/;
+        let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-        // changer pattern 
-        if (e.target.type == "email") {
-            pattern = new RegExp(/^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/);
-            console.log("s " + pattern)
-        } else if (e.target.id == "lastName" || e.target.id == "firstName") {
-            pattern = new RegExp(/^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/);
-            console.log(pattern)
-        } else if (e.target.id == "enterpriseName") {
-            pattern = new RegExp(/^[^ ]+([ ]{1}[^ ]+)+$/)
-        } else if (e.target.id == "password") {
-            pattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+        if (e.target.type === "email") {
+            pattern = new RegExp(patternEmail);
+        } else if (e.target.id === "lastName" || e.target.id === "firstName") {
+            pattern = new RegExp(patternName);
+        } else if (e.target.id === "enterpriseName") {
+            pattern = new RegExp(patternEnterprise)
+        } else if (e.target.id === "password") {
+            pattern = new RegExp(patternPassword)
         }
 
-        if (pattern === undefined) {
+        if (pattern === undefined)
             return;
-        }
+        
 
-        if (!pattern.test(e.target.value) || e.target.value == "") {
+        if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
             inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
@@ -51,11 +53,10 @@ const MonitorRegistration = () => {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
             inputError = ""
-            setMonitor({...monitor, [e.target.id]: e.target.value})
-            console.log("nom du target: " + e.target.name)
+            setMonitor({ ...monitor, [e.target.id]: e.target.value })
         }
-        setError({ ...error, [e.target.id]: inputError })
 
+        setError({ ...error, [e.target.id]: inputError })
     }
     return (
         <>
@@ -75,7 +76,7 @@ const MonitorRegistration = () => {
                     <div className="form-group">
                         <label htmlFor="password">Mot de passe: </label>
                         {error.password !== "" ? error.password : ""}
-                        <input type="password" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                        <input type="text" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
