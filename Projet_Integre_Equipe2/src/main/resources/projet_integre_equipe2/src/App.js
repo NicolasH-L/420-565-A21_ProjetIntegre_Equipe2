@@ -6,12 +6,11 @@ import Footer from './components/Footer';
 
 function App() { 
   return (
-    <div className="container-fluid">
+    <div>
       <NavbarHead/>
       <MonitorRegistration/>
       {/* <StudentRegistration/> */}
       <Footer/>
-      
     </div>
   );
 }
