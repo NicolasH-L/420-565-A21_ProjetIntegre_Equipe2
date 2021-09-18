@@ -25,13 +25,16 @@ const MonitorRegistration = () => {
         
         // changer pattern 
         if (e.target.type == "email") {
-            pattern = new RegExp('[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$');
+            // pattern = new RegExp(/[a-zA-Z0-9._:$!%-]+@([a-zA-Z0-9])+[.-]+.[a-zA-Z]{2,4}$/);
+            pattern = new RegExp(/^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/);
             console.log("s "+ pattern)
         }else if(e.target.id == "lastName" || e.target.id == "firstName"){
-            pattern = new RegExp('^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$');
+            pattern = new RegExp(/^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/);
             console.log(pattern)
         }else if(e.target.id == "enterpriseName"){
-            pattern = new RegExp('[\S]+')
+            pattern = new RegExp('^([a-zA-ZéÉèÈïÏêÊ0-9])(([0-9\wéÉèÈïÏêÊ]*|\-|\s)[a-zA-ZéÉèÈïÏêÊ\w0-9])*[a-zA-ZéÉèÈïÏêÊ\w0-9]*$')
+        }else if(e.target.id == "password"){
+            pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/)
         }
 
         if(pattern === undefined) {
@@ -48,8 +51,10 @@ const MonitorRegistration = () => {
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
-            setError({ ...error, errEmail: "" })
-            setError({...error, errLastName: ""})
+            let vide = ""
+            setError({ ...error, errEmail: vide })
+            // setError({...error, errLastName: vide})
+            // setError({...error, errFirstName: vide})
             console.log("nom du target: " + e.target.name)
         }
     }
