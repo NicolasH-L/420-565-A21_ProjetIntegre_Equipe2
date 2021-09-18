@@ -22,18 +22,14 @@ function App() {
   //  setStudents([...student, data])
   }
 
+  
+
   return (
-    <Router>
-    <div className="container-fluid">
+    <div>
       <NavbarHead/>
-      <Route path='/' exact render={(propos) => (
-        <>
-        <StudentRegistration onAdd={addStudent}/>
-        </>
-      )} />
+      <StudentRegistration onAdd={addStudent}/>
       <Footer/>
     </div>
-    </Router>
   );
 }
 
