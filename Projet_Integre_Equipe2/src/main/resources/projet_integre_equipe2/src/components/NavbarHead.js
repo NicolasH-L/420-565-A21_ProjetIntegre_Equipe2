@@ -4,7 +4,7 @@ import React from 'react'
 const NavbarHead = () => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: '#1B1B1B'}}>
                 <a className="navbar-brand text-white" href="/">
                     Navbar 
                 </a>
