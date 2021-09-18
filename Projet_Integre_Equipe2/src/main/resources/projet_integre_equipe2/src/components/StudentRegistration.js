@@ -15,7 +15,7 @@ const StudentRegistration = ({onAdd}) => {
     }
 
     return (
-        <>
+        <div className="container w-25">
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="lastName">Nom: </label>
@@ -35,7 +35,7 @@ const StudentRegistration = ({onAdd}) => {
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-        </>
+        </div>
     )
 }
 

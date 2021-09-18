@@ -12,14 +12,14 @@ function App() {
   const addStudent = async (student) => {
     const result = await fetch('http://localhost:5000/students',
     {
-      methode:'POST',
+      method:'POST',
       headers:{
         'Content-type': 'application/json'
       },
         body: JSON.stringify(student)
     })
     const data = await result.json()
-    setStudents([...student, data])
+  //  setStudents([...student, data])
   }
 
   return (
