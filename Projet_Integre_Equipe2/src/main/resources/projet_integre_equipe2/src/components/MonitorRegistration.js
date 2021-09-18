@@ -27,8 +27,15 @@ const MonitorRegistration = () => {
         if (e.target.type == "email") {
             pattern = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$');
             console.log("s "+ pattern)
-        }else{
-            pattern = new RegExp("[^a-zA-ZéÉèÈïÏêÊ-]");
+        }else if(e.target.id == "lastName" || e.target.id == "firstName"){
+            pattern = new RegExp('^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$');
+            console.log(pattern)
+        }else if(e.target.id == "enterpriseName"){
+            pattern = new RegExp('[\S]+')
+        }
+
+        if(pattern === undefined) {
+            return;
         }
 
         if (!pattern.test(e.target.value) || e.target.value == "") {
@@ -42,6 +49,7 @@ const MonitorRegistration = () => {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
             setError({ ...error, errEmail: "" })
+            setError({...error, errLastName: ""})
             console.log("nom du target: " + e.target.name)
         }
     }
