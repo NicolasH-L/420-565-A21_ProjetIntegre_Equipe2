@@ -3,19 +3,19 @@ import React from 'react'
 import { useState } from 'react'
 import work from '../images/background-01.jpg'
 
-const MonitorRegistration = () => {
-    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
+const MonitorRegistration = ({onAdd}) => {
+    const [monitor, setMonitor] = useState({lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.enterpriseName) || !_.isEmpty(error.email) ||
-         _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
+        _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs!")
             return
-        } else {
+        } else{
             console.log(monitor)
         }
-
+        onAdd({monitor})
     }
 
     const [error, setError] = useState({
@@ -31,20 +31,18 @@ const MonitorRegistration = () => {
         let patternEnterprise = /^[^ ]+([ ]{0,1}[^ ]+)+$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-        if (e.target.type === "email") {
+        if (e.target.type === "email")
             pattern = new RegExp(patternEmail);
-        } else if (e.target.id === "lastName" || e.target.id === "firstName") {
+        else if (e.target.id === "lastName" || e.target.id === "firstName") 
             pattern = new RegExp(patternName);
-        } else if (e.target.id === "enterpriseName") {
+        else if (e.target.id === "enterpriseName") 
             pattern = new RegExp(patternEnterprise)
-        } else if (e.target.id === "password") {
+        else if (e.target.id === "password") 
             pattern = new RegExp(patternPassword)
-        }
 
         if (pattern === undefined)
             return;
         
-
         if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
@@ -55,7 +53,6 @@ const MonitorRegistration = () => {
             inputError = ""
             setMonitor({ ...monitor, [e.target.id]: e.target.value })
         }
-
         setError({ ...error, [e.target.id]: inputError })
     }
     return (

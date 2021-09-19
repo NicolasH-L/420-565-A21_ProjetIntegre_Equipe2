@@ -31,14 +31,13 @@ const StudentRegistration = ({onAdd}) => {
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         let patternMatricule = /^[0-9]{7}$/;
 
-         if (e.target.id === "lastName" || e.target.id === "firstName") {
+        if (e.target.id === "lastName" || e.target.id === "firstName")
             pattern = new RegExp(patternName);
-        } else  if (e.target.id === "password") {
+        else  if (e.target.id === "password")
             pattern = new RegExp(patternPassword)
-        } else  if (e.target.id === "matricule") {
+        else  if (e.target.id === "matricule")
             pattern = new RegExp(patternMatricule)
-        }
-
+        
         if (pattern === undefined)
             return;
         

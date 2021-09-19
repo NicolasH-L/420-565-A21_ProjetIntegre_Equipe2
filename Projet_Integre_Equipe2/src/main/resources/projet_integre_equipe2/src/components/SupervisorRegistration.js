@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import work from '../images/background-01.jpg'
 
-const SupervisorRegistration = () => {
+const SupervisorRegistration = ({onAdd}) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
 
@@ -16,13 +16,14 @@ const SupervisorRegistration = () => {
         } else {
             console.log(supervisor)
         }
+        onAdd({supervisor})
     }
 
     const validateInput = (e) => {
         let pattern;
         let inputError;
         let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
-        let patternMatricule = /^[0-9]+$/;
+        let patternMatricule = /^[0-9]{7}$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
 
@@ -55,18 +56,18 @@ const SupervisorRegistration = () => {
 
     return (
         <>
-            <div div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+            <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                 <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
                     <h1 className="text-center">Formulaire d'inscription du superviseur</h1>
                     <div className="form-group">
-                        <label htmlFor="lastName">Nom</label>
+                        <label htmlFor="lastName">Nom:</label>
                         {error.lastName !== "" ? error.lastName : ""}
-                        <input type="text" id="lastName" name="Nom" className="form-control text-center" required placeholder="Entrez votre nom de famille" onChange={validateInput} />
+                        <input type="text" id="lastName"  className="form-control text-center" required placeholder="Entrez votre nom de famille" onChange={validateInput} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="firstName">Prénom</label>
+                        <label htmlFor="firstName">Prénom:</label>
                         {error.firstName !== "" ? error.firstName : ""}
-                        <input type="text" id="firstName" name="Prénom" className="form-control text-center" required placeholder="Entrez votre prénom" onChange={validateInput} />
+                        <input type="text" id="firstName" name="firstName" className="form-control text-center" required placeholder="Entrez votre prénom" onChange={validateInput} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="matricule">Matricule: </label>
@@ -76,7 +77,7 @@ const SupervisorRegistration = () => {
                     <div className="form-group">
                         <label htmlFor="password">Mot de passe: </label>
                         {error.password !== "" ? error.password : ""}
-                        <input type="password" name="Mot de passe" className="form-control text-center" id="password" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                        <input type="password" name="password" className="form-control text-center" id="password" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
