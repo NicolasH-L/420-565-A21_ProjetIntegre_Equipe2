@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MonitorRegistration from './components/MonitorRegistration';
@@ -10,6 +8,7 @@ import {useState} from 'react'
 
 function App() {
   const [student, setStudents] = useState([])
+  const [monitor, setMonitors] = useState([])
 
   const addStudent = async (student) => {
     const result = await fetch('http://localhost:5000/students',
@@ -22,6 +21,19 @@ function App() {
     })
     const data = await result.json()
   //  setStudents([...student, data])
+  }
+
+  const addMonitor = async (monitor) => {
+    const result = await fetch('http://localhost:5000/monitors',
+    {
+      method:'POST',
+      headers:{
+        'Content-type': 'application/json'
+      },
+        body: JSON.stringify(monitor)
+    })
+    const data = await result.json()
+  //  setMonitors([...monitor, data])
   }
 
   return (
@@ -38,7 +50,7 @@ function App() {
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="cegep" role="tabpanel" aria-labelledby="cegep-tab"><StudentRegistration onAdd={addStudent}/></div>
-          <div class="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorRegistration/></div>
+          <div class="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorRegistration onAdd={addMonitor}/></div>
         </div>
       </div>
       <Footer/>

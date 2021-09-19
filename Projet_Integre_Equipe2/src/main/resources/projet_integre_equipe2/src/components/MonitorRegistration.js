@@ -13,9 +13,9 @@ const MonitorRegistration = ({onAdd}) => {
             alert("Veuillez remplir tous les champs!")
             return
         } else{
-            onAdd({monitor})
             console.log(monitor)
         }
+        onAdd({monitor})
     }
 
     const [error, setError] = useState({
