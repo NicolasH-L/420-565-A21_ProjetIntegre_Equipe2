@@ -11,7 +11,6 @@ const MonitorRegistration = () => {
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.enterpriseName) || !_.isEmpty(error.email) ||
          _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs!")
-
             return
         } else {
             console.log(monitor)
@@ -29,7 +28,7 @@ const MonitorRegistration = () => {
         let inputError;
         let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/;
         let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
-        let patternEnterprise = /^[^ ]+([ ]{1}[^ ]+)+$/;
+        let patternEnterprise = /^[^ ]+([ ]{0,1}[^ ]+)+$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
         if (e.target.type === "email") {
@@ -50,7 +49,6 @@ const MonitorRegistration = () => {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
             inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
-
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
@@ -60,7 +58,6 @@ const MonitorRegistration = () => {
 
         setError({ ...error, [e.target.id]: inputError })
     }
-
     return (
         <>
             <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
@@ -71,7 +68,6 @@ const MonitorRegistration = () => {
                         {error.lastName !== "" ? error.lastName : ""}
                         <input type="text" name="Nom" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
                     </div>
-
                     <div className="form-group">
                         <label htmlFor="firstName">Prénom: </label>
                         {error.firstName !== "" ? error.firstName : ""}
