@@ -1,45 +1,46 @@
 import React, { useEffect, useState } from "react";
 
 import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MonitorRegistration from './components/MonitorRegistration';
 import NavbarHead from './components/NavbarHead';
 import StudentRegistration from './components/StudentRegistration';
 import Footer from './components/Footer';
+import {useState} from 'react' 
 
-function App() { 
-  const [monitors, setMonitors] = useState([])
+function App() {
+  const [student, setStudents] = useState([])
 
-  // useEffect(() => {
-  //   const getMonitors = async () => {
-  //     const monitorsFromServer = await fetchMonitors()
-  //     setMonitors(monitorsFromServer)
-  //   }
-  //   getMonitors()
-  // }, []) 
-
-  // const fetchMonitors = async () => {
-  //   const res = await fetch('http://localhost:5000/monitors')
-  //   const data = await res.json()
-  //   return data
-  // }
-
-  const addMonitorInscription = async (monitor) =>{
-    const res = await fetch('http://localhost:5000/monitors',
+  const addStudent = async (student) => {
+    const result = await fetch('http://localhost:5000/students',
     {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
+      method:'POST',
+      headers:{
+        'Content-type': 'application/json'
       },
-      body: JSON.stringify(monitor)
+        body: JSON.stringify(student)
     })
-    const data = await res.json()
-    setMonitors([...monitors, data])
+    const data = await result.json()
+  //  setStudents([...student, data])
   }
+
   return (
     <div>
       <NavbarHead/>
-      <MonitorRegistration onAdd={addMonitorInscription}/>
-      {/* <StudentRegistration/> */}
+      <div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="cegep-tab" data-toggle="tab" href="#cegep" role="tab" aria-controls="cegep" aria-selected="true">Cégep</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="monitor-tab" data-toggle="tab" href="#monitor" role="tab" aria-controls="monitor" aria-selected="false">Moniteur</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="cegep" role="tabpanel" aria-labelledby="cegep-tab"><StudentRegistration onAdd={addStudent}/></div>
+          <div class="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorRegistration/></div>
+        </div>
+      </div>
       <Footer/>
     </div>
   );
