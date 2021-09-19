@@ -62,7 +62,7 @@ const MonitorRegistration = ({onAdd}) => {
                 <div className="form-group">
                     <label htmlFor="lastName">Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName">Prénom: </label>
