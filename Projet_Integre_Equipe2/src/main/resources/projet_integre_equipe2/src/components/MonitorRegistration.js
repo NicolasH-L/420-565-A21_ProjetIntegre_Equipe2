@@ -4,7 +4,7 @@ import { useState } from 'react'
 import work from '../images/background-01.jpg'
 
 const MonitorRegistration = ({onAdd}) => {
-    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
+    const [monitor, setMonitor] = useState({lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
 
     const onSubmit = (e) => {
         e.preventDefault()

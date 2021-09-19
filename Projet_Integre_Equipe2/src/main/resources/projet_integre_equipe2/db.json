@@ -1,19 +1,24 @@
 {
-  "posts": [
+  "students": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "student": {
+        "id": "",
+        "lastName": "qwerwqer",
+        "firstName": "qwerqwer",
+        "password": "wqer123@",
+        "matricule": "3242424"
+      },
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "student": {
+        "id": "",
+        "lastName": "trytryt",
+        "firstName": "rtytry",
+        "password": "wqer123@",
+        "matricule": "8888888"
+      },
+      "id": 2
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

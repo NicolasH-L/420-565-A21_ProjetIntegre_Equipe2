@@ -35,9 +35,9 @@ const StudentRegistration = ({onAdd}) => {
             pattern = new RegExp(patternName);
         else  if (e.target.id === "password")
             pattern = new RegExp(patternPassword)
-        else  if (e.target.id === "matricule") 
+        else  if (e.target.id === "matricule")
             pattern = new RegExp(patternMatricule)
-
+        
         if (pattern === undefined)
             return;
         
