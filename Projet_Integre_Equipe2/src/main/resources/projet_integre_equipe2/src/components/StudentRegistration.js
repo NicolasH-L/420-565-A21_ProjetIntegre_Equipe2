@@ -61,22 +61,22 @@ const StudentRegistration = ({onAdd}) => {
                 <div className="form-group">
                     <label htmlFor="lastName">Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control" id="lastName" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName">Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
-                    <input type="firstName" className="form-control" id="firstName" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prenom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control" id="password" onChange={validateInput} />
+                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre password" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="matricule">Matricule: </label>
                     {error.matricule !== "" ? error.matricule : ""}
-                    <input type="text" className="form-control" id="matricule" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

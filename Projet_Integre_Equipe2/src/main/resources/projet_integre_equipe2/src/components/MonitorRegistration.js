@@ -62,27 +62,27 @@ const MonitorRegistration = ({onAdd}) => {
                 <div className="form-group">
                     <label htmlFor="lastName">Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName">Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
-                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="text" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
                     {error.enterpriseName !== "" ? error.enterpriseName : ""}
-                    <input type="text" className="form-control text-center" id="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} />
+                    <input type="text" className="form-control text-center" id="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Courriel: </label>
                     {error.email !== "" ? error.email : ""}
-                    <input type="email" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} />
+                    <input type="email" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
