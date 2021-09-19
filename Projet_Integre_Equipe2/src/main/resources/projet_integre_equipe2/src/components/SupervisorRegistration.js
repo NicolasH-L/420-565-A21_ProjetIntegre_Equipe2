@@ -27,11 +27,11 @@ const SupervisorRegistration = ({ onAdd }) => {
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
 
-        if (e.target.id === "lastName" || e.target.id === "firstName") {
+        if (e.target.name === "lastName" || e.target.name === "firstName") {
             pattern = new RegExp(patternName);
-        } else if (e.target.id === "matricule") {
+        } else if (e.target.name === "matricule") {
             pattern = new RegExp(patternMatricule)
-        } else if (e.target.id === "password") {
+        } else if (e.target.name === "password") {
             pattern = new RegExp(patternPassword)
         }
 
@@ -48,10 +48,10 @@ const SupervisorRegistration = ({ onAdd }) => {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
             inputError = ""
-            setSupervisor({ ...supervisor, [e.target.id]: e.target.value })
+            setSupervisor({ ...supervisor, [e.target.name]: e.target.value })
         }
 
-        setError({ ...error, [e.target.id]: inputError })
+        setError({ ...error, [e.target.name]: inputError })
     }
 
     return (
@@ -60,24 +60,24 @@ const SupervisorRegistration = ({ onAdd }) => {
                 <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
                     <h1 className="text-center">Formulaire d'inscription du superviseur</h1>
                     <div className="form-group">
-                        <label htmlFor="lastName">Nom: </label>
+                        <label htmlFor="lastNameSupervisor">Nom: </label>
                         {error.lastName !== "" ? error.lastName : ""}
-                        <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom" onChange={validateInput} required />
+                        <input type="text" className="form-control text-center" name="lastName" id="lastNameSupervisor" placeholder="Entrez votre nom" onChange={validateInput} required />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="firstName">Prénom:</label>
+                        <label htmlFor="firstNameSupervisor">Prénom:</label>
                         {error.firstName !== "" ? error.firstName : ""}
-                        <input type="text" id="firstName" name="firstName" className="form-control text-center" required placeholder="Entrez votre prénom" onChange={validateInput} />
+                        <input type="text" id="firstNameSupervisor" name="firstName" className="form-control text-center" required placeholder="Entrez votre prénom" onChange={validateInput} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="matricule">Matricule: </label>
+                        <label htmlFor="matriculeSupervisor">Matricule: </label>
                         {error.matricule !== "" ? error.matricule : ""}
-                        <input type="text" name="matricule" className="form-control text-center" id="matricule" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                        <input type="text" name="matricule" className="form-control text-center" id="matriculeSupervisor" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Mot de passe: </label>
+                        <label htmlFor="passwordSupervisor">Mot de passe: </label>
                         {error.password !== "" ? error.password : ""}
-                        <input type="password" name="password" className="form-control text-center" id="password" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                        <input type="password" name="password" className="form-control text-center" id="passwordSupervisor" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>

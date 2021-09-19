@@ -2,14 +2,6 @@
   "students": [],
   "monitors": [],
   "supervisors": [
-    {
-      "supervisor": {
-        "lastName": "toto",
-        "firstName": "toto",
-        "matricule": "1234895",
-        "password": "toto123!"
-      },
-      "id": 1
-    }
+   
   ]
 }
