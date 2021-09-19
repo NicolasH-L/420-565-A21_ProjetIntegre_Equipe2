@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import work from '../images/background-01.jpg'
 
-const MonitorRegistration = () => {
+const MonitorRegistration = ({onAdd}) => {
     const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
 
     const onSubmit = (e) => {
@@ -12,8 +12,10 @@ const MonitorRegistration = () => {
         _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs!")
             return
-        } else
+        } else{
+            onAdd({monitor})
             console.log(monitor)
+        }
     }
 
     const [error, setError] = useState({
@@ -26,7 +28,7 @@ const MonitorRegistration = () => {
         let inputError;
         let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/;
         let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
-        let patternEnterprise = /^[^ ]+([ ]{1}[^ ]+)+$/;
+        let patternEnterprise = /^[^ ]+([ ]{0,1}[^ ]+)+$/
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
         if (e.target.type === "email")
