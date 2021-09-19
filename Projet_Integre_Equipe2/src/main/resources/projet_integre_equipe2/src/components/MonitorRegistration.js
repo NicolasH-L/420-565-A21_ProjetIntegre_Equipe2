@@ -56,39 +56,37 @@ const MonitorRegistration = ({onAdd}) => {
         setError({ ...error, [e.target.id]: inputError })
     }
     return (
-        <>
-            <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
-                    <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
-                    <div className="form-group">
-                        <label htmlFor="lastName">Nom: </label>
-                        {error.lastName !== "" ? error.lastName : ""}
-                        <input type="text" name="Nom" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="firstName">Prénom: </label>
-                        {error.firstName !== "" ? error.firstName : ""}
-                        <input type="text" name="Prénom" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Mot de passe: </label>
-                        {error.password !== "" ? error.password : ""}
-                        <input type="text" name="Mot de passe" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
-                        {error.enterpriseName !== "" ? error.enterpriseName : ""}
-                        <input type="text" name="Nom de l'entreprise" className="form-control text-center" id="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Courriel: </label>
-                        {error.email !== "" ? error.email : ""}
-                        <input type="email" name="Nom de courriel" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </>
+        <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+            <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
+                <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
+                <div className="form-group">
+                    <label htmlFor="lastName">Nom: </label>
+                    {error.lastName !== "" ? error.lastName : ""}
+                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="firstName">Prénom: </label>
+                    {error.firstName !== "" ? error.firstName : ""}
+                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Mot de passe: </label>
+                    {error.password !== "" ? error.password : ""}
+                    <input type="text" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
+                    {error.enterpriseName !== "" ? error.enterpriseName : ""}
+                    <input type="text" className="form-control text-center" id="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Courriel: </label>
+                    {error.email !== "" ? error.email : ""}
+                    <input type="email" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} />
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+        </div>
     )
 }
 
