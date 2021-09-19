@@ -46,7 +46,7 @@ function App() {
         body: JSON.stringify(supervisor)
     })
     const data = await result.json()
-  //  setMonitors([...monitor, data])
+  //  setStudents([...monitor, data])
   }
 
   return (

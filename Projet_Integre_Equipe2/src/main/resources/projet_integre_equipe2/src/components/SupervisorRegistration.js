@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import work from '../images/background-01.jpg'
 
-const SupervisorRegistration = ({onAdd}) => {
+const SupervisorRegistration = ({ onAdd }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
 
@@ -16,7 +16,7 @@ const SupervisorRegistration = ({onAdd}) => {
         } else {
             console.log(supervisor)
         }
-        onAdd({supervisor})
+        onAdd({ supervisor })
     }
 
     const validateInput = (e) => {
@@ -60,9 +60,9 @@ const SupervisorRegistration = ({onAdd}) => {
                 <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
                     <h1 className="text-center">Formulaire d'inscription du superviseur</h1>
                     <div className="form-group">
-                        <label htmlFor="lastName">Nom:</label>
+                        <label htmlFor="lastName">Nom: </label>
                         {error.lastName !== "" ? error.lastName : ""}
-                        <input type="text" id="lastName"  className="form-control text-center" required placeholder="Entrez votre nom de famille" onChange={validateInput} />
+                        <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom" onChange={validateInput} required />
                     </div>
                     <div className="form-group">
                         <label htmlFor="firstName">Prénom:</label>
