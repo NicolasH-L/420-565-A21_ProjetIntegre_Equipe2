@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
-import work from '../images/background-01.jpg'
+
 
 const StudentRegistration = ({onAdd}) => {
     const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""});
@@ -56,30 +56,32 @@ const StudentRegistration = ({onAdd}) => {
     }
 
     return (
-        <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-            <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
-                <h1 className="text-center">Formulaire d'inscription élève</h1>
+        <div>
+            <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="lastName">Nom: </label>
+                    <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i>  Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control" id="lastName" onChange={validateInput} />
+                    <input type="text" className="form-control" id="lastName" onChange={validateInput}/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstName">Prénom: </label>
+                    <label htmlFor="firstName" className="text-secondary"><i className="fas fa-user"></i> Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
                     <input type="firstName" className="form-control" id="firstName" onChange={validateInput} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Mot de passe: </label>
+                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
                     <input type="password" className="form-control" id="password" onChange={validateInput} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="matricule">Matricule: </label>
+                    <label htmlFor="matricule" className="text-secondary"><i className="fas fa-id-badge"></i> Matricule: </label>
                     {error.matricule !== "" ? error.matricule : ""}
                     <input type="text" className="form-control" id="matricule" onChange={validateInput} />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <div className="d-flex justify-content-end">
+                    <button type="submit" className="btn grad text-white ">Submit</button>
+                </div>
+                
             </form>
         </div>
     )
