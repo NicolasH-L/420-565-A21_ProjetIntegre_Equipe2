@@ -68,19 +68,18 @@ const StudentRegistration = ({onAdd}) => {
                     <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prenom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
-                    {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre password" onChange={validateInput} required/>
-                </div>
-                <div className="form-group">
                     <label htmlFor="matricule" className="text-secondary"><i className="fas fa-id-badge"></i> Matricule: </label>
                     {error.matricule !== "" ? error.matricule : ""}
                     <input type="text" className="form-control text-center" id="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
                 </div>
-                <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Submit</button>
+                <div className="form-group">
+                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
+                    {error.password !== "" ? error.password : ""}
+                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre password" onChange={validateInput} required/>
                 </div>
-                
+                <div className="d-flex justify-content-end">
+                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                </div>
             </form>
         </div>
     )
