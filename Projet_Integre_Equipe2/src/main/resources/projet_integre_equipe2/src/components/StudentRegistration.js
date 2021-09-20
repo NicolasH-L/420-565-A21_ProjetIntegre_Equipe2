@@ -66,12 +66,12 @@ const StudentRegistration = ({onAdd}) => {
                 <div className="form-group">
                     <label htmlFor="firstName">Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
-                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prenom" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre password" onChange={validateInput} required/>
+                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="matricule">Matricule: </label>
