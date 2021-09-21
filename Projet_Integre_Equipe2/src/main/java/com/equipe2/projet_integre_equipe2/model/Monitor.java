@@ -1,0 +1,16 @@
+package com.equipe2.projet_integre_equipe2.model;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
+
+@Data
+public class Monitor extends User{
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    private String enterpriseName;
+    private String email;
+}
