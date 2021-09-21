@@ -26,18 +26,15 @@ const SupervisorRegistration = ({ onAdd }) => {
         let patternMatricule = /^[0-9]{7}$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-
-        if (e.target.name === "lastName" || e.target.name === "firstName") {
+        if (e.target.name === "lastName" || e.target.name === "firstName")
             pattern = new RegExp(patternName);
-        } else if (e.target.name === "matricule") {
+        else if (e.target.name === "matricule") 
             pattern = new RegExp(patternMatricule)
-        } else if (e.target.name === "password") {
+        else if (e.target.name === "password")
             pattern = new RegExp(patternPassword)
-        }
 
         if (pattern === undefined)
             return;
-
 
         if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red";
@@ -50,39 +47,37 @@ const SupervisorRegistration = ({ onAdd }) => {
             inputError = ""
             setSupervisor({ ...supervisor, [e.target.name]: e.target.value })
         }
-
         setError({ ...error, [e.target.name]: inputError })
     }
 
     return (
-        <>
-            <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
-                    <h1 className="text-center">Formulaire d'inscription du superviseur</h1>
-                    <div className="form-group">
-                        <label htmlFor="lastNameSupervisor">Nom: </label>
-                        {error.lastName !== "" ? error.lastName : ""}
-                        <input type="text" className="form-control text-center" name="lastName" id="lastNameSupervisor" placeholder="Entrez votre nom" onChange={validateInput} required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="firstNameSupervisor">Prénom:</label>
-                        {error.firstName !== "" ? error.firstName : ""}
-                        <input type="text" id="firstNameSupervisor" name="firstName" className="form-control text-center" required placeholder="Entrez votre prénom" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="matriculeSupervisor">Matricule: </label>
-                        {error.matricule !== "" ? error.matricule : ""}
-                        <input type="text" name="matricule" className="form-control text-center" id="matriculeSupervisor" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="passwordSupervisor">Mot de passe: </label>
-                        {error.password !== "" ? error.password : ""}
-                        <input type="password" name="password" className="form-control text-center" id="passwordSupervisor" required placeholder="Entrez votre mot de passe" onChange={validateInput} />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </>
+        <div>
+            <form className="container-fluid" onSubmit={onSubmit}>
+                <div className="form-group">
+                    <label htmlFor="lastNameSupervisor" className="text-secondary"><i className="fas fa-user"></i> Nom: </label>
+                    {error.lastName !== "" ? error.lastName : ""}
+                    <input type="text" className="form-control text-center" id="lastNameSupervisor" name="lastName" placeholder="Entrez votre nom" onChange={validateInput} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="firstNameSupervisor" className="text-secondary"><i className="fas fa-user"></i> Prénom:</label>
+                    {error.firstName !== "" ? error.firstName : ""}
+                    <input type="text" className="form-control text-center" id="firstNameSupervisor" name="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="matriculeSupervisor" className="text-secondary"><i className="fas fa-id-badge"></i> Matricule: </label>
+                    {error.matricule !== "" ? error.matricule : ""}
+                    <input type="text" className="form-control text-center" id="matriculeSupervisor" name="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="passwordSupervisor" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
+                    {error.password !== "" ? error.password : ""}
+                    <input type="password" className="form-control text-center" id="passwordSupervisor" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
+                </div>
+                <div className="d-flex justify-content-end">
+                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                </div>
+            </form>
+        </div>
     )
 }
 

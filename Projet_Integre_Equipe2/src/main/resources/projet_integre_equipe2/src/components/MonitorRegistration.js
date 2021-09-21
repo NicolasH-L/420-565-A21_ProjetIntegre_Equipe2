@@ -5,6 +5,7 @@ import work from '../images/background-01.jpg'
 
 const MonitorRegistration = ({onAdd}) => {
     const [monitor, setMonitor] = useState({lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
+    const [error, setError] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" })
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -12,16 +13,16 @@ const MonitorRegistration = ({onAdd}) => {
         _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.enterpriseName) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs!")
             return
-        } else{
+        } else {
             console.log(monitor)
         }
         onAdd({monitor})
     }
 
-    const [error, setError] = useState({
-        lastName: "", firstName: "",
-        password: "", enterpriseName: "", email: ""
-    });
+    // const [error, setError] = useState({
+    //     lastName: "", firstName: "",
+    //     password: "", enterpriseName: "", email: ""
+    // });
 
     const validateInput = (e) => {
         let pattern;
@@ -31,13 +32,13 @@ const MonitorRegistration = ({onAdd}) => {
         let patternEnterprise = /^[^ ]+([ ]{0,1}[^ ]+)+$/;
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-        if (e.target.type === "email")
+        if (e.target.name === "email")
             pattern = new RegExp(patternEmail);
-        else if (e.target.id === "lastName" || e.target.id === "firstName") 
+        else if (e.target.name === "lastName" || e.target.name === "firstName") 
             pattern = new RegExp(patternName);
-        else if (e.target.id === "enterpriseName") 
+        else if (e.target.name === "enterpriseName") 
             pattern = new RegExp(patternEnterprise)
-        else if (e.target.id === "password") 
+        else if (e.target.name === "password") 
             pattern = new RegExp(patternPassword)
 
         if (pattern === undefined)
@@ -51,40 +52,41 @@ const MonitorRegistration = ({onAdd}) => {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
             inputError = ""
-            setMonitor({ ...monitor, [e.target.id]: e.target.value })
+            setMonitor({ ...monitor, [e.target.name]: e.target.value })
         }
-        setError({ ...error, [e.target.id]: inputError })
+        setError({ ...error, [e.target.name]: inputError })
     }
     return (
-        <div className="py-5" style={{ backgroundImage: `url(${work})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-            <form className="my-5 py-5 text-center col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid bg-white rounded" onSubmit={onSubmit}>
-                <h1 className="text-center">Formulaire d'inscription du moniteur</h1>
+        <div>
+            <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="lastName">Nom: </label>
+                    <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i> Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="lastNameMonitor" name="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstName">Prénom: </label>
+                    <label htmlFor="firstName" className="text-secondary"><i className="fas fa-user"></i> Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
-                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="firstNameMonitor" name="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Mot de passe: </label>
+                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
+                    <input type="password" className="form-control text-center" id="passwordMonitor" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="enterpriseName">Nom de l'entreprise: </label>
+                    <label htmlFor="enterpriseName" className="text-secondary"><i class="fas fa-building"></i> Nom de l'entreprise: </label>
                     {error.enterpriseName !== "" ? error.enterpriseName : ""}
-                    <input type="text" className="form-control text-center" id="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="enterpriseNameMonitor" name="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Courriel: </label>
+                    <label htmlFor="email" className="text-secondary"><i class="fas fa-at"></i> Courriel: </label>
                     {error.email !== "" ? error.email : ""}
-                    <input type="email" className="form-control text-center" id="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
+                    <input type="email" className="form-control text-center" id="emailMonitor" name="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <div className="d-flex justify-content-end">
+                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                </div>
             </form>
         </div>
     )
