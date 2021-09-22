@@ -15,10 +15,24 @@ public class MonitorService {
 
     public MonitorRepository monitorRepository;
 
-    public MonitorService(MonitorRepository monitorRepository) {this.monitorRepository = monitorRepository;}
+    public MonitorService(MonitorRepository monitorRepository) {
+        this.monitorRepository = monitorRepository;
+    }
 
-    public List<Monitor> getAllMonitors() {return monitorRepository.findAll();}
+    public List<Monitor> getAllMonitors() {
+        return monitorRepository.findAll();
+    }
 
-    public Monitor subscribe(Monitor monitor) {return monitorRepository.save(monitor);}
+    public boolean registerMonitor(Monitor monitor) {
+        monitorRepository.save(monitor);
+        return monitorRepository.existsByEmail(monitor.getEmail());
+    }
 
+    public Monitor getAMonitorByEmail(Monitor monitor){
+        return monitorRepository.findMonitorByEmail(monitor.getEmail());
+    }
+
+    public Monitor getMonitorById(Monitor monitor){
+        return monitorRepository.findMonitorById(monitor.getId());
+    }
 }
