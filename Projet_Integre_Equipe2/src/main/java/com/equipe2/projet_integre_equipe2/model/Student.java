@@ -5,8 +5,8 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 
-@Data
-public class Student extends User {
+//@Data
+public class Student  {
     @Id
     @GeneratedValue
     private Integer id;
