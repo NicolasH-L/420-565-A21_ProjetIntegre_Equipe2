@@ -1,11 +1,14 @@
 package com.equipe2.projet_integre_equipe2.model;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
 
     @Id

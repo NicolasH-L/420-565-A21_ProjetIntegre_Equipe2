@@ -21,7 +21,7 @@ public class StudentController {
         return systemService.login(matricule,password);
     }
 
-    @PostMapping(value = "/projetIntegre")
+    @PostMapping
     public Student subscribe(@RequestBody Student student) {
         return systemService.subscribe(student);
     }
