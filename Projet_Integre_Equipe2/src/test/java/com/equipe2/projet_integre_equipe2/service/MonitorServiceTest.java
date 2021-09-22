@@ -7,10 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,7 @@ class MonitorServiceTest {
     @InjectMocks
     private MonitorService monitorService;
 
+
     @Test
     public void testGetAllMonitors() {
         when(monitorRepository.findAll()).thenReturn(getListMonitors());
@@ -36,7 +38,7 @@ class MonitorServiceTest {
     }
 
     @Test
-    public void testRegisterMonitor(){
+    public void testRegisterMonitor() {
         String email = "toto@toto.toto";
         Monitor newMonitor = Monitor.builder()
                 .password("toto")
@@ -51,14 +53,31 @@ class MonitorServiceTest {
     }
 
     @Test
-    public void testLoginMonitor(){
+    public void testLoginMonitor() {
         List<Monitor> list = getListMonitors();
         String email = "toto@toto.toto";
         String password = "toto";
         Monitor expected = list.get(0);
         when(monitorService.loginMonitor(email, password)).thenReturn(expected);
 
-        assertThat(monitorService.loginMonitor(email,password)).isEqualTo(expected);
+        assertThat(monitorService.loginMonitor(email, password)).isEqualTo(expected);
+    }
+
+    @Test
+    public void testGetAMonitorByEmail() {
+        Monitor monitor = Monitor.builder()
+                .id(54)
+                .password("qsassssss2@")
+                .firstName("ssssssss")
+                .lastName("ssssssssss")
+                .enterpriseName("ssssssss")
+                .email("ssssssss@gmail.com")
+                .build();
+
+        monitorRepository.save(monitor);
+        when(monitorService.getAMonitorByEmail(monitor)).thenReturn(monitor);
+
+        assertThat(monitorService.getAMonitorByEmail(monitor)).isNotNull();
     }
 
     private List<Monitor> getListMonitors() {
@@ -84,5 +103,6 @@ class MonitorServiceTest {
                 .email("tata@tata.tata")
                 .build());
         return list;
+
     }
 }

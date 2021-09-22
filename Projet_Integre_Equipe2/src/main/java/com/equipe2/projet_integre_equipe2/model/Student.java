@@ -6,12 +6,14 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @SuperBuilder
 public class Student extends User {
+
     @Id
     @GeneratedValue
     private Integer id;

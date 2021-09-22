@@ -13,19 +13,31 @@ import java.util.List;
 @Service
 public class MonitorService {
 
-    private MonitorRepository monitorRepository;
+    public MonitorRepository monitorRepository;
 
+    public MonitorService(MonitorRepository monitorRepository) {
+        this.monitorRepository = monitorRepository;
+    }
 
     public List<Monitor> getAllMonitors() {
         return monitorRepository.findAll();
     }
 
-    public boolean registerMonitor(Monitor newMonitor) {
-        monitorRepository.save(newMonitor);
-        return monitorRepository.existsByEmail(newMonitor.getEmail());
+    public boolean registerMonitor(Monitor monitor) {
+        monitorRepository.save(monitor);
+        return monitorRepository.existsByEmail(monitor.getEmail());
     }
+
+    public Monitor getAMonitorByEmail(Monitor monitor){
+        return monitorRepository.findMonitorByEmail(monitor.getEmail());
+    }
+
 
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
+    }
+
+    public Monitor getMonitorById(Monitor monitor){
+        return monitorRepository.findMonitorById(monitor.getId());
     }
 }
