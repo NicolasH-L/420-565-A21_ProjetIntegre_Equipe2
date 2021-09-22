@@ -19,4 +19,14 @@ public class MonitorService {
     public List<Monitor> getAllMonitors() {
         return monitorRepository.findAll();
     }
+
+    public boolean registerMonitor(Monitor newMonitor) {
+        monitorRepository.save(newMonitor);
+        return monitorRepository.existsById(newMonitor.getId());
+
+    }
+
+    public Monitor loginMonitor(String email, String password) {
+        return monitorRepository.findMonitorByEmailAndPassword(email, password);
+    }
 }

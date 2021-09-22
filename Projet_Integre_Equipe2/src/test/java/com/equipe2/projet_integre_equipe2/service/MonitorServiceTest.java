@@ -11,8 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +33,32 @@ class MonitorServiceTest {
 
         assertThat(monitorList.size()).isEqualTo(3);
         assertThat(monitorList.get(0).getLastName()).isEqualTo("toto");
-        
+    }
+
+    @Test
+    public void testRegisterMonitor(){
+        String email = "toto@toto.toto";
+        Monitor newMonitor = Monitor.builder()
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .enterpriseName("toto")
+                .email("toto")
+                .build();
+        when(monitorService.registerMonitor(newMonitor)).thenReturn(true);
+
+        assertThat(monitorService.registerMonitor(newMonitor)).isTrue();
+    }
+
+    @Test
+    public void testLoginMonitor(){
+        List<Monitor> list = getListMonitors();
+        String email = "toto@toto.toto";
+        String password = "toto";
+        Monitor expected = list.get(0);
+        when(monitorService.loginMonitor(email, password)).thenReturn(expected);
+
+        assertThat(monitorService.loginMonitor(email,password)).isEqualTo(expected);
     }
 
     private List<Monitor> getListMonitors() {
