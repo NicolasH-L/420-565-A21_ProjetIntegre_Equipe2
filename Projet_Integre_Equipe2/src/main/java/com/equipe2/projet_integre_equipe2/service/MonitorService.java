@@ -22,8 +22,7 @@ public class MonitorService {
 
     public boolean registerMonitor(Monitor newMonitor) {
         monitorRepository.save(newMonitor);
-        return monitorRepository.existsById(newMonitor.getId());
-
+        return monitorRepository.existsByEmail(newMonitor.getEmail());
     }
 
     public Monitor loginMonitor(String email, String password) {
