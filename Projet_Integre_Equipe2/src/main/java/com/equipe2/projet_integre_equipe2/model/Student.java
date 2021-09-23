@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@SuperBuilder
 public class Student extends User {
 
     @Id
