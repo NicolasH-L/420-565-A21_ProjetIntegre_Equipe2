@@ -1,5 +1,4 @@
 package com.equipe2.projet_integre_equipe2.controller;
-
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.User;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;

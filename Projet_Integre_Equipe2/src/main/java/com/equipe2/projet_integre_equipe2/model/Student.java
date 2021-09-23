@@ -1,16 +1,19 @@
 package com.equipe2.projet_integre_equipe2.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-
 import javax.persistence.GeneratedValue;
 
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Student extends User {
 
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String matricule;
 
     @Builder
