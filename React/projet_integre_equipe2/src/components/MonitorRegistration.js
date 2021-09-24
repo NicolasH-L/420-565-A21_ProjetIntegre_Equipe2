@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
-import work from '../images/background-01.jpg'
-
+// import MonitorLogin from './MonitorLogin';
+// to use router hook we will need to npm i hookrouter
 const MonitorRegistration = ({onAdd}) => {
     const [monitor, setMonitor] = useState({lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
     const [error, setError] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" })
@@ -19,10 +19,9 @@ const MonitorRegistration = ({onAdd}) => {
         onAdd({monitor})
     }
 
-    // const [error, setError] = useState({
-    //     lastName: "", firstName: "",
-    //     password: "", enterpriseName: "", email: ""
-    // });
+    // const routes = {
+    //     "/monitorLogin": () => <MonitorLogin />
+    // }
 
     const validateInput = (e) => {
         let pattern;
@@ -47,7 +46,7 @@ const MonitorRegistration = ({onAdd}) => {
         if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-            inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
+            inputError = <strong className="text-danger"> <i className="fas fa-exclamation-circle text-danger fa-sm" ></i> Erreur de {e.target.name}!</strong>;
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
@@ -58,7 +57,7 @@ const MonitorRegistration = ({onAdd}) => {
     }
     return (
         <div>
-            <form className="container-fluid" onSubmit={onSubmit}>
+            <form className="container-fluid col-sm-6 col-md-12" onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i> Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
@@ -85,7 +84,8 @@ const MonitorRegistration = ({onAdd}) => {
                     <input type="email" className="form-control text-center" id="emailMonitor" name="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
                 </div>
                 <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                    <button type="submit" className="btn grad text-white mr-2">Soumettre</button>
+                    {/* <a className="btn grad text-white" href="/monitorLogin">Se connecter</a> */}
                 </div>
             </form>
         </div>
