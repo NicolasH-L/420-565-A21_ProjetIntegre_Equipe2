@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.setMaxElementsForPrinting;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -66,7 +67,6 @@ class MonitorServiceTest {
     @Test
     public void testGetAMonitorByEmail() {
         Monitor monitor = Monitor.builder()
-                .id(54)
                 .password("qsassssss2@")
                 .firstName("ssssssss")
                 .lastName("ssssssssss")
@@ -78,6 +78,23 @@ class MonitorServiceTest {
         when(monitorService.getAMonitorByEmail(monitor)).thenReturn(monitor);
 
         assertThat(monitorService.getAMonitorByEmail(monitor)).isNotNull();
+        System.out.println(monitorService.getMonitorById(monitor));
+    }
+
+    @Test
+    public void testGetAMonitorByEmailAndPassword(){
+        Monitor monitor = Monitor.builder()
+                .id(34)
+                .password("qwerty123@")
+                .firstName("qweqwe")
+                .lastName("qweqwe")
+                .enterpriseName("qweqwe")
+                .email("qweqwe@gmail.com")
+                .build();
+
+        monitorRepository.save(monitor);
+        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
+        assertThat(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).isNotNull();
     }
 
     private List<Monitor> getListMonitors() {

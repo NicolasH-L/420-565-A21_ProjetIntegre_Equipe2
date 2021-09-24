@@ -5,16 +5,17 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@SuperBuilder
-public class User {
+@SuperBuilder(toBuilder = true)
+public class User{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String password;

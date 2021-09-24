@@ -32,7 +32,6 @@ public class MonitorService {
         return monitorRepository.findMonitorByEmail(monitor.getEmail());
     }
 
-
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
     }

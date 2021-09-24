@@ -2,6 +2,8 @@ import React from 'react'
 import StudentRegistration from '../StudentRegistration';
 import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
+import {Link } from 'react-router-dom'
+
 import './Registration.css'
 
 const Registration = () => {
@@ -64,6 +66,9 @@ const Registration = () => {
                         <div className="tab-pane fade show active" id="cegep" role="tabpanel" aria-labelledby="cegep-tab"><StudentRegistration onAdd={addStudent} /></div>
                         <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorRegistration onAdd={addMonitor} /></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorRegistration onAdd={addSupervisor} /></div>
+                    </div>
+                    <div className="d-flex justify-content-end mt-3 mr-3">
+                      <Link className="btn grad text-white" to='/Login'>Se connecter</Link>
                     </div>
                 </div>
             </div>
