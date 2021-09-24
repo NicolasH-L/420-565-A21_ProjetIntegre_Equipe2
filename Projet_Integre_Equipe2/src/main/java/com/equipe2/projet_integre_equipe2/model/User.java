@@ -1,15 +1,13 @@
 package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.MappedSuperclass;
-
+import javax.persistence.Id;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @MappedSuperclass
 public abstract class User {
