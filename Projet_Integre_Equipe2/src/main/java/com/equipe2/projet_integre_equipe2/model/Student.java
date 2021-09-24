@@ -7,10 +7,6 @@ import javax.persistence.GeneratedValue;
 
 @Data
 public class Student extends User {
-<<<<<<< HEAD
-
-=======
->>>>>>> deeec0b979de93c25e11817076372a4d64c0bc9e
     @Id
     @GeneratedValue
     private Integer id;

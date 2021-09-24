@@ -1,88 +1,42 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
-import work from '../images/background-01.jpg'
 
-const AdminRegistration = ({onAdd}) => {
+const AdminLogin = ({ login }) => {
     const [admin, setAdmin] = useState({username: "", password: ""});
-    const [error, setError] = useState({username: "", password: "" })
+    const [error, setError] = useState({credentials:""})
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!_.isEmpty(error.username) || !_.isEmpty(error.password) ||_.isEmpty(admin.username) || _.isEmpty(admin.password)) {
-            alert("Veuillez remplir tous les champs!")
+        if (_.isEmpty(admin.username) || _.isEmpty(admin.password)) {
+            setError({...error, credentials: "Matricule ou mot de passe incorrect"})
             return
         } else {
             console.log(admin)
         }
+        login({ admin })
     }
 
-    const validateInput = (e) => {
-        let pattern;
-        let inputError;
-        let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/;
-        let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
-        let patternEnterprise = /^[^ ]+([ ]{0,1}[^ ]+)+$/;
-        let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
-        if (e.target.name === "email")
-            pattern = new RegExp(patternEmail);
-        else if (e.target.name === "lastName" || e.target.name === "firstName") 
-            pattern = new RegExp(patternName);
-        else if (e.target.name === "enterpriseName") 
-            pattern = new RegExp(patternEnterprise)
-        else if (e.target.name === "password") 
-            pattern = new RegExp(patternPassword)
-
-        if (pattern === undefined)
-            return;
-        
-        if (!pattern.test(e.target.value) || e.target.value === "") {
-            e.target.style.borderColor = "red";
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-            inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
-        } else {
-            e.target.style.borderColor = "#ced4da";
-            e.target.style.boxShadow = "none"
-            inputError = ""
-            setAdmin({ ...admin, [e.target.name]: e.target.value })
-        }
-        setError({ ...error, [e.target.name]: inputError })
-    }
+    
     return (
         <div>
             <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i> Nom: </label>
-                    {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control text-center" id="lastNameadmin" name="lastName" placeholder="Entrez votre nom de famille" onChange={validateInput} />
+                    <label htmlFor="usernameAdmin" className="text-secondary"><i class="fas fa-user"></i> Nom d'utilisateur: </label>
+                    {error.username !== "" ? error.username : ""}
+                    <input type="text" className="form-control text-center" id="usernameAdmin" name="username" placeholder="Entrez votre nom d'utilisateur" onChange={(e) => setAdmin({...admin, username: e.target.value}) } required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstName" className="text-secondary"><i className="fas fa-user"></i> Prénom: </label>
-                    {error.firstName !== "" ? error.firstName : ""}
-                    <input type="text" className="form-control text-center" id="firstNameadmin" name="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
+                    <label htmlFor="passwordAdmin" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control text-center" id="passwordadmin" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="enterpriseName" className="text-secondary"><i class="fas fa-building"></i> Nom de l'entreprise: </label>
-                    {error.enterpriseName !== "" ? error.enterpriseName : ""}
-                    <input type="text" className="form-control text-center" id="enterpriseNameadmin" name="enterpriseName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email" className="text-secondary"><i class="fas fa-at"></i> Courriel: </label>
-                    {error.email !== "" ? error.email : ""}
-                    <input type="email" className="form-control text-center" id="emailadmin" name="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
+                    <input type="password" className="form-control text-center" id="passwordAdmin" name="password" placeholder="Entrez votre mot de passe" onChange={(e) => setAdmin({...admin, password: e.target.value}) } required/>
                 </div>
                 <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                    <button type="submit" className="btn grad text-white ">Connexion</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default AdminRegistration
+export default AdminLogin
