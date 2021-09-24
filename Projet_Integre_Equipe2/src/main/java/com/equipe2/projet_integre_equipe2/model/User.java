@@ -20,7 +20,6 @@ public abstract class User {
     private String lastName;
     private String firstName;
 
-
     @Override
     public String toString() {
         return "User{" +

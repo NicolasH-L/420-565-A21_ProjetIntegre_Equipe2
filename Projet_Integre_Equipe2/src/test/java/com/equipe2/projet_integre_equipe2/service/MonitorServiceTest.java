@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.setMaxElementsForPrinting;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -144,6 +145,22 @@ class MonitorServiceTest {
         assertThat(monitorService.getAMonitorByEmail(monitor)).isNotNull();
     }
 
+    @Test
+    public void testGetAMonitorByEmailAndPassword(){
+        Monitor monitor = Monitor.monitorBuilder()
+                .id(34)
+                .password("qwerty123@")
+                .firstName("qweqwe")
+                .lastName("qweqwe")
+                .enterpriseName("qweqwe")
+                .email("qweqwe@gmail.com")
+                .build();
+
+        monitorRepository.save(monitor);
+        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
+        assertThat(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).isNotNull();
+    }
+
 
     // To test later
     @Test
@@ -180,6 +197,5 @@ class MonitorServiceTest {
                 .email("tata@tata.tata")
                 .build());
         return list;
-
     }
 }

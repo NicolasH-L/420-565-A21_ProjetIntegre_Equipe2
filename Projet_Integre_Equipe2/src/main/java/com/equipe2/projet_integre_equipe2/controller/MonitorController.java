@@ -1,12 +1,40 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import lombok.Builder;
-import lombok.Data;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.equipe2.projet_integre_equipe2.model.Monitor;
+import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
+import com.equipe2.projet_integre_equipe2.service.MonitorService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Builder
-@RequestMapping("/monitor")
+import java.util.List;
+
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/monitors")
 public class MonitorController {
 
+    @Autowired
+    private MonitorRepository monitorRepository;
+
+    @Autowired
+    private MonitorService monitorService;
+
+    public MonitorController(MonitorRepository monitorRepository) {
+        this.monitorRepository = monitorRepository;
+    }
+
+    @GetMapping
+    public List<Monitor> getMonitors() {
+        return monitorRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Monitor getMonitor(@PathVariable int id) {
+        return monitorRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @PostMapping
+    public Monitor subscribe(@RequestBody Monitor monitor){
+        return monitorRepository.save(monitor);
+    }
 }
