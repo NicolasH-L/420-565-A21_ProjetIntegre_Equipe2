@@ -21,7 +21,7 @@ const Registration = () => {
       }
     
       const addMonitor = async (monitor) => {
-        const result = await fetch('http://localhost:5000/monitors',
+        const result = await fetch('http://localhost:8888np/monitors',
         {
           method:'POST',
           headers:{
@@ -30,7 +30,7 @@ const Registration = () => {
             body: JSON.stringify(monitor)
         })
         const data = await result.json()
-      //  setMonitors([...monitor, data])
+        // setMonitors([...monitor, data])
       }
 
       const addSupervisor = async (supervisor) => {

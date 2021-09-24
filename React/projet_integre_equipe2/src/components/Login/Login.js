@@ -24,13 +24,7 @@ const Login = () => {
                     <h2 className="text-center text-secondary">Login</h2>
                     <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link active" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">Étudiant</a>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link text-black" id="monitor-tab" data-toggle="tab" href="#monitor" role="tab" aria-controls="monitor" aria-selected="false">Moniteur</a>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link text-black" id="supervisor-tab" data-toggle="tab" href="#supervisor" role="tab" aria-controls="supervisor" aria-selected="false">Superviseur</a>
+                            <a className="nav-link active text-black" id="monitor-tab" data-toggle="tab" href="#monitor" role="tab" aria-controls="monitor" aria-selected="false">Moniteur</a>
                         </li>
                     </ul>
                     <div className="tab-content" id="myTabContent">

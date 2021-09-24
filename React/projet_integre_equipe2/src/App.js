@@ -7,11 +7,14 @@ import Login from './components/Login/Login';
 
 function App() {
   return (
-      <div>
-        {/*<NavbarHead/>*/}
-        <Registration/>
-        <Footer/>
-      </div>
+      <Router>
+        <div>
+          {/*<NavbarHead/>*/}
+          {/* <Registration/> */}
+          <Login/>
+          <Footer/>
+        </div>
+      </Router>
   );
 }
 
