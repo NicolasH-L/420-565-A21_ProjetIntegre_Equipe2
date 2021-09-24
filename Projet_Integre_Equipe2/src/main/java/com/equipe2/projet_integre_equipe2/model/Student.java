@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import javax.persistence.GeneratedValue;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

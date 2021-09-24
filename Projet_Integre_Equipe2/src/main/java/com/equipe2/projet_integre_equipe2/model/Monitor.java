@@ -1,12 +1,7 @@
 package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Data
 @ToString
@@ -16,7 +11,6 @@ public class Monitor extends User {
 
     private String enterpriseName;
     private String email;
-
 
     @Builder(builderMethodName = "monitorBuilder")
     public Monitor(Integer id, String password, String lastName, String firstName, String enterpriseName, String email) {
@@ -39,5 +33,4 @@ public class Monitor extends User {
                 ", email='" + email + '\'' +
                 '}';
     }
-
 }
