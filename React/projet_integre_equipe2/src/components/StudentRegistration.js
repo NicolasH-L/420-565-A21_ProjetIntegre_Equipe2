@@ -31,11 +31,11 @@ const StudentRegistration = ({onAdd}) => {
         let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         let patternMatricule = /^[0-9]{7}$/;
 
-        if (e.target.id === "lastName" || e.target.id === "firstName")
+        if (e.target.name === "lastName" || e.target.name === "firstName")
             pattern = new RegExp(patternName);
-        else  if (e.target.id === "password")
+        else  if (e.target.name === "password")
             pattern = new RegExp(patternPassword)
-        else  if (e.target.id === "matricule")
+        else  if (e.target.name === "matricule")
             pattern = new RegExp(patternMatricule)
         
         if (pattern === undefined)
@@ -49,9 +49,9 @@ const StudentRegistration = ({onAdd}) => {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
             inputError = ""
-            setStudent({ ...student, [e.target.id]: e.target.value })
+            setStudent({ ...student, [e.target.name]: e.target.value })
         }
-        setError({ ...error, [e.target.id]: inputError })
+        setError({ ...error, [e.target.name]: inputError })
     }
 
     return (
@@ -60,25 +60,25 @@ const StudentRegistration = ({onAdd}) => {
                 <div className="form-group">
                     <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i>  Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
-                    <input type="text" className="form-control text-center" id="lastName" placeholder="Entrez votre nom" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="lastNameStudent" name="lastName" placeholder="Entrez votre nom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName" className="text-secondary"><i className="fas fa-user"></i> Prénom: </label>
                     {error.firstName !== "" ? error.firstName : ""}
-                    <input type="text" className="form-control text-center" id="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="firstNameStudent" name="firstName" placeholder="Entrez votre prénom" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="matricule" className="text-secondary"><i className="fas fa-id-badge"></i> Matricule: </label>
                     {error.matricule !== "" ? error.matricule : ""}
-                    <input type="text" className="form-control text-center" id="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
+                    <input type="text" className="form-control text-center" id="matriculeStudent" name="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
-                    <input type="password" className="form-control text-center" id="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
+                    <input type="password" className="form-control text-center" id="passwordStudent" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
-                <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                <div className="d-flex justify-content-center mt-4">
+                    <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                 </div>
             </form>
         </div>

@@ -3,6 +3,7 @@ import React from 'react'
 import MonitorLogin from '../MonitorLogin'; 
 import SupervisorLogin from '../SupervisorLogin';
 import AdminLogin from '../AdminLogin';
+import StudentLogin from '../StudentLogin';
 import './Login.css'
 import {Link } from 'react-router-dom'
 
@@ -27,7 +28,10 @@ const Login = () => {
                     <h2 className="text-center text-secondary">Login</h2>
                     <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <a className="nav-link active text-black" id="monitor-tab" data-toggle="tab" href="#monitor" role="tab" aria-controls="monitor" aria-selected="false">Moniteur</a>
+                            <a className="nav-link active text-black" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Étudiant</a>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                            <a className="nav-link text-black" id="monitor-tab" data-toggle="tab" href="#monitor" role="tab" aria-controls="monitor" aria-selected="false">Moniteur</a>
                         </li>
                         <li className="nav-item" role="presentation">
                             <a className="nav-link text-black" id="supervisor-tab" data-toggle="tab" href="#supervisor" role="tab" aria-controls="supervisor" aria-selected="false">Superviseur</a>
@@ -37,8 +41,8 @@ const Login = () => {
                         </li>
                     </ul>
                     <div className="tab-content" id="myTabContent">
-                        {/* <div className="tab-pane fade show active" id="cegep" role="tabpanel" aria-labelledby="cegep-tab"><StudentLogin/></div> */}
-                        <div className="tab-pane fade show active" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onAdd={addMonitor}/></div>
+                        <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin/></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onAdd={addMonitor}/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin/></div>
                     </div>
