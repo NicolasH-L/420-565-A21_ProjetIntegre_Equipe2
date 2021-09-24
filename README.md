@@ -13,4 +13,4 @@ Avertir le groupe lors de chaque push/merge
 
 3. Au moins un poste de travail autre que celui qui a fait le code est capable d’exécuter le feature.
 
-User experience testé par un pair (Vers la fin)
+4. User experience testé par un pair (Vers la fin)
