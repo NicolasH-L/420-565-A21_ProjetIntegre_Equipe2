@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 // import MonitorLogin from './MonitorLogin';
 // to use router hook we will need to npm i hookrouter
 const MonitorRegistration = ({ onAdd }) => {
@@ -86,9 +85,6 @@ const MonitorRegistration = ({ onAdd }) => {
                 </div>
                 <div className="d-flex justify-content-center mt-4">
                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                </div>
-                <div className="d-flex justify-content-center mt-3">
-                    <Link className="btn btn-block grad text-white" to='/Login'>Se connecter</Link>
                 </div>
             </form>
         </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import StudentRegistration from '../StudentRegistration';
 import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
-import { Link } from 'react-router-dom'
 
 import './Registration.css'
 
@@ -49,7 +48,6 @@ const Registration = () => {
   return (
     <div className="grad">
       <div className="d-flex justify-content-center">
-        {/* <div className="jumbotron jumbotron-fluid bg-light rounded col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 shadow m-5"> */}
         <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
           <h2 className="text-center text-secondary">Inscription</h2>
           <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
