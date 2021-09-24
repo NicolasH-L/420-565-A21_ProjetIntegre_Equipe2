@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import SupervisorRegistration from './components/SupervisorRegistration';
 import {useState} from 'react' 
 import Registration from './components/Registration/Registration';
+import SupervisorLogin from './components/SupervisorLogin';
 
 function App() {
   // const [student, setStudents] = useState([])
@@ -40,7 +41,8 @@ function App() {
   return (
     <div>
       {/*<NavbarHead/>*/}
-      <Registration/>
+      {/* <Registration/> */}
+      <SupervisorLogin/>
       <Footer/>
     </div>
   );
