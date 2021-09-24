@@ -6,9 +6,6 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.GeneratedValue;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class User {
 
     @Id
