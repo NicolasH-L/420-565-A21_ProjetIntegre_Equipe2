@@ -24,19 +24,30 @@ public class MonitorService {
     }
 
     public boolean registerMonitor(Monitor monitor) {
+        if (monitorRepository.existsByEmail(monitor.getEmail())){
+            return false;
+        }
         monitorRepository.save(monitor);
         return monitorRepository.existsByEmail(monitor.getEmail());
     }
 
-    public Monitor getAMonitorByEmail(Monitor monitor){
+    public Monitor getAMonitorByEmail(Monitor monitor) {
         return monitorRepository.findMonitorByEmail(monitor.getEmail());
+    }
+
+    public boolean isMonitorExistsByEmail(String email){
+        return monitorRepository.existsByEmail(email);
     }
 
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
     }
 
-    public Monitor getMonitorById(Monitor monitor){
-        return monitorRepository.findMonitorById(monitor.getId());
+    public Monitor getMonitorById(Integer id) {
+        return monitorRepository.findMonitorById(id);
+    }
+
+    public List<Monitor> findAll() {
+        return monitorRepository.findAll();
     }
 }
