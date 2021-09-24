@@ -4,14 +4,19 @@ import NavbarHead from './components/NavbarHead';
 import Footer from './components/Footer';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
+import MonitorLogin from './components/MonitorLogin';
 
 function App() {
   return (
       <Router>
         <div>
           {/*<NavbarHead/>*/}
-          {/* <Registration/> */}
-          <Login/>
+          <Route path = "/" exact render={(props) => (
+          <>
+            {<Registration/>}
+          </>
+        )}/>
+          <Route path = "/Login" component={Login}/>
           <Footer/>
         </div>
       </Router>

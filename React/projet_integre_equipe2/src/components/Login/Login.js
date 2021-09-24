@@ -3,6 +3,8 @@ import React from 'react'
 import MonitorLogin from '../MonitorLogin'; 
 // import SupervisorLogin from '../SupervisorLogin';
 import './Login.css'
+import {Link } from 'react-router-dom'
+
 
 const Login = () => {
     const addMonitor = async (monitor) => {
@@ -29,8 +31,11 @@ const Login = () => {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         {/* <div className="tab-pane fade show active" id="cegep" role="tabpanel" aria-labelledby="cegep-tab"><StudentLogin/></div> */}
-                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin/></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onAdd={addMonitor}/></div>
                         {/* <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div> */}
+                    </div>
+                    <div className="d-flex justify-content-end mt-3 mr-3">
+                        <Link className="btn grad text-white" to='/'>S'inscrire</Link>
                     </div>
                 </div>
             </div>
