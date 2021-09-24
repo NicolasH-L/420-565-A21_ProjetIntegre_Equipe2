@@ -47,12 +47,12 @@ const MonitorLogin = () => {
         <div>
             <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="email" className="text-secondary"><i class="fas fa-at"></i> Courriel: </label>
+                    <label htmlFor="emailMonitor" className="text-secondary"><i class="fas fa-at"></i> Courriel: </label>
                     {error.email !== "" ? error.email : ""}
                     <input type="email" className="form-control text-center" id="emailMonitor" name="email" placeholder="Entrez votre adresse courriel" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
+                    <label htmlFor="passwordMonitor" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     {error.password !== "" ? error.password : ""}
                     <input type="password" className="form-control text-center" id="passwordMonitor" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
