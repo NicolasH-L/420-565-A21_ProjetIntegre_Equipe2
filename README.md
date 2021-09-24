@@ -5,7 +5,7 @@ Se donner maximum 2 minutes pour arriver à un consensus lorsqu'on tourne en ron
 
 Avertir le groupe lors de chaque push/merge
 
-#Definition de Done (Good version) :
+#Definition de Done:
 
 1. Coverage des test a 80%(minimum)
 
