@@ -9,7 +9,7 @@ import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 const Registration = () => {
     const addStudent = async (student) => {
-        const result = await fetch('http://localhost:5000/students',
+        const result = await fetch('http://localhost:8888/students',
         {
           method:'POST',
           headers:{
