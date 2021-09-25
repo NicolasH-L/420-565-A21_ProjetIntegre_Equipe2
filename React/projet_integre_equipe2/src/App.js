@@ -14,10 +14,11 @@ function App() {
           {/*<NavbarHead/>*/}
           <Route path = "/" exact render={(props) => (
           <>
-            {<Login/>}
+            <Login/>
           </>
         )}/>
           <Route path = "/Login" component={Login}/>
+          <Route path = "/Registration" component={Registration}/>
           <Footer/>
         </div>
       </Router>
