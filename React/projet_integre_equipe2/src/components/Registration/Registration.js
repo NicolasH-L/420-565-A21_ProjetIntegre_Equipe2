@@ -20,7 +20,7 @@ const Registration = () => {
   }
 
   const addMonitor = async (monitor) => {
-    const result = await fetch('http://localhost:8888np/monitors',
+    const result = await fetch('http://localhost:8888/monitors',
       {
         method: 'POST',
         headers: {
