@@ -10,4 +10,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findStudentByMatriculeAndPassword(String matricule, String password);
 
     Student findStudentByMatricule(String matricule);
+
+    boolean existsByMatricule(String matricule);
 }
