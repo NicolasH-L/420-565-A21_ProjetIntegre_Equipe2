@@ -50,7 +50,7 @@ class MonitorServiceTest {
 //    @Disabled
     public void testRegisterMonitor() {
         Monitor monitor1 = Monitor.monitorBuilder()
-                .id(1)
+
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -65,7 +65,7 @@ class MonitorServiceTest {
     @Test
     public void testRegisterMonitorWithSameEmail(){
         Monitor monitor1 = Monitor.monitorBuilder()
-                .id(1)
+
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -73,7 +73,7 @@ class MonitorServiceTest {
                 .email("toto@toto")
                 .build();
         Monitor monitor2 = Monitor.monitorBuilder()
-                .id(2)
+
                 .password("tata")
                 .lastName("tata")
                 .firstName("tata")
@@ -89,7 +89,7 @@ class MonitorServiceTest {
     @Test
     public void testRegisterMonitorDuplicateId(){
         Monitor monitor1 = Monitor.monitorBuilder()
-                .id(1)
+
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -97,7 +97,7 @@ class MonitorServiceTest {
                 .email("toto@toto")
                 .build();
         Monitor monitor2 = Monitor.monitorBuilder()
-                .id(1)
+
                 .password("tata")
                 .lastName("tata")
                 .firstName("tata")
@@ -131,7 +131,7 @@ class MonitorServiceTest {
     @Test
     public void testGetAMonitorByEmail() {
         Monitor monitor = Monitor.monitorBuilder()
-                .id(1)
+
                 .password("qsassssss2@")
                 .firstName("ssssssss")
                 .lastName("ssssssssss")
@@ -148,7 +148,7 @@ class MonitorServiceTest {
     @Test
     public void testGetAMonitorByEmailAndPassword(){
         Monitor monitor = Monitor.monitorBuilder()
-                .id(34)
+
                 .password("qwerty123@")
                 .firstName("qweqwe")
                 .lastName("qweqwe")

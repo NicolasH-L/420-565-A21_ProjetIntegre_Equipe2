@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-//@RequestMapping("/monitors")
 public class MonitorController {
 
     @Autowired
@@ -33,9 +32,8 @@ public class MonitorController {
         return monitorRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    @PostMapping("/monitors")
+    @PostMapping("monitors/register")
     public Monitor subscribe(@RequestBody Monitor monitor){
-        System.out.println(monitor);
-        return monitorRepository.save(monitor);
+        return monitorService.registerMonitor(monitor);
     }
 }

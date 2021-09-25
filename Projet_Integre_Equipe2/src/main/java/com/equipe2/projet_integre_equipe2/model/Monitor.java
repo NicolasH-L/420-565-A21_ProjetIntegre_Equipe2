@@ -2,19 +2,19 @@ package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Data
 @ToString
 @NoArgsConstructor
 @Entity
-public class Monitor extends User {
+public class Monitor extends User implements Serializable {
 
     private String enterpriseName;
     private String email;
 
     @Builder(builderMethodName = "monitorBuilder")
-    public Monitor(Integer id, String password, String lastName, String firstName, String enterpriseName, String email) {
-        super.setId(id);
+    public Monitor(String password, String lastName, String firstName, String enterpriseName, String email) {
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);

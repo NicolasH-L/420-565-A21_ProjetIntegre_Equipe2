@@ -23,12 +23,11 @@ public class MonitorService {
         return monitorRepository.findAll();
     }
 
-    public boolean registerMonitor(Monitor monitor) {
+    public Monitor registerMonitor(Monitor monitor) {
         if (monitorRepository.existsByEmail(monitor.getEmail())){
-            return false;
+            return null;
         }
-        monitorRepository.save(monitor);
-        return monitorRepository.existsByEmail(monitor.getEmail());
+        return monitorRepository.save(monitor);
     }
 
     public Monitor getAMonitorByEmail(Monitor monitor) {

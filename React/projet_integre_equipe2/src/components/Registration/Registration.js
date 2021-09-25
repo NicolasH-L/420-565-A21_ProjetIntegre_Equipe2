@@ -1,52 +1,55 @@
-import React from 'react';
+import React from 'react'
 import StudentRegistration from '../StudentRegistration';
 import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
+import {Link } from 'react-router-dom'
 
 import './Registration.css'
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 const Registration = () => {
-  const addStudent = async (student) => {
-    const result = await fetch('http://localhost:5000/students',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(student)
-      })
-    const data = await result.json()
-    //  setStudents([...student, data])
-  }
+    const addStudent = async (student) => {
+        const result = await fetch('http://localhost:5000/students',
+        {
+          method:'POST',
+          headers:{
+            'Content-type': 'application/json'
+          },
+            body: JSON.stringify(student)
+        })
+        const data = await result.json()
+      //  setStudents([...student, data])
+      }
+    
+      const addMonitor = async (monitor) => {
+        const result = await fetch('http://localhost:8888/monitors/register',
+        {
+          method:'POST',
+          headers:{
+            'Content-type': 'application/json'
+          },
+            body: JSON.stringify(monitor)
+        })
+        const data = await result.json()
+        // setMonitors([...monitor, data])
+      }
 
-  const addMonitor = async (monitor) => {
-    const result = await fetch('http://localhost:8888/monitors',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(monitor)
-      })
-    const data = await result.json()
-    // setMonitors([...monitor, data])
-  }
-
-  const addSupervisor = async (supervisor) => {
-    const result = await fetch('http://localhost:5000/supervisors',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(supervisor)
-      })
-    const data = await result.json()
-    //  setSupervisors([...supervisor, data])
-  }
+      const addSupervisor = async (supervisor) => {
+        const result = await fetch('http://localhost:8888/supervisors/register',
+        {
+          method:'POST',
+          headers:{
+            'Content-type': 'application/json'
+          },
+            body: JSON.stringify(supervisor)
+        })
+        const data = await result.json()
+      //  setSupervisors([...supervisor, data])
+      }
 
   return (
     <div className="grad">
+      <NavbarRegistrationLogin/>
       <div className="d-flex justify-content-center">
         <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
           <h2 className="text-center text-secondary">Inscription</h2>
@@ -69,7 +72,7 @@ const Registration = () => {
         </div>
       </div>
     </div>
-  )
+    )
 }
 
 export default Registration
