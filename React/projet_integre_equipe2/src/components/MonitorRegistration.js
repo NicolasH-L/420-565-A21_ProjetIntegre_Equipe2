@@ -15,8 +15,9 @@ const MonitorRegistration = ({ onAdd }) => {
             return
         } else {
             console.log(monitor)
+            onAdd(monitor)
         }
-        onAdd({ monitor })
+        
     }
 
     // const routes = {

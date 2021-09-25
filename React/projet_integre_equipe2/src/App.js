@@ -14,7 +14,7 @@ function App() {
           {/*<NavbarHead/>*/}
           <Route path = "/" exact render={(props) => (
           <>
-            {<Login/>}
+            {<Registration/>}
           </>
         )}/>
           <Route path = "/Login" component={Login}/>

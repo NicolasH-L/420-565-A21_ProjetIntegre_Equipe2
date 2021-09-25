@@ -56,7 +56,7 @@ public class ProjetIntegreEquipe2ControllerTest {
     @Test
     public void subscribeStudentTest() throws Exception {
         // Arrange
-        expected = Student.builder()
+        expected = Student.studentBuilder()
                 .matricule("1234567")
                 .firstName("John")
                 .lastName("Doe")
