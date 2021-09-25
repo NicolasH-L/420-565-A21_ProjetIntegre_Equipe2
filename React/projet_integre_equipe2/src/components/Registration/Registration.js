@@ -4,6 +4,7 @@ import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
 
 import './Registration.css'
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 const Registration = () => {
   const addStudent = async (student) => {
@@ -47,6 +48,7 @@ const Registration = () => {
 
   return (
     <div className="grad">
+      <NavbarRegistrationLogin/>
       <div className="d-flex justify-content-center">
         <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
           <h2 className="text-center text-secondary">Inscription</h2>
