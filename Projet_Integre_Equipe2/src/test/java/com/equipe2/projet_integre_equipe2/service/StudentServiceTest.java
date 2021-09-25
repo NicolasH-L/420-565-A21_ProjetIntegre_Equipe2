@@ -28,8 +28,7 @@ public class StudentServiceTest {
                 .matricule("1234567")
                 .password("1234")
                 .build();
-        when(studentService.isStudentExistsByMatricule(student1.getMatricule())).thenReturn(true);
-        studentService.registerStudent(student1);
-        assertThat(studentService.isStudentExistsByMatricule(student1.getMatricule())).isTrue();
+        //when(studentService.isStudentExistsByMatricule(student1.getMatricule())).thenReturn(true);
+        assertThat(studentService.registerStudent(student1)).isNotNull();
     }
 }
