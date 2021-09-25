@@ -6,6 +6,7 @@ import AdminLogin from '../AdminLogin';
 import StudentLogin from '../StudentLogin';
 import './Login.css'
 import {Link } from 'react-router-dom'
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
 
     return (
         <div className="grad">
+            <NavbarRegistrationLogin/>
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
                     <h2 className="text-center text-secondary">Login</h2>
@@ -45,9 +47,6 @@ const Login = () => {
                         <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onAdd={addMonitor}/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin/></div>
-                    </div>
-                    <div className="d-flex justify-content-end mt-3 mr-3">
-                        <Link className="btn grad text-white" to='/'>S'inscrire</Link>
                     </div>
                 </div>
             </div>

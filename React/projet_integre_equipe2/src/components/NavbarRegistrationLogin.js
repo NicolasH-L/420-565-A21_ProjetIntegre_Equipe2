@@ -1,0 +1,23 @@
+import React from 'react'
+import {Link} from 'react-router-dom'
+
+const NavbarRegistrationLogin = () => {
+    return (
+        <div>
+            <nav className="navbar navbar-expand-lg">
+                <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul className="navbar-nav my-3">
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn " to="/Login">Connexion</Link>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <Link className="nav-link btn btn-outline-light rounded-pill" to="/Registration">S'inscrire</Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    )
+}
+
+export default NavbarRegistrationLogin
