@@ -123,9 +123,9 @@ class MonitorServiceTest {
                 .email("toto")
                 .build();
         Monitor monitor2 = monitor1;
-        when(monitorService.registerMonitor(monitor1)).thenReturn(false);
+        when(monitorService.registerMonitor(monitor1)).thenReturn(null);
         monitorService.registerMonitor(monitor2);
-        assertThat(monitorService.registerMonitor(monitor1)).isFalse();
+        assertThat(monitorService.registerMonitor(monitor1)).isNull();
     }
 
     @Test
