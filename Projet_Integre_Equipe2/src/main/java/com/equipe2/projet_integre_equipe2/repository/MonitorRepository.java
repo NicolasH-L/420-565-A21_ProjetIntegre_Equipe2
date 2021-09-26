@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MonitorRepository extends JpaRepository<Monitor, Integer> {
 
-    Monitor findMonitorByEmail(String email);
+    Boolean existsByEmail(String email);
     
     Monitor findMonitorById(Integer idMonitor);
 
     Monitor findMonitorByEmailAndPassword(String email, String password);
 
-    Boolean existsByEmail(String email);
+    Monitor findMonitorByEmail(Monitor monitorEmail);
 }

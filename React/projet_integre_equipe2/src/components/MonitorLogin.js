@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
 
-const MonitorLogin = () => {
+const MonitorLogin = ({ login }) => {
     const [monitor, setMonitor] = useState({password: "", email: "" });
     const [error, setError] = useState({password: "", email: "" })
 
@@ -14,33 +14,7 @@ const MonitorLogin = () => {
         } else {
             console.log(monitor)
         }
-    }
-
-    const validateInput = (e) => {
-        let pattern;
-        let inputError;
-        let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/;
-        let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
-        if (e.target.name === "email")
-            pattern = new RegExp(patternEmail);
-        else if (e.target.name === "password") 
-            pattern = new RegExp(patternPassword)
-
-        if (pattern === undefined)
-            return;
-        
-        if (!pattern.test(e.target.value) || e.target.value === "") {
-            e.target.style.borderColor = "red";
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-            inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
-        } else {
-            e.target.style.borderColor = "#ced4da";
-            e.target.style.boxShadow = "none"
-            inputError = ""
-            setMonitor({ ...monitor, [e.target.name]: e.target.value })
-        }
-        setError({ ...error, [e.target.name]: inputError })
+        login(monitor)
     }
 
     return (

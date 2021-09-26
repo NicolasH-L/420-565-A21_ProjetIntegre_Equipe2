@@ -15,8 +15,8 @@ const MonitorRegistration = ({ onAdd }) => {
             return
         } else {
             console.log(monitor)
-            onAdd(monitor)
         }
+        onAdd(monitor)
     }
 
     // const routes = {
@@ -57,7 +57,7 @@ const MonitorRegistration = ({ onAdd }) => {
     }
     return (
         <div>
-            <form className="container-fluid col-sm-6 col-md-12" onSubmit={onSubmit}>
+            <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="lastName" className="text-secondary"><i className="fas fa-user"></i> Nom: </label>
                     {error.lastName !== "" ? error.lastName : ""}
