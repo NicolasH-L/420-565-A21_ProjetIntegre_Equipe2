@@ -43,7 +43,7 @@ const Registration = () => {
           },
             body: JSON.stringify(supervisor)
         })
-        const data = await result.json()
+        return await result.json()
       //  setSupervisors([...supervisor, data])
       }
 
