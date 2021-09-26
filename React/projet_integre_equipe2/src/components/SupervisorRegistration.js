@@ -1,17 +1,14 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-  
+import { useHistory } from "react-router-dom";
+
+
 
 const SupervisorRegistration = ({ onAdd }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -22,7 +19,7 @@ const SupervisorRegistration = ({ onAdd }) => {
         } else {
             console.log(supervisor)
             onAdd(supervisor)
-            return <Link to='/login'></Link>
+            history.push("/Login")
         }
 
     }
