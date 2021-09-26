@@ -26,7 +26,7 @@ const Login = () => {
         <div className="grad">
             <NavbarRegistrationLogin/>
             <div className="d-flex justify-content-center">
-                <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
+                <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-center text-secondary">Login</h2>
                     <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                         <li className="nav-item" role="presentation">
