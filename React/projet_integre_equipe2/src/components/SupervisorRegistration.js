@@ -73,7 +73,7 @@ const SupervisorRegistration = ({ onAdd }) => {
                     <input type="password" className="form-control text-center" id="passwordSupervisor" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required />
                 </div>
                 <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Soumettre</button>
+                    <button type="submit" className="btn btn-block grad text-white ">Soumettre</button>
                 </div>
             </form>
         </div>
