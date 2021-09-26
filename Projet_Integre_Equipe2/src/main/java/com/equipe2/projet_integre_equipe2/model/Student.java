@@ -13,7 +13,7 @@ public class Student extends User implements Serializable {
     private String matricule;
 
     @Builder(builderMethodName = "studentBuilder")
-    public Student(String firstName, String lastName, String password, String matricule ) {
+    public Student(String firstName, String lastName, String password, String matricule) {
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);

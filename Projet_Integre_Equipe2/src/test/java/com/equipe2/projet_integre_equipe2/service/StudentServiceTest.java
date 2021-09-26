@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -22,13 +24,17 @@ public class StudentServiceTest {
 
     @Test
     public void testRegisterStudent(){
-        Student student1 = Student.studentBuilder()
+        // Arrange
+        Student expected = Student.studentBuilder()
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
                 .password("1234")
                 .build();
-        //when(studentService.isStudentExistsByMatricule(student1.getMatricule())).thenReturn(true);
-        assertThat(studentService.registerStudent(student1)).isNotNull();
+        when(studentRepository.save(expected)).thenReturn(expected);
+        // Act
+        Optional<Student> actualStudent = studentService.registerStudent(expected);
+        // Assert
+        assertThat(actualStudent.get()).isEqualTo(expected);
     }
 }
