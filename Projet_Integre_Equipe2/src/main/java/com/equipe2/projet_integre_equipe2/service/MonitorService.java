@@ -1,9 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
-import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Data
-@Builder
 @Service
 public class MonitorService {
 
@@ -51,5 +48,4 @@ public class MonitorService {
     public List<Monitor> findAll() {
         return monitorRepository.findAll();
     }
-
 }

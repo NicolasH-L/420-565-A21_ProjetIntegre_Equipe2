@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
     @Autowired
@@ -51,41 +50,5 @@ class MonitorControllerTest {
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(expected).isEqualTo(actualMonitor);
-    }
-
-    @Test
-    public void testMonitorExistsByEmail() {
-        // Arrange
-        
-        String expectedEmail = "toto@toto.toto";
-        boolean expectedResult = true;
-        when(monitorRepository.existsByEmail(expectedEmail)).thenReturn(false);
-        // Act
-        boolean actualResult = monitorService.isMonitorExistsByEmail(expectedEmail);
-        // Assert
-        assertThat(actualResult).isFalse();
-    }
-
-    @Test
-    public void testRegisterMonitorDuplicateId() {
-        Monitor monitor1 = Monitor.monitorBuilder()
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("toto")
-                .email("toto@toto")
-                .build();
-        Monitor monitor2 = Monitor.monitorBuilder()
-                .password("tata")
-                .lastName("tata")
-                .firstName("tata")
-                .enterpriseName("tata")
-                .email("tota@toto")
-                .build();
-        monitorService.registerMonitor(monitor1);
-        monitorService.registerMonitor(monitor2);
-        when(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).thenReturn(true);
-        assertThat(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).isTrue();
-
     }
 }

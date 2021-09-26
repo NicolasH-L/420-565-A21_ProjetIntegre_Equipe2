@@ -8,14 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 @ExtendWith(MockitoExtension.class)
 class MonitorServiceTest {
@@ -54,97 +52,6 @@ class MonitorServiceTest {
         Optional<Monitor> actualMonitor = monitorService.registerMonitor(expected);
         // Assert
         assertThat(actualMonitor.get()).isEqualTo(expected);
-    }
-
-
-    @Test
-    public void testRegisterMonitorWithSameEmail(){
-        Monitor monitor1 = Monitor.monitorBuilder()
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("toto")
-                .email("toto@toto")
-                .build();
-        Monitor monitor2 = Monitor.monitorBuilder()
-                .password("tata")
-                .lastName("tata")
-                .firstName("tata")
-                .enterpriseName("tata")
-                .email("toto@toto")
-                .build();
-//        when()
-//        when(monitorService.registerMonitor(monitor1)).thenReturn(Optional.of(monitor1));
-//        when(monitorService.registerMonitor(monitor2)).thenReturn(Optional.of(monitor2));
-//        when(monitorService.getMonitorById(monitor2.getId())).thenReturn(null);
-
-        // Assert
-    }
-
-    @Test
-    public void testRegisterMonitorDuplicate() {
-        String email = "toto@toto.toto";
-        Monitor monitor1 = Monitor.monitorBuilder()
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("toto")
-                .email("toto")
-                .build();
-        Monitor monitor2 = monitor1;
-        when(monitorRepository.save(monitor1)).thenReturn(monitor1);
-        when(monitorRepository.save(monitor2)).thenReturn(null);
-
-        Optional<Monitor> actualMonitor =  monitorService.registerMonitor(monitor2);
-
-
-        monitorService.registerMonitor(monitor2);
-        assertThat(monitorService.registerMonitor(monitor1)).isNull();
-    }
-
-    @Test
-    public void testGetAMonitorByEmail() {
-        Monitor monitor = Monitor.monitorBuilder()
-
-                .password("qsassssss2@")
-                .firstName("ssssssss")
-                .lastName("ssssssssss")
-                .enterpriseName("ssssssss")
-                .email("ssssssss@gmail.com")
-                .build();
-
-        monitorService.registerMonitor(monitor);
-        when(monitorService.getAMonitorByEmail(monitor)).thenReturn(monitor);
-
-        assertThat(monitorService.getAMonitorByEmail(monitor)).isNotNull();
-    }
-
-    @Test
-    public void testGetAMonitorByEmailAndPassword(){
-        Monitor monitor = Monitor.monitorBuilder()
-
-                .password("qwerty123@")
-                .firstName("qweqwe")
-                .lastName("qweqwe")
-                .enterpriseName("qweqwe")
-                .email("qweqwe@gmail.com")
-                .build();
-
-        monitorRepository.save(monitor);
-        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
-        assertThat(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).isNotNull();
-    }
-
-    // To test later
-    @Test
-    public void testLoginMonitor() {
-        List<Monitor> list = getListMonitors();
-        String email = "toto@toto.toto";
-        String password = "toto";
-        Monitor expected = list.get(0);
-        when(monitorService.loginMonitor(email, password)).thenReturn(expected);
-
-        assertThat(monitorService.loginMonitor(email, password)).isEqualTo(expected);
     }
 
     private List<Monitor> getListMonitors() {
