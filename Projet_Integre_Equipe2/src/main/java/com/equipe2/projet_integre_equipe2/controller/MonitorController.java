@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/monitors")
 public class MonitorController {
 
     @Autowired
@@ -34,10 +35,11 @@ public class MonitorController {
         return monitorRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    @PostMapping("monitors/register")
-    public ResponseEntity<Monitor> subscribe(@RequestBody Monitor monitor) {
+    @PostMapping("/register")
+    public ResponseEntity<Monitor> subscribe(@RequestBody Monitor monitor){
         return monitorService.registerMonitor(monitor)
                 .map(monitor1 -> ResponseEntity.status(HttpStatus.CREATED).body(monitor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
 }

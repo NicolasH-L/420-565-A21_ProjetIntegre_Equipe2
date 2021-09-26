@@ -1,7 +1,10 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
+<<<<<<< HEAD
 import com.equipe2.projet_integre_equipe2.model.Student;
+=======
+>>>>>>> master
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.service.MonitorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,13 +19,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -39,15 +38,14 @@ class MonitorControllerTest {
     private Monitor expected;
 
     @Test
-    public void testSubscribe() throws  Exception{
+    public void subscribeMonitorTest() throws Exception {
         expected = Monitor.monitorBuilder()
-                .firstName("Tata")
-                .lastName("Titi")
-                .email("qwerty@gmail.com")
-                .enterpriseName("testTotoTiti")
-                .password("qwerty12@")
+                .firstName("toto")
+                .lastName("toto")
+                .email("toto@toto")
+                .enterpriseName("toto")
+                .password("1234")
                 .build();
-
         when(monitorService.registerMonitor(expected)).thenReturn(Optional.of(expected));
 
         MvcResult result = mockMvc.perform(post("/monitors/register")

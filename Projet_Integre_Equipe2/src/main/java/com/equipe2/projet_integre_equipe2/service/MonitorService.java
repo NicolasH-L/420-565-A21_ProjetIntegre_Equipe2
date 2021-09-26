@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Data
-@Builder
 @Service
 public class MonitorService {
 
@@ -21,15 +19,15 @@ public class MonitorService {
         this.monitorRepository = monitorRepository;
     }
 
+    public List<Monitor> getAllMonitors() {
+        return monitorRepository.findAll();
+    }
+
     public Optional<Monitor> registerMonitor(Monitor monitor){
         if (monitorRepository.existsByEmail(monitor.getEmail())){
             return null;
         }
         return Optional.of(monitorRepository.save(monitor));
-    }
-
-    public List<Monitor> getAllMonitors() {
-        return monitorRepository.findAll();
     }
 
     public Monitor getAMonitorByEmail(Monitor monitor) {
