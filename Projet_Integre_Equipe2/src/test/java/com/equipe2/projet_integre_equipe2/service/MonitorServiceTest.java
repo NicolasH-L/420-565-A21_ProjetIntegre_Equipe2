@@ -2,17 +2,17 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.setMaxElementsForPrinting;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,46 +26,40 @@ class MonitorServiceTest {
     @InjectMocks
     private MonitorService monitorService;
 
+    private Monitor monitor = Monitor.monitorBuilder()
+            .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .enterpriseName("toto")
+                .email("toto@toto.toto")
+                .build();
 
     @Test
-//    @Disabled
     public void testGetAllMonitors() {
+        //Arrange
         when(monitorService.findAll()).thenReturn(getListMonitors());
-
+        // Act
         final List<Monitor> monitorList = monitorService.getAllMonitors();
-
+        // Assert
         assertThat(monitorList.size()).isEqualTo(3);
         assertThat(monitorList.get(0).getLastName()).isEqualTo("toto");
     }
 
     @Test
-//    @Disabled
-    public void testMonitorExistsByEmail() {
-        String email = "toto@toto.toto";
-        when(monitorService.isMonitorExistsByEmail(email)).thenReturn(false);
-        assertThat(monitorService.isMonitorExistsByEmail(email)).isFalse();
-    }
-
-    @Test
-//    @Disabled
     public void testRegisterMonitor() {
-        Monitor monitor1 = Monitor.monitorBuilder()
-
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("toto")
-                .email("toto@toto")
-                .build();
-        when(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).thenReturn(true);
-        monitorService.registerMonitor(monitor1);
-        assertThat(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).isTrue();
+        // Arrange
+        Monitor expected = monitor;
+        when(monitorRepository.save(expected)).thenReturn(expected);
+        // Act
+        Optional<Monitor> actualMonitor = monitorService.registerMonitor(expected);
+        // Assert
+        assertThat(actualMonitor.get()).isEqualTo(expected);
     }
+
 
     @Test
     public void testRegisterMonitorWithSameEmail(){
         Monitor monitor1 = Monitor.monitorBuilder()
-
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -73,46 +67,21 @@ class MonitorServiceTest {
                 .email("toto@toto")
                 .build();
         Monitor monitor2 = Monitor.monitorBuilder()
-
                 .password("tata")
                 .lastName("tata")
                 .firstName("tata")
                 .enterpriseName("tata")
                 .email("toto@toto")
                 .build();
-        monitorService.registerMonitor(monitor1);
-        monitorService.registerMonitor(monitor2);
-        when(monitorService.getMonitorById(monitor2.getId())).thenReturn(null);
-        assertThat(monitorService.getMonitorById(monitor2.getId())).isNull();
+//        when()
+//        when(monitorService.registerMonitor(monitor1)).thenReturn(Optional.of(monitor1));
+//        when(monitorService.registerMonitor(monitor2)).thenReturn(Optional.of(monitor2));
+//        when(monitorService.getMonitorById(monitor2.getId())).thenReturn(null);
+
+        // Assert
     }
 
     @Test
-    public void testRegisterMonitorDuplicateId(){
-        Monitor monitor1 = Monitor.monitorBuilder()
-
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("toto")
-                .email("toto@toto")
-                .build();
-        Monitor monitor2 = Monitor.monitorBuilder()
-
-                .password("tata")
-                .lastName("tata")
-                .firstName("tata")
-                .enterpriseName("tata")
-                .email("tota@toto")
-                .build();
-        monitorService.registerMonitor(monitor1);
-        monitorService.registerMonitor(monitor2);
-        when(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).thenReturn(true);
-        assertThat(monitorService.isMonitorExistsByEmail(monitor1.getEmail())).isTrue();
-
-    }
-
-    @Test
-//    @Disabled
     public void testRegisterMonitorDuplicate() {
         String email = "toto@toto.toto";
         Monitor monitor1 = Monitor.monitorBuilder()
@@ -123,7 +92,12 @@ class MonitorServiceTest {
                 .email("toto")
                 .build();
         Monitor monitor2 = monitor1;
-        when(monitorService.registerMonitor(monitor1)).thenReturn(null);
+        when(monitorRepository.save(monitor1)).thenReturn(monitor1);
+        when(monitorRepository.save(monitor2)).thenReturn(null);
+
+        Optional<Monitor> actualMonitor =  monitorService.registerMonitor(monitor2);
+
+
         monitorService.registerMonitor(monitor2);
         assertThat(monitorService.registerMonitor(monitor1)).isNull();
     }
