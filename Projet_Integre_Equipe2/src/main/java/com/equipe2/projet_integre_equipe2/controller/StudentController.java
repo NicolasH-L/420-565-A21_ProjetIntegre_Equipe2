@@ -2,8 +2,10 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
-import com.equipe2.projet_integre_equipe2.service.SystemService;
+import com.equipe2.projet_integre_equipe2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,15 +16,12 @@ public class StudentController {
    StudentRepository studentRepository;
 
    @Autowired
-   SystemService systemService;
+   StudentService studentService;
 
-   @GetMapping("/projetIntegre/student/{matricule}/{password}")
-   public Student login(@PathVariable("matricule") String matricule, @PathVariable("password") String password){
-       return systemService.login(matricule,password);
-   }
-
-   @PostMapping
-   public Student subscribe(@RequestBody Student student) {
-       return systemService.subscribe(student);
+   @PostMapping("/students")
+   public ResponseEntity<Student> subscribe(@RequestBody Student student) {
+       return studentService.registerStudent(student)
+               .map(student1 -> ResponseEntity.status(HttpStatus.CREATED).body(student1))
+               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
 }

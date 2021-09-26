@@ -17,7 +17,6 @@ const MonitorRegistration = ({ onAdd }) => {
             console.log(monitor)
             onAdd(monitor)
         }
-        
     }
 
     // const routes = {

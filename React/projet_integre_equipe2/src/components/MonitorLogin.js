@@ -57,7 +57,7 @@ const MonitorLogin = () => {
                     <input type="password" className="form-control text-center" id="passwordMonitor" name="password" placeholder="Entrez votre mot de passe" onChange={validateInput} required/>
                 </div>
                 <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn grad text-white ">Connexion</button>
+                    <button type="submit" className="btn btn-block grad text-white ">Connexion</button>
                 </div>
             </form>
         </div>

@@ -9,7 +9,7 @@ import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 const Registration = () => {
     const addStudent = async (student) => {
-        const result = await fetch('http://localhost:5000/students',
+        const result = await fetch('http://localhost:8888/students/register',
         {
           method:'POST',
           headers:{
@@ -50,8 +50,8 @@ const Registration = () => {
   return (
     <div className="grad">
       <NavbarRegistrationLogin/>
-      <div className="d-flex justify-content-center">
-        <div className="jumbotron jumbotron-fluid bg-light rounded w-25 shadow m-5">
+      <div className="d-flex justify-content-center ">
+        <div className="jumbotron jumbotron-fluid bg-light w-50 rounded shadow reactivescreen">
           <h2 className="text-center text-secondary">Inscription</h2>
           <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">

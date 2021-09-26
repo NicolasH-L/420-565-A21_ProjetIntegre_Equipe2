@@ -161,7 +161,6 @@ class MonitorServiceTest {
         assertThat(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).isNotNull();
     }
 
-
     // To test later
     @Test
     public void testLoginMonitor() {

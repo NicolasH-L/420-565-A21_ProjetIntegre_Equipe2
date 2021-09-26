@@ -16,7 +16,7 @@ const StudentRegistration = ({onAdd}) => {
         } else {
             console.log(student)
         }
-        onAdd({student})
+        onAdd(student)
     }
 
     const [error, setError] = useState({

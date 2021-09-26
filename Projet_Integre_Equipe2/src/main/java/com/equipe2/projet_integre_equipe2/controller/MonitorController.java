@@ -34,7 +34,6 @@ public class MonitorController {
 
     @PostMapping("monitors/register")
     public Monitor subscribe(@RequestBody Monitor monitor){
-        System.out.println(monitor);
         return monitorService.registerMonitor(monitor);
     }
 }
