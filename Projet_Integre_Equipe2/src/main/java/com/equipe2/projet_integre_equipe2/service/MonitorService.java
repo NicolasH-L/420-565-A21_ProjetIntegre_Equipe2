@@ -31,7 +31,7 @@ public class MonitorService {
     }
 
     public Monitor getAMonitorByEmail(Monitor monitor) {
-        return monitorRepository.findMonitorByEmail(monitor);
+        return monitorRepository.findMonitorByEmail(monitor.getEmail());
     }
 
     public boolean isMonitorExistsByEmail(String email){
