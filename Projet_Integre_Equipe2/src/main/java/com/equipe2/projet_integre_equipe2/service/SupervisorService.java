@@ -5,6 +5,7 @@ import com.equipe2.projet_integre_equipe2.model.Supervisor;
 import com.equipe2.projet_integre_equipe2.repository.SupervisorRepository;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,9 +22,11 @@ public class SupervisorService {
     }
 
     public Optional<Supervisor> registerSupervisor(Supervisor supervisor){
-        if (supervisorRepository.existsByMatricule(supervisor.getMatricule())){
-            return null;
-        }
+        try {
         return Optional.of(supervisorRepository.save(supervisor));
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+            return Optional.empty();
+        }
     }
 }
