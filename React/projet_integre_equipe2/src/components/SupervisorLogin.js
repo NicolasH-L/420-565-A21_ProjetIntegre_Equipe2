@@ -14,7 +14,7 @@ const SupervisorLogin = ({ login }) => {
         } else {
             console.log(supervisor)
         }
-        login({ supervisor })
+        // login(supervisor)
     }
 
     return (

@@ -1,21 +1,27 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from "react-router-dom";
+
+
 
 const SupervisorRegistration = ({ onAdd }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.matricule) ||
             _.isEmpty(supervisor.firstName) || _.isEmpty(supervisor.lastName) || _.isEmpty(supervisor.password) || _.isEmpty(supervisor.matricule)) {
-            alert("Veuillez remplir tous les champs!")
+            alert("Veuillez remplir tous les champs correctement!")
             return
         } else {
-            console.log(supervisor)
+            onAdd(supervisor)
+                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existante"))
+                .catch(() => console.error("Something went wrong"))
         }
-        onAdd({ supervisor })
+
     }
 
     const validateInput = (e) => {

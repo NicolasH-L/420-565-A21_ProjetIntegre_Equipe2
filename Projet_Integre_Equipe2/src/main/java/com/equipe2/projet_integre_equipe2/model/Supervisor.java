@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Entity
 public class Supervisor extends User implements Serializable {
 
+    @Column(unique = true, length = 200)
     private String matricule;
 
 
