@@ -19,7 +19,7 @@ const SupervisorRegistration = ({ onAdd }) => {
         } else {
             onAdd(supervisor)
                 .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existante"))
-                .catch(() => console.error("Something went wrong"))
+                .catch(() => alert("Erreur matricule existante"))
         }
 
     }
