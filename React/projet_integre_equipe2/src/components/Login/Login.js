@@ -4,7 +4,7 @@ import MonitorLogin from '../MonitorLogin';
 import SupervisorLogin from '../SupervisorLogin';
 import AdminLogin from '../AdminLogin';
 import StudentLogin from '../StudentLogin';
-import './Login.css'
+import '../Form.css'
 import {Link } from 'react-router-dom'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
