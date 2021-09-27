@@ -9,10 +9,10 @@
     bottom: 0;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1200px) and (min-width: 1001px) {
     .reactivescreen{
-      margin-right: 45%;
-      margin-left: 45%;
+      margin-right: 10%;
+      margin-left: 10%;
       top: 0; 
       bottom: 0;
     }

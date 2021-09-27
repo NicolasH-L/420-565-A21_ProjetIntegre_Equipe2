@@ -4,7 +4,7 @@ import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
 import {Link } from 'react-router-dom'
 
-import './Registration.css'
+import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 
 const Registration = () => {
