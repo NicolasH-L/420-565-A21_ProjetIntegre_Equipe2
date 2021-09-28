@@ -29,7 +29,6 @@ const Registration = () => {
             body: JSON.stringify(monitor)
         })
         const data = await result.json()
-        // setMonitors([...monitor, data])
       }
 
       const addSupervisor = async (supervisor) => {

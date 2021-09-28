@@ -1,6 +1,8 @@
 package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
@@ -10,8 +12,9 @@ import java.io.Serializable;
 @Entity
 public class Monitor extends User implements Serializable {
 
-    private String enterpriseName;
+    @Column(unique = true, length = 200)
     private String email;
+    private String enterpriseName;
 
     @Builder(builderMethodName = "monitorBuilder")
     public Monitor(String password, String lastName, String firstName, String enterpriseName, String email) {
