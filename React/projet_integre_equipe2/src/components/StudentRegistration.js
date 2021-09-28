@@ -1,28 +1,26 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 
 const StudentRegistration = ({onAdd}) => {
     const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""});
+    const [error, setError] = useState({lastName: "", firstName: "", password: "", matricule: ""});
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password)|| !_.isEmpty(error.matricule) ||
             _.isEmpty(student.lastName) || _.isEmpty(student.firstName) || _.isEmpty(student.password )|| _.isEmpty(student.matricule)){
-            console.log(student)
             alert("Veuillez remplir tous les champs!")
             return
         } else {
-            console.log(student)
+            onAdd(student)
+                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existante"))
+                .catch(() => alert("Erreur matricule existante"))
         }
-        onAdd(student)
     }
-
-    const [error, setError] = useState({
-        lastName: "", firstName: "",
-        password: "", matricule: ""
-    });
 
     const validateInput = (e) => {
         let pattern;
@@ -44,7 +42,7 @@ const StudentRegistration = ({onAdd}) => {
         if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red";
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-            inputError = <strong className="text-danger"> Erreur de {e.target.name}!</strong>;
+            inputError = <strong className="text-danger"> <i className="fas fa-exclamation-circle text-danger fa-sm" ></i> Erreur de {e.target.name}!</strong>;
         } else {
             e.target.style.borderColor = "#ced4da";
             e.target.style.boxShadow = "none"
