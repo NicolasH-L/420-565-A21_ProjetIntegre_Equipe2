@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 const Login = () => {
     const history = useHistory();
-    console.log(history.location.state.student)
+//    console.log(history.location.state.student)
 
     const addMonitor = async (monitor) => {
         const result = await fetch('http://localhost:5000/monitors',
