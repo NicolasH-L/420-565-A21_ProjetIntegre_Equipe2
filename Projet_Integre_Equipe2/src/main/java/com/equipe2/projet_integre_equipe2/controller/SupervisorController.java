@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Supervisor;
-import com.equipe2.projet_integre_equipe2.repository.SupervisorRepository;
 import com.equipe2.projet_integre_equipe2.service.SupervisorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

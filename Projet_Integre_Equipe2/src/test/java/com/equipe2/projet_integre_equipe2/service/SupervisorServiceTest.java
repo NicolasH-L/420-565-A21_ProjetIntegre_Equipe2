@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 
-
 @ExtendWith(MockitoExtension.class)
 public class SupervisorServiceTest {
 
