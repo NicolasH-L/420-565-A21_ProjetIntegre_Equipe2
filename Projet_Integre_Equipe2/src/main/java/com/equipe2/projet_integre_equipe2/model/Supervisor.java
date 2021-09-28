@@ -18,8 +18,7 @@ public class Supervisor extends User implements Serializable {
 
 
     @Builder(builderMethodName = "supervisorBuilder")
-    public Supervisor(Integer id, String password, String lastName, String firstName, String enterpriseName, String email, String matricule) {
-        super.setId(id);
+    public Supervisor( String password, String lastName, String firstName, String matricule) {
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
