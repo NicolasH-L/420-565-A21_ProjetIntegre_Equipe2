@@ -9,7 +9,7 @@ const AdminLogin = ({ login }) => {
     const onSubmit = (e) => {
         e.preventDefault()
         if (_.isEmpty(admin.username) || _.isEmpty(admin.password)) {
-            setError({...error, credentials: "Matricule ou mot de passe incorrect"})
+            setError({...error, credentials: "Nom d'utilisateur ou mot de passe incorrect"})
             return
         } else {
             console.log(admin)

@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
    @Autowired
-   StudentRepository studentRepository;
-
-   @Autowired
    StudentService studentService;
 
-   @PostMapping("/students")
+   @PostMapping("/students/register")
    public ResponseEntity<Student> subscribe(@RequestBody Student student) {
        return studentService.registerStudent(student)
                .map(student1 -> ResponseEntity.status(HttpStatus.CREATED).body(student1))

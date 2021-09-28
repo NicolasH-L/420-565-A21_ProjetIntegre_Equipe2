@@ -4,7 +4,6 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,9 +20,10 @@ public class StudentService {
     }
 
     public Optional<Student> registerStudent(Student student){
-        if (studentRepository.existsByMatricule(student.getMatricule())){
-            return null;
+        try {
+            return Optional.of(studentRepository.save(student));
+        } catch (Exception exception) {
+            return Optional.empty();
         }
-        return Optional.of(studentRepository.save(student));
     }
 }
