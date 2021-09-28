@@ -1,5 +1,4 @@
 import React from 'react'
-// import StudentLogin from '../StudentLogin';
 import MonitorLogin from '../MonitorLogin'; 
 import SupervisorLogin from '../SupervisorLogin';
 import AdminLogin from '../AdminLogin';
@@ -10,20 +9,8 @@ import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
-    const history = useHistory();
-    console.log(history.location.state.student)
-
-    const addMonitor = async (monitor) => {
-        const result = await fetch('http://localhost:5000/monitors',
-        {
-        method:'GET',
-        headers:{
-            'Content-type': 'application/json'
-        },
-            body: JSON.stringify(monitor)
-        })
-        const data = await result.json()
-    }
+    // const history = useHistory();
+    // console.log(history.location.state.student)
 
     return (
         <div className="grad">
@@ -47,7 +34,7 @@ const Login = () => {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin/></div>
-                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin login={loginMonitor}/></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin/></div>
                     </div>
