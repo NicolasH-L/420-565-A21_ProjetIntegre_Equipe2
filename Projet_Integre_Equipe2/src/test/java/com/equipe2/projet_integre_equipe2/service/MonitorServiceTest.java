@@ -64,6 +64,15 @@ class MonitorServiceTest {
         assertThat(actualMonitor).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testLoginMonitor(){
+        when(monitorRepository.findMonitorByEmailAndPassword(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
+
+        Monitor actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
+
+        assertThat(actualMonitor).isEqualTo(monitor);
+    }
+
     private List<Monitor> getListMonitors() {
         List<Monitor> list = new ArrayList<>();
         list.add(Monitor.monitorBuilder()
