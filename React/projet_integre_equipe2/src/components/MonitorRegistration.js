@@ -1,11 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
 import { useState } from 'react';
+import { useHistory } from "react-router-dom";
+
 // import MonitorLogin from './MonitorLogin';
 // to use router hook we will need to npm i hookrouter
 const MonitorRegistration = ({ onAdd }) => {
     const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" });
     const [error, setError] = useState({ lastName: "", firstName: "", password: "", enterpriseName: "", email: "" })
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -14,9 +17,10 @@ const MonitorRegistration = ({ onAdd }) => {
             alert("Veuillez remplir tous les champs!")
             return
         } else {
-            console.log(monitor)
+            onAdd(monitor)
+                .then((data) => data.email !== undefined ? history.push("/Login", {monitor}) : alert("Erreur, email existante"))
+                .catch(() => alert("Erreur, email existante"))
         }
-        onAdd(monitor)
     }
 
     // const routes = {
