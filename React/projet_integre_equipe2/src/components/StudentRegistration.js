@@ -17,7 +17,7 @@ const StudentRegistration = ({onAdd}) => {
             return
         } else {
             onAdd(student)
-                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existante"))
+                .then((data) => data.matricule !== undefined ? history.push("/Login", {student}) : alert("Erreur matricule existante"))
                 .catch(() => alert("Erreur matricule existante"))
         }
     }

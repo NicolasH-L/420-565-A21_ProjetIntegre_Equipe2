@@ -7,9 +7,12 @@ import StudentLogin from '../StudentLogin';
 import '../Form.css'
 import {Link } from 'react-router-dom'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
-
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
+    const history = useHistory();
+    console.log(history.location.state.student)
+
     const addMonitor = async (monitor) => {
         const result = await fetch('http://localhost:5000/monitors',
         {
