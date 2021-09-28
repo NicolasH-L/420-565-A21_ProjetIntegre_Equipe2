@@ -13,7 +13,7 @@ const NavbarRegistrationLogin = () => {
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn " to="/Login">Connexion</Link>
                         </li>
-                        <li class="nav-item mx-2">
+                        <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-outline-light rounded-pill" to="/Registration">S'inscrire</Link>
                         </li>
                     </ul>

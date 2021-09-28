@@ -2,7 +2,6 @@ import React from 'react'
 import StudentRegistration from '../StudentRegistration';
 import MonitorRegistration from '../MonitorRegistration';
 import SupervisorRegistration from '../SupervisorRegistration';
-import {Link } from 'react-router-dom'
 
 import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
@@ -17,8 +16,7 @@ const Registration = () => {
           },
             body: JSON.stringify(student)
         })
-        const data = await result.json()
-      //  setStudents([...student, data])
+        return await result.json()
       }
     
       const addMonitor = async (monitor) => {

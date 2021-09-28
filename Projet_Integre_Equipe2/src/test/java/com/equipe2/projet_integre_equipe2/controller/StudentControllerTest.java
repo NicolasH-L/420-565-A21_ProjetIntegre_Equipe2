@@ -43,7 +43,7 @@ public class StudentControllerTest {
                 .build();
         when(studentService.registerStudent(expected)).thenReturn(Optional.of(expected));
 
-        MvcResult result = mockMvc.perform(post("/students")
+        MvcResult result = mockMvc.perform(post("/students/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(expected))).andReturn();
 
