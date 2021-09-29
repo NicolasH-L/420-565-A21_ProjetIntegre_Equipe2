@@ -21,4 +21,9 @@ public class StudentController {
                .map(student1 -> ResponseEntity.status(HttpStatus.CREATED).body(student1))
                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
+
+   @GetMapping("/students/{matricule}/{password}")
+   public Student loginStudent(@PathVariable String matricule, @PathVariable String password){
+      return studentService.loginStudent(matricule, password);
+   }
 }

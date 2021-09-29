@@ -26,4 +26,8 @@ public class StudentService {
             return Optional.empty();
         }
     }
+
+    public Student loginStudent(String matricule, String password){
+        return studentRepository.findByMatriculeAndPassword(matricule, password);
+    }
 }
