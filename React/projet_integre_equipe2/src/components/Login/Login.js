@@ -12,6 +12,12 @@ const Login = () => {
     // const history = useHistory();
     // console.log(history.location.state.student)
 
+    const studentLogin = async(student) => {
+        const res = await fetch(`http://localhost:5000/students/${student}`)
+        const data = await res.json()
+        return data
+    }
+
     return (
         <div className="grad">
             <NavbarRegistrationLogin/>
@@ -33,7 +39,7 @@ const Login = () => {
                         </li>
                     </ul>
                     <div className="tab-content" id="myTabContent">
-                        <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin/></div>
+                        <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin}/></div>
                         <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin/></div>

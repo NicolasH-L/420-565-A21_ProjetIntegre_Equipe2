@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
-const StudentLogin = ({ login }) => {
+const StudentLogin = ({onlogin}) => {
     const [student, setStudent] = useState({matricule: "", password: "" })
     const [error, setError] = useState({credentials:"" })
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -13,8 +15,10 @@ const StudentLogin = ({ login }) => {
             return
         } else {
             console.log(student)
+            onlogin(student)
+            /*    .then((data) => data.matricule !== undefined ? history.push("/OffresStudent", {student}) : alert("Erreur matricule existante"))
+                .catch(() => alert("Erreur matricule existante"))*/
         }
-        login({ student })
     }
 
     return (
