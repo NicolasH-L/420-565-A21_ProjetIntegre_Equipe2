@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from "react-router-dom";
 
-const StudentLogin = ({onlogin}) => {
+const StudentLogin = ({onLogin}) => {
     const [student, setStudent] = useState({matricule: "", password: "" })
     const [error, setError] = useState({credentials:"" })
     const history = useHistory();
@@ -14,10 +14,9 @@ const StudentLogin = ({onlogin}) => {
             setError({...error, credentials: "Matricule ou mot de passe incorrect"})
             return
         } else {
-            console.log(student)
-            onlogin(student)
-            /*    .then((data) => data.matricule !== undefined ? history.push("/OffresStudent", {student}) : alert("Erreur matricule existante"))
-                .catch(() => alert("Erreur matricule existante"))*/
+            onLogin(student.matricule, student.password)
+                .then((data) => data != null ? history.push("/OffresStudent", {student}) : alert("Erreur d'identifiant ou mot de passe"))
+            /*    .catch(() => alert("Erreur matricule existante"))*/
         }
     }
 

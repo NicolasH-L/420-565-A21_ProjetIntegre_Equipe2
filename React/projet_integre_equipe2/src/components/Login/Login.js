@@ -12,8 +12,8 @@ const Login = () => {
     // const history = useHistory();
     // console.log(history.location.state.student)
 
-    const studentLogin = async(student) => {
-        const res = await fetch(`http://localhost:5000/students/${student}`)
+    const studentLogin = async(matricule, password) => {
+        const res = await fetch(`http://localhost:8888/students/${matricule}/${password}`)
         const data = await res.json()
         return data
     }
