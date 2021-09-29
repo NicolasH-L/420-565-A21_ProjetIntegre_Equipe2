@@ -17,7 +17,7 @@ public class AdminService {
         this.adminRepository = adminRepository;
     }
 
-    public Admin login(Admin admin){
-       return adminRepository.findAdminByUsernameAndPassword(admin.getUsername(),admin.getPassword());
+    public Optional<Admin> login(String username, String password){
+       return Optional.of(adminRepository.findAdminByUsernameAndPassword(username,password));
     }
 }
