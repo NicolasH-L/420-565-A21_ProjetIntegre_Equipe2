@@ -22,27 +22,20 @@ public class MonitorService {
         return monitorRepository.findAll();
     }
 
-    public Optional<Monitor> registerMonitor(Monitor monitor){
-        if (monitorRepository.existsByEmail(monitor.getEmail())){
-            return null;
+    public Optional<Monitor> registerMonitor(Monitor monitor) {
+        try {
+            return Optional.of(monitorRepository.save(monitor));
+        } catch (Exception e) {
+            return Optional.empty();
         }
-        return Optional.of(monitorRepository.save(monitor));
     }
 
     public Monitor getAMonitorByEmail(Monitor monitor) {
         return monitorRepository.findMonitorByEmail(monitor.getEmail());
     }
 
-    public boolean isMonitorExistsByEmail(String email){
-        return monitorRepository.existsByEmail(email);
-    }
-
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
-    }
-
-    public Monitor getMonitorById(Integer id) {
-        return monitorRepository.findMonitorById(id);
     }
 
     public List<Monitor> findAll() {
