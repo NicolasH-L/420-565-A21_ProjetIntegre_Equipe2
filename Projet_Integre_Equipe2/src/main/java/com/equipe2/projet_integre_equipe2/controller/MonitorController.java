@@ -36,10 +36,15 @@ public class MonitorController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Monitor> subscribe(@RequestBody Monitor monitor){
+    public ResponseEntity<Monitor> subscribe(@RequestBody Monitor monitor) {
         return monitorService.registerMonitor(monitor)
                 .map(monitor1 -> ResponseEntity.status(HttpStatus.CREATED).body(monitor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/{email}/{password}")
+    public Monitor getMonitorByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+        return monitorService.loginMonitor(email, password);
     }
 
 }

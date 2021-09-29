@@ -13,12 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -52,5 +55,26 @@ class MonitorControllerTest {
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(expected).isEqualTo(actualMonitor);
+    }
+
+    @Test
+    public void testLoginMonitor() throws Exception {
+        expected = Monitor.monitorBuilder()
+                .firstName("toto")
+                .lastName("toto")
+                .email("toto@toto")
+                .enterpriseName("toto")
+                .password("1234")
+                .build();
+
+        monitorService.registerMonitor(expected);
+        when(monitorService.loginMonitor(expected.getEmail(), expected.getPassword())).thenReturn(expected);
+
+        MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/email/password")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+//                .andExpect((ResultMatcher) jsonPath("$.email", is(expected.getEmail())))
+//                .andExpect((ResultMatcher) jsonPath("$.password", is(expected.getPassword())));
     }
 }
