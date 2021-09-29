@@ -27,7 +27,12 @@ public class StudentService {
         }
     }
 
-    public Student loginStudent(String matricule, String password){
-        return studentRepository.findByMatriculeAndPassword(matricule, password);
+    public Optional<Student> loginStudent(String matricule, String password){
+        try {
+            return Optional.of(studentRepository.findByMatriculeAndPassword(matricule, password));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+
     }
 }

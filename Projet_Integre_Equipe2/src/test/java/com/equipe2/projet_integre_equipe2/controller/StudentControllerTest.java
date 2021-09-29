@@ -60,7 +60,7 @@ public class StudentControllerTest {
 
     @Test
     public void loginStudentTest() throws Exception{
-        when(studentService.loginStudent(student.getMatricule(), student.getPassword())).thenReturn(student);
+        when(studentService.loginStudent(student.getMatricule(), student.getPassword())).thenReturn(Optional.of(student));
 
         MvcResult result = mockMvc.perform(get("/students/1234567/1234")
                 .contentType(MediaType.APPLICATION_JSON))

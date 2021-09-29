@@ -56,7 +56,7 @@ public class StudentServiceTest {
     @Test
     public void testLoginStudent(){
         when(studentRepository.findByMatriculeAndPassword(student.getMatricule(), student.getPassword())).thenReturn(student);
-        Student actualStudent = studentService.loginStudent(student.getMatricule(), student.getPassword());
-        assertThat(student).isEqualTo(actualStudent);
+        Optional<Student> actualStudent = studentService.loginStudent(student.getMatricule(), student.getPassword());
+        assertThat(actualStudent.get()).isEqualTo(student);
     }
 }
