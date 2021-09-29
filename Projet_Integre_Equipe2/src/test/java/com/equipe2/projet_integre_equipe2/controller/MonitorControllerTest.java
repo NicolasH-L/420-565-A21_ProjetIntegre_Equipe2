@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -40,7 +41,13 @@ class MonitorControllerTest {
             .enterpriseName("toto")
             .password("1234")
             .build();
-
+    private Monitor monitorDuplicateEmail = Monitor.monitorBuilder()
+            .firstName("tata")
+            .lastName("toto")
+            .email("toto@toto")
+            .enterpriseName("toto")
+            .password("1234")
+            .build();
     @Test
     public void registerMonitorTest() throws Exception {
         when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
@@ -54,38 +61,24 @@ class MonitorControllerTest {
 
     @Test
     public void registerMonitorDuplicateEmailTest() throws Exception {
-        Monitor monitorDuplicate = Monitor.monitorBuilder()
-                .firstName("tata")
-                .lastName("toto")
-                .email("toto@toto")
-                .enterpriseName("toto")
-                .password("1234")
-                .build();
-        when(monitorService.registerMonitor(any())).thenReturn(Optional.of(monitor))
-//                ;
-                .thenReturn(Optional.empty());
-
+        when(monitorService.registerMonitor(any())).thenReturn(Optional.of(monitor)).thenReturn(Optional.empty());
         MvcResult result = mockMvc.perform(post("/monitors/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(monitor))).andReturn();
-
-        MvcResult result2 = mockMvc.perform(post("/monitors/register")
+        MvcResult emptyResult = mockMvc.perform(post("/monitors/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(monitorDuplicate))).andReturn();
-
+                .content(new ObjectMapper().writeValueAsString(monitorDuplicateEmail))).andReturn();
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         Monitor actualDuplicate;
         try {
-            actualDuplicate = new ObjectMapper().readValue(result2.getResponse().getContentAsString(), Monitor.class);
+            actualDuplicate = new ObjectMapper().readValue(emptyResult.getResponse().getContentAsString(), Monitor.class);
         }catch(Exception e){
             System.out.println(e.getMessage());
             actualDuplicate = null;
         }
-        System.out.println(actualDuplicate);
-
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(actualMonitor).isEqualTo(monitor);
-        assertThat(result2.getResponse().getStatus()).isNotEqualTo(HttpStatus.CREATED.value());
+        assertThat(emptyResult.getResponse().getStatus()).isNotEqualTo(HttpStatus.CREATED.value());
         assertThat(actualDuplicate).isNull();
     }
 }
