@@ -16,7 +16,7 @@ public class StudentController {
    StudentService studentService;
 
    @PostMapping("/students/register")
-   public ResponseEntity<Student> subscribe(@RequestBody Student student) {
+   public ResponseEntity<Student> registerStudent(@RequestBody Student student) {
        return studentService.registerStudent(student)
                .map(student1 -> ResponseEntity.status(HttpStatus.CREATED).body(student1))
                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());

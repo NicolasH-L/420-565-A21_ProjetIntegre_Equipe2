@@ -34,7 +34,7 @@ public class StudentControllerTest {
     private Student expected;
 
     @Test
-    public void subscribeTest() throws Exception {
+    public void registerStudentTest() throws Exception {
         expected = Student.studentBuilder()
                 .firstName("Toto")
                 .lastName("Tata")
