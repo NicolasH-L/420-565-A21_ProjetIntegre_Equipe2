@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,32 +34,26 @@ class MonitorServiceTest {
             .build();
 
     @Test
-    public void testGetAllMonitors() {
-        when(monitorService.findAll()).thenReturn(getListMonitors());
-
-        final List<Monitor> monitorList = monitorService.getAllMonitors();
-
-        assertThat(monitorList.size()).isEqualTo(3);
-        assertThat(monitorList.get(0).getLastName()).isEqualTo("toto");
-    }
-
-    @Test
     public void testRegisterMonitor() {
-        Monitor expected = monitor;
-        when(monitorRepository.save(expected)).thenReturn(expected);
-
-        Optional<Monitor> actualMonitor = monitorService.registerMonitor(expected);
-
-        assertThat(actualMonitor.get()).isEqualTo(expected);
+        when(monitorRepository.save(monitor)).thenReturn(monitor);
+        Optional<Monitor> actualMonitor = monitorService.registerMonitor(monitor);
+        assertThat(actualMonitor.get()).isEqualTo(monitor);
     }
 
     @Test
-    public void testRegisterDuplicateMonitorFails() {
-        when(monitorRepository.save(any())).thenReturn(monitor).thenThrow(new DuplicateKeyException(""));
-
+    public void testRegisterDuplicateMonitorEmailFails(){
+        Monitor duplicateEmailMonitor = Monitor.monitorBuilder()
+                .password("tata")
+                .lastName("tata")
+                .firstName("tata")
+                .enterpriseName("tata")
+                .email("toto@toto.toto")
+                .build();
+        when(monitorRepository.save(any())).thenReturn(monitor).thenReturn(Optional.empty());
         Optional<Monitor> actualMonitor = monitorService.registerMonitor(monitor);
-
-        assertThat(actualMonitor).isEqualTo(Optional.empty());
+        Optional<Monitor> actualDuplicateMonitor = monitorService.registerMonitor(duplicateEmailMonitor);
+        assertThat(actualMonitor).isEqualTo(Optional.of(monitor));
+        assertThat(actualDuplicateMonitor).isEmpty();
     }
 
     @Test
@@ -71,30 +63,5 @@ class MonitorServiceTest {
         Monitor actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
 
         assertThat(actualMonitor).isEqualTo(monitor);
-    }
-
-    private List<Monitor> getListMonitors() {
-        List<Monitor> list = new ArrayList<>();
-        list.add(Monitor.monitorBuilder()
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .enterpriseName("totoEnterprise")
-                .email("toto@toto.toto")
-                .build());
-        list.add(Monitor.monitorBuilder()
-                .password("titi")
-                .lastName("titi")
-                .firstName("titi")
-                .enterpriseName("titiEnterprise")
-                .email("titi@titi.titi")
-                .build());
-        list.add(Monitor.monitorBuilder()
-                .password("tata")
-                .lastName("tata")
-                .enterpriseName("tata")
-                .email("tata@tata.tata")
-                .build());
-        return list;
     }
 }

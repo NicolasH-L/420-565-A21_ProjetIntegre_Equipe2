@@ -18,10 +18,10 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -35,40 +35,58 @@ class MonitorControllerTest {
     @MockBean
     private MonitorRepository monitorRepository;
 
-    private Monitor expected;
-
+    private Monitor monitor = Monitor.monitorBuilder()
+            .firstName("toto")
+            .lastName("toto")
+            .email("toto@toto")
+            .enterpriseName("toto")
+            .password("1234")
+            .build();
+    private Monitor monitorDuplicateEmail = Monitor.monitorBuilder()
+            .firstName("tata")
+            .lastName("toto")
+            .email("toto@toto")
+            .enterpriseName("toto")
+            .password("1234")
+            .build();
     @Test
-    public void subscribeMonitorTest() throws Exception {
-        expected = Monitor.monitorBuilder()
-                .firstName("toto")
-                .lastName("toto")
-                .email("toto@toto")
-                .enterpriseName("toto")
-                .password("1234")
-                .build();
-        when(monitorService.registerMonitor(expected)).thenReturn(Optional.of(expected));
-
+    public void registerMonitorTest() throws Exception {
+        when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
         MvcResult result = mockMvc.perform(post("/monitors/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(expected))).andReturn();
-
+                .content(new ObjectMapper().writeValueAsString(monitor))).andReturn();
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(expected).isEqualTo(actualMonitor);
+        assertThat(monitor).isEqualTo(actualMonitor);
+    }
+
+    @Test
+    public void registerMonitorDuplicateEmailTest() throws Exception {
+        when(monitorService.registerMonitor(any())).thenReturn(Optional.of(monitor)).thenReturn(Optional.empty());
+        MvcResult result = mockMvc.perform(post("/monitors/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(monitor))).andReturn();
+        MvcResult emptyResult = mockMvc.perform(post("/monitors/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(monitorDuplicateEmail))).andReturn();
+        var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
+        Monitor actualDuplicate;
+        try {
+            actualDuplicate = new ObjectMapper().readValue(emptyResult.getResponse().getContentAsString(), Monitor.class);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            actualDuplicate = null;
+        }
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(actualMonitor).isEqualTo(monitor);
+        assertThat(emptyResult.getResponse().getStatus()).isNotEqualTo(HttpStatus.CREATED.value());
+        assertThat(actualDuplicate).isNull();
     }
 
     @Test
     public void testLoginMonitor() throws Exception {
-        expected = Monitor.monitorBuilder()
-                .firstName("toto")
-                .lastName("toto")
-                .email("toto@toto")
-                .enterpriseName("toto")
-                .password("1234")
-                .build();
-
-        monitorService.registerMonitor(expected);
-        when(monitorService.loginMonitor(expected.getEmail(), expected.getPassword())).thenReturn(expected);
+        monitorService.registerMonitor(monitor);
+        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
 
         MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/email/password")
                 .contentType(MediaType.APPLICATION_JSON))

@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
-const StudentLogin = ({ login }) => {
+const StudentLogin = ({onLogin}) => {
     const [student, setStudent] = useState({matricule: "", password: "" })
     const [error, setError] = useState({credentials:"" })
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -12,9 +14,9 @@ const StudentLogin = ({ login }) => {
             setError({...error, credentials: "Matricule ou mot de passe incorrect"})
             return
         } else {
-            console.log(student)
+            onLogin(student.matricule, student.password)
+                .then((data) => data.matricule != null ? history.push("/OffresStudent", {student}) : alert("Erreur de matricule ou mot de passe"))
         }
-        login({ student })
     }
 
     return (

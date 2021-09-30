@@ -4,6 +4,7 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,12 +27,17 @@ public class StudentServiceTest {
     @InjectMocks
     private StudentService studentService;
 
-    private Student student = Student.studentBuilder()
-            .firstName("Toto")
-            .lastName("Tata")
-            .matricule("1234567")
-            .password("1234")
-            .build();
+    private Student student;
+
+    @BeforeEach
+    void setup(){
+        student = Student.studentBuilder()
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .build();
+    }
 
     @Test
     public void testRegisterStudent(){
@@ -45,5 +51,12 @@ public class StudentServiceTest {
         when(studentRepository.save(any())).thenReturn(student).thenReturn(Optional.empty());
         studentService.registerStudent(student);
         assertThat(studentService.registerStudent(student)).isEmpty();
+    }
+
+    @Test
+    public void testLoginStudent(){
+        when(studentRepository.findByMatriculeAndPassword(student.getMatricule(), student.getPassword())).thenReturn(student);
+        Optional<Student> actualStudent = studentService.loginStudent(student.getMatricule(), student.getPassword());
+        assertThat(actualStudent.get()).isEqualTo(student);
     }
 }

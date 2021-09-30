@@ -5,7 +5,6 @@ import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -16,10 +15,6 @@ public class MonitorService {
 
     public MonitorService(MonitorRepository monitorRepository) {
         this.monitorRepository = monitorRepository;
-    }
-
-    public List<Monitor> getAllMonitors() {
-        return monitorRepository.findAll();
     }
 
     public Optional<Monitor> registerMonitor(Monitor monitor) {
@@ -36,9 +31,5 @@ public class MonitorService {
 
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
-    }
-
-    public List<Monitor> findAll() {
-        return monitorRepository.findAll();
     }
 }
