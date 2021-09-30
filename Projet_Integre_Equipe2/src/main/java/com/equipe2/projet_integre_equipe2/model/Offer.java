@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Offer implements Serializable {
 
     @Id
@@ -33,7 +35,7 @@ public class Offer implements Serializable {
     @Builder(builderMethodName = "offerBuilder")
     public Offer(Integer idOffer, String companyName, String address, String salary,
                  String jobTitle, String description, String skills, String jobSchedules,
-                 String workingHours, String monitorEmail, Monitor monitor) {
+                 String workingHours, String monitorEmail) {
         this.idOffer = idOffer;
         this.companyName = companyName;
         this.address = address;
@@ -44,6 +46,5 @@ public class Offer implements Serializable {
         this.jobSchedules = jobSchedules;
         this.workingHours = workingHours;
         this.monitorEmail = monitorEmail;
-        this.monitor = monitor;
     }
 }

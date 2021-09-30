@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(StudentController.class)
+@WebMvcTest(OfferController.class)
 public class OfferControllerTest {
 
     @Autowired
@@ -41,15 +41,14 @@ public class OfferControllerTest {
     void setup(){
         offer = Offer.offerBuilder()
                 .companyName("Cegep")
-                .address("Montral")
+                .address("Montreal")
                 .salary("19")
                 .jobTitle("Developpeur")
                 .description("Java")
-                .skills("Débrouillard")
+                .skills("Debrouillard")
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
-                .monitor(new Monitor())
                 .build();
     }
 
@@ -61,8 +60,8 @@ public class OfferControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(offer))).andReturn();
 
-        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Offer.class);
+        var actualOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Offer.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(offer).isEqualTo(actualStudent);
+        assertThat(offer).isEqualTo(actualOffer);
     }
 }

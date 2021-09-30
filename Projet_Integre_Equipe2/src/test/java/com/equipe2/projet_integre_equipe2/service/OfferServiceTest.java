@@ -39,7 +39,6 @@ public class OfferServiceTest {
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
-                .monitor(new Monitor())
                 .build();
     }
 
