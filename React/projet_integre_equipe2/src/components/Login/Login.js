@@ -24,6 +24,12 @@ const Login = () => {
         return data
     }
 
+    const monitorLogin = async(email, password) => {
+        const res = await fetch(`http://localhost:8888/monitors/${email}/${password}`)
+        const data = await res.json()
+        return data
+    }
+
     return (
         <div className="grad">
             <NavbarRegistrationLogin/>
@@ -46,7 +52,7 @@ const Login = () => {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin}/></div>
-                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin/></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onLogin={monitorLogin}/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin onLogin={adminLogin}/></div>
                     </div>
