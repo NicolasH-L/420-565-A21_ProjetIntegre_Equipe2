@@ -21,6 +21,4 @@ public class AdminController {
                 .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Admin()));
     }
-
-
 }

@@ -18,6 +18,10 @@ public class AdminService {
     }
 
     public Optional<Admin> login(String username, String password){
-       return Optional.of(adminRepository.findAdminByUsernameAndPassword(username,password));
+       try {
+           return Optional.of(adminRepository.findAdminByUsernameAndPassword(username,password));
+       } catch (Exception exception){
+           return Optional.empty();
+       }
     }
 }
