@@ -41,7 +41,7 @@ class MonitorServiceTest {
     }
 
     @Test
-    public void testRegisterDuplicateMonitorEmailFails(){
+    public void testRegisterDuplicateMonitorEmailFails() {
         Monitor duplicateEmailMonitor = Monitor.monitorBuilder()
                 .password("tata")
                 .lastName("tata")
@@ -57,11 +57,9 @@ class MonitorServiceTest {
     }
 
     @Test
-    public void testLoginMonitor(){
+    public void testLoginMonitor() {
         when(monitorRepository.findMonitorByEmailAndPassword(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
-
-        Monitor actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
-
-        assertThat(actualMonitor).isEqualTo(monitor);
+        Optional<Monitor> actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
+        assertThat(actualMonitor.get()).isEqualTo(monitor);
     }
 }
