@@ -25,11 +25,15 @@ public class MonitorService {
         }
     }
 
-    public Monitor getAMonitorByEmail(Monitor monitor) {
-        return monitorRepository.findMonitorByEmail(monitor.getEmail());
+    public Optional<Monitor> loginMonitor(String email, String password) {
+        try{
+            return Optional.of(monitorRepository.findMonitorByEmailAndPassword(email, password));
+        }catch(Exception exception){
+            return Optional.empty();
+        }
     }
 
-    public Monitor loginMonitor(String email, String password) {
-        return monitorRepository.findMonitorByEmailAndPassword(email, password);
+    public Monitor getAMonitorByEmail(Monitor monitor) {
+        return monitorRepository.findMonitorByEmail(monitor.getEmail());
     }
 }
