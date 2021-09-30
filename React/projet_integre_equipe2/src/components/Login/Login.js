@@ -17,6 +17,12 @@ const Login = () => {
         const data = await res.json()
         return data
     }
+    
+    const adminLogin = async(username, password) => {
+        const res = await fetch(`http://localhost:8888/admin/${username}/${password}`)
+        const data = await res.json()
+        return data
+    }
 
     return (
         <div className="grad">
@@ -42,7 +48,7 @@ const Login = () => {
                         <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin}/></div>
                         <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin/></div>
-                        <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin/></div>
+                        <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin onLogin={adminLogin}/></div>
                     </div>
                 </div>
             </div>

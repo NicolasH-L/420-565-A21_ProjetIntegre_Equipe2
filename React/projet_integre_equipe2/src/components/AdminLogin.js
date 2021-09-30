@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
 
-const AdminLogin = ({ login }) => {
+const AdminLogin = ({ onLogin }) => {
     const [admin, setAdmin] = useState({username: "", password: ""});
     const [error, setError] = useState({credentials:""})
 
@@ -13,9 +13,9 @@ const AdminLogin = ({ login }) => {
             return
         } else {
             console.log(admin)
+            onLogin(admin.username, admin.password)
         }
-        login({ admin })
-    }
+    }  
 
     
     return (
