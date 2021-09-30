@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
-const AdminLogin = ({ login }) => {
+const AdminLogin = ({ onLogin }) => {
     const [admin, setAdmin] = useState({username: "", password: ""});
     const [error, setError] = useState({credentials:""})
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -13,9 +15,10 @@ const AdminLogin = ({ login }) => {
             return
         } else {
             console.log(admin)
+            onLogin(admin.username, admin.password) 
+                .then((data) => data.username != null ? history.push("/Gestionnaire", {admin}) : alert("Nom d'utilisateur ou mot de passe incorrect"))
         }
-        login({ admin })
-    }
+    }  
 
     
     return (

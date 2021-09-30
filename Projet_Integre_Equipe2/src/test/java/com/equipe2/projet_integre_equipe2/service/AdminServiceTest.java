@@ -10,6 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,7 +37,7 @@ public class AdminServiceTest {
     @Test
     public void testLoginAdmin(){
         when(adminRepository.findAdminByUsernameAndPassword(admin.getUsername(), admin.getPassword())).thenReturn(admin);
-        Admin actualAdmin = adminService.login(admin);
-        assertThat(actualAdmin.equals(admin));
+        Optional<Admin> actualAdmin = adminService.login(admin.getUsername(),admin.getPassword());
+        assertThat(actualAdmin.get()).isEqualTo(admin);
     }
 }
