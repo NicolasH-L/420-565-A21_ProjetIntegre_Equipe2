@@ -10,12 +10,12 @@ const StudentLogin = ({onLogin}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!_.isEmpty(error.credentials) ||_.isEmpty(student.password) || _.isEmpty(student.matricule)) {
+        if (!_.isEmpty(error.credentials) || _.isEmpty(student.password) || _.isEmpty(student.matricule)) {
             setError({...error, credentials: "Matricule ou mot de passe incorrect"})
             return
         } else {
             onLogin(student.matricule, student.password)
-                .then((data) => data.matricule != null ? history.push("/OffresStudent", {student}) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? history.push("/studentOffersList", {student}) : alert("Erreur de matricule ou mot de passe"))
         }
     }
 
@@ -31,7 +31,7 @@ const StudentLogin = ({onLogin}) => {
                     <label htmlFor="passwordStudent" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>
                     <input type="password" className="form-control text-center" id="passwordStudent" name="password" placeholder="Entrez votre mot de passe" onChange={(e) => setStudent({...student, password: e.target.value}) } required />
                 </div>
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-block grad text-white ">Connexion</button>
                 </div>
             </form>

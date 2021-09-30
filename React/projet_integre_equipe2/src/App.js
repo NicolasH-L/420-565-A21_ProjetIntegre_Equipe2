@@ -6,12 +6,12 @@ import Registration from './components/Registration/Registration';
 import SupervisorLogin from './components/SupervisorLogin';
 import Login from './components/Login/Login';
 import MonitorLogin from './components/MonitorLogin';
+import AdminIntershipOffer from './components/AdminIntershipOffer';
 
 function App() {
   return (
       <Router>
         <div>
-          {/*<NavbarHead/>*/}
           <Route path = "/" exact render={(props) => (
           <>
             <Login/>
@@ -23,6 +23,18 @@ function App() {
         </div>
       </Router>
   );
+  /*return (
+    <Router>
+      <div>
+        <Route path = "/" exact render={(props) => (
+          <>
+            <AdminIntershipOffer/>
+          </>
+        )}/>
+      </div>
+      <Route path = "/AdminIntershipOffer" component={AdminIntershipOffer}/>
+    </Router>
+  );*/
 }
 
 export default App;
