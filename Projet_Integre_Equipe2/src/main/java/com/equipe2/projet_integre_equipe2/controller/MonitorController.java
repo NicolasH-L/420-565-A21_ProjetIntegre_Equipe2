@@ -43,8 +43,10 @@ public class MonitorController {
     }
 
     @GetMapping("/{email}/{password}")
-    public Monitor getMonitorByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
-        return monitorService.loginMonitor(email, password);
+    public ResponseEntity<Monitor> getMonitorByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+        return monitorService.loginMonitor(email, password)
+                .map(monitor1 -> ResponseEntity.status(HttpStatus.OK).body(monitor1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Monitor()));
     }
 
 }
