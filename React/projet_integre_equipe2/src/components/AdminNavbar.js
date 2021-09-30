@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { Route } from 'react-router-dom/cjs/react-router-dom'
+import AdminIntershipOffer from './AdminIntershipOffer'
 
 const AdminNavbar = () => {
     return (
@@ -12,7 +14,7 @@ const AdminNavbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav my-3">
                         <li className="nav-item mx-2">
-                            <Link className="nav-link btn btn-outline-primary" to="/AdminIntershipOffer">Déposer offre</Link>
+                            <Link className="nav-link btn btn-outline-primary" to="/AdminOffer">Déposer offre</Link>
                         </li>
                     </ul>
                 </div>
