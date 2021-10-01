@@ -86,7 +86,7 @@ class MonitorControllerTest {
     public void testLoginMonitor() throws Exception {
         when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(Optional.of(monitor));
 
-        MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/bobTest@gmail.com/123Patate@")
+        MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/toto@toto/1234")
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
