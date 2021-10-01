@@ -5,14 +5,16 @@ import AdminNavbar from './AdminNavbar'
 import { useHistory } from "react-router-dom";
 import './Form.css'
 
-const AdminIntershipOffer = ({onAdd}) => {
+const AdminIntershipOffer = ({onAdd, verifyMonitorExists}) => {
     const [offer, setOffer] = useState({companyName: "", address: "", salary: "", 
                                         jobTitle: "", description: "", skills: "", 
-                                        jobSchedules: "", workingHours: "", monitorEmail: "", })
+                                        jobSchedules: "", workingHours: "", monitorEmail: ""})
     const [error, setError] = useState({companyName: "", address: "", salary: "", 
                                         jobTitle: "", description: "", skills: "", 
-                                        jobSchedules: "", workingHours: "", monitorEmail: "", })
+                                        jobSchedules: "", workingHours: "", monitorEmail: ""})
     const history = useHistory();
+
+    const monitorExists = false;
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -27,6 +29,11 @@ const AdminIntershipOffer = ({onAdd}) => {
 
             return
         } else {
+            verifyMonitorExists(offer.monitorEmail)
+                .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
+        }
+
+        function submitOffer() {
             onAdd(offer)
                 .then((data) => data.jobTitle != null ? history.push("/adminOffersList") : alert("Impossible de créer l'offre, veuillez réessayer!"))
         }
