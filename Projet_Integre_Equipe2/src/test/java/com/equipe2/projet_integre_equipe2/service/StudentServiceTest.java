@@ -2,15 +2,12 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.Optional;
 
@@ -58,5 +55,12 @@ public class StudentServiceTest {
         when(studentRepository.findByMatriculeAndPassword(student.getMatricule(), student.getPassword())).thenReturn(student);
         Optional<Student> actualStudent = studentService.loginStudent(student.getMatricule(), student.getPassword());
         assertThat(actualStudent.get()).isEqualTo(student);
+    }
+
+    @Test
+    public void testLoginStudentFails() {
+        when(studentRepository.findByMatriculeAndPassword("", "")).thenReturn(null);
+        Optional<Student> actualStudent = studentService.loginStudent("", "");
+        assertThat(actualStudent).isEqualTo(Optional.empty());
     }
 }

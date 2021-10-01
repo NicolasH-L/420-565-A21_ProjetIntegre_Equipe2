@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
-import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +28,6 @@ public class StudentControllerTest {
 
     @MockBean
     private StudentService studentService;
-
-    @MockBean
-    private StudentRepository studentRepository;
 
     private Student student;
 

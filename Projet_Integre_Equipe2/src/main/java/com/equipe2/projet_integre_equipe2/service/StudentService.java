@@ -2,14 +2,10 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
-import lombok.Builder;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Data
-@Builder
 @Service
 public class StudentService {
 
@@ -33,6 +29,5 @@ public class StudentService {
         } catch (Exception exception) {
             return Optional.empty();
         }
-
     }
 }
