@@ -28,10 +28,8 @@ class MonitorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private MonitorService monitorService;
-
     private Monitor monitor;
     private Monitor monitorDuplicateEmail;
 

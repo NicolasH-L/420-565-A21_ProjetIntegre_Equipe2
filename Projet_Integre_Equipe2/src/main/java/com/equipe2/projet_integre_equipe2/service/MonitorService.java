@@ -2,12 +2,10 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Data
 @Service
 public class MonitorService {
 

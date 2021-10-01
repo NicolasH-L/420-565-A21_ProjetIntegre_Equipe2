@@ -76,10 +76,10 @@ class MonitorServiceTest {
         assertThat(actualMonitor.get()).isEqualTo(monitor);
     }
 
-//    @Test
-//    public void testLoginMonitorFails() {
-//        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword("", "")).thenReturn(mo);
-//        Optional<Monitor> actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
-//        assertThat(actualMonitor.get()).isEqualTo(monitor);
-//    }
+    @Test
+    public void testLoginMonitorFails() {
+        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword("", "")).thenReturn(null);
+        Optional<Monitor> actualMonitor = monitorService.loginMonitor("", "");
+        assertThat(actualMonitor).isEqualTo(Optional.empty());
+    }
 }

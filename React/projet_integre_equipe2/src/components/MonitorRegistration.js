@@ -2,7 +2,6 @@ import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-// import RegexPattern from './RegexPattern'
 import { RegexPattern } from './RegexPattern'
 
 const MonitorRegistration = ({ onAdd }) => {
@@ -27,15 +26,13 @@ const MonitorRegistration = ({ onAdd }) => {
     const validateInput = (e) => {
         let pattern
         let inputError
-        // Mettre les patterns dans un seul fichier 
-        let patternEmail = /^([a-zA-Z0-9]+[\._:$!%\-+]{0,1}([a-zA-Z0-9])+)+@(([a-zA-Z0-9])+[\.\-]{0,1}([a-zA-Z0-9])+)+\.[a-zA-Z0-9]{2,4}$/
-        let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/
-        let patternCompany = /^[^ ]+([ ]{0,1}[^ ]+)+$/
-        let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+        let patternEmail = RegexPattern.getPatternEmail()
+        let patternName = RegexPattern.getPatternName()
+        let patternCompany = RegexPattern.getPatternCompany()
+        let patternPassword = RegexPattern.getPatternPassword()
 
         if (e.target.name === "email")
             pattern = new RegExp(patternEmail)
-            // pattern = new RegExp(RegexPattern.patternEmail)
         else if (e.target.name === "lastName" || e.target.name === "firstName")
             pattern = new RegExp(patternName)
         else if (e.target.name === "companyName")
