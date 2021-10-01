@@ -22,6 +22,6 @@ public class OfferController {
     public ResponseEntity<Offer> saveOffer(@RequestBody Offer offer) {
         return offerService.saveOffer(offer)
                 .map(offer1 -> ResponseEntity.status(HttpStatus.CREATED).body(offer1))
-                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Offer()));
     }
 }
