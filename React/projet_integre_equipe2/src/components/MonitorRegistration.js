@@ -1,7 +1,9 @@
 import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
-import { useHistory } from "react-router-dom"
+import { useHistory } from 'react-router-dom'
+// import RegexPattern from './RegexPattern'
+import { RegexPattern } from './RegexPattern'
 
 const MonitorRegistration = ({ onAdd }) => {
     const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "" })
@@ -17,8 +19,8 @@ const MonitorRegistration = ({ onAdd }) => {
         } else {
             monitor.email = monitor.email.toLowerCase()
             onAdd(monitor)
-                .then((data) => data.email !== undefined ? history.push("/Login") : alert("Erreur, email existante"))
-                .catch(() => alert("Erreur, email existante"))
+                .then((data) => data.email !== undefined ? history.push("/Login") : alert("Erreur! Email existant"))
+                .catch(() => alert("Erreur! Email existant"))
         }
     }
 
@@ -33,6 +35,7 @@ const MonitorRegistration = ({ onAdd }) => {
 
         if (e.target.name === "email")
             pattern = new RegExp(patternEmail)
+            // pattern = new RegExp(RegexPattern.patternEmail)
         else if (e.target.name === "lastName" || e.target.name === "firstName")
             pattern = new RegExp(patternName)
         else if (e.target.name === "companyName")
