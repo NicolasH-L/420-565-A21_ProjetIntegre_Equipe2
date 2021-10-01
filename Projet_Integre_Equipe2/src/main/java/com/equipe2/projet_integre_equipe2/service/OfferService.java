@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
 import lombok.Builder;
 import lombok.Data;
@@ -16,23 +15,15 @@ public class OfferService {
 
     private OfferRepository offerRepository;
 
-    private MonitorRepository monitorRepository;
-
-    public OfferService(OfferRepository offerRepository, MonitorRepository monitorRepository){
+    public OfferService(OfferRepository offerRepository){
         this.offerRepository = offerRepository;
-        this.monitorRepository = monitorRepository;
     }
 
     public Optional<Offer> saveOffer(Offer offer){
         try {
-            if (monitorRepository.existsByEmail(offer.getMonitorEmail())){
-                offer.setMonitor(monitorRepository.findMonitorByEmail(offer.getMonitorEmail()));
-                return Optional.of(offerRepository.save(offer));
-            }
-            return Optional.empty();
+            return Optional.of(offerRepository.save(offer));
         } catch (Exception exception) {
             return Optional.empty();
         }
     }
-
 }

@@ -32,4 +32,8 @@ public class MonitorService {
     public Monitor loginMonitor(String email, String password) {
         return monitorRepository.findMonitorByEmailAndPassword(email, password);
     }
+
+    public Optional<Boolean> monitorExistsByEmail(String email){
+        return Optional.of(monitorRepository.existsByEmail(email));
+    }
 }

@@ -54,5 +54,10 @@ class MonitorServiceTest {
         assertThat(actualDuplicateMonitor).isEmpty();
     }
 
-
+    @Test
+    public void testMonitorExistsByEmail(){
+        when(monitorRepository.existsByEmail(monitor.getEmail())).thenReturn(true);
+        Optional<Boolean> actualMonitor = monitorService.monitorExistsByEmail(monitor.getEmail());
+        assertThat(actualMonitor.get()).isEqualTo(true);
+    }
 }

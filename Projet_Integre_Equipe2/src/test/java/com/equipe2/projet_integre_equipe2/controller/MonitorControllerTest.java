@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
 
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.service.MonitorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,5 +81,18 @@ class MonitorControllerTest {
         assertThat(actualMonitor).isEqualTo(monitor);
         assertThat(emptyResult.getResponse().getStatus()).isNotEqualTo(HttpStatus.CREATED.value());
         assertThat(actualDuplicate).isNull();
+    }
+
+    @Test
+    public void monitorExistsByEmailTest() throws Exception {
+        when(monitorService.monitorExistsByEmail(monitor.getEmail())).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/monitors/monitorEmailExists/toto@toto")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andReturn();
+
+        var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualMonitor).isEqualTo(true);
     }
 }
