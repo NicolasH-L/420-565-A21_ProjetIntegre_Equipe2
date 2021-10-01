@@ -1,8 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Admin;
-import com.equipe2.projet_integre_equipe2.model.Student;
-import com.equipe2.projet_integre_equipe2.repository.AdminRepository;
 import com.equipe2.projet_integre_equipe2.service.AdminService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(AdminController.class)
 public class AdminControllerTest {
@@ -31,9 +28,6 @@ public class AdminControllerTest {
 
     @MockBean
     private AdminService adminService;
-
-    @MockBean
-    private AdminRepository adminRepository;
 
     private Admin admin;
 

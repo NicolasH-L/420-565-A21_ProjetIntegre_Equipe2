@@ -1,12 +1,12 @@
-import _ from 'lodash';
+import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
 const AdminLogin = ({ onLogin }) => {
-    const [admin, setAdmin] = useState({username: "", password: ""});
+    const [admin, setAdmin] = useState({username: "", password: ""})
     const [error, setError] = useState({credentials:""})
-    const history = useHistory();
+    const history = useHistory()
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -14,18 +14,16 @@ const AdminLogin = ({ onLogin }) => {
             setError({...error, credentials: "Nom d'utilisateur ou mot de passe incorrect"})
             return
         } else {
-            console.log(admin)
             onLogin(admin.username, admin.password) 
-                .then((data) => data.username != null ? history.push("/Admin", {admin}) : alert("Nom d'utilisateur ou mot de passe incorrect"))
+                .then((data) => data.username != null ? history.push("/Admin", admin) : alert("Nom d'utilisateur ou mot de passe incorrect"))
         }
     }  
 
-    
     return (
         <div>
             <form className="container-fluid" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="usernameAdmin" className="text-secondary"><i class="fas fa-user"></i> Nom d'utilisateur: </label>
+                    <label htmlFor="usernameAdmin" className="text-secondary"><i className="fas fa-user"></i> Nom d'utilisateur: </label>
                     {error.username !== "" ? error.username : ""}
                     <input type="text" className="form-control text-center" id="usernameAdmin" name="username" placeholder="Entrez votre nom d'utilisateur" onChange={(e) => setAdmin({...admin, username: e.target.value}) } required/>
                 </div>
@@ -34,7 +32,7 @@ const AdminLogin = ({ onLogin }) => {
                     {error.password !== "" ? error.password : ""}
                     <input type="password" className="form-control text-center" id="passwordAdmin" name="password" placeholder="Entrez votre mot de passe" onChange={(e) => setAdmin({...admin, password: e.target.value}) } required/>
                 </div>
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-block grad text-white ">Connexion</button>
                 </div>
             </form>

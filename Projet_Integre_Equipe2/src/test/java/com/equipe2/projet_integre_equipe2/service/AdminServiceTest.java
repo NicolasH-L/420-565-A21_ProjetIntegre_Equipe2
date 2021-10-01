@@ -1,7 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Admin;
-import com.equipe2.projet_integre_equipe2.model.Monitor;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.AdminRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,5 +39,12 @@ public class AdminServiceTest {
         when(adminRepository.findAdminByUsernameAndPassword(admin.getUsername(), admin.getPassword())).thenReturn(admin);
         Optional<Admin> actualAdmin = adminService.login(admin.getUsername(),admin.getPassword());
         assertThat(actualAdmin.get()).isEqualTo(admin);
+    }
+
+    @Test
+    public void testLoginAdminFails() {
+        when(adminRepository.findAdminByUsernameAndPassword("", "")).thenReturn(null);
+        Optional<Admin> actualAdmin = adminService.login("", "");
+        assertThat(actualAdmin).isEqualTo(Optional.empty());
     }
 }
