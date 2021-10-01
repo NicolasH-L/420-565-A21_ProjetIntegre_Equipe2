@@ -1,13 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import NavbarHead from './components/NavbarHead';
 import Footer from './components/Footer';
 import Registration from './components/Registration/Registration';
-import SupervisorLogin from './components/SupervisorLogin';
 import Login from './components/Login/Login';
-import MonitorLogin from './components/MonitorLogin';
 import AdminIntershipOffer from './components/AdminIntershipOffer';
 import Admin from './components/Admin';
+import Student from './components/Student';
 
 function App() {
   return (
@@ -22,6 +20,7 @@ function App() {
           <Route path = "/Registration" component={Registration}/>
           <Route path = "/Admin" component={Admin}/>
           <Route path = "/AdminOffer" component={AdminIntershipOffer}/>
+          <Route path = "/Student" component={Student}/>
           <Footer/>
         </div>
       </Router>
