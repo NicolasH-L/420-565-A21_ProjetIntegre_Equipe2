@@ -6,6 +6,7 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.service.MonitorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,47 +32,48 @@ class MonitorControllerTest {
     @MockBean
     private MonitorService monitorService;
 
-    @MockBean
-    private MonitorRepository monitorRepository;
+    private Monitor monitor;
+    private Monitor monitorDuplicateEmail;
 
-    private Monitor monitor = Monitor.monitorBuilder()
-            .firstName("toto")
-            .lastName("toto")
-            .email("toto@toto")
-            .enterpriseName("toto")
-            .password("1234")
-            .build();
-    private Monitor monitorDuplicateEmail = Monitor.monitorBuilder()
-            .firstName("tata")
-            .lastName("toto")
-            .email("toto@toto")
-            .enterpriseName("toto")
-            .password("1234")
-            .build();
+    @BeforeEach
+    void setup() {
+        monitor = Monitor.monitorBuilder()
+                .password("1234")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto")
+                .build();
+
+        monitorDuplicateEmail = Monitor.monitorBuilder()
+                .firstName("tata")
+                .lastName("toto")
+                .email("toto@toto")
+                .companyName("toto")
+                .password("1234")
+                .build();
+    }
 
     @Test
     public void registerMonitorTest() throws Exception {
         when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
-        MvcResult result = mockMvc.perform(post("/monitors/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(monitor))).andReturn();
+        MvcResult result = getResult(monitor);
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(monitor).isEqualTo(actualMonitor);
     }
 
     @Test
-    public void registerMonitorDuplicateEmailTest() throws Exception {
+    public void registerMonitorDuplicateEmailTest() {
         when(monitorService.registerMonitor(any())).thenReturn(Optional.of(monitor)).thenReturn(Optional.empty());
-        MvcResult result = mockMvc.perform(post("/monitors/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(monitor))).andReturn();
-        MvcResult emptyResult = mockMvc.perform(post("/monitors/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(monitorDuplicateEmail))).andReturn();
-        var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
+        MvcResult result = null;
+        MvcResult emptyResult = null;
+        Monitor actualMonitor = null;
         Monitor actualDuplicate;
         try {
+            result = getResult(monitor);
+            emptyResult = getResult(monitorDuplicateEmail);
+            actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
             actualDuplicate = new ObjectMapper().readValue(emptyResult.getResponse().getContentAsString(), Monitor.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -81,6 +83,12 @@ class MonitorControllerTest {
         assertThat(actualMonitor).isEqualTo(monitor);
         assertThat(emptyResult.getResponse().getStatus()).isNotEqualTo(HttpStatus.CREATED.value());
         assertThat(actualDuplicate).isNull();
+    }
+
+    private MvcResult getResult(Monitor monitorDuplicateEmail) throws Exception {
+        return mockMvc.perform(post("/monitors/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(monitorDuplicateEmail))).andReturn();
     }
 
     @Test
@@ -100,7 +108,7 @@ class MonitorControllerTest {
     public void testLoginMonitor() throws Exception {
         when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(Optional.of(monitor));
 
-        MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/toto@toto/1234")
+        MvcResult result = mockMvc.perform(get("/monitors/toto@toto/1234")
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);

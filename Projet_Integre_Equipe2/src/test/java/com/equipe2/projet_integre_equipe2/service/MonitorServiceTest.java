@@ -1,14 +1,14 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.Optional;
 
@@ -25,13 +25,19 @@ class MonitorServiceTest {
     @InjectMocks
     private MonitorService monitorService;
 
-    private Monitor monitor = Monitor.monitorBuilder()
-            .password("toto")
-            .lastName("toto")
-            .firstName("toto")
-            .enterpriseName("toto")
-            .email("toto@toto.toto")
-            .build();
+    private Monitor monitor;
+
+    @BeforeEach
+    void setup() {
+        monitor = Monitor.monitorBuilder()
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
+                .build();
+    }
+
 
     @Test
     public void testRegisterMonitor() {
@@ -46,7 +52,7 @@ class MonitorServiceTest {
                 .password("tata")
                 .lastName("tata")
                 .firstName("tata")
-                .enterpriseName("tata")
+                .companyName("tata")
                 .email("toto@toto.toto")
                 .build();
         when(monitorRepository.save(any())).thenReturn(monitor).thenReturn(Optional.empty());
@@ -57,16 +63,23 @@ class MonitorServiceTest {
     }
 
     @Test
-    public void testMonitorExistsByEmail(){
-        when(monitorRepository.existsByEmail(monitor.getEmail())).thenReturn(true);
+    public void testMonitorExistsByEmail() {
+        when(monitorRepository.existsByEmailIgnoreCase(monitor.getEmail())).thenReturn(true);
         Optional<Boolean> actualMonitor = monitorService.monitorExistsByEmail(monitor.getEmail());
         assertThat(actualMonitor.get()).isEqualTo(true);
     }
 
     @Test
     public void testLoginMonitor() {
-        when(monitorRepository.findMonitorByEmailAndPassword(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
+        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
         Optional<Monitor> actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
         assertThat(actualMonitor.get()).isEqualTo(monitor);
     }
+
+//    @Test
+//    public void testLoginMonitorFails() {
+//        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword("", "")).thenReturn(mo);
+//        Optional<Monitor> actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
+//        assertThat(actualMonitor.get()).isEqualTo(monitor);
+//    }
 }

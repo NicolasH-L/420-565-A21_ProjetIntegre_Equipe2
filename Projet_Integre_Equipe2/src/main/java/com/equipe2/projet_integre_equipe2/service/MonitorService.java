@@ -26,18 +26,14 @@ public class MonitorService {
     }
 
     public Optional<Monitor> loginMonitor(String email, String password) {
-        try{
-            return Optional.of(monitorRepository.findMonitorByEmailAndPassword(email, password));
-        }catch(Exception exception){
+        try {
+            return Optional.of(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword(email, password));
+        } catch(Exception exception){
             return Optional.empty();
         }
     }
 
-    public Monitor getAMonitorByEmail(Monitor monitor) {
-        return monitorRepository.findMonitorByEmail(monitor.getEmail());
-    }
-
     public Optional<Boolean> monitorExistsByEmail(String email){
-        return Optional.of(monitorRepository.existsByEmail(email));
+        return Optional.of(monitorRepository.existsByEmailIgnoreCase(email));
     }
 }

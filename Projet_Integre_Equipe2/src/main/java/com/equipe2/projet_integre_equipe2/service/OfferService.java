@@ -25,7 +25,7 @@ public class OfferService {
 
     public Optional<Offer> saveOffer(Offer offer){
         try {
-            offer.setMonitor(monitorRepository.findMonitorByEmail(offer.getMonitorEmail()));
+            offer.setMonitor(monitorRepository.findMonitorByEmailIgnoreCase(offer.getMonitorEmail()));
             return Optional.of(offerRepository.save(offer));
         } catch (Exception exception) {
             return Optional.empty();

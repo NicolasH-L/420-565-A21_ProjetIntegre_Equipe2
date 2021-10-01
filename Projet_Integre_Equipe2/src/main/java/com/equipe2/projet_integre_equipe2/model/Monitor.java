@@ -14,26 +14,14 @@ public class Monitor extends User implements Serializable {
 
     @Column(unique = true, length = 200)
     private String email;
-    private String enterpriseName;
+    private String companyName;
 
     @Builder(builderMethodName = "monitorBuilder")
-    public Monitor(String password, String lastName, String firstName, String enterpriseName, String email) {
+    public Monitor(String password, String lastName, String firstName, String companyName, String email) {
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
-        this.enterpriseName = enterpriseName;
+        this.companyName = companyName;
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Monitor{" +
-                "id=" + super.getId() +
-                ", password='" + super.getPassword() + '\'' +
-                ", lastName='" + super.getLastName() + '\'' +
-                ", firstName='" + super.getFirstName() + '\'' +
-                "enterpriseName='" + enterpriseName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

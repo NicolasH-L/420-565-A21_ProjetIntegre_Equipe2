@@ -17,24 +17,7 @@ import java.util.List;
 public class MonitorController {
 
     @Autowired
-    private MonitorRepository monitorRepository;
-
-    @Autowired
     private MonitorService monitorService;
-
-    public MonitorController(MonitorRepository monitorRepository) {
-        this.monitorRepository = monitorRepository;
-    }
-
-    @GetMapping
-    public List<Monitor> getMonitors() {
-        return monitorRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Monitor getMonitor(@PathVariable int id) {
-        return monitorRepository.findById(id).orElseThrow(RuntimeException::new);
-    }
 
     @PostMapping("/register")
     public ResponseEntity<Monitor> subscribe(@RequestBody Monitor monitor) {
@@ -56,5 +39,4 @@ public class MonitorController {
                 .map(monitor1 -> ResponseEntity.status(HttpStatus.OK).body(monitor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Monitor()));
     }
-
 }

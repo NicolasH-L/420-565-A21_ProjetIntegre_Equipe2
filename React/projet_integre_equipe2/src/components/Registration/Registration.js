@@ -1,56 +1,54 @@
 import React from 'react'
-import StudentRegistration from '../StudentRegistration';
-import MonitorRegistration from '../MonitorRegistration';
-import SupervisorRegistration from '../SupervisorRegistration';
-
+import StudentRegistration from '../StudentRegistration'
+import MonitorRegistration from '../MonitorRegistration'
+import SupervisorRegistration from '../SupervisorRegistration'
 import '../Form.css'
-import NavbarRegistrationLogin from '../NavbarRegistrationLogin';
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin'
 
 const Registration = () => {
-    const addStudent = async (student) => {
-        const result = await fetch('http://localhost:8888/students/register',
-        {
-          method:'POST',
-          headers:{
-            'Content-type': 'application/json'
-          },
-            body: JSON.stringify(student)
-        })
-        return await result.json()
-      }
-    
-      const addMonitor = async (monitor) => {
-        const result = await fetch('http://localhost:8888/monitors/register',
-        {
-          method:'POST',
-          headers:{
-            'Content-type': 'application/json'
-          },
-            body: JSON.stringify(monitor)
-        })
-        const data = await result.json()
-      }
+  const addStudent = async (student) => {
+    const result = await fetch('http://localhost:8888/students/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(student)
+      })
+    return await result.json()
+  }
 
-      const addSupervisor = async (supervisor) => {
-        const result = await fetch('http://localhost:8888/supervisors/register',
-        {
-          method:'POST',
-          headers:{
-            'Content-type': 'application/json'
-          },
-            body: JSON.stringify(supervisor)
-        })
-        return await result.json()
-      //  setSupervisors([...supervisor, data])
-      }
+  const addMonitor = async (monitor) => {
+    const result = await fetch('http://localhost:8888/monitors/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(monitor)
+      })
+    return await result.json()
+  }
+
+  const addSupervisor = async (supervisor) => {
+    const result = await fetch('http://localhost:8888/supervisors/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(supervisor)
+      })
+    return await result.json()
+  }
 
   return (
     <div className="grad">
-      <NavbarRegistrationLogin/>
+      <NavbarRegistrationLogin />
       <div className="d-flex justify-content-center ">
         <div className="jumbotron jumbotron-fluid bg-light w-50 rounded shadow reactivescreen">
           <h2 className="text-center text-secondary">Inscription</h2>
-          <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+          <ul className="nav nav-tabs justify-content-center mb-3" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">
               <a className="nav-link active" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">Étudiant</a>
             </li>
@@ -69,7 +67,7 @@ const Registration = () => {
         </div>
       </div>
     </div>
-    )
+  )
 }
 
 export default Registration
