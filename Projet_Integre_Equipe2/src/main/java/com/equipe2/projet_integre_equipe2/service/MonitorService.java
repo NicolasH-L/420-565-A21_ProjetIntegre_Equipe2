@@ -20,17 +20,21 @@ public class MonitorService {
     public Optional<Monitor> registerMonitor(Monitor monitor) {
         try {
             return Optional.of(monitorRepository.save(monitor));
-        } catch (Exception e) {
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Monitor> loginMonitor(String email, String password) {
+        try{
+            return Optional.of(monitorRepository.findMonitorByEmailAndPassword(email, password));
+        }catch(Exception exception){
             return Optional.empty();
         }
     }
 
     public Monitor getAMonitorByEmail(Monitor monitor) {
         return monitorRepository.findMonitorByEmail(monitor.getEmail());
-    }
-
-    public Monitor loginMonitor(String email, String password) {
-        return monitorRepository.findMonitorByEmailAndPassword(email, password);
     }
 
     public Optional<Boolean> monitorExistsByEmail(String email){

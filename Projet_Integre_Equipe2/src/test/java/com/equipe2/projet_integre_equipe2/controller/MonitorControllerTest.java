@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -49,6 +48,7 @@ class MonitorControllerTest {
             .enterpriseName("toto")
             .password("1234")
             .build();
+
     @Test
     public void registerMonitorTest() throws Exception {
         when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
@@ -73,7 +73,7 @@ class MonitorControllerTest {
         Monitor actualDuplicate;
         try {
             actualDuplicate = new ObjectMapper().readValue(emptyResult.getResponse().getContentAsString(), Monitor.class);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             actualDuplicate = null;
         }
@@ -89,10 +89,22 @@ class MonitorControllerTest {
 
         MvcResult result = mockMvc.perform(get("/monitors/monitorEmailExists/toto@toto")
                         .contentType(MediaType.APPLICATION_JSON))
-                        .andReturn();
+                .andReturn();
 
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualMonitor).isEqualTo(true);
+    }
+
+    @Test
+    public void testLoginMonitor() throws Exception {
+        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(Optional.of(monitor));
+
+        MvcResult result = (MvcResult) mockMvc.perform(get("/monitors/bobTest@gmail.com/123Patate@")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualMonitor).isEqualTo(monitor);
     }
 }

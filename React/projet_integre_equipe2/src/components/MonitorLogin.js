@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
+import { useHistory } from 'react-router';
 
-const MonitorLogin = ({ login }) => {
+const MonitorLogin = ({ onLogin }) => {
     const [monitor, setMonitor] = useState({password: "", email: "" });
     const [error, setError] = useState({credentials: ""})
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -12,9 +14,9 @@ const MonitorLogin = ({ login }) => {
             setError({...error, credentials: "Email ou mot de passe incorrect"})
             return
         } else {
-            console.log(monitor)
+            onLogin(monitor.email, monitor.password)
+                .then((data) => data.email != null ? history.push("/Monitor", {monitor}) : alert("Email ou mot de passe incorrect"))
         }
-        login(monitor)
     }
 
     return (
