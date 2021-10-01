@@ -9,5 +9,4 @@ public interface SupervisorRepository extends JpaRepository<Supervisor, Integer>
 
     Supervisor findByMatriculeAndPassword(String matricule, String password);
 
-    boolean existsByMatricule(String matricule);
 }

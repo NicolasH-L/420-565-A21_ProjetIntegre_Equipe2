@@ -3,6 +3,7 @@ package com.equipe2.projet_integre_equipe2.controller;
 import com.equipe2.projet_integre_equipe2.model.Supervisor;
 import com.equipe2.projet_integre_equipe2.service.SupervisorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,24 +28,28 @@ public class SupervisorControllerTest {
     @MockBean
     private SupervisorService supervisorService;
 
-    private Supervisor expected;
+    private Supervisor supervisor;
 
-    @Test
-    public void subscribeSupervisorTest() throws Exception {
-        expected = Supervisor.supervisorBuilder()
-                .firstName("Toto")
-                .lastName("Toto")
+    @BeforeEach
+    void setup() {
+        supervisor = Supervisor.supervisorBuilder()
+                .firstName("toto")
+                .lastName("toto")
                 .matricule("1234567")
                 .password("toto1!")
                 .build();
-        when(supervisorService.registerSupervisor(expected)).thenReturn(Optional.of(expected));
+    }
+
+    @Test
+    public void subscribeSupervisorTest() throws Exception {
+        when(supervisorService.registerSupervisor(supervisor)).thenReturn(Optional.of(supervisor));
 
         MvcResult result = mockMvc.perform(post("/supervisors/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(expected))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(supervisor))).andReturn();
 
         var actualSupervisor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(expected).isEqualTo(actualSupervisor);
+        assertThat(supervisor).isEqualTo(actualSupervisor);
     }
 }

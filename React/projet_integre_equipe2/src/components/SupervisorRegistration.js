@@ -1,14 +1,13 @@
-import _ from 'lodash';
+import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
-import { useHistory } from "react-router-dom";
-
-
+import { useHistory } from "react-router-dom"
+import { RegexPattern } from './RegexPattern'
 
 const SupervisorRegistration = ({ onAdd }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
-    const history = useHistory();
+    const history = useHistory()
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -18,36 +17,34 @@ const SupervisorRegistration = ({ onAdd }) => {
             return
         } else {
             onAdd(supervisor)
-                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existante"))
-                .catch(() => alert("Erreur matricule existante"))
+                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur! matricule existant"))
+                .catch(() => alert("Erreur! matricule existant"))
         }
-
     }
 
     const validateInput = (e) => {
-        let pattern;
-        let inputError;
-        let patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/;
-        let patternMatricule = /^[0-9]{7}$/;
-        let patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        let pattern
+        let inputError
+        let patternName = RegexPattern.getPatternName()
+        let patternMatricule = RegexPattern.getPatternMatricule()
+        let patternPassword = RegexPattern.getPatternPassword()
 
         if (e.target.name === "lastName" || e.target.name === "firstName")
-            pattern = new RegExp(patternName);
+            pattern = new RegExp(patternName)
         else if (e.target.name === "matricule")
             pattern = new RegExp(patternMatricule)
         else if (e.target.name === "password")
             pattern = new RegExp(patternPassword)
 
         if (pattern === undefined)
-            return;
+            return
 
         if (!pattern.test(e.target.value) || e.target.value === "") {
-            e.target.style.borderColor = "red";
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-            inputError = <strong className="text-danger"> <i className="fas fa-exclamation-circle text-danger fa-sm" ></i> Erreur de {e.target.name}!</strong>;
-
+            e.target.style.borderColor = "red"
+            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
+            inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
         } else {
-            e.target.style.borderColor = "#ced4da";
+            e.target.style.borderColor = "#ced4da"
             e.target.style.boxShadow = "none"
             inputError = ""
             setSupervisor({ ...supervisor, [e.target.name]: e.target.value })
