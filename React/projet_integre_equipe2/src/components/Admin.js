@@ -1,5 +1,4 @@
 import React from 'react'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
 import AdminIntershipOffer from './AdminIntershipOffer'
 
 const Admin = () => {
@@ -18,13 +17,12 @@ const Admin = () => {
 
     const monitorEmailExists = async(email) => {
         const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
-        const data = await res.json()
-        return data
+        return await res.json()
     }
 
     return (
         <div>
-            <AdminIntershipOffer onAdd={addOffer} verifyMonitorExists={monitorEmailExists}/>
+            <AdminIntershipOffer verifyMonitorExists={monitorEmailExists} onAdd={addOffer}/>
         </div>
     )
 }
