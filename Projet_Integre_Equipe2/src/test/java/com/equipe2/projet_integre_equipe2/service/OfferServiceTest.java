@@ -1,8 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,9 @@ public class OfferServiceTest {
     @Mock
     private OfferRepository offerRepository;
 
+    @Mock
+    private MonitorRepository monitorRepository;
+
     @InjectMocks
     private OfferService offerService;
 
@@ -29,7 +31,7 @@ public class OfferServiceTest {
 
     @BeforeEach
     void setup(){
-        offer = Offer.offerBuilder()
+        offer = Offer.builder()
                 .companyName("Cegep")
                 .address("Montral")
                 .salary("19")
@@ -47,5 +49,12 @@ public class OfferServiceTest {
         when(offerRepository.save(offer)).thenReturn(offer);
         Optional<Offer> actualOffer = offerService.saveOffer(offer);
         assertThat(actualOffer.get()).isEqualTo(offer);
+    }
+
+    @Test
+    public void testSaveOfferFails(){
+        when(offerRepository.save(offer)).thenReturn(null);
+        Optional<Offer> actualOffer = offerService.saveOffer(offer);
+        assertThat(actualOffer).isEqualTo(Optional.empty());
     }
 }

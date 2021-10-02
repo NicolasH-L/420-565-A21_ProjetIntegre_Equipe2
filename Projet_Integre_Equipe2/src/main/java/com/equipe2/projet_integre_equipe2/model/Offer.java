@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import java.io.Serializable;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Offer implements Serializable {
 
     @Id
@@ -31,20 +34,4 @@ public class Offer implements Serializable {
 
     @OneToOne
     private Monitor monitor;
-
-    @Builder(builderMethodName = "offerBuilder")
-    public Offer(Integer idOffer, String companyName, String address, String salary,
-                 String jobTitle, String description, String skills, String jobSchedules,
-                 String workingHours, String monitorEmail) {
-        this.idOffer = idOffer;
-        this.companyName = companyName;
-        this.address = address;
-        this.salary = salary;
-        this.jobTitle = jobTitle;
-        this.description = description;
-        this.skills = skills;
-        this.jobSchedules = jobSchedules;
-        this.workingHours = workingHours;
-        this.monitorEmail = monitorEmail;
-    }
 }

@@ -1,11 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.Student;
-import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
 import com.equipe2.projet_integre_equipe2.service.OfferService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,14 +28,11 @@ public class OfferControllerTest {
     @MockBean
     private OfferService offerService;
 
-    @MockBean
-    private OfferRepository offerRepository;
-
     private Offer offer;
 
     @BeforeEach
     void setup(){
-        offer = Offer.offerBuilder()
+        offer = Offer.builder()
                 .companyName("Cegep")
                 .address("Montreal")
                 .salary("19")
