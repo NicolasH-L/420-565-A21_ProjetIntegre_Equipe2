@@ -50,4 +50,18 @@ public class SupervisorServiceTest {
         supervisorService.registerSupervisor(supervisor);
         assertThat(supervisorService.registerSupervisor(supervisor)).isEmpty();
     }
+
+    @Test
+    public void testLoginSupervisor() {
+        when(supervisorRepository.findByMatriculeAndPassword(supervisor.getMatricule(), supervisor.getPassword())).thenReturn(supervisor);
+        Optional<Supervisor> actualSupervisor = supervisorService.loginSupervisor(supervisor.getMatricule(), supervisor.getPassword());
+        assertThat(actualSupervisor.get()).isEqualTo(supervisor);
+    }
+
+    @Test
+    public void testLoginSupervisorFails() {
+        when(supervisorRepository.findByMatriculeAndPassword("", "")).thenReturn(null);
+        Optional<Supervisor> actualSupervisor = supervisorService.loginSupervisor("", "");
+        assertThat(actualSupervisor).isEqualTo(Optional.empty());
+    }
 }
