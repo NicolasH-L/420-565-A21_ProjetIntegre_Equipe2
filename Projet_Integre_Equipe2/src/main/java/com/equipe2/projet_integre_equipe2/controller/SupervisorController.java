@@ -21,4 +21,11 @@ public class SupervisorController {
                 .map(supervisor1 -> ResponseEntity.status(HttpStatus.CREATED).body(supervisor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/{matricule}/{password}")
+    public ResponseEntity<Supervisor> loginSupervisor(@PathVariable String matricule, @PathVariable String password){
+        return supervisorService.loginSupervisor(matricule, password)
+                .map(supervisor1 -> ResponseEntity.status(HttpStatus.OK).body(supervisor1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Supervisor()));
+    }
 }

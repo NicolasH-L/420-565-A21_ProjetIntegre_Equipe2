@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(SupervisorController.class)
@@ -51,5 +52,18 @@ public class SupervisorControllerTest {
         var actualSupervisor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(supervisor).isEqualTo(actualSupervisor);
+    }
+
+    @Test
+    public void loginSupervisorTest() throws Exception {
+        when(supervisorService.loginSupervisor(supervisor.getMatricule(), supervisor.getPassword())).thenReturn(Optional.of(supervisor));
+
+        MvcResult result = mockMvc.perform(get("/supervisors/1234567/toto1!")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualStudent).isEqualTo(supervisor);
     }
 }
