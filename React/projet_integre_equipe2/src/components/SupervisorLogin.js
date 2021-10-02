@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
 
-const SupervisorLogin = ({ login }) => {
+const SupervisorLogin = ({ onLogin }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({credentials:"" })
 
@@ -12,9 +12,9 @@ const SupervisorLogin = ({ login }) => {
             setError({...error, credentials: "Matricule ou mot de passe incorrect"})
             return
         } else {
-            console.log(supervisor)
+            onLogin(supervisor.matricule, supervisor.password)
+                .then((data) => data.matricule != null ? history.push("/Supervisor", supervisor) : alert("Erreur de matricule ou mot de passe"))
         }
-        // login(supervisor)
     }
 
     return (
