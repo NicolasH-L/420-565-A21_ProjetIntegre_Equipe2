@@ -2,8 +2,7 @@ package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -24,4 +23,7 @@ public class Monitor extends User implements Serializable {
         this.companyName = companyName;
         this.email = email;
     }
+
+    @OneToOne
+    private Offer offer;
 }
