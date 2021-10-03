@@ -68,6 +68,13 @@ public class OfferServiceTest {
         assertThat(allOffers.get().get(0).getCompanyName()).isEqualTo("Cegep");
     }
 
+    @Test
+    public void testGetAllOffersFails(){
+        when(offerRepository.findAll()).thenReturn(null);
+        final Optional<List<Offer>> allOffers = offerService.getAllOffers();
+        assertThat(allOffers).isEqualTo(Optional.empty());
+    }
+
     private List<Offer> getListOfOffers() {
         List<Offer> offerList = new ArrayList<>();
         offerList.add(Offer.builder()
