@@ -5,6 +5,7 @@ import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +27,9 @@ public class OfferService {
         } catch (Exception exception) {
             return Optional.empty();
         }
+    }
+
+    public Optional<List<Offer>> getAllOffers(){
+        return Optional.of(offerRepository.findAll());
     }
 }
