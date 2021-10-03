@@ -1,6 +1,74 @@
 import React from 'react'
+import { useState } from 'react'
+import _ from 'lodash';
+import { useHistory } from "react-router-dom";
+import './Form.css'
+import { RegexPattern } from './RegexPattern';
+import MonitorNavbar from './MonitorNavbar';
 
 const MonitorInternshipOffer = ({ onAdd }) => {
+    const [offer, setOffer] = useState({
+        companyName: "", address: "", salary: "",
+        jobTitle: "", description: "", skills: "",
+        jobSchedules: "", workingHours: "", monitorEmail: ""
+    })
+    const [error, setError] = useState({
+        companyName: "", address: "", salary: "",
+        jobTitle: "", description: "", skills: "",
+        jobSchedules: "", workingHours: "", monitorEmail: ""
+    })
+    const history = useHistory();
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
+            !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
+            !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
+            _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
+            _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
+            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail)) {
+            alert("Veuillez remplir tous les champs!")
+            return
+        }
+
+        function submitOffer() {
+            onAdd(offer)
+                .then((data) => data.jobTitle != null ? history.push("/monitorsOfferList") : alert("Impossible de créer l'offre, veuillez réessayer!"))
+        }
+    }
+
+    const validateInput = (e) => {
+        let pattern
+        let inputError
+        let patternGeneral = RegexPattern.getPatternGeneral()
+        let patternEmail = RegexPattern.getPatternEmail()
+        let patternCompany = RegexPattern.getPatternCompany()
+        let patternNumber = RegexPattern.getPatternNumber()
+        if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
+            e.target.name === "skills" || e.target.name === "jobSchedules")
+            pattern = new RegExp(patternGeneral)
+        else if (e.target.name === "companyName")
+            pattern = new RegExp(patternCompany)
+        else if (e.target.name === "monitorEmail")
+            pattern = new RegExp(patternEmail)
+        else if (e.target.name === "salary" || e.target.name === "workingHours")
+            pattern = new RegExp(patternNumber)
+
+        if (pattern === undefined)
+            return
+
+        if (!pattern.test(e.target.value) || e.target.value === "") {
+            e.target.style.borderColor = "red"
+            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
+            inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
+        } else {
+            e.target.style.borderColor = "#ced4da"
+            e.target.style.boxShadow = "none"
+            inputError = ""
+            setOffer({ ...offer, [e.target.name]: e.target.value })
+        }
+        setError({ ...error, [e.target.name]: inputError })
+    }
 
     return (
         <div className="grad">
@@ -43,8 +111,9 @@ const MonitorInternshipOffer = ({ onAdd }) => {
                             <label htmlFor="jobType" className="text-secondary"><i className="fas fa-briefcase"></i> Type de postes: </label>
                             {error.jobTitle !== "" ? error.jobTitle : ""}
                             <select className="form-control text-center" id="jobType" name="jobType" placeholder="Entrez le type de postes" onChange={validateInput} required >
-                                <option>Temps plein</option>
-                                <option>Temps partiel</option>
+                                <option value="" selected disabled>Veuillez choisir le type de poste</option>
+                                <option value="Temps plein">Temps plein</option>
+                                <option value="Temps partiel">Temps partiel</option>
                             </select>
                         </div>
                         <div className="form-group">

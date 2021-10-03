@@ -9,6 +9,10 @@
     bottom: 0;
 }
 
+select option[disabled]:first-child {
+	display: none;
+}
+
 @media only screen and (max-width: 1200px) and (min-width: 1001px) {
     .reactivescreen{
       margin-right: 10%;

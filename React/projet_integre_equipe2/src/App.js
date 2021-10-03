@@ -5,6 +5,8 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import AdminIntershipOffer from './components/AdminIntershipOffer';
 import Admin from './components/Admin';
+import Monitor from './components/Monitor';
+import MonitorInternshipOffer from './components/MonitorInternshipOffer';
 import Student from './components/Student';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path = "/Registration" component={Registration}/>
           <Route path = "/Admin" component={Admin}/>
           <Route path = "/AdminOffer" component={AdminIntershipOffer}/>
+          <Route path = "/Monitor" component={Monitor}/>
+          <Route path = "/MonitorOffer" component={MonitorInternshipOffer}/>
           <Route path = "/Student" component={Student}/>
           <Footer/>
         </div>
