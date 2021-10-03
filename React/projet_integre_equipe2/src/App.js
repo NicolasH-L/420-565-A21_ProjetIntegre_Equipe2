@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import AdminIntershipOffer from './components/AdminIntershipOffer';
+import AdminInternshipOfferList from './components/AdminInternshipOfferList';
 import Admin from './components/Admin';
 import Student from './components/Student';
 
@@ -20,7 +21,7 @@ function App() {
           <Route path = "/Registration" component={Registration}/>
           <Route path = "/Admin" component={Admin}/>
           <Route path = "/AdminOffer" component={AdminIntershipOffer}/>
-          <Route path = "/AdminOffersList" component={AdminIntershipOffer}/>
+          <Route path = "/AdminOffersList" component={AdminInternshipOfferList}/>
           <Route path = "/Student" component={Student}/>
           <Footer/>
         </div>

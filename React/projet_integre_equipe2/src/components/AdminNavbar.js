@@ -14,6 +14,9 @@ const AdminNavbar = () => {
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-light" to="/AdminOffer">Déposer offre</Link>
                         </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminOffersList">Offres</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
