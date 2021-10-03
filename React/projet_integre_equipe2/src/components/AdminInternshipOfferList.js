@@ -14,7 +14,7 @@ const AdminInternshipOfferList = () => {
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://localhost:5000/offers')
+        const res = await fetch('http://localhost:8888/offer/getAllOffers')
         return await res.json()
     }
 
