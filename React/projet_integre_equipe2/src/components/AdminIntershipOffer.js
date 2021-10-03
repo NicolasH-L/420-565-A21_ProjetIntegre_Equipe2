@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import './Form.css'
 import { RegexPattern } from './RegexPattern';
 
-const AdminIntershipOffer = ({onAdd, verifyMonitorExists}) => {
+const AdminIntershipOffer = () => {
     const [offer, setOffer] = useState({companyName: "", address: "", salary: "", 
                                         jobTitle: "", description: "", skills: "", 
                                         jobSchedules: "", workingHours: "", monitorEmail: ""})
@@ -33,9 +33,26 @@ const AdminIntershipOffer = ({onAdd, verifyMonitorExists}) => {
         }
 
         function submitOffer() {
-            onAdd(offer)
-                .then((data) => data.jobTitle != null ? history.push("/adminOffersList") : alert("Impossible de créer l'offre, veuillez réessayer!"))
+            addOffer(offer)
+                .then((data) => data.jobTitle != null ? history.push("/AdminOffersList") : alert("Impossible de créer l'offre, veuillez réessayer!"))
         }
+    }
+
+    const addOffer = async (offer) => {
+        const result = await fetch('http://localhost:8888/offer/saveOffer',
+        {
+          method:'POST',
+          headers:{
+            'Content-type': 'application/json'
+          },
+            body: JSON.stringify(offer)
+        })
+        return await result.json()
+    }
+
+    const verifyMonitorExists = async(email) => {
+        const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
+        return await res.json()
     }
 
     const validateInput = (e) => {

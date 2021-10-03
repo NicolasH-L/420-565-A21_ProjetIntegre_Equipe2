@@ -13,11 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(OfferController.class)
 public class OfferControllerTest {
@@ -56,5 +59,39 @@ public class OfferControllerTest {
         var actualOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Offer.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(offer).isEqualTo(actualOffer);
+    }
+
+    @Test
+    public void getAllOffersTest() throws Exception {
+        List<Offer> offerList = getListOfOffers();
+        when(offerService.getAllOffers()).thenReturn(Optional.of(offerList));
+
+        MvcResult result = mockMvc.perform(get("/offer/getAllOffers")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Offer> getListOfOffers() {
+        List<Offer> offerList = new ArrayList<>();
+        offerList.add(Offer.builder()
+                .companyName("Cegep")
+                .salary("19")
+                .jobTitle("Developper")
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep2")
+                .salary("20")
+                .jobTitle("Developper2")
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep3")
+                .salary("21")
+                .jobTitle("Developper3")
+                .build());
+        return offerList;
     }
 }

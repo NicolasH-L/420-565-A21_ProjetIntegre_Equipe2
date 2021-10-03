@@ -31,6 +31,8 @@ public class Offer implements Serializable {
     private String jobSchedules;
     private String workingHours;
     private String monitorEmail;
+    private boolean isValid;
+    private String state;
 
     @OneToOne
     private Monitor monitor;
