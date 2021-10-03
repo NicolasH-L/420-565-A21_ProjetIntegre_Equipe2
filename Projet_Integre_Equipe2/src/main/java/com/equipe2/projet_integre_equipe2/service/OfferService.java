@@ -30,6 +30,11 @@ public class OfferService {
     }
 
     public Optional<List<Offer>> getAllOffers(){
-        return Optional.of(offerRepository.findAll());
+        try {
+            return Optional.of(offerRepository.findAll());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
     }
 }
