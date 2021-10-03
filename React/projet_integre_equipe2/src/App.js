@@ -20,6 +20,7 @@ function App() {
           <Route path = "/Registration" component={Registration}/>
           <Route path = "/Admin" component={Admin}/>
           <Route path = "/AdminOffer" component={AdminIntershipOffer}/>
+          <Route path = "/AdminOffersList" component={AdminIntershipOffer}/>
           <Route path = "/Student" component={Student}/>
           <Footer/>
         </div>
