@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import './Form.css'
 import { RegexPattern } from './RegexPattern';
 
-const AdminIntershipOffer = () => {
+const AdminInternshipOffer = () => {
     const [offer, setOffer] = useState({companyName: "", address: "", salary: "", 
                                         jobTitle: "", description: "", skills: "", 
                                         jobSchedules: "", workingHours: "", monitorEmail: ""})
@@ -150,4 +150,4 @@ const AdminIntershipOffer = () => {
     )
 }
 
-export default AdminIntershipOffer
+export default AdminInternshipOffer
