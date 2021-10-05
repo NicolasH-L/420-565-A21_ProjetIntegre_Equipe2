@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import _ from 'lodash';
 import { useHistory } from "react-router-dom";
-import { useLocation } from 'react-router';
 import './Form.css'
 import { RegexPattern } from './RegexPattern';
 import MonitorNavbar from './MonitorNavbar';
@@ -19,40 +18,32 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         jobSchedules: "", workingHours: "", monitorEmail: ""
     })
     const history = useHistory();
-    const location = useLocation();
 
     const onSubmit = (e) => {
-        console.log("history : " + history.state)
-        console.log("Offer : " + offer)
+        console.log(offer)
         e.preventDefault()
-        setOffer({ ...offer, "monitorEmail" : "test@gmail.com"})
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
             !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
             !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
-            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) /* ||_.isEmpty(offer.monitorEmail*/) {
-            alert("Veuillez remplir tous les champs!")
-            return
-        } else {
-            verifyMonitorExists(offer.monitorEmail)
-                .then((data) => data ? submitOffer() : alert("Aucun moniteur existant avec cet email!"))
-        }
+            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail)) {
+                alert("Veuillez remplir tous les champs!")
+                return
+            } else{
+                verifyMonitorExists(offer.monitorEmail)
+                .then((data) => data ? submitOffer(): alert("Aucun moniteur existant avec cet email!"))
+            }
 
         function submitOffer() {
             addOffer(offer)
                 .then((data) => data.jobTitle != null ? history.push("/monitorofferlist") : alert("Impossible de créer l'offre, veuillez réessayer!"))
-            // On redirige ou le moniteur apres avoir soumit son offre de stage?
+                // On redirige ou le moniteur apres avoir soumit son offre de stage?
         }
     }
 
-    const verifyMonitorExists = async (email) => {
-        const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
-        return await res.json()
-    }
-
     const addOffer = async (offer) => {
-        const result = await fetch('http://localhost:8888/offer/saveOffer',
+        const result = await fetch('http://localhost:8888/offer/saveoffer',
             {
                 method: 'POST',
                 headers: {
@@ -67,27 +58,28 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         let pattern
         let inputError
         let patternGeneral = RegexPattern.getPatternGeneral()
-        // let patternEmail = RegexPattern.getPatternEmail()
+        let patternEmail = RegexPattern.getPatternEmail()
         let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
 
+        
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills")
             pattern = new RegExp(patternGeneral)
         else if (e.target.name === "companyName")
             pattern = new RegExp(patternCompany)
-        // else if (e.target.name === "monitorEmail")
-        //     pattern = new RegExp(patternEmail)
+        else if (e.target.name === "monitorEmail")
+            pattern = new RegExp(patternEmail)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)
         else if (e.target.name === "jobSchedules")
             console.log("pattern : " + pattern)
 
-        if (pattern === undefined && e.target.name === "jobSchedule" && e.target.value === "") {
+        if (pattern === undefined && e.target.name === "jobSchedule" && e.target.value === ""){
             e.target.style.borderColor = "red"
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
             inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
-        } else if (pattern !== undefined && !pattern.test(e.target.value) || e.target.value === "") {
+        }else if (!pattern == undefined && !pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red"
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
             inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
@@ -99,6 +91,12 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         }
         setError({ ...error, [e.target.name]: inputError })
     }
+
+    // const setScheduleOptions = (e) => {
+    //     console.log(e.target.value)
+    //     if(e.target.value !== "")
+    //         setOffer({ ...offer, [e.target.name]: e.target.value})
+    // }
 
     return (
         <div className="grad">
@@ -139,7 +137,8 @@ const MonitorInternshipOffer = ({ onAdd }) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
-                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value="test@gmail.com" disabled />
+                            {error.monitorEmail !== "" ? error.monitorEmail : ""}
+                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" placeholder="Entrez l'email du représentant" onChange={validateInput}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
