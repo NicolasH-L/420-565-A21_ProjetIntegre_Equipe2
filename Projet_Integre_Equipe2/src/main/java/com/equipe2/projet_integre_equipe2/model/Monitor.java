@@ -2,8 +2,7 @@ package com.equipe2.projet_integre_equipe2.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data

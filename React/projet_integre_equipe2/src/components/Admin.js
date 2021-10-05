@@ -1,10 +1,10 @@
 import React from 'react'
-import AdminIntershipOffer from './AdminIntershipOffer'
+import AdminInternshipOfferList from './AdminInternshipOfferList'
 
 const Admin = () => {
     return (
         <div className="grad">
-            <AdminIntershipOffer/>
+            <AdminInternshipOfferList/>
         </div>
     )
 }
