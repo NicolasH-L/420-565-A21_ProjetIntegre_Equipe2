@@ -7,6 +7,7 @@ import AdminIntershipOffer from './components/AdminIntershipOffer';
 import AdminInternshipOfferList from './components/AdminInternshipOfferList';
 import Admin from './components/Admin';
 import Student from './components/Student';
+import StudentUploadCV from './components/StudentUploadCV';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <div>
           <Route path = "/" exact render={(props) => (
           <>
-            <Login/>
+            <StudentUploadCV/>
           </>
         )}/>
           <Route path = "/Login" component={Login}/>
