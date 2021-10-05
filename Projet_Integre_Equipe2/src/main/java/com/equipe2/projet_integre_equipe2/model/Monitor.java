@@ -23,7 +23,4 @@ public class Monitor extends User implements Serializable {
         this.companyName = companyName;
         this.email = email;
     }
-
-    @OneToOne
-    private Offer offer;
 }
