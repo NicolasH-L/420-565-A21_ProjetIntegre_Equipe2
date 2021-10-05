@@ -7,21 +7,26 @@ import { RegexPattern } from './RegexPattern';
 import MonitorNavbar from './MonitorNavbar';
 
 const MonitorInternshipOffer = ({ onAdd }) => {
+    const history = useHistory()
+    const historyState = useHistory().location.state;
+    const emailMonitor = historyState.email
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: ""
+        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor
     })
     const [error, setError] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
         jobSchedules: "", workingHours: "", monitorEmail: ""
     })
-    const history = useHistory();
+    // logs
+    console.log(historyState)
 
     const onSubmit = (e) => {
         console.log(offer)
         e.preventDefault()
+        setOffer({ ...offer, "monitorEmail": "test@gmail.com" })
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
             !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
             !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
@@ -58,18 +63,14 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         let pattern
         let inputError
         let patternGeneral = RegexPattern.getPatternGeneral()
-        let patternEmail = RegexPattern.getPatternEmail()
         let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
-
         
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills")
             pattern = new RegExp(patternGeneral)
         else if (e.target.name === "companyName")
             pattern = new RegExp(patternCompany)
-        else if (e.target.name === "monitorEmail")
-            pattern = new RegExp(patternEmail)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)
         else if (e.target.name === "jobSchedules")
@@ -137,8 +138,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
-                            {error.monitorEmail !== "" ? error.monitorEmail : ""}
-                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" placeholder="Entrez l'email du représentant" onChange={validateInput}/>
+                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
                         </div>
                         <div className="form-group">
                             <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
