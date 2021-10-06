@@ -33,6 +33,10 @@ public class Offer implements Serializable {
     private String monitorEmail;
     private boolean isValid;
     private String state;
+    private String displayDate;
+    private String deadlineDate;
+    private String startInternshipDate;
+    private String endInternshipDate;
 
     @OneToOne
     private Monitor monitor;

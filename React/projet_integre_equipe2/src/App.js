@@ -9,6 +9,7 @@ import Admin from './components/Admin';
 import Monitor from './components/Monitor';
 import MonitorInternshipOffer from './components/MonitorInternshipOffer';
 import Student from './components/Student';
+import Supervisor from './components/Supervisor';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path = "/Monitor" component={Monitor}/>
           <Route path = "/MonitorOffer" component={MonitorInternshipOffer}/>
           <Route path = "/Student" component={Student}/>
+          <Route path = "/Supervisor" component={Supervisor}/>
           <Footer/>
         </div>
       </Router>

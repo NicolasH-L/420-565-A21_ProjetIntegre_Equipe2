@@ -7,22 +7,33 @@ import './Form.css'
 import { RegexPattern } from './RegexPattern';
 
 const AdminInternshipOffer = () => {
-    const [offer, setOffer] = useState({companyName: "", address: "", salary: "", 
-                                        jobTitle: "", description: "", skills: "", 
-                                        jobSchedules: "", workingHours: "", monitorEmail: ""})
-    const [error, setError] = useState({companyName: "", address: "", salary: "", 
-                                        jobTitle: "", description: "", skills: "", 
-                                        jobSchedules: "", workingHours: "", monitorEmail: ""})
+    const [offer, setOffer] = useState({
+        companyName: "", address: "", salary: "",
+        jobTitle: "", description: "", skills: "",
+        jobSchedules: "", workingHours: "", monitorEmail: "",
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
+    })
+    const [error, setError] = useState({
+        companyName: "", address: "", salary: "",
+        jobTitle: "", description: "", skills: "",
+        jobSchedules: "", workingHours: "", monitorEmail: "",
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
+    })
     const history = useHistory();
+    const timeElapsed = Date.now()
+    const today = new Date(timeElapsed).toISOString().split('T')[0]
+    console.log(today)
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
-            !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) || 
+            !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
             !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
+            !_.isEmpty(error.displayDate) || !_.isEmpty(error.deadlineDate) || !_.isEmpty(error.startInternshipDate) || !_.isEmpty(error.endInternshipDate) ||
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
-            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail)){
+            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail ||
+            _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
 
             alert("Veuillez remplir tous les champs!")
 
@@ -40,17 +51,17 @@ const AdminInternshipOffer = () => {
 
     const addOffer = async (offer) => {
         const result = await fetch('http://localhost:8888/offer/saveOffer',
-        {
-          method:'POST',
-          headers:{
-            'Content-type': 'application/json'
-          },
-            body: JSON.stringify(offer)
-        })
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(offer)
+            })
         return await result.json()
     }
 
-    const verifyMonitorExists = async(email) => {
+    const verifyMonitorExists = async (email) => {
         const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
         return await res.json()
     }
@@ -62,19 +73,20 @@ const AdminInternshipOffer = () => {
         let patternEmail = RegexPattern.getPatternEmail()
         let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
-        if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" || 
-            e.target.name === "skills" || e.target.name === "jobSchedules")
+        if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
+            e.target.name === "skills" || e.target.name === "jobSchedules" || e.target.name === "displayDate" || e.target.name === "deadlineDate" ||
+            e.target.name === "startInternshipDate" || e.target.name === "endInternshipDate")
             pattern = new RegExp(patternGeneral)
-        else  if (e.target.name === "companyName")
+        else if (e.target.name === "companyName")
             pattern = new RegExp(patternCompany)
-        else  if (e.target.name === "monitorEmail")
+        else if (e.target.name === "monitorEmail")
             pattern = new RegExp(patternEmail)
-        else  if (e.target.name === "salary" || e.target.name === "workingHours")
+        else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)
-        
+
         if (pattern === undefined)
             return
-        
+
         if (!pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red"
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
@@ -90,7 +102,7 @@ const AdminInternshipOffer = () => {
 
     return (
         <div className="grad">
-            <AdminNavbar/>
+            <AdminNavbar />
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-secondary text-center">Déposer offre de stage</h2>
@@ -139,6 +151,26 @@ const AdminInternshipOffer = () => {
                             <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
                             {error.description !== "" ? error.description : ""}
                             <textarea type="text" className="form-control text-center" id="description" name="description" rows="3" onChange={validateInput} required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Display Date:</label>
+                            {error.displayDate !== "" ? error.displayDate : ""}
+                            <input type="date" min={today} max="2022-05-03" id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Deadline Date:</label>
+                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
+                            <input type="date" min={today} max="2022-05-03" id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Start Internship</label>
+                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
+                            <input type="date" min={today} max="2022-05-03" id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> End Internship</label>
+                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
+                            <input type="date" min={today} max="2022-05-03" id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="d-flex justify-content-center">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
