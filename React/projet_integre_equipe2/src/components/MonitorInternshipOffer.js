@@ -65,6 +65,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         let patternGeneral = RegexPattern.getPatternGeneral()
         let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
+
         
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills")
