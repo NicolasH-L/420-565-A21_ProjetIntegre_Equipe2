@@ -10,6 +10,7 @@ import Monitor from './components/Monitor';
 import MonitorInternshipOffer from './components/MonitorInternshipOffer';
 import Student from './components/Student';
 import Supervisor from './components/Supervisor';
+import StudentUploadCV from './components/StudentUploadCV';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <div>
           <Route path = "/" exact render={(props) => (
           <>
-            <Login/>
+            <StudentUploadCV/>
           </>
         )}/>
           <Route path = "/Login" component={Login}/>
