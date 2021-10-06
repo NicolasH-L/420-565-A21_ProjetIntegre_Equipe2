@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,11 +18,13 @@ public class DocumentController {
     @Autowired
     DocumentService documentService;
 
+
     @ResponseBody
     @PostMapping(value = "/uploadcv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> ReceiveDocument(@RequestParam(name="uploadFile",required = false) MultipartFile uploadFile) throws IOException {
         String content = new String(uploadFile.getBytes());
         System.out.println(content);
+        System.out.println(java.net.URLDecoder.decode(uploadFile.getOriginalFilename(), StandardCharsets.UTF_8));
         return ResponseEntity.ok().build();
     }
 
