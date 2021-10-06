@@ -10,6 +10,7 @@ import Monitor from './components/Monitor';
 import MonitorInternshipOffer from './components/MonitorInternshipOffer';
 import Student from './components/Student';
 import StudentUploadCV from './components/StudentUploadCV';
+import OfferView from './components/OfferView';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path = "/Monitor" component={Monitor}/>
           <Route path = "/MonitorOffer" component={MonitorInternshipOffer}/>
           <Route path = "/Student" component={Student}/>
+          <Route path = "/OfferView" component={OfferView}/>
           <Footer/>
         </div>
       </Router>
