@@ -34,6 +34,7 @@ public class OfferServiceTest {
     @BeforeEach
     void setup(){
         offer = Offer.builder()
+                .idOffer(1)
                 .companyName("Cegep")
                 .address("Montral")
                 .salary("19")
@@ -43,6 +44,8 @@ public class OfferServiceTest {
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
+                .isValid(false)
+                .state("Invalide")
                 .build();
     }
 
@@ -73,6 +76,24 @@ public class OfferServiceTest {
         when(offerRepository.findAll()).thenReturn(null);
         final Optional<List<Offer>> allOffers = offerService.getAllOffers();
         assertThat(allOffers).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testAcceptOffer(){
+        when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
+        when(offerRepository.saveAndFlush(offer)).thenReturn(offer);
+        Optional<Offer> actualOffer = offerService.acceptOffer(offer.getIdOffer());
+        assertThat(actualOffer.get().getCompanyName()).isEqualTo("Cegep");
+        assertThat(actualOffer.get().getState()).isEqualTo("Valide");
+        assertThat(actualOffer.get().isValid()).isTrue();
+    }
+
+    @Test
+    public void testAcceptOfferFails(){
+        when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
+        when(offerRepository.saveAndFlush(offer)).thenReturn(null);
+        Optional<Offer> actualOffer = offerService.acceptOffer(offer.getIdOffer());
+        assertThat(actualOffer).isEqualTo(Optional.empty());
     }
 
     private List<Offer> getListOfOffers() {
