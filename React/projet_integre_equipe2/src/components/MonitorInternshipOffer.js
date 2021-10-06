@@ -9,8 +9,12 @@ import MonitorNavbar from './MonitorNavbar';
 const MonitorInternshipOffer = ({ onAdd }) => {
     const history = useHistory()
     const historyState = useHistory().location.state;
-    const emailMonitor = historyState.email
-    const company = historyState.companyName
+    var emailMonitor
+    var company
+    if (historyState != undefined){
+        emailMonitor = historyState.email
+        company = historyState.companyName
+    }
 
     const [offer, setOffer] = useState({
         companyName: company, address: "", salary: "",
@@ -23,10 +27,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         jobSchedules: "", workingHours: "", monitorEmail: ""
     })
     const onSubmit = (e) => {
-        console.log(offer)
         e.preventDefault()
-        // cette ligne permet de reset le formulaire
-        document.getElementById("monitorInternshipForm").reset()
 
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
             !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
@@ -43,11 +44,15 @@ const MonitorInternshipOffer = ({ onAdd }) => {
 
         function submitOffer() {
             addOffer(offer)
-                .then((data) => data.jobTitle != null ? history.push("/Monitor", history) : alert("Impossible de créer l'offre, veuillez réessayer!"))
-                .then(alert("Ajout de l'offre de stage avec succès"))
+                .then((data) => data.jobTitle != null ? submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
                 .catch((err) => console.log(err))
-            // On redirige ou le moniteur apres avoir soumit son offre de stage?
         }
+    }
+
+    function submitOfferSuccess(){
+        alert("Ajout de l'offre de stage avec succès")
+        document.getElementById("monitorInternshipForm").reset()
+        history.push("/Monitor", history)
     }
 
     const verifyMonitorExists = async (email) => {
