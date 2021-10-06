@@ -10,29 +10,30 @@ const MonitorInternshipOffer = ({ onAdd }) => {
     const history = useHistory()
     const historyState = useHistory().location.state;
     const emailMonitor = historyState.email
+    const company = historyState.companyName
+
     const [offer, setOffer] = useState({
-        companyName: "", address: "", salary: "",
+        companyName: company, address: "", salary: "",
         jobTitle: "", description: "", skills: "",
         jobSchedules: "", workingHours: "", monitorEmail: emailMonitor
     })
     const [error, setError] = useState({
-        companyName: "", address: "", salary: "",
+        address: "", salary: "",
         jobTitle: "", description: "", skills: "",
         jobSchedules: "", workingHours: "", monitorEmail: ""
     })
-    // logs
-    console.log(historyState)
-
     const onSubmit = (e) => {
         console.log(offer)
         e.preventDefault()
-        setOffer({ ...offer, "monitorEmail": "test@gmail.com" })
+        // cette ligne permet de reset le formulaire
+        document.getElementById("monitorInternshipForm").reset()
+
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
             !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
             !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
-            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) /* ||_.isEmpty(offer.monitorEmail*/) {
+            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours)) {
             alert("Veuillez remplir tous les champs!")
             return
         } else {
@@ -42,7 +43,9 @@ const MonitorInternshipOffer = ({ onAdd }) => {
 
         function submitOffer() {
             addOffer(offer)
-                .then((data) => data.jobTitle != null ? history.push("/monitorofferlist") : alert("Impossible de créer l'offre, veuillez réessayer!"))
+                .then((data) => data.jobTitle != null ? history.push("/Monitor", history) : alert("Impossible de créer l'offre, veuillez réessayer!"))
+                .then(alert("Ajout de l'offre de stage avec succès"))
+                .catch((err) => console.log(err))
             // On redirige ou le moniteur apres avoir soumit son offre de stage?
         }
     }
@@ -68,14 +71,11 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         let pattern
         let inputError
         let patternGeneral = RegexPattern.getPatternGeneral()
-        let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
 
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills")
             pattern = new RegExp(patternGeneral)
-        else if (e.target.name === "companyName")
-            pattern = new RegExp(patternCompany)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)
         else if (e.target.name === "jobSchedules")
@@ -104,11 +104,10 @@ const MonitorInternshipOffer = ({ onAdd }) => {
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-secondary text-center">Déposer offre de stage</h2>
-                    <form className="container-fluid" onSubmit={onSubmit}>
+                    <form className="container-fluid" id="monitorInternshipForm" onSubmit={onSubmit}>
                         <div className="form-group">
                             <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
-                            {error.companyName !== "" ? error.companyName : ""}
-                            <input type="text" className="form-control text-center" id="companyName" name="companyName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required />
+                            <input type="text" className="form-control text-center" id="companyName" name="companyName" value={company} disabled />
                         </div>
                         <div className="form-group">
                             <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
