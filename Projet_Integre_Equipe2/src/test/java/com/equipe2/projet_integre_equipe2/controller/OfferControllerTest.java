@@ -45,6 +45,10 @@ public class OfferControllerTest {
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
+                .displayDate("2021-10-15")
+                .deadlineDate("2021-10-30")
+                .startInternshipDate("2021-10-30")
+                .endInternshipDate("2021-12-30")
                 .build();
     }
 

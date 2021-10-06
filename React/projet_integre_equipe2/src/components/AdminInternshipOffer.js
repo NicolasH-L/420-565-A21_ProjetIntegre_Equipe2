@@ -22,7 +22,9 @@ const AdminInternshipOffer = () => {
     const history = useHistory();
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    console.log(today)
+    let futureDate = new Date(timeElapsed)
+    futureDate.setDate(futureDate.getDate() + 220)
+    let futureDateFormat = futureDate.toISOString().split('T')[0]
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -33,20 +35,27 @@ const AdminInternshipOffer = () => {
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
             _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail ||
-            _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
+                _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
 
-            alert("Veuillez remplir tous les champs!")
+            alert("Veuillez remplir tous les champs correctement!")
 
             return
         } else {
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
+            
         }
 
         function submitOffer() {
             addOffer(offer)
-                .then((data) => data.jobTitle != null ? history.push("/AdminOffersList") : alert("Impossible de créer l'offre, veuillez réessayer!"))
+                .then((data) => data.jobTitle != null ? submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
         }
+
+        function submitOfferSuccess() {
+            alert("Offre déposée avec succès")
+            document.getElementById("AdminInternshipOfferForm").reset()
+        }
+        
     }
 
     const addOffer = async (offer) => {
@@ -106,7 +115,7 @@ const AdminInternshipOffer = () => {
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-secondary text-center">Déposer offre de stage</h2>
-                    <form className="container-fluid" onSubmit={onSubmit}>
+                    <form className="container-fluid" id="AdminInternshipOfferForm" onSubmit={onSubmit}>
                         <div className="form-group">
                             <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
                             {error.companyName !== "" ? error.companyName : ""}
@@ -155,22 +164,22 @@ const AdminInternshipOffer = () => {
                         <div className="form-group">
                             <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Display Date:</label>
                             {error.displayDate !== "" ? error.displayDate : ""}
-                            <input type="date" min={today} max="2022-05-03" id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={futureDateFormat} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Deadline Date:</label>
                             {error.deadlineDate !== "" ? error.deadlineDate : ""}
-                            <input type="date" min={today} max="2022-05-03" id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={futureDateFormat} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Start Internship</label>
-                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
-                            <input type="date" min={today} max="2022-05-03" id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> End Internship</label>
-                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
-                            <input type="date" min={today} max="2022-05-03" id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="d-flex justify-content-center">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
