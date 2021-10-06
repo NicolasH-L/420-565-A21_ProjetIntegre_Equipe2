@@ -162,22 +162,22 @@ const AdminInternshipOffer = () => {
                             <textarea type="text" className="form-control text-center" id="description" name="description" rows="3" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Display Date:</label>
+                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
                             {error.displayDate !== "" ? error.displayDate : ""}
                             <input type="date" min={today} max={futureDateFormat} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Deadline Date:</label>
+                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
                             {error.deadlineDate !== "" ? error.deadlineDate : ""}
                             <input type="date" min={today} max={futureDateFormat} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Start Internship</label>
+                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
                             {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
                             <input type="date" min={today} max={futureDateFormat} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> End Internship</label>
+                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
                             {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
                             <input type="date" min={today} max={futureDateFormat} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
