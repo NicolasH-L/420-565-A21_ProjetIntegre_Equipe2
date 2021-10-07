@@ -2,36 +2,51 @@ import React from 'react'
 import { useState } from 'react'
 import _ from 'lodash';
 import { useHistory } from "react-router-dom";
-import { useLocation } from 'react-router';
 import './Form.css'
 import { RegexPattern } from './RegexPattern';
 import MonitorNavbar from './MonitorNavbar';
 
 const MonitorInternshipOffer = ({ onAdd }) => {
+    const history = useHistory()
+    const historyState = useHistory().location.state;
+    const timeElapsed = Date.now()
+    const today = new Date(timeElapsed).toISOString().split('T')[0]
+    let futureDate = new Date(timeElapsed)
+    futureDate.setDate(futureDate.getDate() + 220)
+    let futureDateFormat = futureDate.toISOString().split('T')[0]
+
+    let emailMonitor
+    let company
+    if (historyState != undefined) {
+        emailMonitor = historyState.email
+        company = historyState.companyName
+    }
+
     const [offer, setOffer] = useState({
-        companyName: "", address: "", salary: "",
+        companyName: company, address: "", salary: "",
         jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: ""
+        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor,
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
     const [error, setError] = useState({
-        companyName: "", address: "", salary: "",
-        jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: ""
+        address: "", salary: "", jobTitle: "", description: "",
+        skills: "", jobSchedules: "", workingHours: "",
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
-    const history = useHistory();
-    const location = useLocation();
-
     const onSubmit = (e) => {
-        console.log("history : " + history.state)
-        console.log("Offer : " + offer)
         e.preventDefault()
-        setOffer({ ...offer, "monitorEmail" : "test@gmail.com"})
-        if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
-            !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
-            !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
+
+        if (!_.isEmpty(error.address) || !_.isEmpty(error.salary) || !_.isEmpty(error.jobTitle) ||
+            !_.isEmpty(error.description) || !_.isEmpty(error.skills) || !_.isEmpty(error.jobSchedules) ||
+            !_.isEmpty(error.workingHours) || !_.isEmpty(error.displayDate) || !_.isEmpty(error.deadlineDate) ||
+            !_.isEmpty(error.startInternshipDate) || !_.isEmpty(error.endInternshipDate) ||
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
-            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) /* ||_.isEmpty(offer.monitorEmail*/) {
+            _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail) 
+            ||
+            _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) ||
+            _.isEmpty(offer.endInternshipDate)
+            ) {
             alert("Veuillez remplir tous les champs!")
             return
         } else {
@@ -41,9 +56,15 @@ const MonitorInternshipOffer = ({ onAdd }) => {
 
         function submitOffer() {
             addOffer(offer)
-                .then((data) => data.jobTitle != null ? history.push("/monitorofferlist") : alert("Impossible de créer l'offre, veuillez réessayer!"))
-            // On redirige ou le moniteur apres avoir soumit son offre de stage?
+                .then((data) => data.jobTitle != null ? submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
+                .catch((err) => console.log(err))
         }
+    }
+
+    function submitOfferSuccess() {
+        alert("Ajout de l'offre de stage avec succès")
+        document.getElementById("monitorInternshipForm").reset()
+        history.push("/Monitor", history)
     }
 
     const verifyMonitorExists = async (email) => {
@@ -67,27 +88,17 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         let pattern
         let inputError
         let patternGeneral = RegexPattern.getPatternGeneral()
-        // let patternEmail = RegexPattern.getPatternEmail()
-        let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
 
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills")
             pattern = new RegExp(patternGeneral)
-        else if (e.target.name === "companyName")
-            pattern = new RegExp(patternCompany)
-        // else if (e.target.name === "monitorEmail")
-        //     pattern = new RegExp(patternEmail)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)
         else if (e.target.name === "jobSchedules")
             console.log("pattern : " + pattern)
 
-        if (pattern === undefined && e.target.name === "jobSchedule" && e.target.value === "") {
-            e.target.style.borderColor = "red"
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
-            inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
-        } else if (pattern !== undefined && !pattern.test(e.target.value) || e.target.value === "") {
+        if (pattern === undefined && e.target.name === "jobSchedules" && e.target.value === "DEFAULT" ||  pattern !== undefined && !pattern.test(e.target.value) || e.target.value === "") {
             e.target.style.borderColor = "red"
             e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
             inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
@@ -106,11 +117,10 @@ const MonitorInternshipOffer = ({ onAdd }) => {
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-secondary text-center">Déposer offre de stage</h2>
-                    <form className="container-fluid" onSubmit={onSubmit}>
+                    <form className="container-fluid" id="monitorInternshipForm" onSubmit={onSubmit}>
                         <div className="form-group">
                             <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
-                            {error.companyName !== "" ? error.companyName : ""}
-                            <input type="text" className="form-control text-center" id="companyName" name="companyName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required />
+                            <input type="text" className="form-control text-center" id="companyName" name="companyName" value={company} disabled />
                         </div>
                         <div className="form-group">
                             <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
@@ -130,16 +140,16 @@ const MonitorInternshipOffer = ({ onAdd }) => {
                         <div className="form-group">
                             <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
                             {error.description !== "" ? error.description : ""}
-                            <textarea type="text" className="form-control text-center" id="description" name="description" rows="3" onChange={validateInput} required />
+                            <textarea type="text" className="form-control text-center" id="description" name="description" rows="3" placeholder="Entrez la description"  onChange={validateInput} required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="skills" className="text-secondary"><i className="fas fa-book"></i> Compétences: </label>
                             {error.skills !== "" ? error.skills : ""}
-                            <textarea type="text" className="form-control text-center" id="skills" name="skills" rows="3" onChange={validateInput} required />
+                            <textarea type="text" className="form-control text-center" id="skills" name="skills" rows="3" placeholder="Entrez les compétences" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
-                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value="test@gmail.com" disabled />
+                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
                         </div>
                         <div className="form-group">
                             <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
@@ -147,15 +157,35 @@ const MonitorInternshipOffer = ({ onAdd }) => {
                             <input type="text" className="form-control text-center" id="workingHours" name="workingHours" placeholder="Entrez le nombre d'heures de travail" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="jobType" className="text-secondary"><i className="fas fa-calendar-alt"></i> Horaire de travail: </label>
+                            <label htmlFor="jobSchedules" className="text-secondary"><i className="fas fa-calendar-alt"></i> Horaire de travail: </label>
                             {error.jobSchedules !== "" ? error.jobSchedules : ""}
-                            <select defaultValue={'DEFAULT'} className="form-control text-center" id="jobSchedules" name="jobSchedules" onChange={validateInput} required >
-                                <option value="DEFAULT" disabled>Veuillez choisir le type d'horaire</option>
+                            <select defaultValue={'DEFAULT'} className="form-control text-center" id="jobSchedules" name="jobSchedules" onChange={validateInput} required>
+                                <option value="DEFAULT">Veuillez choisir le type d'horaire</option>
                                 <option value="Temps plein">Temps plein</option>
                                 <option value="Temps partiel">Temps partiel</option>
                                 <option value="Jour">Jour</option>
                                 <option value="Soir">Soir</option>
                             </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
+                            {error.displayDate !== "" ? error.displayDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
+                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
+                            {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
+                            {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
+                            <input type="date" min={today} max={futureDateFormat} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="d-flex justify-content-center">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>

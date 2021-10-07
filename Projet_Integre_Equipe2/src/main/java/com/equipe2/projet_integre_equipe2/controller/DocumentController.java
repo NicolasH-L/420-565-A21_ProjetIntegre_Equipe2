@@ -13,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-//@RequestMapping("/document")
 public class DocumentController {
 
     @Autowired
