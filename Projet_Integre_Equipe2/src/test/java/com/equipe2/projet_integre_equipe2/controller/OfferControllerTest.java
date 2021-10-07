@@ -49,6 +49,10 @@ public class OfferControllerTest {
                 .monitorEmail("cegep@email.com")
                 .isValid(false)
                 .state("Invalide")
+                .displayDate("2021-10-15")
+                .deadlineDate("2021-10-30")
+                .startInternshipDate("2021-10-30")
+                .endInternshipDate("2021-12-30")
                 .build();
     }
 
