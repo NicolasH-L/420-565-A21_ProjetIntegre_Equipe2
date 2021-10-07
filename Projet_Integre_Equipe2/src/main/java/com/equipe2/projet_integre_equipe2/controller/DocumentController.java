@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,7 +16,6 @@ public class DocumentController {
 
     @Autowired
     DocumentService documentService;
-
 
     @ResponseBody
     @PostMapping(value = "/uploadcv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
