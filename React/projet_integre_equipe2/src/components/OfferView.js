@@ -49,6 +49,22 @@ const OfferView = () => {
                             <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
                             <textarea type="text" className="form-control" id="description" name="description" rows="3" value={offer.description} readOnly/>
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
+                            <input type="text" id="displayDate" name="displayDate" className="form-control text-center" value={offer.displayDate} readOnly></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
+                            <input type="text" id="deadlineDate" name="deadlineDate" className="form-control text-center" value={offer.deadlineDate} readOnly></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
+                            <input type="text" id="startInternshipDate" name="startInternshipDate" className="form-control text-center" value={offer.startInternshipDate} readOnly></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
+                            <input type="text" id="endInternshipDate" name="endInternshipDate" className="form-control text-center" value={offer.endInternshipDate} readOnly></input>
+                        </div>
                     </form>
                 </div>
             </div>

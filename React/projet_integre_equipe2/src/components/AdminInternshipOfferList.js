@@ -71,6 +71,7 @@ const AdminInternshipOfferList = () => {
                             <th scope="col">Entreprise</th>
                             <th scope="col">Poste</th>
                             <th scope="col">Salaire</th>
+                            <th scope="col">Date d'affichage</th>
                             <th scope="col">Validité</th>
                             <th scope="col"></th>
                         </tr>
@@ -81,6 +82,7 @@ const AdminInternshipOfferList = () => {
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
                                 <td>{offer.salary}$</td>
+                                <td>{offer.displayDate}</td>
                                 <td>{offer.state}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }} >Afficher</button>
