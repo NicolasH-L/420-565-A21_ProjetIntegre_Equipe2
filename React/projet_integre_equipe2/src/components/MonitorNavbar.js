@@ -1,7 +1,12 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const MonitorNavbar = () => {
+    let history = useHistory()
+    let historyState = history.location.state
+    function goToMonitorOffer(){
+        history.push("/MonitorOffer", historyState)
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -12,7 +17,7 @@ const MonitorNavbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
-                            <Link className="nav-link btn btn-light" to="/">Déposer offre</Link>
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOffer}>Déposer offre</button>
                         </li>
                     </ul>
                 </div>

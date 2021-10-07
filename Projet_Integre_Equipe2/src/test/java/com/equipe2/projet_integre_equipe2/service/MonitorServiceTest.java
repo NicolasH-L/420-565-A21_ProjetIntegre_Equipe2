@@ -37,7 +37,6 @@ class MonitorServiceTest {
                 .build();
     }
 
-
     @Test
     public void testRegisterMonitor() {
         when(monitorRepository.save(monitor)).thenReturn(monitor);
