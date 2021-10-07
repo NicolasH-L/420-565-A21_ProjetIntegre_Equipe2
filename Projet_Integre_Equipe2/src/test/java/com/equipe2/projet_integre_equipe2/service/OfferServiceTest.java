@@ -45,7 +45,7 @@ public class OfferServiceTest {
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
                 .isValid(false)
-                .state("Invalide")
+                .state("")
                 .displayDate("2021-10-15")
                 .deadlineDate("2021-10-30")
                 .startInternshipDate("2021-10-30")
@@ -98,6 +98,24 @@ public class OfferServiceTest {
         when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
         when(offerRepository.saveAndFlush(offer)).thenReturn(null);
         Optional<Offer> actualOffer = offerService.acceptOffer(offer.getIdOffer());
+        assertThat(actualOffer).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testDeclineOffer(){
+        when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
+        when(offerRepository.saveAndFlush(offer)).thenReturn(offer);
+        Optional<Offer> actualOffer = offerService.declineOffer(offer.getIdOffer());
+        assertThat(actualOffer.get().getCompanyName()).isEqualTo("Cegep");
+        assertThat(actualOffer.get().getState()).isEqualTo("Invalide");
+        assertThat(actualOffer.get().isValid()).isFalse();
+    }
+
+    @Test
+    public void testDeclineOfferFails(){
+        when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
+        when(offerRepository.saveAndFlush(offer)).thenReturn(null);
+        Optional<Offer> actualOffer = offerService.declineOffer(offer.getIdOffer());
         assertThat(actualOffer).isEqualTo(Optional.empty());
     }
 
