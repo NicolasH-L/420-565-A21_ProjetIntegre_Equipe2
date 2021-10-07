@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @WebMvcTest(OfferController.class)
 public class OfferControllerTest {
@@ -36,8 +37,9 @@ public class OfferControllerTest {
     @BeforeEach
     void setup(){
         offer = Offer.builder()
+                .idOffer(1)
                 .companyName("Cegep")
-                .address("Montreal")
+                .address("Montral")
                 .salary("19")
                 .jobTitle("Developpeur")
                 .description("Java")
@@ -45,6 +47,12 @@ public class OfferControllerTest {
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
                 .monitorEmail("cegep@email.com")
+                .isValid(false)
+                .state("Invalide")
+                .displayDate("2021-10-15")
+                .deadlineDate("2021-10-30")
+                .startInternshipDate("2021-10-30")
+                .endInternshipDate("2021-12-30")
                 .build();
     }
 
@@ -66,13 +74,26 @@ public class OfferControllerTest {
         List<Offer> offerList = getListOfOffers();
         when(offerService.getAllOffers()).thenReturn(Optional.of(offerList));
 
-        MvcResult result = mockMvc.perform(get("/offer/getAllOffers")
+        MvcResult result = mockMvc.perform(get("/offer/get-all-offers")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void acceptOfferTest() throws Exception{
+        when(offerService.acceptOffer(offer.getIdOffer())).thenReturn(Optional.of(offer));
+
+        MvcResult result = mockMvc.perform(put("/offer/accept-offer/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(offer))).andReturn();
+
+        var actualOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Offer.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(offer).isEqualTo(actualOffer);
     }
 
     private List<Offer> getListOfOffers() {
