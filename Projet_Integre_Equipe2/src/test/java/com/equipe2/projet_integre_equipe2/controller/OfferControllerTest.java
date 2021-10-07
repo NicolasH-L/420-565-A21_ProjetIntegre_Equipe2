@@ -96,6 +96,19 @@ public class OfferControllerTest {
         assertThat(offer).isEqualTo(actualOffer);
     }
 
+    @Test
+    public void declineOfferTest() throws Exception{
+        when(offerService.declineOffer(offer.getIdOffer())).thenReturn(Optional.of(offer));
+
+        MvcResult result = mockMvc.perform(put("/offer/decline-offer/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(offer))).andReturn();
+
+        var actualOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Offer.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(offer).isEqualTo(actualOffer);
+    }
+
     private List<Offer> getListOfOffers() {
         List<Offer> offerList = new ArrayList<>();
         offerList.add(Offer.builder()
