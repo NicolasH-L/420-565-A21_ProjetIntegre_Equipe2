@@ -73,7 +73,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
     }
 
     const addOffer = async (offer) => {
-        const result = await fetch('http://localhost:8888/offer/saveoffer',
+        const result = await fetch('http://localhost:8888/offer/saveOffer',
             {
                 method: 'POST',
                 headers: {

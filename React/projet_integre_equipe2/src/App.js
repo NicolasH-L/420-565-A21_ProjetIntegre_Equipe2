@@ -19,7 +19,7 @@ function App() {
         <div>
           <Route path = "/" exact render={(props) => (
           <>
-            <StudentUploadCV/>
+            <Registration/>
           </>
         )}/>
           <Route path = "/Login" component={Login}/>
