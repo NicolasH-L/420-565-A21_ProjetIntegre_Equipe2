@@ -15,7 +15,7 @@ const StudentLogin = ({onLogin}) => {
             return
         } else {
             onLogin(student.matricule, student.password)
-                .then((data) => data.matricule != null ? history.push("/Student", student) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? history.push("/Student", data) : alert("Erreur de matricule ou mot de passe"))
         }
     }
 

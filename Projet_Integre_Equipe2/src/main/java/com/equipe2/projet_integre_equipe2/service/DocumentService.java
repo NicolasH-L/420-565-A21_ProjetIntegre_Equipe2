@@ -4,13 +4,11 @@ import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-import org.apache.commons.io.FileUtils;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @Service
 public class DocumentService {
@@ -19,26 +17,23 @@ public class DocumentService {
 
     public StudentRepository studentRepository;
 
-    public DocumentService(DocumentRepository documentRepository){
+    public DocumentService(DocumentRepository documentRepository, StudentRepository studentRepository){
         this.documentRepository = documentRepository;
+        this.studentRepository = studentRepository;
     }
 
-    public void createFile(MultipartFile multipartFile){
-        File file = new File("src/main/resources/targetFile.pdf");
+    public Optional<Document> createDocument(MultipartFile multipartFile) {
+        try {
+            String[] signatureFile = java.net.URLDecoder.decode(multipartFile.getOriginalFilename(),
+                    StandardCharsets.UTF_8).replace("\"","").split(":");
 
-        try (OutputStream os = new FileOutputStream(file)) {
-            os.write(multipartFile.getBytes());
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            Document document = new Document();
+            document.setDocumentName(signatureFile[0]);
+            document.setData(multipartFile.getBytes());
+            document.setStudent(studentRepository.getById(Integer.parseInt(signatureFile[1])));
+            return Optional.of(documentRepository.save(document));
+        } catch (Exception exception){
+            return Optional.empty();
         }
     }
-
-    public void saveFile(MultipartFile multipartFile, String documentName, int studentId) throws IOException {
-        Document document = new Document();
-        document.setDocumentName(documentName);
-        document.setData(multipartFile.getBytes());
-        document.setStudent(studentRepository.getById(studentId));
-        documentRepository.save(document);
-    }
-
 }

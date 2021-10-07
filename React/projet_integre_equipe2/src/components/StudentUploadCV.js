@@ -1,20 +1,22 @@
 import axios from "axios";
 import React from 'react';
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 const StudentUploadCV = () => {
-    const [uploadFile, setUploadFile] = React.useState();
-    const [uploadFileName, setUploadFileName] = React.useState()
+    const [uploadFile, setUploadFile] = useState();
+    const [uploadFileName, setUploadFileName] = useState()
+    const history = useHistory()
 
     const submitForm = (event) => {
         event.preventDefault();
-        const studentId = 1;
-        var nameId = {"fileName":uploadFileName,
-                      "id":studentId}
+        var nameId = uploadFileName+ ":" + 1
         var nameidOBJ = JSON.stringify(nameId);
+
+        console.log(history.location.state.id)
 
         const formData = new FormData();
         formData.append("uploadFile", uploadFile, nameidOBJ);
-        formData.append("id",1)
     
         axios
           .post("http://localhost:8888/uploadcv", formData, {
@@ -23,14 +25,13 @@ const StudentUploadCV = () => {
             },
           })
           .then((response) => {
-            console.log(nameidOBJ)
+            console.log(response)
           })
           .catch((error) => {
             console.log("Erreur de transfert de fichier")
           });
-    };
+        };
 
-    
 
     return (
         <div>
