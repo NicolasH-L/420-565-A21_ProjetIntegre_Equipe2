@@ -26,9 +26,16 @@ public class OfferController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Offer()));
     }
 
-    @GetMapping("/getAllOffers")
+    @GetMapping("/get-all-offers")
     public ResponseEntity<List<Offer>> getAllOffers(){
         return offerService.getAllOffers()
+                .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/accept-offer/{id}")
+    public ResponseEntity<Offer> acceptOffer(@PathVariable Integer id){
+        return offerService.acceptOffer(id)
                 .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
