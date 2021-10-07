@@ -30,11 +30,8 @@ function App() {
           <Route path = "/Monitor" component={Monitor}/>
           <Route path = "/MonitorOffer" component={MonitorInternshipOffer}/>
           <Route path = "/Student" component={Student}/>
-<<<<<<< HEAD
           <Route path = "/OfferView" component={OfferView}/>
-=======
           <Route path = "/Supervisor" component={Supervisor}/>
->>>>>>> 791147b3b2fb7cd52d694f2d9ee32aafffdfb1dc
           <Footer/>
         </div>
       </Router>
