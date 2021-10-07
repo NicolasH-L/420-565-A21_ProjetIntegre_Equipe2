@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,9 @@ public class DocumentServiceTest {
     @Mock
     private DocumentRepository documentRepository;
 
+    @Mock
+    private StudentRepository studentRepository;
+
     @InjectMocks
     private DocumentService documentService;
 
@@ -39,7 +43,6 @@ public class DocumentServiceTest {
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
-
     }
 
     @Test
