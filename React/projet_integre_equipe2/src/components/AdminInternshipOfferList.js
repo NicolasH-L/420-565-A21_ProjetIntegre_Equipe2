@@ -39,7 +39,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const declineOffer = async (offer) => {
-        const res = await fetch(`http://localhost:8888/offer/accept-offer/${offer.idOffer}`,
+        const res = await fetch(`http://localhost:8888/offer/decline-offer/${offer.idOffer}`,
             {
                 method: 'PUT',
                 headers: {
@@ -63,6 +63,7 @@ const AdminInternshipOfferList = () => {
     return (
         <div className="grad">
             <AdminNavbar />
+            <h2 className="text-center">Offres</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -76,7 +77,7 @@ const AdminInternshipOfferList = () => {
                     </thead>
                     <tbody>
                         {offers.map((offer) => (
-                            <tr className={`${offer.valid ? 'table-success' : offer.valid == null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
+                            <tr className={`${offer.valid ? 'table-success' : offer.state == null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
                                 <td>{offer.salary}$</td>
