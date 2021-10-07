@@ -19,7 +19,11 @@ function App() {
         <div>
           <Route path = "/" exact render={(props) => (
           <>
+<<<<<<< HEAD
             <Registration/>
+=======
+            <Login/>
+>>>>>>> master
           </>
         )}/>
           <Route path = "/Login" component={Login}/>
@@ -30,6 +34,7 @@ function App() {
           <Route path = "/Monitor" component={Monitor}/>
           <Route path = "/MonitorOffer" component={MonitorInternshipOffer}/>
           <Route path = "/Student" component={Student}/>
+          <Route path = "/StudentUploadCV" component={StudentUploadCV}/>
           <Route path = "/OfferView" component={OfferView}/>
           <Route path = "/Supervisor" component={Supervisor}/>
           <Footer/>

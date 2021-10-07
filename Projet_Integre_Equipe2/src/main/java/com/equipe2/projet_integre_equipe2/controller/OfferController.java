@@ -39,4 +39,11 @@ public class OfferController {
                 .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @PutMapping("/decline-offer/{id}")
+    public ResponseEntity<Offer> declineOffer(@PathVariable Integer id){
+        return offerService.declineOffer(id)
+                .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

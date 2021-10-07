@@ -47,4 +47,15 @@ public class OfferService {
             return Optional.empty();
         }
     }
+
+    public Optional<Offer> declineOffer(Integer id){
+        try {
+            Optional<Offer> offer = offerRepository.findById(id);
+            offer.get().setState("Invalide");
+            offer.get().setValid(false);
+            return Optional.of(offerRepository.saveAndFlush(offer.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
