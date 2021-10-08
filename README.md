@@ -2,15 +2,15 @@
 
 Rétroaction
 <div align="center">Sprint 01</div>
-1. Se donner maximum 2 minutes pour arriver à un consensus lorsqu'on tourne en rond
+1- Se donner maximum 2 minutes pour arriver à un consensus lorsqu'on tourne en rond
 
-2. Avertir le groupe lors de chaque push/merge
+2- Avertir le groupe lors de chaque push/merge
 
 <div align="center">Sprint 02</div>
 
-1. Avertir le groupe lorsque la Story (Front-End et Back-End) est terminée et le mettre en <b>Code Review</b> et se rencontrer en groupe.
+1- Avertir le groupe lorsque la Story (Front-End et Back-End) est terminée et le mettre en <b>Code Review</b> et se rencontrer en groupe.
 
-2. Pré-assigner les Stories une fois que le Sprint est lancé.
+2- Pré-assigner les Stories une fois que le Sprint est lancé.
 
 #Definition de Done:
 
