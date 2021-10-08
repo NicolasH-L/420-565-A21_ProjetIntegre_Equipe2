@@ -11,7 +11,7 @@ const OfferView = () => {
             <AdminNavbar />
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
-                    <h2 className="text-secondary text-center">Offre</h2>
+                    <h2 className="text-secondary text-center">Offre de stage</h2>
                     <form className="container-fluid">
                         <div className="form-group">
                             <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,7 +18,7 @@ public class DocumentController {
 
     @ResponseBody
     @PostMapping(value = "/uploadcv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> ReceiveDocument(@RequestParam(name="uploadFile",required = false) MultipartFile uploadFile) throws IOException {
+    public ResponseEntity<Boolean> ReceiveDocument(@RequestParam(name="uploadFile") MultipartFile uploadFile) {
         return documentService.createDocument(uploadFile)
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));

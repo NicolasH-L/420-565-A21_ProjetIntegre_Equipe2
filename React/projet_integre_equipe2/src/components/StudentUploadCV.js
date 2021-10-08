@@ -1,24 +1,24 @@
-import axios from "axios";
-import React from 'react';
+import axios from "axios"
+import React from 'react'
 import { useState } from 'react'
 import _ from 'lodash'
 import { useHistory } from 'react-router-dom'
 import bsCustomFileInput from 'bs-custom-file-input'
-import StudentNavbar from "./StudentNavbar";
+import StudentNavbar from "./StudentNavbar"
 
 const StudentUploadCV = () => {
-  const [uploadFile, setUploadFile] = useState();
+  const [uploadFile, setUploadFile] = useState()
   const [uploadFileName, setUploadFileName] = useState()
   const history = useHistory()
 
   const submitForm = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    if (typeof (uploadFile) !== 'undefined' && typeof (history.location.state) !== 'undefined' && !_.isEmpty(uploadFileName)) {
+    if (typeof(uploadFile) !== 'undefined' && typeof(history.location.state) !== 'undefined' && !_.isEmpty(uploadFileName)) {
       var fileSignature = uploadFileName + ":" + history.location.state.id
-      var fileSinatureJSON = JSON.stringify(fileSignature);
-      const formData = new FormData();
-      formData.append("uploadFile", uploadFile, fileSinatureJSON);
+      var fileSignatureJSON = JSON.stringify(fileSignature)
+      const formData = new FormData()
+      formData.append("uploadFile", uploadFile, fileSignatureJSON)
 
       axios
         .post("http://localhost:8888/uploadcv", formData, {
@@ -27,16 +27,15 @@ const StudentUploadCV = () => {
           },
         })
         .then((response) => {
-          alert("Cv téléverser avec succes")
+          alert("Cv téléverser avec succès")
         })
         .catch((error) => {
           alert("Une erreur est survenue lors du transfert de fichier")
-        });
+        })
     } else {
       alert("Une erreur est survenue lors du transfert de fichier")
     }
-  };
-
+  }
 
   return (
     <div className="grad">
@@ -51,7 +50,7 @@ const StudentUploadCV = () => {
             </div>
             <div className="form-group">
               <div class="custom-file">
-                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
+                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init()}} />
                 <label class="custom-file-label" for="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
               </div>
             </div>

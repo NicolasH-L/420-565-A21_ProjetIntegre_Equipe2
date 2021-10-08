@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@ToString
 @NoArgsConstructor
 @Entity
 public class Monitor extends User implements Serializable {

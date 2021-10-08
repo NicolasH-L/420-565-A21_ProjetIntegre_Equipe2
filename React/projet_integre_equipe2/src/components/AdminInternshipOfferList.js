@@ -63,7 +63,7 @@ const AdminInternshipOfferList = () => {
     return (
         <div className="grad">
             <AdminNavbar />
-            <h2 className="text-center">Offres</h2>
+            <h2 className="text-center">Offres de stage</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -83,9 +83,9 @@ const AdminInternshipOfferList = () => {
                                 <td>{offer.jobTitle}</td>
                                 <td>{offer.salary}$</td>
                                 <td>{offer.displayDate}</td>
-                                <td>{offer.state}</td>
+                                <td>{offer.state == null ? "En attente" : offer.state}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }} >Afficher</button>
+                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>Afficher</button>
                                     <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Accepter</button>
                                     <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Refuser</button>
                                 </td>
