@@ -19,12 +19,17 @@ const AdminInternshipOffer = () => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
+
     const history = useHistory();
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    let futureDate = new Date(timeElapsed)
-    futureDate.setDate(futureDate.getDate() + 220)
-    let futureDateFormat = futureDate.toISOString().split('T')[0]
+
+    const findFutureDate = () => {
+        let futureDate = new Date(timeElapsed)
+        futureDate.setDate(futureDate.getDate() + 220)
+        let futureDateFormat = futureDate.toISOString().split('T')[0]
+        return futureDateFormat
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -43,7 +48,7 @@ const AdminInternshipOffer = () => {
         } else {
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
-            
+
         }
 
         function submitOffer() {
@@ -55,7 +60,6 @@ const AdminInternshipOffer = () => {
             alert("Offre déposée avec succès")
             document.getElementById("AdminInternshipOfferForm").reset()
         }
-        
     }
 
     const addOffer = async (offer) => {
@@ -82,6 +86,7 @@ const AdminInternshipOffer = () => {
         let patternEmail = RegexPattern.getPatternEmail()
         let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
+
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
             e.target.name === "skills" || e.target.name === "jobSchedules" || e.target.name === "displayDate" || e.target.name === "deadlineDate" ||
             e.target.name === "startInternshipDate" || e.target.name === "endInternshipDate")
@@ -164,22 +169,22 @@ const AdminInternshipOffer = () => {
                         <div className="form-group">
                             <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
                             {error.displayDate !== "" ? error.displayDate : ""}
-                            <input type="date" min={today} max={futureDateFormat} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={findFutureDate()} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
                             {error.deadlineDate !== "" ? error.deadlineDate : ""}
-                            <input type="date" min={today} max={futureDateFormat} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={findFutureDate()} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
                             {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
-                            <input type="date" min={today} max={futureDateFormat} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={findFutureDate()} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
                             {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
-                            <input type="date" min={today} max={futureDateFormat} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            <input type="date" min={today} max={findFutureDate()} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
                         </div>
                         <div className="d-flex justify-content-center">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
