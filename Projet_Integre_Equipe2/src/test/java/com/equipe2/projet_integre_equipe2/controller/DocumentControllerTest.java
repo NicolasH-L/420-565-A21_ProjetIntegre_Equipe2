@@ -61,8 +61,8 @@ public class DocumentControllerTest {
                 .file((MockMultipartFile) multipartFile))
                 .andReturn();
 
-        var actualresponse = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        var actualResponse = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualresponse).isEqualTo(true);
+        assertThat(actualResponse).isEqualTo(true);
     }
 }
