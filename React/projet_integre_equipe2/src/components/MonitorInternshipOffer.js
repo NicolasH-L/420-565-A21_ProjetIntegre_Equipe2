@@ -33,6 +33,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
         skills: "", jobSchedules: "", workingHours: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
+    
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -64,7 +65,7 @@ const MonitorInternshipOffer = ({ onAdd }) => {
     function submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
-        history.push("/Monitor", history)
+        history.push("/Monitor", historyState)
     }
 
     const verifyMonitorExists = async (email) => {
