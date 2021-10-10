@@ -91,6 +91,13 @@ class MonitorServiceTest {
         assertThat(allMonitors.get().get(0).getEmail()).isEqualTo("didi@kong.com");
     }
 
+    @Test
+    public void testGetAllMonitorsFail() {
+        when(monitorRepository.findAll()).thenReturn(null);
+        final Optional<List<Monitor>> allMonitors = monitorService.getAllMonitors();
+        assertThat(allMonitors).isEqualTo(Optional.empty());
+    }
+
     private List<Monitor> getListOfMonitors() {
         List<Monitor> monitorList = new ArrayList<>();
         monitorList.add(Monitor.monitorBuilder()
