@@ -36,7 +36,7 @@ public class StudentControllerTest {
 
     @BeforeEach
     void setup(){
-        student = Student.studentBuilder()
+        student = Student.studentBuilder().id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -87,6 +87,7 @@ public class StudentControllerTest {
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
+                .id(2)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -94,6 +95,7 @@ public class StudentControllerTest {
                 .isCvValid(true)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(3)
                 .firstName("Lolo")
                 .lastName("Lala")
                 .matricule("1234568")
@@ -101,6 +103,7 @@ public class StudentControllerTest {
                 .isCvValid(false)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(4)
                 .firstName("Lulu")
                 .lastName("Tutu")
                 .matricule("1234569")
