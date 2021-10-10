@@ -1,5 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
@@ -22,5 +26,12 @@ public class DocumentController {
         return documentService.createDocument(uploadFile)
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(true))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
+    }
+
+    @GetMapping("/document/get-all-documents/{idStudent}")
+    public ResponseEntity<List<Document>> getAllDocumentsByStudent(@PathVariable Integer idStudent){
+        return documentService.getAllDocumentsByStudentId(idStudent)
+                .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }

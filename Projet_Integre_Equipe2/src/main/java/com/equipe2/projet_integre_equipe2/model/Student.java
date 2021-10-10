@@ -16,7 +16,8 @@ public class Student extends User implements Serializable {
     private Boolean isCvValid = false;
 
     @Builder(builderMethodName = "studentBuilder")
-    public Student(String firstName, String lastName, String password, String matricule, Boolean isCvValid) {
+    public Student(Integer id, String firstName, String lastName, String password, String matricule, Boolean isCvValid) {
+        super.setId(id);
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);

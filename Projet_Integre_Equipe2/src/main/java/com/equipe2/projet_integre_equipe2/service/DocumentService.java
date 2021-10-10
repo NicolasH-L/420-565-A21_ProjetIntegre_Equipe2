@@ -39,9 +39,9 @@ public class DocumentService {
         }
     }
 
-    public Optional<List<Document>> getAllDocumentsByStudent(Student student){
+    public Optional<List<Document>> getAllDocumentsByStudentId(Integer idStudent){
         try {
-            return Optional.of(documentRepository.findByStudent(student));
+            return Optional.of(documentRepository.findDocumentsByStudent_Id(idStudent));
         } catch (Exception e) {
             return Optional.empty();
         }
