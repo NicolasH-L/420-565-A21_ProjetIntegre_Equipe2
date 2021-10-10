@@ -39,7 +39,11 @@ public class DocumentService {
         }
     }
 
-    public Optional<List<Document>> getAllDocumentsByStudent(){
-        return null;
+    public Optional<List<Document>> getAllDocumentsByStudent(Student student){
+        try {
+            return Optional.of(documentRepository.findByStudent(student));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }
