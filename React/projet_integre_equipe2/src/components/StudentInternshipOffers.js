@@ -6,17 +6,20 @@ import StudentNavbar from './StudentNavbar'
 const StudentInternshipOffers = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
-
+    let studentMatricule
+    
     useEffect(() => {
         const getOffers = async () => {
+            
             const offersFromServer = await fetchOffers()
+            studentMatricule = history.location.state.matricule
             setOffers(offersFromServer)
         }
         getOffers()
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://localhost:8888/offer/get-all-valid-offers')
+        const res = await fetch('http://localhost:8888/offer/get-all-valid-offers/')
         return await res.json()
     }
 
