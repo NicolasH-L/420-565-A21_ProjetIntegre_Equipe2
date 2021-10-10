@@ -7,7 +7,9 @@ const StudentNavbar = () => {
     function goToStudentUploadCV(){
         history.push("/StudentUploadCV", historyState)
     }
-
+    function goToStudentInternshipOffers(){
+        history.push("/StudentInternshipOffers", historyState)
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -19,6 +21,9 @@ const StudentNavbar = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToStudentUploadCV}>Déposer CV</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToStudentInternshipOffers}>Offres de stages</button>
                         </li>
                     </ul>
                 </div>
