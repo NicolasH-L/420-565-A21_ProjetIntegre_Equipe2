@@ -3,13 +3,12 @@ import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
 import { useState, useEffect } from 'react'
 
-const AdmindocumentCvList = () => {
+const AdminStudentCvList = () => {
     const [documents, setDocuments] = useState([])
     const history = useHistory()
-    const student = undefined
+    const student = history.location.state
 
     useEffect(() => {
-        student = history.location.state
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments(student)
             setDocuments(documentsFromServer)
@@ -18,8 +17,13 @@ const AdmindocumentCvList = () => {
     }, [])
 
     const fetchDocuments = async (student) => {
-        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student}`)
+        console.log(student)
+        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
         return await res.json()
+    }
+
+    const viewDocumentCv = async (document) => {
+        history.push("/AdminViewStudentCV", document)
     }
 
     return (
@@ -32,7 +36,7 @@ const AdmindocumentCvList = () => {
                         <tr>
                             <th scope="col">Nom: </th>
                             <th scope="col">Validité du CV: </th>
-                            <th scope="col">Document: </th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +45,7 @@ const AdmindocumentCvList = () => {
                                 <th>{document.documentName}</th>
                                 <td>{/*document.isCvValid ? "Valide" : "En attente"*/}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); /*viewDocumentCvList(document)*/ }}>Consulter</button>
+                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
                                 </td>
                             </tr>
                         ))}
@@ -52,4 +56,4 @@ const AdmindocumentCvList = () => {
     )
 }
 
-export default AdmindocumentCvList
+export default AdminStudentCvList
