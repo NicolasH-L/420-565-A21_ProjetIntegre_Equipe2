@@ -1,8 +1,10 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Offer;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
+import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,10 +28,15 @@ public class OfferServiceTest {
     @Mock
     private MonitorRepository monitorRepository;
 
+    @Mock
+    private StudentRepository studentRepository;
+
     @InjectMocks
     private OfferService offerService;
 
     private Offer offer;
+    private Student validCvStudent;
+    private Student invalidCvStudent;
 
     @BeforeEach
     void setup() {
@@ -50,6 +57,22 @@ public class OfferServiceTest {
                 .deadlineDate("2021-10-30")
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
+                .build();
+        validCvStudent = Student.studentBuilder()
+                .id(1)
+                .matricule("1234567")
+                .password("toto")
+                .firstName("toto")
+                .lastName("toto")
+                .isCvValid(true)
+                .build();
+        invalidCvStudent = Student.studentBuilder()
+                .id(2)
+                .matricule("7654321")
+                .password("toto")
+                .firstName("toto")
+                .lastName("toto")
+                .isCvValid(false)
                 .build();
     }
 
