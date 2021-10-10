@@ -1,11 +1,14 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,5 +30,12 @@ public class StudentController {
       return studentService.loginStudent(matricule, password)
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Student()));
+   }
+
+   @GetMapping("/get-all-students")
+   public ResponseEntity<List<Student>> getAllStudents(){
+      return studentService.getAllStudents()
+              .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+              .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
 }

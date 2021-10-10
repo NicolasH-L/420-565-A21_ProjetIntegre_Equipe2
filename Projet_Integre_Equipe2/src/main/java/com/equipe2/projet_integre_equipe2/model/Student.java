@@ -13,6 +13,7 @@ public class Student extends User implements Serializable {
 
     @Column(unique = true, length = 200)
     private String matricule;
+    private Boolean isCvValid;
 
     @Builder(builderMethodName = "studentBuilder")
     public Student(String firstName, String lastName, String password, String matricule) {
@@ -20,5 +21,6 @@ public class Student extends User implements Serializable {
         super.setFirstName(firstName);
         super.setPassword(password);
         this.matricule = matricule;
+        this.isCvValid = false;
     }
 }

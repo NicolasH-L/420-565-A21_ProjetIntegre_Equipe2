@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,5 +65,46 @@ public class StudentServiceTest {
         when(studentRepository.findByMatriculeAndPassword("", "")).thenReturn(null);
         Optional<Student> actualStudent = studentService.loginStudent("", "");
         assertThat(actualStudent).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllStudents(){
+        when(studentRepository.findAll()).thenReturn(getListOfStudents());
+        final Optional<List<Student>> allOffers = studentService.getAllStudents();
+        assertThat(allOffers.get().size()).isEqualTo(3);
+        assertThat(allOffers.get().get(0).getMatricule()).isEqualTo("1234567");
+    }
+
+    @Test
+    public void testGetAllStudentsFails(){
+        when(studentRepository.findAll()).thenReturn(null);
+        final Optional<List<Student>> allStudents = studentService.getAllStudents();
+        assertThat(allStudents).isEqualTo(Optional.empty());
+    }
+
+    private List<Student> getListOfStudents() {
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(Student.studentBuilder()
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build());
+        studentList.add(Student.studentBuilder()
+                .firstName("Lolo")
+                .lastName("Lala")
+                .matricule("1234568")
+                .password("1235")
+                .isCvValid(false)
+                .build());
+        studentList.add(Student.studentBuilder()
+                .firstName("Lulu")
+                .lastName("Tutu")
+                .matricule("1234569")
+                .password("1236")
+                .isCvValid(true)
+                .build());
+        return studentList;
     }
 }
