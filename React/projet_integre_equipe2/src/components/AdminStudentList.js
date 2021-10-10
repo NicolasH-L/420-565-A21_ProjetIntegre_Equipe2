@@ -40,7 +40,7 @@ const AdminStudentList = () => {
                     </thead>
                     <tbody>
                         {students.map((student) => (
-                            <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.idStudent}>
+                            <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.id}>
                                 <th>{student.firstName + " " + student.lastName}</th>
                                 <td>{student.matricule}</td>
                                 <td>{student.isCvValid ? "Valide" : "En attente"}</td>

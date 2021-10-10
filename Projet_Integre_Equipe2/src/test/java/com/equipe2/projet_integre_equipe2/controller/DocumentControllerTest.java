@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
 
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,10 +23,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 @WebMvcTest(DocumentController.class)
@@ -64,5 +69,46 @@ public class DocumentControllerTest {
         var actualResponse = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualResponse).isEqualTo(true);
+    }
+
+    @Test
+    public void getAllDocumentsByStudentTest() throws Exception {
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+        List<Document> documentList = getListOfDocumentsByStudent();
+        when(documentService.getAllDocumentsByStudentId(student.getId())).thenReturn(Optional.of(documentList));
+
+        MvcResult result = mockMvc.perform(get("/document/get-all-documents/{idStudent}", 1)
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Document> getListOfDocumentsByStudent() {
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .idDocument(1)
+                .documentName("CvInfo")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo2")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo3")
+                .student(null)
+                .build());
+
+        return documentList;
     }
 }

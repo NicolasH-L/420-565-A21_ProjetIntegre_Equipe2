@@ -64,22 +64,51 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void testGetAllDocumentsByStudent(){
-        when(documentRepository.findAll()).thenReturn(getListOfDocumentsByStudent());
-        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudent();
+    public void testGetAllDocumentsByStudentId(){
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+        when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(getListOfDocumentsByStudent());
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
         assertThat(allDocuments.get().size()).isEqualTo(3);
         assertThat(allDocuments.get().get(0).getIdDocument()).isEqualTo(1);
     }
 
     @Test
-    public void testGetAllDocumentsByStudentFails(){
-        when(studentRepository.findAll()).thenReturn(null);
-        final Optional<List<Document>> allStudents = documentService.getAllDocumentsByStudent();
-        assertThat(allStudents).isEqualTo(Optional.empty());
+    public void testGetAllDocumentsByStudentiDFails(){
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+        when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(null);
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
+        assertThat(allDocuments).isEqualTo(Optional.empty());
     }
 
     private List<Document> getListOfDocumentsByStudent() {
         List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .idDocument(1)
+                .documentName("CvInfo")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo2")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo3")
+                .student(null)
+                .build());
 
         return documentList;
     }
