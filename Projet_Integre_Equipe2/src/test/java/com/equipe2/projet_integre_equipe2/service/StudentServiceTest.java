@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
@@ -28,33 +27,60 @@ public class StudentServiceTest {
     private StudentService studentService;
 
     private Student student;
+    private Student validCvStudent;
+    private Student invalidCvStudent;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         student = Student.studentBuilder()
+                .id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
                 .password("1234")
+                .isCvValid(true)
                 .build();
+
+        validCvStudent = Student.studentBuilder()
+                .id(4)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234568")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
+        invalidCvStudent = Student.studentBuilder()
+                .id(5)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234569")
+                .password("1234")
+                .isCvValid(false)
+                .build();
+        when(studentRepository.saveAndFlush(validCvStudent)).thenReturn(validCvStudent);
+        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
+        studentRepository.saveAndFlush(validCvStudent);
+        studentRepository.saveAndFlush(invalidCvStudent);
+
     }
 
     @Test
-    public void testRegisterStudent(){
+    public void testRegisterStudent() {
         when(studentRepository.save(student)).thenReturn(student);
         Optional<Student> actualStudent = studentService.registerStudent(student);
         assertThat(actualStudent.get()).isEqualTo(student);
     }
 
     @Test
-    public void testRegisterDuplicateStudentFails(){
+    public void testRegisterDuplicateStudentFails() {
         when(studentRepository.save(any())).thenReturn(student).thenReturn(Optional.empty());
         studentService.registerStudent(student);
         assertThat(studentService.registerStudent(student)).isEmpty();
     }
 
     @Test
-    public void testLoginStudent(){
+    public void testLoginStudent() {
         when(studentRepository.findByMatriculeAndPassword(student.getMatricule(), student.getPassword())).thenReturn(student);
         Optional<Student> actualStudent = studentService.loginStudent(student.getMatricule(), student.getPassword());
         assertThat(actualStudent.get()).isEqualTo(student);
@@ -68,7 +94,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testGetAllStudents(){
+    public void testGetAllStudents() {
         when(studentRepository.findAll()).thenReturn(getListOfStudents());
         final Optional<List<Student>> allStudents = studentService.getAllStudents();
         assertThat(allStudents.get().size()).isEqualTo(3);
@@ -76,15 +102,30 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testGetAllStudentsFails(){
+    public void testGetAllStudentsFails() {
         when(studentRepository.findAll()).thenReturn(null);
         final Optional<List<Student>> allStudents = studentService.getAllStudents();
         assertThat(allStudents).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testIsValidCvStudent(){
+        when(studentRepository.existsByMatriculeAndIsCvValidTrue(validCvStudent.getMatricule())).thenReturn(true);
+        final Optional<Boolean> actualValidCvStudentExist = studentService.isValidCvStudent(validCvStudent.getMatricule());
+        assertThat(actualValidCvStudentExist.get()).isTrue();
+    }
+
+    @Test
+    public void testIsValidCvStudentFails(){
+        when(studentRepository.existsByMatriculeAndIsCvValidTrue(invalidCvStudent.getMatricule())).thenReturn(false);
+        final Optional<Boolean> actualInvalidCvStudentExist = studentService.isValidCvStudent(invalidCvStudent.getMatricule());
+        assertThat(actualInvalidCvStudentExist.get()).isFalse();
+    }
+
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
+                .id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -92,6 +133,7 @@ public class StudentServiceTest {
                 .isCvValid(true)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(2)
                 .firstName("Lolo")
                 .lastName("Lala")
                 .matricule("1234568")
@@ -99,6 +141,7 @@ public class StudentServiceTest {
                 .isCvValid(false)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(3)
                 .firstName("Lulu")
                 .lastName("Tutu")
                 .matricule("1234569")
