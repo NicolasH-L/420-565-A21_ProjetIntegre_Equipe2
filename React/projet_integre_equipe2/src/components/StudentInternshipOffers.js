@@ -86,8 +86,8 @@ const StudentInternshipOffers = () => {
                                 <td>{offer.state == null ? "En attente" : offer.state}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>Afficher</button>
-                                    <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Accepter</button>
-                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Refuser</button>
+                                    {/* <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Accepter</button>
+                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Refuser</button> */}
                                 </td>
                             </tr>
                         ))}
