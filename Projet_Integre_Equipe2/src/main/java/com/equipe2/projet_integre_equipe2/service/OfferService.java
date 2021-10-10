@@ -3,6 +3,7 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
+import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +16,15 @@ public class OfferService {
 
     private MonitorRepository monitorRepository;
 
-    public OfferService(OfferRepository offerRepository, MonitorRepository monitorRepository){
+    private StudentRepository studentRepository;
+
+    public OfferService(OfferRepository offerRepository, MonitorRepository monitorRepository, StudentRepository studentRepository) {
         this.offerRepository = offerRepository;
         this.monitorRepository = monitorRepository;
+        this.studentRepository = studentRepository;
     }
 
-    public Optional<Offer> saveOffer(Offer offer){
+    public Optional<Offer> saveOffer(Offer offer) {
         try {
             offer.setMonitor(monitorRepository.findMonitorByEmailIgnoreCase(offer.getMonitorEmail()));
             return Optional.of(offerRepository.save(offer));
@@ -29,7 +33,7 @@ public class OfferService {
         }
     }
 
-    public Optional<List<Offer>> getAllOffers(){
+    public Optional<List<Offer>> getAllOffers() {
         try {
             return Optional.of(offerRepository.findAll());
         } catch (Exception e) {
@@ -37,15 +41,15 @@ public class OfferService {
         }
     }
 
-    public Optional<List<Offer>> getAllValidOffers(){
-        try{
+    public Optional<List<Offer>> getAllValidOffers() {
+        try {
             return Optional.of(offerRepository.findOffersByIsValidTrue());
-        }catch (Exception e){
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
 
-    public Optional<Offer> acceptOffer(Integer id){
+    public Optional<Offer> acceptOffer(Integer id) {
         try {
             Optional<Offer> offer = offerRepository.findById(id);
             offer.get().setState("Valide");
@@ -56,7 +60,7 @@ public class OfferService {
         }
     }
 
-    public Optional<Offer> declineOffer(Integer id){
+    public Optional<Offer> declineOffer(Integer id) {
         try {
             Optional<Offer> offer = offerRepository.findById(id);
             offer.get().setState("Invalide");
