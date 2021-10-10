@@ -1,6 +1,8 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Student;
+
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,8 +35,11 @@ public class DocumentServiceTest {
 
     private Document document;
 
+    private Student student;
+
     private MultipartFile multipartFile;
 
+    private List<Document> listDocuments;
 
     @BeforeEach
     void setup(){
@@ -41,6 +47,13 @@ public class DocumentServiceTest {
                 .documentName("CvInfo")
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
+                .build();
+
+        student = Student.studentBuilder()
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
                 .build();
     }
 
