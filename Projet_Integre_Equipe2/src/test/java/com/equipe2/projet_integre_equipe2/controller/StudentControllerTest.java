@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +19,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(StudentController.class)
 public class StudentControllerTest {
@@ -36,7 +35,7 @@ public class StudentControllerTest {
 
     @BeforeEach
     void setup(){
-        student = Student.studentBuilder()
+        student = Student.studentBuilder().id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -87,6 +86,7 @@ public class StudentControllerTest {
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
+                .id(2)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -94,6 +94,7 @@ public class StudentControllerTest {
                 .isCvValid(true)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(3)
                 .firstName("Lolo")
                 .lastName("Lala")
                 .matricule("1234568")
@@ -101,6 +102,7 @@ public class StudentControllerTest {
                 .isCvValid(false)
                 .build());
         studentList.add(Student.studentBuilder()
+                .id(4)
                 .firstName("Lulu")
                 .lastName("Tutu")
                 .matricule("1234569")

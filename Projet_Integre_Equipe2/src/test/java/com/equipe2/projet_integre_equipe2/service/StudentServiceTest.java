@@ -109,14 +109,14 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testIsValidCvStudent(){
+    public void testIsValidCvStudent() {
         when(studentRepository.existsByMatriculeAndIsCvValidTrue(validCvStudent.getMatricule())).thenReturn(true);
         final Optional<Boolean> actualValidCvStudentExist = studentService.isValidCvStudent(validCvStudent.getMatricule());
         assertThat(actualValidCvStudentExist.get()).isTrue();
     }
 
     @Test
-    public void testIsValidCvStudentFails(){
+    public void testIsValidCvStudentFails() {
         when(studentRepository.existsByMatriculeAndIsCvValidTrue(invalidCvStudent.getMatricule())).thenReturn(false);
         final Optional<Boolean> actualInvalidCvStudentExist = studentService.isValidCvStudent(invalidCvStudent.getMatricule());
         assertThat(actualInvalidCvStudentExist.get()).isFalse();
@@ -125,7 +125,7 @@ public class StudentServiceTest {
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
-                .id(1)
+                .id(2)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -133,7 +133,7 @@ public class StudentServiceTest {
                 .isCvValid(true)
                 .build());
         studentList.add(Student.studentBuilder()
-                .id(2)
+                .id(3)
                 .firstName("Lolo")
                 .lastName("Lala")
                 .matricule("1234568")
@@ -141,7 +141,7 @@ public class StudentServiceTest {
                 .isCvValid(false)
                 .build());
         studentList.add(Student.studentBuilder()
-                .id(3)
+                .id(4)
                 .firstName("Lulu")
                 .lastName("Tutu")
                 .matricule("1234569")
