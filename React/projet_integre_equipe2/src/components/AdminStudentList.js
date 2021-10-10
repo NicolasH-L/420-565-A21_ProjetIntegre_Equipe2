@@ -20,14 +20,14 @@ const AdminStudentList = () => {
         return await res.json()
     }
 
-    const viewStudent = async (student) => {
-        console.log(student)
+    const viewStudentCvList = async (student) => {
+        history.push("/AdminStudentCvList", student)
     }
 
     return (
         <div className="grad">
             <AdminNavbar/>
-            <h2 className="text-center">Offres de stage</h2>
+            <h2 className="text-center">Liste des étudiants</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -40,12 +40,12 @@ const AdminStudentList = () => {
                     </thead>
                     <tbody>
                         {students.map((student) => (
-                            <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.idstudent}>
+                            <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.idStudent}>
                                 <th>{student.firstName + " " + student.lastName}</th>
                                 <td>{student.matricule}</td>
                                 <td>{student.isCvValid ? "Valide" : "En attente"}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudent(student) }}>Consulter documents</button>
+                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>Consulter documents</button>
                                 </td>
                             </tr>
                         ))}
