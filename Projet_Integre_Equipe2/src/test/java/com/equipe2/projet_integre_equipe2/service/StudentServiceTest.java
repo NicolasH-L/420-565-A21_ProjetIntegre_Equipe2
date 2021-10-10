@@ -70,9 +70,9 @@ public class StudentServiceTest {
     @Test
     public void testGetAllStudents(){
         when(studentRepository.findAll()).thenReturn(getListOfStudents());
-        final Optional<List<Student>> allOffers = studentService.getAllStudents();
-        assertThat(allOffers.get().size()).isEqualTo(3);
-        assertThat(allOffers.get().get(0).getMatricule()).isEqualTo("1234567");
+        final Optional<List<Student>> allStudents = studentService.getAllStudents();
+        assertThat(allStudents.get().size()).isEqualTo(3);
+        assertThat(allStudents.get().get(0).getMatricule()).isEqualTo("1234567");
     }
 
     @Test

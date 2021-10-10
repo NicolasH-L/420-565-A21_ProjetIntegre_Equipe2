@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +37,9 @@ public class DocumentService {
         } catch (Exception exception){
             return Optional.empty();
         }
+    }
+
+    public Optional<List<Document>> getAllDocumentsByStudent(){
+        return null;
     }
 }
