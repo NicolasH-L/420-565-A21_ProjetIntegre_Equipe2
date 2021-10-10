@@ -37,6 +37,14 @@ public class OfferService {
         }
     }
 
+    public Optional<List<Offer>> getAllValidOffers(){
+        try{
+            return Optional.of(offerRepository.findOffersByIsValidTrue());
+        }catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
     public Optional<Offer> acceptOffer(Integer id){
         try {
             Optional<Offer> offer = offerRepository.findById(id);
