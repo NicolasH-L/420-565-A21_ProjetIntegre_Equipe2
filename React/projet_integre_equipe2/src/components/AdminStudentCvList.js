@@ -6,10 +6,9 @@ import { useState, useEffect } from 'react'
 const AdmindocumentCvList = () => {
     const [documents, setDocuments] = useState([])
     const history = useHistory()
-    const student = undefined
+    const student = history.location.state
 
     useEffect(() => {
-        student = history.location.state
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments(student)
             setDocuments(documentsFromServer)
@@ -18,7 +17,8 @@ const AdmindocumentCvList = () => {
     }, [])
 
     const fetchDocuments = async (student) => {
-        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student}`)
+        console.log(student)
+        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
         return await res.json()
     }
 
