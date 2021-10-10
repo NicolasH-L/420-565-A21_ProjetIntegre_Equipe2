@@ -12,6 +12,9 @@ import Student from './components/Student';
 import Supervisor from './components/Supervisor';
 import StudentUploadCV from './components/StudentUploadCV';
 import OfferView from './components/OfferView';
+import AdminStudentCvList from './components/AdminStudentCvList';
+import AdminStudentList from './components/AdminStudentList';
+import AdminViewStudentCV from './components/AdminViewStudentCV';
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
           <Route path = "/StudentUploadCV" component={StudentUploadCV}/>
           <Route path = "/OfferView" component={OfferView}/>
           <Route path = "/Supervisor" component={Supervisor}/>
+          <Route path = "/AdminStudentList" component={AdminStudentList}/>
+          <Route path = "/AdminStudentCvList" component={AdminStudentCvList}/>
+          <Route path = "/AdminViewStudentCV" component={AdminViewStudentCV}/>
           <Footer/>
         </div>
       </Router>
