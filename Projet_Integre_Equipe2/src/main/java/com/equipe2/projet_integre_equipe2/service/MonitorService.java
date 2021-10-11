@@ -4,6 +4,7 @@ import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,5 +34,13 @@ public class MonitorService {
 
     public Optional<Boolean> monitorExistsByEmail(String email){
         return Optional.of(monitorRepository.existsByEmailIgnoreCase(email));
+    }
+
+    public Optional<List<Monitor>> getAllMonitors() {
+        try {
+            return Optional.of(monitorRepository.findAll());
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
     }
 }
