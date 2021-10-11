@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,13 @@ public class DocumentController {
     public ResponseEntity<List<Document>> getAllDocumentsByStudent(@PathVariable Integer idStudent){
         return documentService.getAllDocumentsByStudentId(idStudent)
                 .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/document/decline-document/{idDocument}")
+    public ResponseEntity<Document> declineDocument(@PathVariable Integer idDocument){
+        return documentService.declineDocument(idDocument)
+                .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }
