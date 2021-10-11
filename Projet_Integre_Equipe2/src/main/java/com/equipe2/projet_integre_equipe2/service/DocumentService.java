@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
@@ -30,6 +31,7 @@ public class DocumentService {
                     StandardCharsets.UTF_8).replace("\"","").split(":");
 
             Document document = new Document();
+            document.setIsValid(true);
             document.setDocumentName(signatureFile[0]);
             document.setData(multipartFile.getBytes());
             document.setStudent(studentRepository.getById(Integer.parseInt(signatureFile[1])));
@@ -42,6 +44,16 @@ public class DocumentService {
     public Optional<List<Document>> getAllDocumentsByStudentId(Integer idStudent){
         try {
             return Optional.of(documentRepository.findDocumentsByStudent_Id(idStudent));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Document> declineDocument(Integer idDocument){
+        try {
+            Optional<Document> document = documentRepository.findById(idDocument);
+            document.get().setIsValid(false);
+            return Optional.of(documentRepository.saveAndFlush(document.get()));
         } catch (Exception e) {
             return Optional.empty();
         }

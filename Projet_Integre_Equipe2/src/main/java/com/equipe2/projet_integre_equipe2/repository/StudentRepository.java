@@ -11,4 +11,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     boolean existsByMatriculeAndIsCvValidTrue(String matricule);
 
+    Student findByMatricule(String matricule);
+
 }

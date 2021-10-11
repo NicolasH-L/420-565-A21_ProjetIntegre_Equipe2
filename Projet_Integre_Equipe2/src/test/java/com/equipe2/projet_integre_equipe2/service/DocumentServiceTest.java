@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
@@ -45,11 +46,13 @@ public class DocumentServiceTest {
     void setup(){
         document = Document.builder()
                 .documentName("CvInfo")
+                .isValid(true)
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
         student = Student.studentBuilder()
+                .id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
@@ -75,14 +78,6 @@ public class DocumentServiceTest {
 
     @Test
     public void testGetAllDocumentsByStudentId(){
-        Student student = Student.studentBuilder()
-                .id(1)
-                .firstName("Toto")
-                .lastName("Tata")
-                .matricule("1234567")
-                .password("1234")
-                .isCvValid(true)
-                .build();
         when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(getListOfDocumentsByStudent());
         final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
         assertThat(allDocuments.get().size()).isEqualTo(3);
@@ -90,18 +85,27 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void testGetAllDocumentsByStudentiDFails(){
-        Student student = Student.studentBuilder()
-                .id(1)
-                .firstName("Toto")
-                .lastName("Tata")
-                .matricule("1234567")
-                .password("1234")
-                .isCvValid(true)
-                .build();
+    public void testGetAllDocumentsByStudentIdFails(){
         when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(null);
         final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
         assertThat(allDocuments).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testDeclineDocument() {
+        when(documentRepository.findById(document.getIdDocument())).thenReturn(Optional.of(document));
+        when(documentRepository.saveAndFlush(document)).thenReturn(document);
+        Optional<Document> actualDocument = documentService.declineDocument(document.getIdDocument());
+        assertThat(actualDocument.get().getDocumentName()).isEqualTo("CvInfo");
+        assertThat(actualDocument.get().getIsValid()).isFalse();
+    }
+
+    @Test
+    public void testDeclineDocumentFails() {
+        when(documentRepository.findById(document.getIdDocument())).thenReturn(Optional.of(document));
+        when(documentRepository.saveAndFlush(document)).thenReturn(null);
+        Optional<Document> actualDocument = documentService.declineDocument(document.getIdDocument());
+        assertThat(actualDocument).isEmpty();
     }
 
     private List<Document> getListOfDocumentsByStudent() {
