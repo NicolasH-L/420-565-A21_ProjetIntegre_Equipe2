@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
@@ -87,6 +88,15 @@ public class DocumentServiceTest {
         when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(null);
         final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
         assertThat(allDocuments).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testDeclineDocument() {
+        when(documentRepository.findById(document.getIdDocument())).thenReturn(Optional.of(document));
+        when(documentRepository.saveAndFlush(document)).thenReturn(document);
+        Optional<Document> actualDocument = documentService.declineDocument(document.getIdDocument());
+        assertThat(actualDocument.get().getDocumentName()).isEqualTo("CvInfo");
+        assertThat(actualDocument.get().isValid()).isFalse();
     }
 
     private List<Document> getListOfDocumentsByStudent() {
