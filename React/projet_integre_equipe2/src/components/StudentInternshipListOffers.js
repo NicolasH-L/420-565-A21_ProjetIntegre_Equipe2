@@ -43,9 +43,7 @@ const StudentInternshipListOffers = () => {
                                 <td className="text-center">{offer.salary}$</td>
                                 <td className="text-center">{offer.displayDate}</td>
                                 <td className="text-center">{offer.deadlineDate}</td>
-                                <td className="w-5">
-                                    <OfferModalView newOffer={offer} />
-                                </td>
+                                <td><OfferModalView newOffer={offer}/></td>
                             </tr>
                         ))}
                     </tbody>
