@@ -32,14 +32,25 @@ public class StudentControllerTest {
     private StudentService studentService;
 
     private Student student;
+    private Student invalidCvStudent;
 
     @BeforeEach
     void setup(){
-        student = Student.studentBuilder().id(1)
+        student = Student.studentBuilder()
+                .id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
                 .password("1234")
+                .isCvValid(true)
+                .build();
+        invalidCvStudent = Student.studentBuilder()
+                .id(5)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("7654321")
+                .password("1234")
+                .isCvValid(false)
                 .build();
     }
 
@@ -81,6 +92,28 @@ public class StudentControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void isValidCvStudentExist() throws Exception {
+        when(studentService.isValidCvStudent(student.getMatricule())).thenReturn(Optional.of(true));
+        MvcResult result = mockMvc.perform(get("/students/valid-cv/"+student.getMatricule())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        var actualIsValidCvStudentExist = new ObjectMapper().readValue(result
+                .getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualIsValidCvStudentExist).isEqualTo(true);
+    }
+
+    @Test
+    public void isValidCvStudentExistFails() throws Exception {
+        when(studentService.isValidCvStudent(invalidCvStudent.getMatricule())).thenReturn(Optional.of(false));
+        MvcResult result = mockMvc.perform(get("/students/valid-cv/"+invalidCvStudent.getMatricule())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        var actualIsValidCvStudentExist = new ObjectMapper().readValue(result
+                .getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualIsValidCvStudentExist).isEqualTo(false);
     }
 
     private List<Student> getListOfStudents() {

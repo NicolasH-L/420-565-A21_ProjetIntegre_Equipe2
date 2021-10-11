@@ -27,7 +27,6 @@ public class StudentServiceTest {
     private StudentService studentService;
 
     private Student student;
-    private Student validCvStudent;
     private Student invalidCvStudent;
 
     @BeforeEach
@@ -40,16 +39,6 @@ public class StudentServiceTest {
                 .password("1234")
                 .isCvValid(true)
                 .build();
-
-        validCvStudent = Student.studentBuilder()
-                .id(4)
-                .firstName("Toto")
-                .lastName("Tata")
-                .matricule("1234568")
-                .password("1234")
-                .isCvValid(true)
-                .build();
-
         invalidCvStudent = Student.studentBuilder()
                 .id(5)
                 .firstName("Toto")
@@ -58,9 +47,7 @@ public class StudentServiceTest {
                 .password("1234")
                 .isCvValid(false)
                 .build();
-        when(studentRepository.saveAndFlush(validCvStudent)).thenReturn(validCvStudent);
         when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
-        studentRepository.saveAndFlush(validCvStudent);
         studentRepository.saveAndFlush(invalidCvStudent);
 
     }
@@ -110,14 +97,18 @@ public class StudentServiceTest {
 
     @Test
     public void testIsValidCvStudent() {
-        when(studentRepository.existsByMatriculeAndIsCvValidTrue(validCvStudent.getMatricule())).thenReturn(true);
-        final Optional<Boolean> actualValidCvStudentExist = studentService.isValidCvStudent(validCvStudent.getMatricule());
+        when(studentRepository.saveAndFlush(student)).thenReturn(student);
+        when(studentRepository.existsByMatriculeAndIsCvValidTrue(student.getMatricule())).thenReturn(true);
+        studentRepository.saveAndFlush(student);
+        final Optional<Boolean> actualValidCvStudentExist = studentService.isValidCvStudent(student.getMatricule());
         assertThat(actualValidCvStudentExist.get()).isTrue();
     }
 
     @Test
     public void testIsValidCvStudentFails() {
+        when(studentRepository.saveAndFlush(student)).thenReturn(student);
         when(studentRepository.existsByMatriculeAndIsCvValidTrue(invalidCvStudent.getMatricule())).thenReturn(false);
+        studentRepository.saveAndFlush(student);
         final Optional<Boolean> actualInvalidCvStudentExist = studentService.isValidCvStudent(invalidCvStudent.getMatricule());
         assertThat(actualInvalidCvStudentExist.get()).isFalse();
     }
