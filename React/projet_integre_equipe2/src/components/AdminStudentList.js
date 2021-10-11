@@ -25,7 +25,7 @@ const AdminStudentList = () => {
     }
 
     const validateStudent = async (student) => {
-        const res = await fetch(`http://localhost:8888/students/validate-student/${student.id}`,
+        const res = await fetch(`http://localhost:8888/students/validate-student/${student.matricule}`,
             {
                 method: 'PUT',
                 headers: {
@@ -37,7 +37,7 @@ const AdminStudentList = () => {
 
         setStudents(
             students.map(
-                (student1) => student1.id === student.id ? {...student1, isCvValid: data.isCvValid} : student1
+                (student1) => student1.matricule === student.matricule ? {...student1, isCvValid: data.isCvValid} : student1
             )
         )
     }
