@@ -19,7 +19,7 @@ const OfferModalView = ({ newOffer }) => {
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header text-center">
-                            <h2 className="modal-title text-secondary w-100 ml-4" id="offreDeStage">Offre de stage - {offer.companyName}</h2>
+                            <h2 className="modal-title text-secondary w-100 ml-4" id="offreDeStage">Offre de stage</h2>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -35,7 +35,7 @@ const OfferModalView = ({ newOffer }) => {
                                     <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" value={offer.jobTitle} readOnly />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
+                                    <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
                                     <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={offer.monitorEmail} readOnly />
                                 </div>
                                 <div className="form-group">
