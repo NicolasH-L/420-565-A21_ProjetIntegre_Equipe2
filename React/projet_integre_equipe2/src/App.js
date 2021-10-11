@@ -17,6 +17,7 @@ import AdminStudentList from './components/AdminStudentList'
 import AdminViewStudentCV from './components/AdminViewStudentCV'
 import StudentInternshipListOffers from './components/StudentInternshipListOffers'
 import StudentDocuments from './components/StudentDocuments'
+
 function App() {
   return (
     <Router>
