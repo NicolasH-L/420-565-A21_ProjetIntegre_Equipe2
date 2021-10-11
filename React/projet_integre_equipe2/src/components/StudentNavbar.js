@@ -17,14 +17,21 @@ const StudentNavbar = () => {
     }
 
     function goToStudentInternshipOffers() {
+        console.log("gotoStudentInternship")
+        console.log(historyState)
         verifyCvValidity(studentMatricule)
             .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
+    }
+
+    function goToMyDocuments() {
+        history.push("/StudentDocuments", historyState)
     }
 
     const verifyCvValidity = async (matricule) => {
         const res = await fetch('http://localhost:8888/students/valid-cv/' + matricule)
         return await res.json()
     }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -39,6 +46,9 @@ const StudentNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToStudentInternshipOffers}>Offres de stages</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMyDocuments}>Mes Documents</button>
                         </li>
                     </ul>
                 </div>

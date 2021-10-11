@@ -37,7 +37,7 @@ const StudentInternshipListOffers = () => {
                     </thead>
                     <tbody>
                         {offers.map((offer) => (
-                            <tr id={"offer" + offer.idOffer} key={offer.idOffer}>
+                            <tr key={offer.idOffer}>
                                 <th className="text-center">{offer.companyName}</th>
                                 <td className="text-center">{offer.jobTitle}</td>
                                 <td className="text-center">{offer.salary}$</td>

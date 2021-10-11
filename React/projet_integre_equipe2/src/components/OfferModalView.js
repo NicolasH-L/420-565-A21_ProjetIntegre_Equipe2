@@ -8,7 +8,6 @@ const OfferModalView = ({ newOffer }) => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
-
     useEffect(() => {
         setOffer(newOffer)
     }, [])
@@ -17,7 +16,7 @@ const OfferModalView = ({ newOffer }) => {
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
-                <div className="modal-dialog" role="document">
+                <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header text-center">
                             <h2 className="modal-title text-secondary w-100 ml-4" id="offreDeStage">Offre de stage - {offer.companyName}</h2>
