@@ -8,13 +8,33 @@ const OfferModalView = ({ newOffer }) => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
+    const [documents, setDocuments] = useState([])
+
     useEffect(() => {
         setOffer(newOffer)
+
+        const getDocuments = async () => {
+            const documentsFromServer = await fetchDocuments()
+            setDocuments(documentsFromServer)
+        }
+        getDocuments()
     }, [])
+
+    const fetchDocuments = async () => {
+        const res = await fetch('http://localhost:8888/document/get-all-documents/' + 1)
+        return await res.json()
+    }
 
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
+            <select defaultValue="default"  className="mx-5" id="document" >
+                <option value="default">Choisissez un document</option>
+                {documents.map((document) => (
+                <option value={document.documentName} key={1}>{document.documentName}</option>
+                ))} 
+            </select>
+            <button className="btn btn-success mx-5">Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
