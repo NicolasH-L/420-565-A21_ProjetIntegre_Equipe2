@@ -33,6 +33,7 @@ public class StudentController {
 
    @GetMapping("/valid-cv/{matricule}")
    public ResponseEntity<Boolean> isValidStudentExists(@PathVariable String matricule){
+      System.out.println("Matricule " + matricule);
       return studentService.isValidCvStudent(matricule)
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));

@@ -2,11 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import StudentNavbar from './StudentNavbar'
 import OfferModalView from './OfferModalView'
+import { useHistory } from 'react-router'
 
 const StudentInternshipListOffers = () => {
     const [offers, setOffers] = useState([])
-
+    const history = useHistory()
+    const historyState = history.location.state
     useEffect(() => {
+        if (historyState === undefined)
+            return
         const getOffers = async () => {
             const offersFromServer = await fetchOffers()
             setOffers(offersFromServer)
@@ -21,7 +25,7 @@ const StudentInternshipListOffers = () => {
 
     return (
         <div className="grad">
-            <StudentNavbar />
+            <StudentNavbar useStudent={historyState} />
             <h2 className="text-center">Offres de stage</h2>
             <div className="p-5 table-responsive">
                 <table className="table table-hover bg-light shadow-lg">

@@ -39,7 +39,7 @@ const StudentUploadCV = () => {
 
   return (
     <div className="grad">
-      <StudentNavbar/>
+      <StudentNavbar useStudent={history.location.state}/>
       <div className="d-flex justify-content-center">
         <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
           <form className="container-fluid" onSubmit={submitForm}>
