@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import _ from 'lodash';
+import _ from 'lodash'
 import AdminNavbar from './AdminNavbar'
 import { useHistory } from "react-router-dom"
 import './Form.css'
@@ -21,11 +21,7 @@ const AdminInternshipOffer = () => {
     })
 
     const [monitors, setMonitors] = useState([])
-
-    
- 
-
-    const history = useHistory();
+    const history = useHistory()
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
 
@@ -61,12 +57,10 @@ const AdminInternshipOffer = () => {
                 _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
 
             alert("Veuillez remplir tous les champs correctement!")
-
             return
         } else {
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
-
         }
 
         function submitOffer() {
@@ -152,11 +146,11 @@ const AdminInternshipOffer = () => {
                         <div className="form-group">
                             <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
                             {error.monitorEmail !== "" ? error.monitorEmail : ""}
-                            <select defaultValue="default"  className="form-control text-center" id="monitorEmail" name="monitorEmail" onChange={validateInput} required>
+                            <select defaultValue="default" className="form-control text-center" id="monitorEmail" name="monitorEmail" onChange={validateInput} required>
                                 <option value="default">Veuillez choisir le représentant</option>
                                 {monitors.map((monitor) => (
                                     <option value={monitor.email} key={monitor.id}>{monitor.email}</option>
-                                ))} 
+                                ))}
                             </select>
                         </div>
                         <div className="form-group">
