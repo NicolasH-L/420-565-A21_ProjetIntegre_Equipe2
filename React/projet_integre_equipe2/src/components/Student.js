@@ -7,16 +7,11 @@ import StudentNavbar from './StudentNavbar'
 
 const Student = () => {
     const history = useHistory()
-
-    useEffect(() => {
-       /* history.push("/StudentUploadCV",history.location.state) */
-        // history.push("/StudentDocuments",history.location.state)
-    }, [])
-    
+    const historyState = history.location.state
 
     return (
         <div>
-            <StudentNavbar></StudentNavbar>
+            <StudentNavbar useStudent={historyState} />
         </div>
     )
 }
