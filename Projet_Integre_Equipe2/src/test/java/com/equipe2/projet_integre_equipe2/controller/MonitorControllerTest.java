@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,5 +114,45 @@ class MonitorControllerTest {
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualMonitor).isEqualTo(monitor);
+    }
+
+    @Test
+    public void testGetAllMonitors() throws Exception {
+        List<Monitor> monitorList = getListOfMonitors();
+        when(monitorService.getAllMonitors()).thenReturn(Optional.of(monitorList));
+
+        MvcResult result = mockMvc.perform(get("/monitors/get-all-monitors")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Monitor> getListOfMonitors() {
+        List<Monitor> monitorList = new ArrayList<>();
+        monitorList.add(Monitor.monitorBuilder()
+                .password("didi1*")
+                .lastName("didi")
+                .firstName("didi")
+                .companyName("kong")
+                .email("didi@kong.com")
+                .build());
+        monitorList.add(Monitor.monitorBuilder()
+                .password("dodo1*")
+                .lastName("dodo")
+                .firstName("dodo")
+                .companyName("kong")
+                .email("dodo@kong.com")
+                .build());
+        monitorList.add(Monitor.monitorBuilder()
+                .password("donkey1*")
+                .lastName("donkey")
+                .firstName("donkey")
+                .companyName("kong")
+                .email("donkey@kong.com")
+                .build());
+        return monitorList;
     }
 }
