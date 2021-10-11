@@ -2,7 +2,10 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Student;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2224f3fdd7a7ce3cb1883c8ff0363e33c4e82969
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.nio.charset.StandardCharsets;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> 2224f3fdd7a7ce3cb1883c8ff0363e33c4e82969
 import java.util.List;
 import java.util.Optional;
 
@@ -71,5 +78,55 @@ public class DocumentServiceTest {
         when(documentRepository.save(document)).thenReturn(null);
         Optional<Document> actualDocument = documentService.createDocument(multipartFile);
         assertThat(actualDocument).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllDocumentsByStudentId(){
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+        when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(getListOfDocumentsByStudent());
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
+        assertThat(allDocuments.get().size()).isEqualTo(3);
+        assertThat(allDocuments.get().get(0).getIdDocument()).isEqualTo(1);
+    }
+
+    @Test
+    public void testGetAllDocumentsByStudentiDFails(){
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+        when(documentRepository.findDocumentsByStudent_Id(student.getId())).thenReturn(null);
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsByStudentId(student.getId());
+        assertThat(allDocuments).isEqualTo(Optional.empty());
+    }
+
+    private List<Document> getListOfDocumentsByStudent() {
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .idDocument(1)
+                .documentName("CvInfo")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo2")
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("CvInfo3")
+                .student(null)
+                .build());
+
+        return documentList;
     }
 }
