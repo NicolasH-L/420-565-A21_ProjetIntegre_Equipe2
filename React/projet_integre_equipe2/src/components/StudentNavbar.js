@@ -1,11 +1,35 @@
-import React from 'react'
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 
 const StudentNavbar = () => {
     let history = useHistory()
     let historyState = history.location.state
-    function goToStudentUploadCV(){
+    let studentMatricule
+
+    useEffect(() => {
+        if (historyState === undefined || historyState.matricule === undefined)
+            return
+        studentMatricule = historyState.matricule
+    }, [])
+
+    function goToStudentUploadCV() {
         history.push("/StudentUploadCV", historyState)
+    }
+
+    function goToStudentInternshipOffers() {
+        console.log("gotoStudentInternship")
+        console.log(historyState)
+        verifyCvValidity(studentMatricule)
+            .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
+    }
+
+    function goToMyDocuments() {
+        history.push("/StudentDocuments", historyState)
+    }
+
+    const verifyCvValidity = async (matricule) => {
+        const res = await fetch('http://localhost:8888/students/valid-cv/' + matricule)
+        return await res.json()
     }
 
     return (
@@ -19,6 +43,12 @@ const StudentNavbar = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToStudentUploadCV}>Déposer CV</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToStudentInternshipOffers}>Offres de stages</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMyDocuments}>Mes Documents</button>
                         </li>
                     </ul>
                 </div>

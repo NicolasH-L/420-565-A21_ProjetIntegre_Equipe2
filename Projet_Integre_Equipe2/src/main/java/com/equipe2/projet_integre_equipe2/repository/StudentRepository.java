@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     Student findByMatriculeAndPassword(String matricule, String password);
+
+    boolean existsByMatriculeAndIsCvValidTrue(String matricule);
+
 }

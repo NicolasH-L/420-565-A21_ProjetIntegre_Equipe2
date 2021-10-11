@@ -19,9 +19,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(OfferController.class)
 public class OfferControllerTest {
@@ -35,7 +33,7 @@ public class OfferControllerTest {
     private Offer offer;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         offer = Offer.builder()
                 .idOffer(1)
                 .companyName("Cegep")
@@ -75,7 +73,7 @@ public class OfferControllerTest {
         when(offerService.getAllOffers()).thenReturn(Optional.of(offerList));
 
         MvcResult result = mockMvc.perform(get("/offer/get-all-offers")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
@@ -84,7 +82,40 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void acceptOfferTest() throws Exception{
+    public void getAllValidOffersTest() throws Exception {
+        List<Offer> offerList = getListOfValidOffers();
+        when(offerService.getAllValidOffers()).thenReturn(Optional.of(offerList));
+
+        MvcResult result = mockMvc.perform(get("/offer/get-all-valid-offers")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void getAllValidOffersTestFail() throws Exception {
+        List<Offer> offerList = getListOfOffers();
+        List<Offer> actuals;
+        when(offerService.getAllValidOffers()).thenReturn(Optional.empty());
+
+        MvcResult result = mockMvc.perform(get("/offer/get-all-valid-offers")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        try {
+            actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        } catch (Exception e) {
+            actuals = new ArrayList<>();
+        }
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CONFLICT.value());
+        assertThat(actuals.size()).isNotEqualTo(offerList.size());
+        assertThat(actuals).isEqualTo(new ArrayList<>());
+    }
+
+    @Test
+    public void acceptOfferTest() throws Exception {
         when(offerService.acceptOffer(offer.getIdOffer())).thenReturn(Optional.of(offer));
 
         MvcResult result = mockMvc.perform(put("/offer/accept-offer/1")
@@ -97,7 +128,7 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void declineOfferTest() throws Exception{
+    public void declineOfferTest() throws Exception {
         when(offerService.declineOffer(offer.getIdOffer())).thenReturn(Optional.of(offer));
 
         MvcResult result = mockMvc.perform(put("/offer/decline-offer/1")
@@ -127,5 +158,22 @@ public class OfferControllerTest {
                 .jobTitle("Developper3")
                 .build());
         return offerList;
+    }
+
+    private List<Offer> getListOfValidOffers() {
+        List<Offer> validOfferList = new ArrayList<>();
+        validOfferList.add(Offer.builder()
+                .companyName("Cegep2")
+                .salary("20")
+                .jobTitle("Developper2")
+                .isValid(true)
+                .build());
+        validOfferList.add(Offer.builder()
+                .companyName("Cegep23")
+                .salary("203")
+                .jobTitle("Developper23")
+                .isValid(true)
+                .build());
+        return validOfferList;
     }
 }

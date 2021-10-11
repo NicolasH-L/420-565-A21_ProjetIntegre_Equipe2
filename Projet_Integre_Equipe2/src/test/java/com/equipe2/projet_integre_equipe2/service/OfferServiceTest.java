@@ -1,8 +1,10 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Offer;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
+import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +28,18 @@ public class OfferServiceTest {
     @Mock
     private MonitorRepository monitorRepository;
 
+    @Mock
+    private StudentRepository studentRepository;
+
     @InjectMocks
     private OfferService offerService;
 
     private Offer offer;
+    private Student validCvStudent;
+    private Student invalidCvStudent;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         offer = Offer.builder()
                 .idOffer(1)
                 .companyName("Cegep")
@@ -51,25 +58,41 @@ public class OfferServiceTest {
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
                 .build();
+        validCvStudent = Student.studentBuilder()
+                .id(1)
+                .matricule("1234567")
+                .password("toto")
+                .firstName("toto")
+                .lastName("toto")
+                .isCvValid(true)
+                .build();
+        invalidCvStudent = Student.studentBuilder()
+                .id(2)
+                .matricule("7654321")
+                .password("toto")
+                .firstName("toto")
+                .lastName("toto")
+                .isCvValid(false)
+                .build();
     }
 
 
     @Test
-    public void testSaveOffer(){
+    public void testSaveOffer() {
         when(offerRepository.save(offer)).thenReturn(offer);
         Optional<Offer> actualOffer = offerService.saveOffer(offer);
         assertThat(actualOffer.get()).isEqualTo(offer);
     }
 
     @Test
-    public void testSaveOfferFails(){
+    public void testSaveOfferFails() {
         when(offerRepository.save(offer)).thenReturn(null);
         Optional<Offer> actualOffer = offerService.saveOffer(offer);
         assertThat(actualOffer).isEqualTo(Optional.empty());
     }
 
     @Test
-    public void testGetAllOffers(){
+    public void testGetAllOffers() {
         when(offerRepository.findAll()).thenReturn(getListOfOffers());
         final Optional<List<Offer>> allOffers = offerService.getAllOffers();
         assertThat(allOffers.get().size()).isEqualTo(3);
@@ -77,14 +100,14 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testGetAllOffersFails(){
+    public void testGetAllOffersFails() {
         when(offerRepository.findAll()).thenReturn(null);
         final Optional<List<Offer>> allOffers = offerService.getAllOffers();
         assertThat(allOffers).isEqualTo(Optional.empty());
     }
 
     @Test
-    public void testAcceptOffer(){
+    public void testAcceptOffer() {
         when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
         when(offerRepository.saveAndFlush(offer)).thenReturn(offer);
         Optional<Offer> actualOffer = offerService.acceptOffer(offer.getIdOffer());
@@ -94,7 +117,7 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testAcceptOfferFails(){
+    public void testAcceptOfferFails() {
         when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
         when(offerRepository.saveAndFlush(offer)).thenReturn(null);
         Optional<Offer> actualOffer = offerService.acceptOffer(offer.getIdOffer());
@@ -102,7 +125,7 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testDeclineOffer(){
+    public void testDeclineOffer() {
         when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
         when(offerRepository.saveAndFlush(offer)).thenReturn(offer);
         Optional<Offer> actualOffer = offerService.declineOffer(offer.getIdOffer());
@@ -112,11 +135,30 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testDeclineOfferFails(){
+    public void testDeclineOfferFails() {
         when(offerRepository.findById(offer.getIdOffer())).thenReturn(Optional.of(offer));
         when(offerRepository.saveAndFlush(offer)).thenReturn(null);
         Optional<Offer> actualOffer = offerService.declineOffer(offer.getIdOffer());
         assertThat(actualOffer).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllValidOffers() {
+        when(offerRepository.saveAll(getListOfValidOffers())).thenReturn(getListOfValidOffers());
+        when(offerRepository.findOffersByIsValidTrue()).thenReturn(getListOfValidOffers());
+        final Optional<List<Offer>> expectedValidOfferList = Optional.of(offerRepository.saveAll(getListOfValidOffers()));
+        final Optional<List<Offer>> actualValidOfferList = offerService.getAllValidOffers();
+        assertThat(actualValidOfferList.get().size()).isEqualTo(expectedValidOfferList.get().size());
+        assertThat(actualValidOfferList.get().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void testGetAllValidOffersFails(){
+        when(offerRepository.saveAll(getListOfOffers())).thenReturn(getListOfOffers());
+        when(offerRepository.findOffersByIsValidTrue()).thenReturn(null);
+        offerRepository.saveAll(getListOfOffers());
+        final Optional<List<Offer>> actualValidOfferList = offerService.getAllValidOffers();
+        assertThat(actualValidOfferList).isEqualTo(Optional.empty());
     }
 
     private List<Offer> getListOfOffers() {
@@ -137,5 +179,22 @@ public class OfferServiceTest {
                 .jobTitle("Developper3")
                 .build());
         return offerList;
+    }
+
+    private List<Offer> getListOfValidOffers() {
+        List<Offer> validOfferList = new ArrayList<>();
+        validOfferList.add(Offer.builder()
+                .companyName("Cegep2")
+                .salary("20")
+                .jobTitle("Developper2")
+                .isValid(true)
+                .build());
+        validOfferList.add(Offer.builder()
+                .companyName("Cegep23")
+                .salary("203")
+                .jobTitle("Developper23")
+                .isValid(true)
+                .build());
+        return validOfferList;
     }
 }

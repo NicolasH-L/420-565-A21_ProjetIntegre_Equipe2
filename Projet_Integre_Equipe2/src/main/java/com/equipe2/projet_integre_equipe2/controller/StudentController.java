@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,18 @@ public class StudentController {
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Student()));
    }
 
+   @GetMapping("/valid-cv/{matricule}")
+   public ResponseEntity<Boolean> isValidStudentExists(@PathVariable String matricule){
+      return studentService.isValidCvStudent(matricule)
+              .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+              .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
+   }
+
    @GetMapping("/get-all-students")
    public ResponseEntity<List<Student>> getAllStudents(){
       return studentService.getAllStudents()
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
+
 }
