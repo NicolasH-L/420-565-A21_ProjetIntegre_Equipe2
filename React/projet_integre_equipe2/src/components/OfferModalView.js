@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
-const OfferModalView = ({ newOffer }) => {
+const OfferModalView = ({ newOffer, onAdd }) => {
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
@@ -33,16 +33,26 @@ const OfferModalView = ({ newOffer }) => {
         return await res.json()
     }
 
+    // const onClick = (e) => {
+    //     e.preventDefault()
+    //     if (condition)
+    //         return
+    //     } else {
+    //         onAdd(documents)
+    //         onAdd(student)
+    //     }
+    // }
+
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
             <select defaultValue="default" className="mx-5" id="document" >
-                <option value="default" selected disabled>Choisissez un document</option>
+                <option value="default" disabled>Choisissez un document</option>
                 {documents.map((document) => (
                     <option value={document.documentName} key={studentId}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5">Appliquer</button>
+            <button className="btn btn-success mx-5 disabled" /*</div>onClick={onClick}*/>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
