@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +20,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(StudentController.class)
 public class StudentControllerTest {
@@ -114,6 +114,19 @@ public class StudentControllerTest {
                 .getResponse().getContentAsString(), Boolean.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualIsValidCvStudentExist).isEqualTo(false);
+    }
+
+    @Test
+    public void validateStudentTest() throws Exception {
+        when(studentService.validateStudent(invalidCvStudent.getMatricule())).thenReturn(Optional.of(invalidCvStudent));
+
+        MvcResult result = mockMvc.perform(put("/students/validate-student/7654321")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(invalidCvStudent))).andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(invalidCvStudent).isEqualTo(actualStudent);
     }
 
     private List<Student> getListOfStudents() {
