@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
 
 const OfferModalView = ({ newOffer }) => {
     const [offer, setOffer] = useState({
@@ -9,6 +10,13 @@ const OfferModalView = ({ newOffer }) => {
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
     const [documents, setDocuments] = useState([])
+    const history = useHistory()
+    const historyState = useHistory().location.state
+    let studentId
+
+    if (history !== undefined) {
+        studentId = historyState.id
+    }
 
     useEffect(() => {
         setOffer(newOffer)
@@ -21,18 +29,18 @@ const OfferModalView = ({ newOffer }) => {
     }, [])
 
     const fetchDocuments = async () => {
-        const res = await fetch('http://localhost:8888/document/get-all-documents/' + 1)
+        const res = await fetch(`http://localhost:8888/document/get-all-documents/${studentId}`)
         return await res.json()
     }
 
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
-            <select defaultValue="default"  className="mx-5" id="document" >
-                <option value="default">Choisissez un document</option>
+            <select defaultValue="default" className="mx-5" id="document" >
+                <option value="default" selected disabled>Choisissez un document</option>
                 {documents.map((document) => (
-                <option value={document.documentName} key={1}>{document.documentName}</option>
-                ))} 
+                    <option value={document.documentName} key={studentId}>{document.documentName}</option>
+                ))}
             </select>
             <button className="btn btn-success mx-5">Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">

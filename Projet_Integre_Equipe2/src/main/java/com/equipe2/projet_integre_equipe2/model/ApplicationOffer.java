@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Internship implements Serializable {
+public class ApplicationOffer implements Serializable {
 
     @Id
     private int idInternship;
@@ -26,5 +26,8 @@ public class Internship implements Serializable {
 
     @OneToOne
     private Document document;
+
+    @OneToOne
+    private Student student;
 
 }
