@@ -35,8 +35,11 @@ public class DocumentServiceTest {
 
     private Document document;
 
+    private Student student;
+
     private MultipartFile multipartFile;
 
+    private List<Document> listDocuments;
 
     @BeforeEach
     void setup(){
@@ -44,6 +47,13 @@ public class DocumentServiceTest {
                 .documentName("CvInfo")
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
+                .build();
+
+        student = Student.studentBuilder()
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
                 .build();
     }
 
