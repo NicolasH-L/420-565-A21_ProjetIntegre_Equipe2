@@ -26,10 +26,21 @@ const AdminStudentCvList = () => {
         history.push("/AdminViewStudentCV", document)
     }
 
+    
+
+    const declineCv = async (document) => {
+        
+    }
+
     return (
         <div className="grad">
             <AdminNavbar />
-            <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
+            <div className="">
+                <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
+                
+            </div>
+            
+            
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -46,6 +57,7 @@ const AdminStudentCvList = () => {
                                 <td>{/*document.isCvValid ? "Valide" : "En attente"*/}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
+                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineCv(document) }}>Refuser</button>
                                 </td>
                             </tr>
                         ))}

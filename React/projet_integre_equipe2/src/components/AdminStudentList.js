@@ -24,6 +24,24 @@ const AdminStudentList = () => {
         history.push("/AdminStudentCvList", student)
     }
 
+    const validateStudent = async (student) => {
+        const res = await fetch(`http://localhost:8888/students/validate-student/${student.id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        const data = await res.json()
+
+        setStudents(
+            students.map(
+                (student1) => student1.id === student.id ? {...student1, isCvValid: data.isCvValid} : student1
+            )
+        )
+    }
+
     return (
         <div className="grad">
             <AdminNavbar/>
@@ -46,6 +64,7 @@ const AdminStudentList = () => {
                                 <td>{student.isCvValid ? "Valide" : "En attente"}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>Consulter documents</button>
+                                    <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>Valider étudiant</button>
                                 </td>
                             </tr>
                         ))}
