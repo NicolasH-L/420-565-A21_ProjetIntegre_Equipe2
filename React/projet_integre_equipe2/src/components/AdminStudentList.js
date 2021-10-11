@@ -52,7 +52,7 @@ const AdminStudentList = () => {
                         <tr>
                             <th scope="col">Nom: </th>
                             <th scope="col">Matricule: </th>
-                            <th scope="col">Validité du CV: </th>
+                            <th scope="col">Validité: </th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

@@ -26,10 +26,22 @@ const AdminStudentCvList = () => {
         history.push("/AdminViewStudentCV", document)
     }
 
-    
-
     const declineCv = async (document) => {
-        
+        const res = await fetch(`http://localhost:8888/document/decline-document/${document.idDocument}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(document)
+            })
+        const data = await res.json()
+
+        setDocuments(
+            documents.map(
+                (document1) => document1.idDocument === document.idDocument ? {...document1, isValid: data.isValid} : document1
+            )
+        )
     }
 
     return (
@@ -52,7 +64,7 @@ const AdminStudentCvList = () => {
                     </thead>
                     <tbody>
                         {documents.map((document) => (
-                            <tr className={`${document.isCvValid ? 'table-success' : 'table-warning'}`} key={document.idDocument}>
+                            <tr className={`${!document.isValid ? 'table-danger' : ''}`} key={document.idDocument}>
                                 <th>{document.documentName}</th>
                                 <td>{/*document.isCvValid ? "Valide" : "En attente"*/}</td>
                                 <td className="w-25">
