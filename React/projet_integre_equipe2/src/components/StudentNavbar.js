@@ -1,14 +1,29 @@
-import React from 'react'
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 
 const StudentNavbar = () => {
     let history = useHistory()
     let historyState = history.location.state
-    function goToStudentUploadCV(){
+    let studentMatricule
+
+    useEffect(() => {
+        if (historyState === undefined || historyState.matricule === undefined)
+            return
+        studentMatricule = historyState.matricule
+    }, [])
+
+    function goToStudentUploadCV() {
         history.push("/StudentUploadCV", historyState)
     }
-    function goToStudentInternshipOffers(){
-        history.push("/StudentInternshipOffers", historyState)
+
+    function goToStudentInternshipOffers() {
+        verifyCvValidity(studentMatricule)
+            .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
+    }
+
+    const verifyCvValidity = async (matricule) => {
+        const res = await fetch('http://localhost:8888/students/valid-cv/' + matricule)
+        return await res.json()
     }
     return (
         <div>
