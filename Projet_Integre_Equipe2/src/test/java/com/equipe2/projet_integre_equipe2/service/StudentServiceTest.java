@@ -48,8 +48,6 @@ public class StudentServiceTest {
                 .password("1234")
                 .isCvValid(false)
                 .build();
-        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
-        studentRepository.saveAndFlush(invalidCvStudent);
 
     }
 
@@ -107,9 +105,9 @@ public class StudentServiceTest {
 
     @Test
     public void testIsValidCvStudentFails() {
-        when(studentRepository.saveAndFlush(student)).thenReturn(student);
         when(studentRepository.existsByMatriculeAndIsCvValidTrue(invalidCvStudent.getMatricule())).thenReturn(false);
-        studentRepository.saveAndFlush(student);
+        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
+        studentRepository.saveAndFlush(invalidCvStudent);
         final Optional<Boolean> actualInvalidCvStudentExist = studentService.isValidCvStudent(invalidCvStudent.getMatricule());
         assertThat(actualInvalidCvStudentExist.get()).isFalse();
     }

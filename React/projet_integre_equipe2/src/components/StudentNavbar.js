@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react'
 import { useHistory } from "react-router-dom"
+import { useState } from 'react'
 
-const StudentNavbar = () => {
-    let history = useHistory()
-    let historyState = history.location.state
+const StudentNavbar = ({ useStudent }) => {
+    const [student, setStudent] = useState({
+        matricule: ""
+    })
+    const history = useHistory()
+    const historyState = history.location.state
     let studentMatricule
 
     useEffect(() => {
         if (historyState === undefined || historyState.matricule === undefined)
             return
+        setStudent(useStudent)
         studentMatricule = historyState.matricule
     }, [])
 
@@ -17,9 +22,9 @@ const StudentNavbar = () => {
     }
 
     function goToStudentInternshipOffers() {
-        console.log("gotoStudentInternship")
-        console.log(historyState)
-        verifyCvValidity(studentMatricule)
+        if (historyState === undefined)
+            return
+        verifyCvValidity(student.matricule)
             .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
     }
 

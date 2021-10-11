@@ -21,7 +21,6 @@ const AdminInternshipOffer = () => {
     })
 
     const [monitors, setMonitors] = useState([])
-    const history = useHistory()
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
 
@@ -144,7 +143,7 @@ const AdminInternshipOffer = () => {
                             <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" placeholder="Entrez le nom du poste" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
+                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
                             {error.monitorEmail !== "" ? error.monitorEmail : ""}
                             <select defaultValue="default" className="form-control text-center" id="monitorEmail" name="monitorEmail" onChange={validateInput} required>
                                 <option value="default">Veuillez choisir le représentant</option>
