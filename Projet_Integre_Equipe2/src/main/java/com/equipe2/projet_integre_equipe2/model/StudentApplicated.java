@@ -16,10 +16,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApplicationOffer implements Serializable {
+public class StudentApplicated implements Serializable {
 
     @Id
-    private int idInternship;
+    private int idStudentApplicated;
 
     @OneToOne
     private Offer offer;

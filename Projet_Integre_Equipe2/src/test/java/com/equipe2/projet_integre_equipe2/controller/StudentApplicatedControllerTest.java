@@ -1,9 +1,9 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
-import com.equipe2.projet_integre_equipe2.model.Internship;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.service.InternshipService;
+import com.equipe2.projet_integre_equipe2.model.StudentApplicated;
+import com.equipe2.projet_integre_equipe2.service.StudentApplicatedService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,16 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(InternshipController.class)
-public class InternshipControllerTest {
+@WebMvcTest(StudentApplicatedController.class)
+public class StudentApplicatedControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private InternshipService internshipService;
+    private StudentApplicatedService studentApplicatedService;
 
-    private Internship internship;
+    private StudentApplicated studentApplicated;
 
     private Document document;
 
@@ -64,22 +64,22 @@ public class InternshipControllerTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
-        internship = Internship.builder()
+        studentApplicated = StudentApplicated.builder()
                 .offer(offer)
                 .document(document)
                 .build();
     }
 
     @Test
-    public void testSaveInternship() throws Exception {
-        when(internshipService.saveInternship(internship)).thenReturn(Optional.of(internship));
+    public void testSaveApplication() throws Exception {
+        when(studentApplicatedService.saveApplication(studentApplicated)).thenReturn(Optional.of(studentApplicated));
 
         MvcResult result = mockMvc.perform(post("/offers-list/save-internship")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(internship))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(studentApplicated))).andReturn();
 
-        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Internship.class);
+        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentApplicated.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(internship).isEqualTo(actualInternship);
+        assertThat(studentApplicated).isEqualTo(actualInternship);
     }
 }

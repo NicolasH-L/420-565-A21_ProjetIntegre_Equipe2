@@ -1,9 +1,9 @@
 package com.equipe2.projet_integre_equipe2.repository;
 
-import com.equipe2.projet_integre_equipe2.model.Internship;
+import com.equipe2.projet_integre_equipe2.model.StudentApplicated;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InternshipRepository extends JpaRepository<Internship, Integer> {
+public interface StudentApplicatedRepository extends JpaRepository<StudentApplicated, Integer> {
 }
