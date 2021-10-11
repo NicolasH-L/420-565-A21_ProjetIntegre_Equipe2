@@ -31,6 +31,7 @@ public class DocumentService {
                     StandardCharsets.UTF_8).replace("\"","").split(":");
 
             Document document = new Document();
+            document.setIsValid(true);
             document.setDocumentName(signatureFile[0]);
             document.setData(multipartFile.getBytes());
             document.setStudent(studentRepository.getById(Integer.parseInt(signatureFile[1])));
@@ -51,7 +52,7 @@ public class DocumentService {
     public Optional<Document> declineDocument(Integer idDocument){
         try {
             Optional<Document> document = documentRepository.findById(idDocument);
-            document.get().setValid(false);
+            document.get().setIsValid(false);
             return Optional.of(documentRepository.saveAndFlush(document.get()));
         } catch (Exception e) {
             return Optional.empty();

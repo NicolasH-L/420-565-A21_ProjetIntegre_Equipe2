@@ -20,7 +20,7 @@ public class Document implements Serializable {
     private Integer idDocument;
 
     private String documentName;
-    private boolean isValid = true;
+    private Boolean isValid;
 
     @Lob
     private byte[] data;

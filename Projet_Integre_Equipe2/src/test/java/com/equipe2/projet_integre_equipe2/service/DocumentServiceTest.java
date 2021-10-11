@@ -46,6 +46,7 @@ public class DocumentServiceTest {
     void setup(){
         document = Document.builder()
                 .documentName("CvInfo")
+                .isValid(true)
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
@@ -96,7 +97,15 @@ public class DocumentServiceTest {
         when(documentRepository.saveAndFlush(document)).thenReturn(document);
         Optional<Document> actualDocument = documentService.declineDocument(document.getIdDocument());
         assertThat(actualDocument.get().getDocumentName()).isEqualTo("CvInfo");
-        assertThat(actualDocument.get().isValid()).isFalse();
+        assertThat(actualDocument.get().getIsValid()).isFalse();
+    }
+
+    @Test
+    public void testDeclineDocumentFails() {
+        when(documentRepository.findById(document.getIdDocument())).thenReturn(Optional.of(document));
+        when(documentRepository.saveAndFlush(document)).thenReturn(null);
+        Optional<Document> actualDocument = documentService.declineDocument(document.getIdDocument());
+        assertThat(actualDocument).isEmpty();
     }
 
     private List<Document> getListOfDocumentsByStudent() {
