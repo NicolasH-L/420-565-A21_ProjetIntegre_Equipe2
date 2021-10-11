@@ -2,10 +2,6 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Student;
-<<<<<<< HEAD
-
-=======
->>>>>>> 2224f3fdd7a7ce3cb1883c8ff0363e33c4e82969
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,10 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.nio.charset.StandardCharsets;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> 2224f3fdd7a7ce3cb1883c8ff0363e33c4e82969
 import java.util.List;
 import java.util.Optional;
 
