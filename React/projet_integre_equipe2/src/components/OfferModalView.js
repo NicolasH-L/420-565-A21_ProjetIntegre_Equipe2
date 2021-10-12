@@ -13,10 +13,10 @@ const OfferModalView = ({ newOffer, onAdd }) => {
     const history = useHistory()
     const historyState = useHistory().location.state
     let studentId
+    let documentName
 
-    if (history !== undefined) {
+    if (history !== undefined)
         studentId = historyState.id
-    }
 
     useEffect(() => {
         setOffer(newOffer)
@@ -24,6 +24,7 @@ const OfferModalView = ({ newOffer, onAdd }) => {
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments()
             setDocuments(documentsFromServer)
+            documentName = documents.documentName
         }
         getDocuments()
     }, [])
@@ -33,26 +34,31 @@ const OfferModalView = ({ newOffer, onAdd }) => {
         return await res.json()
     }
 
-    // const onClick = (e) => {
-    //     e.preventDefault()
-    //     if (condition)
-    //         return
-    //     } else {
-    //         onAdd(documents)
-    //         onAdd(student)
-    //     }
-    // }
+    const applyInternship = async (document) => {
+        alert("click")
+        console.log(document)
+    }
+
+    const validateInput = (e) => {
+        if (e.target.name === "document" && e.target.value === "DEFAULT") {
+            alert("alerte")
+        }
+    }
+
+    // console.log(documents[1].documentName)
+    // console.log(documents)
+    console.log(documentName)
 
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
-            <select defaultValue="default" className="mx-5" id="document" >
-                <option value="default" disabled>Choisissez un document</option>
+            <select defaultValue="DEFAULT" className="mx-5" id="document" name="document" onChange={validateInput} >
+                <option value="DEFAULT" disabled>Choisissez un document</option>
                 {documents.map((document) => (
-                    <option value={document.documentName} key={studentId}>{document.documentName}</option>
+                    <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5 disabled" /*</div>onClick={onClick}*/>Appliquer</button>
+            <button className="btn btn-success mx-5" disabled={true} onClick={e => { e.preventDefault(); applyInternship(document) }}>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
