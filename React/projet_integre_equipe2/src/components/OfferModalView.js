@@ -9,6 +9,9 @@ const OfferModalView = ({ newOffer, onAdd }) => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
+    const [applicationInternship, setApplicationInternship] = useState({
+        offer, document, student
+    })
     const [documents, setDocuments] = useState([])
     const history = useHistory()
     const historyState = useHistory().location.state
@@ -44,6 +47,18 @@ const OfferModalView = ({ newOffer, onAdd }) => {
             alert("alerte")
         }
     }
+
+    // const addApplicationInternship = async (student) => {
+    //     const result = await fetch('http://localhost:8888/offers-list/save-internship',
+    //         {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-type': 'application/json'
+    //             },
+    //             body: JSON.stringify(student)
+    //         })
+    //     return await result.json()
+    // }
 
     // console.log(documents[1].documentName)
     // console.log(documents)
