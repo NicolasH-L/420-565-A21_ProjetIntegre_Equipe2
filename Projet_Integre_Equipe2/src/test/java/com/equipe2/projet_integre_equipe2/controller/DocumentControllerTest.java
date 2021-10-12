@@ -51,7 +51,7 @@ public class DocumentControllerTest {
     private MultipartFile multipartFile;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         document = document.builder()
                 .idDocument(1)
                 .documentName("CvInfo")
@@ -62,11 +62,11 @@ public class DocumentControllerTest {
 
     @Test
     public void receiveDocumentTest() throws Exception {
-        multipartFile = new MockMultipartFile("uploadFile","CvInfo:0",null,"test".getBytes(StandardCharsets.UTF_8));
+        multipartFile = new MockMultipartFile("uploadFile", "CvInfo:0", null, "test".getBytes(StandardCharsets.UTF_8));
         when(documentService.createDocument(multipartFile)).thenReturn(Optional.of(document));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.multipart("/uploadcv")
-                .file((MockMultipartFile) multipartFile))
+                        .file((MockMultipartFile) multipartFile))
                 .andReturn();
 
         var actualResponse = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
@@ -89,7 +89,7 @@ public class DocumentControllerTest {
 
         MvcResult result = mockMvc.perform(get("/document/get-all-documents/{idStudent}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                        .andReturn();
+                .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -107,6 +107,43 @@ public class DocumentControllerTest {
         var actualDocument = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Document.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(document).isEqualTo(actualDocument);
+    }
+
+    @Test
+    public void getAllDocumentsValidByStudentTest() throws Exception {
+        Student student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .idDocument(1)
+                .documentName("cv")
+                .isValid(true)
+                .data(null)
+                .student(student)
+                .build());
+        documentList.add(Document.builder()
+                .idDocument(2)
+                .documentName("cvfalse")
+                .isValid(true)
+                .data(null)
+                .student(student)
+                .build());
+
+        when(documentService.getAllDocumentsValidByStudentId(student.getId())).thenReturn(Optional.of(documentList));
+
+        MvcResult result = mockMvc.perform(get("/document/get-all-documents-valid/{idStudent}", 1)
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(2);
     }
 
     private List<Document> getListOfDocumentsByStudent() {
