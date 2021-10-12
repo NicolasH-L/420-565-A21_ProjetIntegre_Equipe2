@@ -19,13 +19,13 @@ const StudentDocuments = () => {
         getDocuments()
     }, [])
 
-    const viewDocumentCv = async (document) => {
-        history.push("/AdminViewStudentCV", document)
-    }
-
     const fetchDocuments = async (studentId) => {
         const res = await fetch(`http://localhost:8888/document/get-all-documents/${studentId}`)
         return await res.json()
+    }
+
+    const viewDocumentCv = async (document) => {
+        history.push("/AdminViewStudentCV", document)
     }
 
     return (
