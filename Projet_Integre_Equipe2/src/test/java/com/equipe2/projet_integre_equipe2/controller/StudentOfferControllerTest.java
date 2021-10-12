@@ -2,8 +2,8 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.StudentApplicated;
-import com.equipe2.projet_integre_equipe2.service.StudentApplicatedService;
+import com.equipe2.projet_integre_equipe2.model.StudentOffer;
+import com.equipe2.projet_integre_equipe2.service.StudentOfferService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,16 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(StudentApplicatedController.class)
-public class StudentApplicatedControllerTest {
+@WebMvcTest(StudentOfferController.class)
+public class StudentOfferControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private StudentApplicatedService studentApplicatedService;
+    private StudentOfferService studentOfferService;
 
-    private StudentApplicated studentApplicated;
+    private StudentOffer studentOffer;
 
     private Document document;
 
@@ -64,7 +64,7 @@ public class StudentApplicatedControllerTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
-        studentApplicated = StudentApplicated.builder()
+        studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
                 .build();
@@ -72,14 +72,14 @@ public class StudentApplicatedControllerTest {
 
     @Test
     public void testSaveApplication() throws Exception {
-        when(studentApplicatedService.saveApplication(studentApplicated)).thenReturn(Optional.of(studentApplicated));
+        when(studentOfferService.saveApplication(studentOffer)).thenReturn(Optional.of(studentOffer));
 
         MvcResult result = mockMvc.perform(post("/offers-list/save-internship")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(studentApplicated))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(studentOffer))).andReturn();
 
-        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentApplicated.class);
+        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentOffer.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(studentApplicated).isEqualTo(actualInternship);
+        assertThat(studentOffer).isEqualTo(actualInternship);
     }
 }

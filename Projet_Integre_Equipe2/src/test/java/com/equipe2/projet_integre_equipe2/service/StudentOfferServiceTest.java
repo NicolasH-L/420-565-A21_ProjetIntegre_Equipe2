@@ -2,8 +2,8 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.StudentApplicated;
-import com.equipe2.projet_integre_equipe2.repository.StudentApplicatedRepository;
+import com.equipe2.projet_integre_equipe2.model.StudentOffer;
+import com.equipe2.projet_integre_equipe2.repository.StudentOfferRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,19 +18,19 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class StudentApplicatedServiceTest {
+public class StudentOfferServiceTest {
 
     @Mock
-    private StudentApplicatedRepository studentApplicatedRepository;
+    private StudentOfferRepository studentOfferRepository;
 
     @InjectMocks
-    private StudentApplicatedService studentApplicatedService;
+    private StudentOfferService studentOfferService;
 
     private Offer offer;
 
     private Document document;
 
-    private StudentApplicated studentApplicated;
+    private StudentOffer studentOffer;
 
     @BeforeEach
     void setup() {
@@ -59,7 +59,7 @@ public class StudentApplicatedServiceTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
-        studentApplicated = StudentApplicated.builder()
+        studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
                 .build();
@@ -67,15 +67,15 @@ public class StudentApplicatedServiceTest {
 
     @Test
     public void testApplyInternship() {
-        when(studentApplicatedRepository.save(studentApplicated)).thenReturn(studentApplicated);
-        Optional<StudentApplicated> actualApplication = studentApplicatedService.saveApplication(studentApplicated);
-        assertThat(actualApplication.get()).isEqualTo(studentApplicated);
+        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveApplication(studentOffer);
+        assertThat(actualApplication.get()).isEqualTo(studentOffer);
     }
 
     @Test
     public void testFailedApplyInternship() {
-        when(studentApplicatedRepository.save(studentApplicated)).thenReturn(null);
-        Optional<StudentApplicated> actualApplication = studentApplicatedService.saveApplication(studentApplicated);
+        when(studentOfferRepository.save(studentOffer)).thenReturn(null);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveApplication(studentOffer);
         assertThat(actualApplication).isEqualTo(Optional.empty());
     }
 }
