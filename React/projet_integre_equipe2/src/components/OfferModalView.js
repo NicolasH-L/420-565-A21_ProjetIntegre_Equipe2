@@ -75,7 +75,7 @@ const OfferModalView = ({ newOffer, onAdd }) => {
                     <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5" id="applicationButton" disabled={isDisabled}>Appliquer</button>
+            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={isDisabled}>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
