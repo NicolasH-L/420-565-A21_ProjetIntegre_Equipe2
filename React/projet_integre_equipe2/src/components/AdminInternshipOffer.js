@@ -1,10 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
-import _ from 'lodash';
+import { useState, useEffect } from 'react'
+import _ from 'lodash'
 import AdminNavbar from './AdminNavbar'
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
 import './Form.css'
-import { RegexPattern } from './RegexPattern';
+import { RegexPattern } from './RegexPattern'
 
 const AdminInternshipOffer = () => {
     const [offer, setOffer] = useState({
@@ -20,7 +20,7 @@ const AdminInternshipOffer = () => {
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
 
-    const history = useHistory();
+    const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
 
@@ -29,6 +29,19 @@ const AdminInternshipOffer = () => {
         futureDate.setDate(futureDate.getDate() + 220)
         let futureDateFormat = futureDate.toISOString().split('T')[0]
         return futureDateFormat
+    }
+
+    useEffect(() => {
+        const getMonitors = async () => {
+            const monitorsFromServer = await fetchMonitors()
+            setMonitors(monitorsFromServer)
+        }
+        getMonitors()
+    }, [])
+
+    const fetchMonitors = async () => {
+        const res = await fetch('http://localhost:8888/monitors/get-all-monitors')
+        return await res.json()
     }
 
     const onSubmit = (e) => {
@@ -43,12 +56,10 @@ const AdminInternshipOffer = () => {
                 _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
 
             alert("Veuillez remplir tous les champs correctement!")
-
             return
         } else {
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
-
         }
 
         function submitOffer() {
@@ -132,9 +143,14 @@ const AdminInternshipOffer = () => {
                             <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" placeholder="Entrez le nom du poste" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
+                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
                             {error.monitorEmail !== "" ? error.monitorEmail : ""}
-                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" placeholder="Entrez l'email du représentant" onChange={validateInput} required />
+                            <select defaultValue="default" className="form-control text-center" id="monitorEmail" name="monitorEmail" onChange={validateInput} required>
+                                <option value="default">Veuillez choisir le représentant</option>
+                                {monitors.map((monitor) => (
+                                    <option value={monitor.email} key={monitor.id}>{monitor.email}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
@@ -159,12 +175,12 @@ const AdminInternshipOffer = () => {
                         <div className="form-group">
                             <label htmlFor="skills" className="text-secondary"><i className="fas fa-book"></i> Compétences: </label>
                             {error.skills !== "" ? error.skills : ""}
-                            <textarea type="text" className="form-control text-center" id="skills" name="skills" rows="3" onChange={validateInput} required />
+                            <textarea type="text" className="form-control" id="skills" name="skills" placeholder="Entrez les compétences" rows="3" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
                             {error.description !== "" ? error.description : ""}
-                            <textarea type="text" className="form-control text-center" id="description" name="description" rows="3" onChange={validateInput} required />
+                            <textarea type="text" className="form-control" id="description" name="description" rows="3" placeholder="Entrez la description" onChange={validateInput} required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>

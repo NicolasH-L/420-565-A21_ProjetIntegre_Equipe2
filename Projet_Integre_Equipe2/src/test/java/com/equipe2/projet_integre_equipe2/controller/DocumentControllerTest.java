@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
@@ -30,6 +31,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 
 @WebMvcTest(DocumentController.class)
@@ -51,6 +53,7 @@ public class DocumentControllerTest {
     @BeforeEach
     void setup(){
         document = document.builder()
+                .idDocument(1)
                 .documentName("CvInfo")
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
@@ -91,6 +94,19 @@ public class DocumentControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void declineDocumentTest() throws Exception {
+        when(documentService.declineDocument(document.getIdDocument())).thenReturn(Optional.of(document));
+
+        MvcResult result = mockMvc.perform(put("/document/decline-document/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(document))).andReturn();
+
+        var actualDocument = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Document.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(document).isEqualTo(actualDocument);
     }
 
     private List<Document> getListOfDocumentsByStudent() {

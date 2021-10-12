@@ -26,10 +26,33 @@ const AdminStudentCvList = () => {
         history.push("/AdminViewStudentCV", document)
     }
 
+    const declineCv = async (document) => {
+        const res = await fetch(`http://localhost:8888/document/decline-document/${document.idDocument}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(document)
+            })
+        const data = await res.json()
+
+        setDocuments(
+            documents.map(
+                (document1) => document1.idDocument === document.idDocument ? {...document1, isValid: data.isValid} : document1
+            )
+        )
+    }
+
     return (
         <div className="grad">
             <AdminNavbar />
-            <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
+            <div className="">
+                <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
+                
+            </div>
+            
+            
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -41,11 +64,12 @@ const AdminStudentCvList = () => {
                     </thead>
                     <tbody>
                         {documents.map((document) => (
-                            <tr className={`${document.isCvValid ? 'table-success' : 'table-warning'}`} key={document.idDocument}>
+                            <tr className={`${!document.isValid ? 'table-danger' : ''}`} key={document.idDocument}>
                                 <th>{document.documentName}</th>
                                 <td>{/*document.isCvValid ? "Valide" : "En attente"*/}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
+                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineCv(document) }}>Refuser</button>
                                 </td>
                             </tr>
                         ))}

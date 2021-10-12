@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
+import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +48,6 @@ public class StudentServiceTest {
                 .password("1234")
                 .isCvValid(false)
                 .build();
-        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
-        studentRepository.saveAndFlush(invalidCvStudent);
 
     }
 
@@ -106,11 +105,28 @@ public class StudentServiceTest {
 
     @Test
     public void testIsValidCvStudentFails() {
-        when(studentRepository.saveAndFlush(student)).thenReturn(student);
         when(studentRepository.existsByMatriculeAndIsCvValidTrue(invalidCvStudent.getMatricule())).thenReturn(false);
-        studentRepository.saveAndFlush(student);
+        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
+        studentRepository.saveAndFlush(invalidCvStudent);
         final Optional<Boolean> actualInvalidCvStudentExist = studentService.isValidCvStudent(invalidCvStudent.getMatricule());
         assertThat(actualInvalidCvStudentExist.get()).isFalse();
+    }
+
+    @Test
+    public void testValidateStudent() {
+        when(studentRepository.findByMatricule(invalidCvStudent.getMatricule())).thenReturn(invalidCvStudent);
+        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(invalidCvStudent);
+        Optional<Student> actualStudent = studentService.validateStudent(invalidCvStudent.getMatricule());
+        assertThat(actualStudent.get().getMatricule()).isEqualTo("1234569");
+        assertThat(actualStudent.get().getIsCvValid()).isTrue();
+    }
+
+    @Test
+    public void testValidateStudentFails() {
+        when(studentRepository.findByMatricule(invalidCvStudent.getMatricule())).thenReturn(invalidCvStudent);
+        when(studentRepository.saveAndFlush(invalidCvStudent)).thenReturn(null);
+        Optional<Student> actualStudent = studentService.validateStudent(invalidCvStudent.getMatricule());
+        assertThat(actualStudent).isEmpty();
     }
 
     private List<Student> getListOfStudents() {

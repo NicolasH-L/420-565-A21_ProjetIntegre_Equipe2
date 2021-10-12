@@ -9,11 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class MonitorServiceTest {
@@ -79,5 +81,46 @@ class MonitorServiceTest {
         when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword("", "")).thenReturn(null);
         Optional<Monitor> actualMonitor = monitorService.loginMonitor("", "");
         assertThat(actualMonitor).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllMonitors() {
+        when(monitorRepository.findAll()).thenReturn(getListOfMonitors());
+        final Optional<List<Monitor>> allMonitors = monitorService.getAllMonitors();
+        assertThat(allMonitors.get().size()).isEqualTo(3);
+        assertThat(allMonitors.get().get(0).getEmail()).isEqualTo("didi@kong.com");
+    }
+
+    @Test
+    public void testGetAllMonitorsFail() {
+        when(monitorRepository.findAll()).thenReturn(null);
+        final Optional<List<Monitor>> allMonitors = monitorService.getAllMonitors();
+        assertThat(allMonitors).isEqualTo(Optional.empty());
+    }
+
+    private List<Monitor> getListOfMonitors() {
+        List<Monitor> monitorList = new ArrayList<>();
+        monitorList.add(Monitor.monitorBuilder()
+                .password("didi1*")
+                .lastName("didi")
+                .firstName("didi")
+                .companyName("kong")
+                .email("didi@kong.com")
+                .build());
+        monitorList.add(Monitor.monitorBuilder()
+                .password("dodo1*")
+                .lastName("dodo")
+                .firstName("dodo")
+                .companyName("kong")
+                .email("dodo@kong.com")
+                .build());
+        monitorList.add(Monitor.monitorBuilder()
+                .password("donkey1*")
+                .lastName("donkey")
+                .firstName("donkey")
+                .companyName("kong")
+                .email("donkey@kong.com")
+                .build());
+        return monitorList;
     }
 }
