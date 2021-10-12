@@ -46,7 +46,7 @@ const OfferModalView = ({ newOffer, onAdd }) => {
     const checkDocumentChosen = (e) => {
         if (e.target.name === "document" && e.target.value != "DEFAULT") {
             /*document.getElementById("applicationButton").disabled = false*/
-            document.getElementById(e.target.id).nextElementSibling.disabled = false
+            console.log(document.getElementById(e.target.id).nextElementSibling.disabled = false)
         }
     }
 
@@ -69,7 +69,7 @@ const OfferModalView = ({ newOffer, onAdd }) => {
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
-            <select defaultValue="DEFAULT" className="mx-5" id="document" name="document" onChange={checkDocumentChosen}>
+            <select defaultValue="DEFAULT" className="mx-5" id={"document" + offer.idOffer} name="document" onChange={checkDocumentChosen}>
                 <option value="DEFAULT" disabled>Choisissez un document</option>
                 {documents.map((document) => (
                     <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
