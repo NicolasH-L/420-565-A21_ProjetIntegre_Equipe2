@@ -1,5 +1,5 @@
 import React from 'react'
-import StudentNavbar from "./StudentNavbar"
+import StudentNavbar from './StudentNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
@@ -25,7 +25,7 @@ const StudentDocuments = () => {
     }
 
     const viewDocumentCv = async (document) => {
-        history.push("/AdminViewStudentCV", document)
+        history.push("/ViewDocument", document)
     }
 
     return (

@@ -2,8 +2,9 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.StudentApplicated;
-import com.equipe2.projet_integre_equipe2.service.StudentApplicatedService;
+import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.model.StudentOffer;
+import com.equipe2.projet_integre_equipe2.service.StudentOfferService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,18 +23,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(StudentApplicatedController.class)
-public class StudentApplicatedControllerTest {
+@WebMvcTest(StudentOfferController.class)
+public class StudentOfferControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private StudentApplicatedService studentApplicatedService;
+    private StudentOfferService studentOfferService;
 
-    private StudentApplicated studentApplicated;
+    private StudentOffer studentOffer;
 
     private Document document;
+
+    private Student student;
 
     private Offer offer;
 
@@ -64,22 +67,45 @@ public class StudentApplicatedControllerTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
-        studentApplicated = StudentApplicated.builder()
+        student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
+        studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
+                .student(student)
                 .build();
     }
 
     @Test
-    public void testSaveApplication() throws Exception {
-        when(studentApplicatedService.saveApplication(studentApplicated)).thenReturn(Optional.of(studentApplicated));
+    public void testSaveStudentOffer() throws Exception {
+        when(studentOfferService.saveStudentOffer(studentOffer)).thenReturn(Optional.of(studentOffer));
 
-        MvcResult result = mockMvc.perform(post("/offers-list/save-internship")
+        MvcResult result = mockMvc.perform(post("/offers-list/save-internship-offer")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(studentApplicated))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(studentOffer))).andReturn();
 
-        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentApplicated.class);
+        var actualInternship = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentOffer.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(studentApplicated).isEqualTo(actualInternship);
+        assertThat(studentOffer).isEqualTo(actualInternship);
     }
+
+//    @Test
+//    public void testIsStudentOfferExist() throws Exception {
+//        when(studentOfferService.getStudentOfferIsExist(studentOffer)).thenReturn(Optional.of(true));
+//
+//        MvcResult result = mockMvc.perform(get("/offers-list/student-offer-exist/")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .andReturn());
+//
+//        var actualStudentOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentOffer.class);
+//        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
+//        assertThat(studentOffer).isEqualTo(actualStudentOffer);
+//    }
 }
