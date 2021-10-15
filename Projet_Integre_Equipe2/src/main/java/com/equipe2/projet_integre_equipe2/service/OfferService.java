@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
-import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +15,9 @@ public class OfferService {
 
     private MonitorRepository monitorRepository;
 
-    private StudentRepository studentRepository;
-
-    public OfferService(OfferRepository offerRepository, MonitorRepository monitorRepository, StudentRepository studentRepository) {
+    public OfferService(OfferRepository offerRepository, MonitorRepository monitorRepository) {
         this.offerRepository = offerRepository;
         this.monitorRepository = monitorRepository;
-        this.studentRepository = studentRepository;
     }
 
     public Optional<Offer> saveOffer(Offer offer) {
