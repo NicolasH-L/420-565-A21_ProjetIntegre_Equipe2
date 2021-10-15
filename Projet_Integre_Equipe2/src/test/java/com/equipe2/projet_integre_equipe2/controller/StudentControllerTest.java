@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
