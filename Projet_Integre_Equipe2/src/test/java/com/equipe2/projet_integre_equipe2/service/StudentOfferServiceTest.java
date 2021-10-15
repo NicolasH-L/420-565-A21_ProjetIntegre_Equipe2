@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Offer;
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.StudentOffer;
 import com.equipe2.projet_integre_equipe2.repository.StudentOfferRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +30,8 @@ public class StudentOfferServiceTest {
     private Offer offer;
 
     private Document document;
+
+    private Student student;
 
     private StudentOffer studentOffer;
 
@@ -59,23 +62,40 @@ public class StudentOfferServiceTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
+        student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
         studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
+                .student(student)
                 .build();
     }
 
     @Test
     public void testApplyInternship() {
         when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer);
-        Optional<StudentOffer> actualApplication = studentOfferService.saveApplication(studentOffer);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveStudentOffer(studentOffer);
         assertThat(actualApplication.get()).isEqualTo(studentOffer);
     }
 
     @Test
     public void testFailedApplyInternship() {
         when(studentOfferRepository.save(studentOffer)).thenReturn(null);
-        Optional<StudentOffer> actualApplication = studentOfferService.saveApplication(studentOffer);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveStudentOffer(studentOffer);
         assertThat(actualApplication).isEqualTo(Optional.empty());
     }
+
+//    @Test
+//    public void testGetStudentOfferExist(){
+//        when(studentOfferRepository.existsStudentOfferByStudent_Id(student.getId())).thenReturn(true);
+//        final Optional<Boolean> actualStudentOfferExist = studentOfferService.getStudentOfferIsExist(studentOffer);
+//        assertThat(actualStudentOfferExist.get()).isTrue();
+//    }
 }

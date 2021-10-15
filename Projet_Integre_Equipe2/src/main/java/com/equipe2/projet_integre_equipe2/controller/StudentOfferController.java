@@ -15,10 +15,17 @@ public class StudentOfferController {
     @Autowired
     private StudentOfferService studentOfferService;
 
-    @PostMapping("/save-internship")
-    public ResponseEntity<StudentOffer> postApplication(@RequestBody StudentOffer studentOffer) {
-        return studentOfferService.saveApplication(studentOffer)
+    @PostMapping("/save-internship-offer")
+    public ResponseEntity<StudentOffer> postStudentOffer(@RequestBody StudentOffer studentOffer) {
+        return studentOfferService.saveStudentOffer(studentOffer)
                 .map(studentApplication1 -> ResponseEntity.status(HttpStatus.CREATED).body(studentApplication1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new StudentOffer()));
     }
+
+//    @GetMapping("/student-offer-exist/{}")
+//    public ResponseEntity<Boolean> getStudentOfferExist(@RequestBody StudentOffer studentOffer) {
+//        return studentOfferService.getStudentOfferIsExist(studentOffer)
+//                .map(studentApplication1 -> ResponseEntity.status(HttpStatus.CREATED).body(studentApplication1))
+//                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
+//    }
 }

@@ -9,17 +9,25 @@ import java.util.Optional;
 @Service
 public class StudentOfferService {
 
-    private StudentOfferRepository studentApplicatedRepository;
+    private StudentOfferRepository studentOfferRepository;
 
-    public StudentOfferService(StudentOfferRepository studentApplicatedRepository) {
-        this.studentApplicatedRepository = studentApplicatedRepository;
+    public StudentOfferService(StudentOfferRepository studentOfferRepository) {
+        this.studentOfferRepository = studentOfferRepository;
     }
 
-    public Optional<StudentOffer> saveApplication(StudentOffer studentOffer) {
+    public Optional<StudentOffer> saveStudentOffer(StudentOffer studentOffer) {
         try {
-            return Optional.of(studentApplicatedRepository.save(studentOffer));
+            return Optional.of(studentOfferRepository.save(studentOffer));
         } catch (Exception exception) {
             return Optional.empty();
         }
     }
+
+//    public Optional<Boolean> getStudentOfferIsExist(StudentOffer studentOffer) {
+//        try {
+//            return Optional.of(studentOfferRepository.existsStudentOfferByStudent_Id(studentOffer.getStudent().getId()));
+//        } catch (Exception exception) {
+//            return Optional.empty();
+//        }
+//    }
 }
