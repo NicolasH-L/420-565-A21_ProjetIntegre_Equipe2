@@ -23,7 +23,7 @@ const AdminStudentCvList = () => {
     }
 
     const viewDocumentCv = async (document) => {
-        history.push("/AdminViewStudentCV", document)
+        history.push("/ViewDocument", document)
     }
 
     const declineCv = async (document) => {

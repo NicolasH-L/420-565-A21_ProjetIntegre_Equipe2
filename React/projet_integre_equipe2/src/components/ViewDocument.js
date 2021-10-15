@@ -2,9 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
-import { Document, Page, pdfjs } from '../../node_modules/react-pdf/dist/esm/entry.webpack';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack';
 
-const AdminViewStudentCV = () => {
+const ViewDocument = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory()
@@ -45,37 +45,35 @@ const AdminViewStudentCV = () => {
   const content = _base64ToArrayBuffer(data)
 
   return (
-    <div>
+    <div className="grad">
       <AdminNavbar />
-      <div className="justify-content-center d-flex"> 
-        <Document width="200em"
-          file={content}
-          onLoadSuccess={onDocumentLoadSuccess}
-          options={options}
-        >
-          <Page pageNumber={pageNumber} />
-        </Document>
-      </div>
-      <div className="justify-content-center d-flex">
+      <div className="py-3">
+        <div className="justify-content-start d-flex mx-5">
+          <button className="btn btn-light" onClick={e => { e.preventDefault(); history.goBack()}}>
+            <i className="fas fa-angle-double-left"></i> Retour
+          </button>
+        </div>
+        <div className="justify-content-center d-flex">
+          <Document file={content} onLoadSuccess={onDocumentLoadSuccess} options={options}>
+            <Page pageNumber={pageNumber} />
+          </Document>
+        </div>
+        <div className="justify-content-center d-flex pt-3">
           <p>
-            Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+            Page {pageNumber || (numPages ? 1 : "--")} de {numPages || "--"}
           </p>
         </div>
-      <div className="justify-content-center d-flex">
+        <div className="justify-content-center d-flex">
           <button className="btn btn-primary mx-3" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
-            Previous
+            Précedent
           </button>
-          <button
-            className="btn btn-primary"
-            type="button"
-            disabled={pageNumber >= numPages}
-            onClick={nextPage}
-          >
-            Next
+          <button className="btn btn-primary" type="button" disabled={pageNumber >= numPages} onClick={nextPage}>
+            Suivant
           </button>
         </div>
+      </div>
     </div>
   )
 }
 
-export default AdminViewStudentCV
+export default ViewDocument
