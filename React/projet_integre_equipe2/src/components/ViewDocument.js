@@ -64,10 +64,10 @@ const ViewDocument = () => {
           </p>
         </div>
         <div className="justify-content-center d-flex">
-          <button className="btn btn-primary mx-3" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
-            Précedent
+          <button className="btn btn-dark mx-3" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
+            Précèdent
           </button>
-          <button className="btn btn-primary" type="button" disabled={pageNumber >= numPages} onClick={nextPage}>
+          <button className="btn btn-dark" type="button" disabled={pageNumber >= numPages} onClick={nextPage}>
             Suivant
           </button>
         </div>
