@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentOfferRepository extends JpaRepository<StudentOffer, Integer> {
 
-    boolean existsStudentOfferByStudent_Id(Integer studentId);
+    boolean existsStudentOfferByStudent_IdAndOffer_IdOffer(Integer studentId, Integer offerId);
 }
