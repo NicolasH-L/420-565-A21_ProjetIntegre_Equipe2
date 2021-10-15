@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
@@ -89,7 +88,7 @@ public class DocumentControllerTest {
 
         MvcResult result = mockMvc.perform(get("/document/get-all-documents/{idStudent}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
+                        .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
