@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(StudentOfferController.class)
 public class StudentOfferControllerTest {
@@ -37,6 +37,8 @@ public class StudentOfferControllerTest {
     private Document document;
 
     private Student student;
+
+    private Student student2;
 
     private Offer offer;
 
@@ -76,6 +78,15 @@ public class StudentOfferControllerTest {
                 .isCvValid(true)
                 .build();
 
+        student2 = Student.studentBuilder()
+                .id(2)
+                .firstName("Tete")
+                .lastName("Ttete")
+                .matricule("2345678")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
         studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
@@ -87,7 +98,7 @@ public class StudentOfferControllerTest {
     public void testSaveStudentOffer() throws Exception {
         when(studentOfferService.saveStudentOffer(studentOffer)).thenReturn(Optional.of(studentOffer));
 
-        MvcResult result = mockMvc.perform(post("/offers-list/save-internship-offer")
+        MvcResult result = mockMvc.perform(post("/offers-list/save-student-offer")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(studentOffer))).andReturn();
 
@@ -96,16 +107,18 @@ public class StudentOfferControllerTest {
         assertThat(studentOffer).isEqualTo(actualInternship);
     }
 
-//    @Test
-//    public void testIsStudentOfferExist() throws Exception {
-//        when(studentOfferService.getStudentOfferIsExist(studentOffer)).thenReturn(Optional.of(true));
-//
-//        MvcResult result = mockMvc.perform(get("/offers-list/student-offer-exist/")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .andReturn());
-//
-//        var actualStudentOffer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), StudentOffer.class);
-//        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-//        assertThat(studentOffer).isEqualTo(actualStudentOffer);
-//    }
+    @Test
+    public void testIsStudentOfferExist() throws Exception {
+        when(studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student2.getId())).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/offers-list/offer-applied/1/2")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualIsStudentOfferExist = new ObjectMapper().readValue(result.getResponse()
+                .getContentAsString(), Boolean.class);
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualIsStudentOfferExist).isEqualTo(true);
+    }
+
 }

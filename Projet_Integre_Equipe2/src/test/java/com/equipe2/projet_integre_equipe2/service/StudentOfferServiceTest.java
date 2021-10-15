@@ -94,7 +94,7 @@ public class StudentOfferServiceTest {
 
     @Test
     public void testStudentNotAppliedToOffer(){
-        when(studentOfferRepository.existsStudentOfferByStudent_IdAndOffer_IdOffer(offer.getIdOffer(),student.getId())).thenReturn(false);
+        when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),student.getId())).thenReturn(false);
         Optional<Boolean> actualStudentNotAppliedToOffer = studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student.getId());
         assertThat(actualStudentNotAppliedToOffer.get()).isTrue();
     }
