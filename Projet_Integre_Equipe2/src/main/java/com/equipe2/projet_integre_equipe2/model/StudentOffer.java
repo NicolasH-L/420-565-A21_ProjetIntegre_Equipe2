@@ -19,6 +19,7 @@ import java.io.Serializable;
 public class StudentOffer implements Serializable {
 
     @Id
+    @GeneratedValue
     private int idApplication;
 
     @OneToOne

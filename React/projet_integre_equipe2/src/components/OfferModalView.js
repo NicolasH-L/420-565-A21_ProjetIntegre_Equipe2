@@ -57,7 +57,7 @@ const OfferModalView = ({ newOffer }) => {
         }
     }
 
-    const addApplicationInternship = async (e) => {
+    async function addApplicationInternship(studentOfferApplication){
         console.log("jsuis inside")
         const result = await fetch('http://localhost:8888/offers-list/save-internship-offer',
             {
@@ -79,7 +79,7 @@ const OfferModalView = ({ newOffer }) => {
                     <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={isDisabled} onClick={(e) => addApplicationInternship}>Appliquer</button>
+            <button className="btn btn-success mx-5" id="applicationButton" name="button" /*disabled={isDisabled}*/ onClick={(e) => addApplicationInternship(studentOfferApplication)}>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">

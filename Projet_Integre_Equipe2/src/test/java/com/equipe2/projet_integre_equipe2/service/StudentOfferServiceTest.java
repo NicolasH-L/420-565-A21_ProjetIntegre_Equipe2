@@ -92,10 +92,4 @@ public class StudentOfferServiceTest {
         assertThat(actualApplication).isEqualTo(Optional.empty());
     }
 
-//    @Test
-//    public void testGetStudentOfferExist(){
-//        when(studentOfferRepository.existsStudentOfferByStudent_Id(student.getId())).thenReturn(true);
-//        final Optional<Boolean> actualStudentOfferExist = studentOfferService.getStudentOfferIsExist(studentOffer);
-//        assertThat(actualStudentOfferExist.get()).isTrue();
-//    }
 }
