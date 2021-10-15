@@ -17,15 +17,25 @@ public class StudentOfferController {
 
     @PostMapping("/save-internship-offer")
     public ResponseEntity<StudentOffer> postStudentOffer(@RequestBody StudentOffer studentOffer) {
+        System.out.println(studentOffer.getOffer().getIdOffer());
         return studentOfferService.saveStudentOffer(studentOffer)
                 .map(studentApplication1 -> ResponseEntity.status(HttpStatus.CREATED).body(studentApplication1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new StudentOffer()));
     }
 
-//    @GetMapping("/student-offer-exist/{}")
-//    public ResponseEntity<Boolean> getStudentOfferExist(@RequestBody StudentOffer studentOffer) {
-//        return studentOfferService.getStudentOfferIsExist(studentOffer)
-//                .map(studentApplication1 -> ResponseEntity.status(HttpStatus.CREATED).body(studentApplication1))
-//                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
-//    }
+        @GetMapping("/offer-applied/{offerId}/{studentId}")
+    public ResponseEntity<Boolean> getStudentOfferExist(@PathVariable Integer offerId, @PathVariable Integer studentId) {
+        return studentOfferService.isStudentNotAppliedToOffer(offerId, studentId)
+                .map(studentApplication1 -> ResponseEntity.status(HttpStatus.OK).body(studentApplication1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
+    }
+    /*
+     @GetMapping("/valid-cv/{matricule}")
+   public ResponseEntity<Boolean> isValidStudentExists(@PathVariable String matricule){
+      System.out.println("Matricule " + matricule);
+      return studentService.isValidCvStudent(matricule)
+              .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+              .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(false));
+   }
+     */
 }

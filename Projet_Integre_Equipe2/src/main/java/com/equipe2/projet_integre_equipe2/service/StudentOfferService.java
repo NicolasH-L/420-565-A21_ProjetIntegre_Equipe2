@@ -17,13 +17,14 @@ public class StudentOfferService {
 
     public Optional<StudentOffer> saveStudentOffer(StudentOffer studentOffer) {
         try {
-            if (studentOfferRepository.existsStudentOfferByStudent_IdAndOffer_IdOffer(studentOffer.getStudent().getId(), studentOffer.getOffer().getIdOffer()))
-                return Optional.empty();
-
             return Optional.of(studentOfferRepository.save(studentOffer));
         } catch (Exception exception) {
             return Optional.empty();
         }
     }
 
+    public Optional<Boolean> isStudentNotAppliedToOffer(Integer offerId, Integer studentId) {
+        return Optional.of(!studentOfferRepository.existsStudentOfferByStudent_IdAndOffer_IdOffer(studentId,
+                offerId));
+    }
 }

@@ -92,4 +92,9 @@ public class StudentOfferServiceTest {
         assertThat(actualApplication).isEqualTo(Optional.empty());
     }
 
+//    @Test
+//    public void testApplyInternshipExistAlreadyApplied(){
+//        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer).thenReturn(null);
+//        when(studentOfferService.saveStudentOffer(studentOffer))
+//    }
 }
