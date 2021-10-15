@@ -14,14 +14,14 @@ const OfferModalView = ({ newOffer }) => {
     })
     const [documents, setDocuments] = useState([])
     const [documentChoice, setDocumentChoice] = useState()
+    const [disabledButton, setDisabled] = useState({buttonDisable : true})
     const history = useHistory()
     const historyState = useHistory().location.state
     let studentId
     let studentObject
     let documentName
-    let isDisabled = true
 
-    if (history !== undefined){
+    if (history !== undefined) {
         studentId = historyState.id
         studentObject = historyState
     }
@@ -34,7 +34,7 @@ const OfferModalView = ({ newOffer }) => {
             setDocuments(documentsFromServer)
             documentName = documents.documentName
         }
-        setStudentOfferApplication({ ...studentOfferApplication, offer: offer, document: documentChoice, student: studentObject})
+        setStudentOfferApplication({ ...studentOfferApplication, offer: offer, document: documentChoice, student: studentObject })
         getDocuments()
     }, [])
 
@@ -45,8 +45,7 @@ const OfferModalView = ({ newOffer }) => {
 
     const checkDocumentChosen = (e) => {
         if (e.target.name === "document" && e.target.value != "DEFAULT") {
-            // document.getElementById(e.target.id).nextElementSibling.disabled = false
-            // console.log(e.target.value)
+            setDisabled({...disabledButton, buttonDisable:false})
             for (let index = 0; index < documents.length; index++) {
                 const element = documents[index];
                 if (element.documentName === e.target.value) {
@@ -57,7 +56,8 @@ const OfferModalView = ({ newOffer }) => {
         }
     }
 
-    const addApplicationInternship = async (e) => {
+    const addApplicationInternship = async (studentOfferApplication) => {
+        console.log(studentOfferApplication)
         console.log("jsuis inside")
         const result = await fetch('http://localhost:8888/offers-list/save-internship-offer',
             {
@@ -79,7 +79,7 @@ const OfferModalView = ({ newOffer }) => {
                     <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={isDisabled} onClick={(e) => addApplicationInternship}>Appliquer</button>
+            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={disabledButton.buttonDisable} onClick={()=>addApplicationInternship(studentOfferApplication)}>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
