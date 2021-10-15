@@ -9,18 +9,22 @@ const OfferModalView = ({ newOffer }) => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
-    const [applicationInternship, setApplicationInternship] = useState({
+    const [studentOfferApplication, setStudentOfferApplication] = useState({
         offer: "", document: "", student: ""
     })
     const [documents, setDocuments] = useState([])
+    const [documentChoice, setDocumentChoice] = useState()
     const history = useHistory()
     const historyState = useHistory().location.state
     let studentId
+    let studentObject
     let documentName
     let isDisabled = true
 
-    if (history !== undefined)
+    if (history !== undefined){
         studentId = historyState.id
+        studentObject = historyState
+    }
 
     useEffect(() => {
         setOffer(newOffer)
@@ -30,6 +34,7 @@ const OfferModalView = ({ newOffer }) => {
             setDocuments(documentsFromServer)
             documentName = documents.documentName
         }
+        setStudentOfferApplication({ ...studentOfferApplication, offer: offer, document: documentChoice, student: studentObject})
         getDocuments()
     }, [])
 
@@ -40,18 +45,27 @@ const OfferModalView = ({ newOffer }) => {
 
     const checkDocumentChosen = (e) => {
         if (e.target.name === "document" && e.target.value != "DEFAULT") {
-            document.getElementById(e.target.id).nextElementSibling.disabled = false
+            // document.getElementById(e.target.id).nextElementSibling.disabled = false
+            // console.log(e.target.value)
+            for (let index = 0; index < documents.length; index++) {
+                const element = documents[index];
+                if (element.documentName === e.target.value) {
+                    console.log(element.documentName)
+                    setDocumentChoice(element)
+                }
+            }
         }
     }
 
-    const addApplicationInternship = async (studentOffer) => {
-        const result = await fetch('http://localhost:8888/offers-list//save-internship-offer',
+    const addApplicationInternship = async (e) => {
+        console.log("jsuis inside")
+        const result = await fetch('http://localhost:8888/offers-list/save-internship-offer',
             {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(studentOffer)
+                body: JSON.stringify(studentOfferApplication)
             })
         return await result.json()
     }
@@ -65,7 +79,7 @@ const OfferModalView = ({ newOffer }) => {
                     <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
                 ))}
             </select>
-            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={isDisabled}>Appliquer</button>
+            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={isDisabled} onClick={(e) => addApplicationInternship}>Appliquer</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
