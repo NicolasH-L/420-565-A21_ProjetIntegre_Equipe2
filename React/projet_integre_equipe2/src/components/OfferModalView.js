@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
-const OfferModalView = ({ newOffer, onAdd }) => {
+const OfferModalView = ({ newOffer }) => {
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
@@ -38,33 +38,23 @@ const OfferModalView = ({ newOffer, onAdd }) => {
         return await res.json()
     }
 
-    const applyInternship = async (document) => {
-        alert("click")
-        console.log(document)
-    }
-
     const checkDocumentChosen = (e) => {
         if (e.target.name === "document" && e.target.value != "DEFAULT") {
-            /*document.getElementById("applicationButton").disabled = false*/
-            console.log(document.getElementById(e.target.id).nextElementSibling.disabled = false)
+            document.getElementById(e.target.id).nextElementSibling.disabled = false
         }
     }
 
-    // const addApplicationInternship = async (student) => {
-    //     const result = await fetch('http://localhost:8888/offers-list/save-internship',
-    //         {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-type': 'application/json'
-    //             },
-    //             body: JSON.stringify(student)
-    //         })
-    //     return await result.json()
-    // }
-
-    // console.log(documents[1].documentName)
-    // console.log(documents)
-    console.log(documentName)
+    const addApplicationInternship = async (studentOffer) => {
+        const result = await fetch('http://localhost:8888/offers-list//save-internship-offer',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(studentOffer)
+            })
+        return await result.json()
+    }
 
     return (
         <div>
