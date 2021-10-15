@@ -92,9 +92,10 @@ public class StudentOfferServiceTest {
         assertThat(actualApplication).isEqualTo(Optional.empty());
     }
 
-//    @Test
-//    public void testApplyInternshipExistAlreadyApplied(){
-//        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer).thenReturn(null);
-//        when(studentOfferService.saveStudentOffer(studentOffer))
-//    }
+    @Test
+    public void testStudentNotAppliedToOffer(){
+        when(studentOfferRepository.existsStudentOfferByStudent_IdAndOffer_IdOffer(offer.getIdOffer(),student.getId())).thenReturn(false);
+        Optional<Boolean> actualStudentNotAppliedToOffer = studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student.getId());
+        assertThat(actualStudentNotAppliedToOffer.get()).isTrue();
+    }
 }
