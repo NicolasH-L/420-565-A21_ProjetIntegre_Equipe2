@@ -1,5 +1,7 @@
+import { data } from 'jquery'
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
 
 const OfferModalView = ({ newOffer }) => {
     const [offer, setOffer] = useState({
@@ -8,13 +10,92 @@ const OfferModalView = ({ newOffer }) => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
+    const [studentOfferApplication, setStudentOfferApplication] = useState({
+        offer: "", document: "", student: ""
+    })
+    const [documents, setDocuments] = useState([])
+    const [disabledButton, setDisabled] = useState({ buttonDisable: true })
+    const history = useHistory()
+    const historyState = useHistory().location.state
+    const baseUrl = "http://localhost:8888/offers-list/"
+    let studentId
+    let studentObject
+    let documentName
+
+    if (history !== undefined) {
+        studentId = historyState.id
+        studentObject = historyState
+    }
+
     useEffect(() => {
         setOffer(newOffer)
+        const getDocuments = async () => {
+            const documentsFromServer = await fetchDocuments()
+            setDocuments(documentsFromServer)
+            documentName = documents.documentName
+        }
+        setStudentOfferApplication({ ...studentOfferApplication, student: studentObject })
+        getDocuments()
     }, [])
+
+    const fetchDocuments = async () => {
+        const res = await fetch(`http://localhost:8888/document/get-all-documents-valid/${studentId}`)
+        return await res.json()
+    }
+
+    const checkDocumentChosen = (e) => {
+        if (e.target.name === "document" && e.target.value != "DEFAULT") {
+            setDisabled({ ...disabledButton, buttonDisable: false })
+            for (let index = 0; index < documents.length; index++) {
+                const element = documents[index];
+                if (element.documentName === e.target.value) {
+                    setStudentOfferApplication({ ...studentOfferApplication, offer: offer, document: element })
+                    break
+                }
+            }
+        }
+    }
+
+    const addApplicationInternship = async () => {
+        const result = await fetch(baseUrl+'/save-internship-offer',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(studentOfferApplication)
+            })
+        return await result.json()
+    }
+
+    const veryAppliedToOfferStatus = async (offerId, studentId) =>{
+        const res = await fetch(`${baseUrl}/offer-applied/${offerId}/${studentId}`)
+        return await res.json()
+    }
+
+    function applyToOffer(){
+        console.log(studentOfferApplication.offer)
+        let offerId = studentOfferApplication.offer.idOffer
+        let studentId = studentOfferApplication.student.id
+        veryAppliedToOfferStatus(offerId, studentId)
+            .then((data) => data ? applyToOfferSuccess() : alert("Vous avez déjà appliqué pour cette offre!"))
+    }
+
+    function applyToOfferSuccess(){
+        addApplicationInternship() 
+        alert("Postuler avec succès!")
+    }
 
     return (
         <div>
             <button className="btn btn-primary mx-2" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
+            <select defaultValue="DEFAULT" className="mx-5" id={"document" + offer.idOffer} name="document" onChange={checkDocumentChosen}>
+                <option value="DEFAULT" disabled>Choisissez un document</option>
+                {documents.map((document) => (
+                    <option value={document.documentName} key={document.idDocument}>{document.documentName}</option>
+                ))}
+            </select>
+            <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={disabledButton.buttonDisable} onClick={() => applyToOffer()}>Postuler</button>
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">

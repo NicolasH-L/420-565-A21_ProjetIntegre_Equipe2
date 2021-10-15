@@ -42,4 +42,11 @@ public class DocumentController {
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/document/get-all-documents-valid/{idStudent}")
+    public ResponseEntity<List<Document>> getAllDocumentsValidByStudent(@PathVariable Integer idStudent){
+        return documentService.getAllDocumentsValidByStudentId(idStudent)
+                .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

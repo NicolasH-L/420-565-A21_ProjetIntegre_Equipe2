@@ -16,15 +16,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Internship implements Serializable {
+public class StudentOffer implements Serializable {
 
     @Id
-    private int idInternship;
+    @GeneratedValue
+    private int idApplication;
 
     @OneToOne
     private Offer offer;
 
     @OneToOne
     private Document document;
+
+    @OneToOne
+    private Student student;
 
 }
