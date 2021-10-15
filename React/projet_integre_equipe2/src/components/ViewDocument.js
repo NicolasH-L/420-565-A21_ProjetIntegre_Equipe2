@@ -1,15 +1,15 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
-import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
 const ViewDocument = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory()
   const document = history.location.state
-  var data = document.data
+  const data = document.data
 
   const options = {
     cMapUrl: 'cmaps/',
@@ -32,24 +32,24 @@ const ViewDocument = () => {
     setNumPages(numPages);
   }
 
-  function _base64ToArrayBuffer(base64) {
-    var binary_string = window.atob(base64);
-    var len = binary_string.length;
-    var bytes = new Uint8Array(len);
-    for (var i = 0; i < len; i++) {
+  function base64ToArrayBuffer(base64) {
+    let binary_string = window.atob(base64);
+    let len = binary_string.length;
+    let bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
       bytes[i] = binary_string.charCodeAt(i);
     }
     return bytes.buffer;
   }
 
-  const content = _base64ToArrayBuffer(data)
+  const content = base64ToArrayBuffer(data)
 
   return (
     <div className="grad">
       <AdminNavbar />
       <div className="py-3">
         <div className="justify-content-start d-flex mx-5">
-          <button className="btn btn-light" onClick={e => { e.preventDefault(); history.goBack()}}>
+          <button className="btn btn-light" onClick={e => { e.preventDefault(); history.goBack() }}>
             <i className="fas fa-angle-double-left"></i> Retour
           </button>
         </div>
@@ -58,9 +58,9 @@ const ViewDocument = () => {
             <Page pageNumber={pageNumber} />
           </Document>
         </div>
-        <div className="justify-content-center d-flex pt-3">
+        <div className="justify-content-center d-flex pt-3 text-light">
           <p>
-            Page {pageNumber || (numPages ? 1 : "--")} de {numPages || "--"}
+            Page {pageNumber || (numPages ? 1 : "--")} sur {numPages || "--"}
           </p>
         </div>
         <div className="justify-content-center d-flex">
