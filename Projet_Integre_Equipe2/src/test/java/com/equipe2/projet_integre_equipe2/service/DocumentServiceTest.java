@@ -108,6 +108,21 @@ public class DocumentServiceTest {
         assertThat(actualDocument).isEmpty();
     }
 
+    @Test
+    public void testGetAllDocumentsValidByStudentId(){
+        when(documentRepository.findDocumentsByIsValidTrueAndStudent_Id(student.getId())).thenReturn(getListOfDocumentsValidByStudent());
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsValidByStudentId(student.getId());
+        assertThat(allDocuments.get().size()).isEqualTo(2);
+        assertThat(allDocuments.get().get(0).getIdDocument()).isEqualTo(1);
+    }
+
+    @Test
+    public void testGetAllDocumentsValidByStudentIdFails(){
+        when(documentRepository.findDocumentsByIsValidTrueAndStudent_Id(student.getId())).thenReturn(null);
+        final Optional<List<Document>> allDocuments = documentService.getAllDocumentsValidByStudentId(student.getId());
+        assertThat(allDocuments).isEqualTo(Optional.empty());
+    }
+
     private List<Document> getListOfDocumentsByStudent() {
         List<Document> documentList = new ArrayList<>();
         documentList.add(Document.builder()
@@ -122,6 +137,26 @@ public class DocumentServiceTest {
         documentList.add(Document.builder()
                 .documentName("CvInfo3")
                 .student(null)
+                .build());
+
+        return documentList;
+    }
+
+    private List<Document> getListOfDocumentsValidByStudent() {
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .idDocument(1)
+                .documentName("cv")
+                .isValid(true)
+                .data(null)
+                .student(student)
+                .build());
+        documentList.add(Document.builder()
+                .idDocument(2)
+                .documentName("cvfalse")
+                .isValid(true)
+                .data(null)
+                .student(student)
                 .build());
 
         return documentList;

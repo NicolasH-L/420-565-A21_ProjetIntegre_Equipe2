@@ -58,4 +58,12 @@ public class DocumentService {
             return Optional.empty();
         }
     }
+
+    public Optional<List<Document>> getAllDocumentsValidByStudentId(Integer idStudent){
+        try {
+            return Optional.of(documentRepository.findDocumentsByIsValidTrueAndStudent_Id(idStudent));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

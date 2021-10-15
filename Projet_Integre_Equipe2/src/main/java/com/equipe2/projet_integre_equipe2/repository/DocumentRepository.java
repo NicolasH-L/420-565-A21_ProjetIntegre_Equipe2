@@ -11,4 +11,6 @@ import java.util.List;
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
 
         List<Document> findDocumentsByStudent_Id(Integer id);
+
+        List<Document> findDocumentsByIsValidTrueAndStudent_Id(Integer id);
 }

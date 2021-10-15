@@ -1,9 +1,10 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
-import com.equipe2.projet_integre_equipe2.model.Internship;
 import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.repository.InternshipRepository;
+import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.model.StudentOffer;
+import com.equipe2.projet_integre_equipe2.repository.StudentOfferRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,19 +19,21 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class InternshipServiceTest {
+public class StudentOfferServiceTest {
 
     @Mock
-    private InternshipRepository internshipRepository;
+    private StudentOfferRepository studentOfferRepository;
 
     @InjectMocks
-    private InternshipService internshipService;
+    private StudentOfferService studentOfferService;
 
     private Offer offer;
 
     private Document document;
 
-    private Internship internship;
+    private Student student;
+
+    private StudentOffer studentOffer;
 
     @BeforeEach
     void setup() {
@@ -59,23 +62,40 @@ public class InternshipServiceTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
-        internship = Internship.builder()
+        student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
+        studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
+                .student(student)
                 .build();
     }
 
     @Test
     public void testApplyInternship() {
-        when(internshipRepository.save(internship)).thenReturn(internship);
-        Optional<Internship> actualInternship = internshipService.saveInternship(internship);
-        assertThat(actualInternship.get()).isEqualTo(internship);
+        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveStudentOffer(studentOffer);
+        assertThat(actualApplication.get()).isEqualTo(studentOffer);
     }
 
     @Test
     public void testFailedApplyInternship() {
-        when(internshipRepository.save(internship)).thenReturn(null);
-        Optional<Internship> actualInternship = internshipService.saveInternship(internship);
-        assertThat(actualInternship).isEqualTo(Optional.empty());
+        when(studentOfferRepository.save(studentOffer)).thenReturn(null);
+        Optional<StudentOffer> actualApplication = studentOfferService.saveStudentOffer(studentOffer);
+        assertThat(actualApplication).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testStudentNotAppliedToOffer(){
+        when(studentOfferRepository.existsStudentOfferByStudent_IdAndOffer_IdOffer(offer.getIdOffer(),student.getId())).thenReturn(false);
+        Optional<Boolean> actualStudentNotAppliedToOffer = studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student.getId());
+        assertThat(actualStudentNotAppliedToOffer.get()).isTrue();
     }
 }
