@@ -30,5 +30,4 @@ public class StudentOffer implements Serializable {
 
     @OneToOne
     private Student student;
-
 }
