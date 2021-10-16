@@ -17,7 +17,7 @@ const OfferModalView = ({ newOffer }) => {
     const history = useHistory()
     const historyState = useHistory().location.state
     const baseUrl = "http://localhost:8888/offers-list/"
-    const appliedMessage = <strong className="text-success">Vous avez déjà appliqué pour cette offre <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+    const appliedMessage = <strong className="text-success">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
     let studentId
     let offerId
     let studentObject
@@ -94,7 +94,7 @@ const OfferModalView = ({ newOffer }) => {
     }
 
     const showApplyButton = () => {
-        return <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={applyOfferButton.buttonDisable} onClick={() => applyToOffer()}>Postuler</button>
+        return <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={applyOfferButton.buttonDisable} onClick={() => applyToOffer()}>Postuler <i className="fas fa-external-link-alt fa-sm"></i></button>
     }
 
     return (
