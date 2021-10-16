@@ -38,8 +38,6 @@ public class StudentOfferControllerTest {
 
     private Student student;
 
-    private Student student2;
-
     private Offer offer;
 
     @BeforeEach
@@ -78,15 +76,6 @@ public class StudentOfferControllerTest {
                 .isCvValid(true)
                 .build();
 
-        student2 = Student.studentBuilder()
-                .id(2)
-                .firstName("Tete")
-                .lastName("Ttete")
-                .matricule("2345678")
-                .password("1234")
-                .isCvValid(true)
-                .build();
-
         studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
@@ -109,9 +98,9 @@ public class StudentOfferControllerTest {
 
     @Test
     public void testIsStudentOfferExist() throws Exception {
-        when(studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student2.getId())).thenReturn(Optional.of(true));
+        when(studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), student.getId())).thenReturn(Optional.of(true));
 
-        MvcResult result = mockMvc.perform(get("/offers-list/offer-applied/1/2")
+        MvcResult result = mockMvc.perform(get("/offers-list/offer-applied/"+offer.getIdOffer()+"/"+student.getId())
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualIsStudentOfferExist = new ObjectMapper().readValue(result.getResponse()
@@ -120,5 +109,4 @@ public class StudentOfferControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualIsStudentOfferExist).isEqualTo(true);
     }
-
 }

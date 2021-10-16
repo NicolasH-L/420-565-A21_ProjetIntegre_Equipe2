@@ -24,7 +24,7 @@ public class StudentOfferController {
 
     @GetMapping("/offer-applied/{offerId}/{studentId}")
     public ResponseEntity<Boolean> getStudentOfferExist(@PathVariable Integer offerId, @PathVariable Integer studentId) {
-        return studentOfferService.isStudentNotAppliedToOffer(offerId, studentId)
+        return studentOfferService.isStudentAppliedToOffer(offerId, studentId)
                 .map(studentApplication1 -> ResponseEntity.status(HttpStatus.OK).body(studentApplication1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(true));
     }

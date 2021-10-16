@@ -93,9 +93,19 @@ public class StudentOfferServiceTest {
     }
 
     @Test
-    public void testStudentNotAppliedToOffer(){
-        when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),student.getId())).thenReturn(false);
-        Optional<Boolean> actualStudentNotAppliedToOffer = studentOfferService.isStudentNotAppliedToOffer(offer.getIdOffer(), student.getId());
-        assertThat(actualStudentNotAppliedToOffer.get()).isTrue();
+    public void testStudentAppliedToOffer(){
+        Student newStudent = Student.studentBuilder()
+                .id(9)
+                .build();
+        when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),newStudent.getId())).thenReturn(false);
+        Optional<Boolean> actualStudentNotAppliedToOffer = studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), newStudent.getId());
+        assertThat(actualStudentNotAppliedToOffer.get()).isFalse();
+    }
+
+    @Test
+    public void testStudentAppliedToOfferFails(){
+        when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),student.getId())).thenReturn(true);
+        Optional<Boolean> actualStudentAlreadyAppliedToOffer = studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), student.getId());
+        assertThat(actualStudentAlreadyAppliedToOffer.get()).isTrue();
     }
 }

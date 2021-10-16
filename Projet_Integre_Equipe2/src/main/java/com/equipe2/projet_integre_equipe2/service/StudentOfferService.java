@@ -23,7 +23,7 @@ public class StudentOfferService {
         }
     }
 
-    public Optional<Boolean> isStudentNotAppliedToOffer(Integer offerId, Integer studentId) {
-        return Optional.of(!studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offerId, studentId));
+    public Optional<Boolean> isStudentAppliedToOffer(Integer offerId, Integer studentId) {
+        return Optional.of(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offerId, studentId));
     }
 }
