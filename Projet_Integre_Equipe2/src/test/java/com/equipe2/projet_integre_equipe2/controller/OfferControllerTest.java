@@ -1,7 +1,9 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.service.OfferService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,8 @@ public class OfferControllerTest {
 
     private Offer offer;
 
+    private Monitor monitor;
+
     @BeforeEach
     void setup() {
         offer = Offer.builder()
@@ -51,6 +55,14 @@ public class OfferControllerTest {
                 .deadlineDate("2021-10-30")
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
+                .build();
+
+        monitor = Monitor.monitorBuilder()
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
                 .build();
     }
 
@@ -77,6 +89,21 @@ public class OfferControllerTest {
                 .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void getAllOffersByMonitor() throws Exception {
+        when(offerService.getAllOffersByMonitor_Id(monitor.getId())).thenReturn(Optional.of(getListOfOffers()));
+
+        MvcResult result = mockMvc.perform(get("/offer/get-all-offers/" + monitor.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Offer>>(){
+
+        });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
     }
@@ -175,5 +202,28 @@ public class OfferControllerTest {
                 .isValid(true)
                 .build());
         return validOfferList;
+    }
+
+    private List<Offer> getListOfOffersByMonitor() {
+        List<Offer> offerList = new ArrayList<>();
+        offerList.add(Offer.builder()
+                .companyName("Cegep21")
+                .salary("22")
+                .jobSchedules("programmer")
+                .monitor(monitor)
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep18")
+                .salary("18")
+                .jobSchedules("analyst")
+                .monitor(monitor)
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep23")
+                .salary("23")
+                .jobSchedules("programmer")
+                .monitor(monitor)
+                .build());
+        return  offerList;
     }
 }
