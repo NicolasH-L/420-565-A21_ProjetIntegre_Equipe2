@@ -66,4 +66,12 @@ public class OfferService {
             return Optional.empty();
         }
     }
+
+    public Optional<List<Offer>> getAllOffersByMonitor_Id(Integer id) {
+        try {
+            return Optional.of(offerRepository.findOfferByMonitor_Id(id));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

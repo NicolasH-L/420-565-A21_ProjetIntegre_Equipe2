@@ -50,4 +50,11 @@ public class OfferController {
                 .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-all-offers/{id}")
+    public ResponseEntity<List<Offer>> getAllOffersByMonitor(@PathVariable Integer id) {
+        return offerService.getAllOffersByMonitor_Id(id)
+                .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }
