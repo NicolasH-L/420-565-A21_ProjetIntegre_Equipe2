@@ -5,6 +5,7 @@ import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.StudentOffer;
 import com.equipe2.projet_integre_equipe2.service.StudentOfferService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +44,7 @@ public class StudentOfferControllerTest {
 
     private Offer offer;
 
+    private List<StudentOffer> studentOfferList;
     @BeforeEach
     void setup() {
         offer = Offer.builder()
@@ -81,6 +86,8 @@ public class StudentOfferControllerTest {
                 .document(document)
                 .student(student)
                 .build();
+        studentOfferList = new ArrayList<>();
+        studentOfferList.add(studentOffer);
     }
 
     @Test
@@ -108,5 +115,38 @@ public class StudentOfferControllerTest {
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualIsStudentOfferExist).isEqualTo(true);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByStudentId() throws Exception {
+        when(studentOfferService.getAllStudentOfferByStudentId(student.getId())).thenReturn(Optional.of(studentOfferList));
+
+        MvcResult result = mockMvc.perform(get("/offers-list/student-offers/student/"+student.getId())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualStudentOfferList = new ObjectMapper().readValue(result.getResponse()
+                .getContentAsString(), new TypeReference<List<StudentOffer>>() {});
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualStudentOfferList).isEqualTo(studentOfferList);
+        assertThat(actualStudentOfferList.size()).isEqualTo(studentOfferList.size());
+    }
+
+    @Test
+    public void testSetStudentOfferInterviewDate() throws Exception{
+        LocalDate expectedDate = LocalDate.now();
+        studentOffer.setInterviewDate(expectedDate.toString());
+        when(studentOfferService.saveStudentOffer(studentOffer)).thenReturn(Optional.of(studentOffer));
+        MvcResult result = mockMvc.perform(put("/offers-list/student-offer-add-date")
+                        .content(new ObjectMapper().writeValueAsString(studentOffer))
+                        .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualStudentOffer = new ObjectMapper().readValue(result.getResponse()
+                .getContentAsString(), StudentOffer.class);
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualStudentOffer.getInterviewDate()).isEqualTo(expectedDate.toString());
+        assertThat(actualStudentOffer).isEqualTo(studentOffer);
+
     }
 }
