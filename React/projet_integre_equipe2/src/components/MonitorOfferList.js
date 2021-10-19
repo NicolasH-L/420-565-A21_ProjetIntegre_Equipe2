@@ -7,7 +7,7 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
-    const monitor = useHistory().location.state
+    const monitor = history.location.state
 
     useEffect(() => {
         console.log(monitor)
@@ -23,8 +23,6 @@ const MonitorOfferList = () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
         return await res.json()
     }
-
-
 
     return (
         <div className="grad">
@@ -49,7 +47,7 @@ const MonitorOfferList = () => {
                                 <td>{offer.salary}$</td>
                                 <td>{offer.displayDate}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={(e) => console.log(offer.id)}>Voir étudiants</button>
+                                    <button className="btn btn-primary mx-2" onClick={(e) => console.log(offer.idOffer + ": " + offer.jobTitle)}>Voir étudiants</button>
                                 </td>
                             </tr>
                         ))}
