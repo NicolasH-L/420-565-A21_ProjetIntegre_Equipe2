@@ -5,6 +5,8 @@ import AdminNavbar from './../AdminNavbar'
 
 const AdminStudentAcceptedOffers = () => {
     const [acceptedOffers, setAcceptedOffers] = useState([])
+    const [internship, setInternship] = useState({isSignedByStudent: false, isSignedByMonitor: false, 
+                                                offer: undefined, student: undefined})
     const history = useHistory()
 
     useEffect(() => {
@@ -24,22 +26,24 @@ const AdminStudentAcceptedOffers = () => {
         history.push("/OfferView", offer)
     }
 
-    const acceptOffer = async (offer) => {
-        const res = await fetch('http://localhost:8888/offers-list',
+    const startSigningProcess = async (acceptedOffer) => {
+        internship.offer = acceptedOffer.offer
+        internship.student = acceptedOffer.student
+        const res = await fetch('http://localhost:8888/internship',
             {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(offer)
+                body: JSON.stringify(internship)
             })
         const data = await res.json()
         
-        setAcceptedOffers(
+        /*setAcceptedOffers(
             acceptedOffers.map(
                 (offer1) => offer1.idApplication === offer.idApplication ? {...offer1, isAccepted: data.isAccepted} : offer1
             )
-        )
+        )*/
 
         return data
     }
@@ -70,8 +74,8 @@ const AdminStudentAcceptedOffers = () => {
                                         <button className="btn btn-success mx-2"
                                             onClick={e => {
                                                 e.preventDefault();
-                                                acceptOffer(acceptedOffer)
-                                                    .then((data) => !data.isAccepted ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : alert("Processus de signature commencé"))
+                                                startSigningProcess(acceptedOffer)
+                                                    .then((data) => data.student == null ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : alert("Processus de signature commencé"))
                                             }}>
                                             Débuter signatures
                                         </button>
