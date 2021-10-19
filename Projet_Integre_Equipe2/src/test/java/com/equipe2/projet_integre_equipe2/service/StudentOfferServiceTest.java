@@ -113,15 +113,15 @@ public class StudentOfferServiceTest {
 
     @Test
     public void testGetAllStudentsOfferAcceptedIsTrue(){
-        when(studentOfferRepository.findStudentOffersByAcceptedIsTrue()).thenReturn(getListOfStudentsOffer());
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(getListOfStudentsOffer());
         Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
         assertThat(actualStudentOffers.get().size()).isEqualTo(3);
-        assertThat(actualStudentOffers.get().get(0).isAccepted()).isTrue();
+        assertThat(actualStudentOffers.get().get(0).getIsAccepted()).isTrue();
     }
 
     @Test
     public void testGetAllStudentsOfferAcceptedIsTrueFails(){
-        when(studentOfferRepository.findStudentOffersByAcceptedIsTrue()).thenReturn(null);
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(null);
         Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
         assertThat(actualStudentOffers).isEmpty();
     }

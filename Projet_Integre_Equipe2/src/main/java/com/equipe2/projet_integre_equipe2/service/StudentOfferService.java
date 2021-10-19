@@ -30,7 +30,7 @@ public class StudentOfferService {
 
     public Optional<List<StudentOffer>> getAllAcceptedStudentOffers(){
         try {
-            return Optional.of(studentOfferRepository.findStudentOffersByAcceptedIsTrue());
+            return Optional.of(studentOfferRepository.findStudentOffersByIsAcceptedTrue());
         } catch (Exception e){
             return Optional.empty();
         }
