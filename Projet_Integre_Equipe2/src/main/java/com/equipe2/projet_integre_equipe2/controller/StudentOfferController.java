@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/offers-list")
@@ -27,6 +29,13 @@ public class StudentOfferController {
         return studentOfferService.isStudentAppliedToOffer(offerId, studentId)
                 .map(studentApplication1 -> ResponseEntity.status(HttpStatus.OK).body(studentApplication1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(true));
+    }
+
+    @GetMapping("/get-all-studentOffersByIdOffer/{offerId}")
+    public ResponseEntity<List<StudentOffer>> getAllStudentOffersByIdOffer(@PathVariable Integer offerId) {
+        return studentOfferService.getAllStudentOffersByOffer_IdOffer(offerId)
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
 }
