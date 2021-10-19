@@ -29,7 +29,7 @@ const AdminStudentAcceptedOffers = () => {
     const startSigningProcess = async (acceptedOffer) => {
         internship.offer = acceptedOffer.offer
         internship.student = acceptedOffer.student
-        const res = await fetch('http://localhost:8888/internship',
+        const res = await fetch('http://localhost:8888/internship/saveInternship',
             {
                 method: 'POST',
                 headers: {
@@ -39,12 +39,6 @@ const AdminStudentAcceptedOffers = () => {
             })
         const data = await res.json()
         
-        /*setAcceptedOffers(
-            acceptedOffers.map(
-                (offer1) => offer1.idApplication === offer.idApplication ? {...offer1, isAccepted: data.isAccepted} : offer1
-            )
-        )*/
-
         return data
     }
 
@@ -79,7 +73,6 @@ const AdminStudentAcceptedOffers = () => {
                                             }}>
                                             Débuter signatures
                                         </button>
-                                        {/*<button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(acceptedOffer) }}>Refuser</button>*/}
                                     </td>
                                 </tr>
                             ))}
