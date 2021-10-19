@@ -17,8 +17,8 @@ const StudentAppliedOffersList = ({useStudent}) => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
         }
-        getStudentOffers()
         setStudent(historyState)
+        getStudentOffers()
         console.log(student)
     }, [])
 
