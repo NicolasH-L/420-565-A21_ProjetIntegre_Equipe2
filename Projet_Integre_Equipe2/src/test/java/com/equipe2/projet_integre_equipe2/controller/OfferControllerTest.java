@@ -94,10 +94,10 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void getAllOffersByMonitor() throws Exception {
-        when(offerService.getAllOffersByMonitor_Id(monitor.getId())).thenReturn(Optional.of(getListOfOffers()));
+    public void getAllOffersValidByMonitor_Id() throws Exception {
+        when(offerService.getAllOffersValidByMonitor_Id(monitor.getId())).thenReturn(Optional.of(getListOfOffersByMonitor()));
 
-        MvcResult result = mockMvc.perform(get("/offer/get-all-offers/" + monitor.getId())
+        MvcResult result = mockMvc.perform(get("/offer/get-all-valid-offers/" + monitor.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
@@ -210,18 +210,21 @@ public class OfferControllerTest {
                 .companyName("Cegep21")
                 .salary("22")
                 .jobSchedules("programmer")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         offerList.add(Offer.builder()
                 .companyName("Cegep18")
                 .salary("18")
                 .jobSchedules("analyst")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         offerList.add(Offer.builder()
                 .companyName("Cegep23")
                 .salary("23")
                 .jobSchedules("programmer")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         return  offerList;

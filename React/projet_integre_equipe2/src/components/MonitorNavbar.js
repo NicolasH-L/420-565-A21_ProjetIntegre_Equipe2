@@ -4,8 +4,11 @@ import React from 'react'
 const MonitorNavbar = () => {
     let history = useHistory()
     let historyState = history.location.state
-    function goToMonitorOffer(){
+    function goToMonitorOffer() {
         history.push("/MonitorOffer", historyState)
+    }
+    function goToMonitorOfferList() {
+        history.push("/MonitorOfferList", historyState)
     }
     return (
         <div>
@@ -18,6 +21,9 @@ const MonitorNavbar = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOffer}>Déposer offre</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
                         </li>
                     </ul>
                 </div>

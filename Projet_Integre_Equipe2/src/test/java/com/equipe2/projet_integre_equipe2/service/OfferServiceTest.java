@@ -150,17 +150,21 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testGetAllOffersByMonitor() {
-        when(offerRepository.findOfferByMonitor_Id(monitor.getId())).thenReturn(getListOfOffersByMonitor());
-        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersByMonitor_Id(monitor.getId());
+    public void testGetAllOffersValidByMonitor_Id() {
+        when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
+        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(getListOfOffersByMonitor());
+        final Optional<List<Offer>> expectedMonitorOffer = Optional.of(offerRepository.saveAll(getListOfOffersByMonitor()));
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
+        assertThat(monitorOffers.get().size()).isEqualTo(expectedMonitorOffer.get().size());
         assertThat(monitorOffers.get().size()).isEqualTo(3);
-        assertThat(monitorOffers.get().get(2).getCompanyName()).isEqualTo("Cegep23");
     }
 
     @Test
-    public void testGetAllOffersByMonitorFails() {
-        when(offerRepository.findOfferByMonitor_Id(monitor.getId())).thenReturn(null);
-        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersByMonitor_Id(monitor.getId());
+    public void testGetAllOffersValidByMonitor_IdFails() {
+        when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
+        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(null);
+        offerRepository.saveAll(getListOfOffersByMonitor());
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
         assertThat(monitorOffers).isEqualTo(Optional.empty());
     }
 
@@ -207,18 +211,21 @@ public class OfferServiceTest {
                 .companyName("Cegep21")
                 .salary("22")
                 .jobSchedules("programmer")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         offerList.add(Offer.builder()
                 .companyName("Cegep18")
                 .salary("18")
                 .jobSchedules("analyst")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         offerList.add(Offer.builder()
                 .companyName("Cegep23")
                 .salary("23")
                 .jobSchedules("programmer")
+                .isValid(true)
                 .monitor(monitor)
                 .build());
         return  offerList;

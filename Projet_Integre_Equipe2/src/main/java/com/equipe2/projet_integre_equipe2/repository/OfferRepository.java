@@ -10,5 +10,5 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
     List<Offer> findOffersByIsValidTrue();
-    List<Offer> findOfferByMonitor_Id(Integer id);
+    List<Offer> findOfferByIsValidTrueAndMonitor_Id(Integer id);
 }

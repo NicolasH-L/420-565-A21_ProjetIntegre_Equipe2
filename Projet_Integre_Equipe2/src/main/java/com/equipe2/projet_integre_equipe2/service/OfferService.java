@@ -67,9 +67,9 @@ public class OfferService {
         }
     }
 
-    public Optional<List<Offer>> getAllOffersByMonitor_Id(Integer id) {
+    public Optional<List<Offer>> getAllOffersValidByMonitor_Id(Integer id) {
         try {
-            return Optional.of(offerRepository.findOfferByMonitor_Id(id));
+            return Optional.of(offerRepository.findOfferByIsValidTrueAndMonitor_Id(id));
         } catch (Exception e) {
             return Optional.empty();
         }
