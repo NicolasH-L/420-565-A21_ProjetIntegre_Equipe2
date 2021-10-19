@@ -20,6 +20,9 @@ const AdminNavbar = () => {
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-light" to="/AdminStudentList">Liste des étudiants</Link>
                         </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminStudentAcceptedOffers">Offres acceptées</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

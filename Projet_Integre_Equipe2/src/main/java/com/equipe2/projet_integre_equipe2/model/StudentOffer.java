@@ -22,6 +22,8 @@ public class StudentOffer implements Serializable {
     @GeneratedValue
     private int idStudentOffer;
 
+    private boolean isAccepted;
+
     @OneToOne
     private Offer offer;
 
