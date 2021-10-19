@@ -64,9 +64,9 @@ const AdminStudentAcceptedOffers = () => {
                                 <tr key={acceptedOffer.idApplication}>
                                     <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
                                     <td>{acceptedOffer.student.matricule}</td>
-                                    <td>{acceptedOffer.offer.jobTitle}$</td>
+                                    <td>{acceptedOffer.offer.jobTitle}</td>
                                     <td className="w-25">
-                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer) }}>Consulter</button>
+                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}>Consulter</button>
                                         <button className="btn btn-success mx-2"
                                             onClick={e => {
                                                 e.preventDefault();
