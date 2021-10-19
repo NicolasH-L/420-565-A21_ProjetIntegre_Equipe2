@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.StudentOffer;
 import com.equipe2.projet_integre_equipe2.service.StudentOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,10 @@ public class StudentOfferController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @GetMapping("/get-all-accepted-offers")
+    public ResponseEntity<List<StudentOffer>> getAllAcceptedStudentOffers(){
+        return studentOfferService.getAllAcceptedStudentOffers()
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }
