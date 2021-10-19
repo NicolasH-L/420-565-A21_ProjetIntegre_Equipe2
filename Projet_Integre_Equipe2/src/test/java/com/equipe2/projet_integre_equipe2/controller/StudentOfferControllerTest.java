@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,5 +110,39 @@ public class StudentOfferControllerTest {
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualIsStudentOfferExist).isEqualTo(true);
+    }
+
+    @Test
+    public void getAllAcceptedStudentOffers() throws Exception {
+        List<StudentOffer> studentOfferList = getListOfStudentsOffer();
+        when(studentOfferService.getAllAcceptedStudentOffers()).thenReturn(Optional.of(studentOfferList));
+
+        MvcResult result = mockMvc.perform(get("/offers-list/get-all-accepted-offers")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        return studentsOfferList;
     }
 }
