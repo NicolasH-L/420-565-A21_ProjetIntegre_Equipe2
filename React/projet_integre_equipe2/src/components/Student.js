@@ -17,9 +17,9 @@ const Student = () => {
         <div className="grad">
             <StudentNavbar useStudent={historyState} />
             <div className="d-flex justify-content-center">
-                <div className="container my-5">
+                <div className="container-fluid my-5">
                     <h1 className="text-center mb-5">Bienvenu {userStudent.firstName} {userStudent.lastName}</h1>
-                    <StudentAppliedOffersList />
+                    <StudentAppliedOffersList/>
                 </div>
             </div>
         </div>

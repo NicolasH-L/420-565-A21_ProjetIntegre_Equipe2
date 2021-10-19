@@ -16,7 +16,7 @@ const OfferModalView = ({ newOffer }) => {
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
     const history = useHistory()
     const historyState = useHistory().location.state
-    const baseUrl = "http://localhost:8888/offers-list/"
+    const baseUrl = "http://localhost:8888/offers-list"
     const appliedMessage = <strong className="text-success">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
     let studentId
     let offerId

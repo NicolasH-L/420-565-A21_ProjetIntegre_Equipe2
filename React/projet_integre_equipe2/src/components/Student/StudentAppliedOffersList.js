@@ -1,14 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import OfferModalView from '../OfferModalView'
 
-const StudentAppliedOffersList = ({useStudent}) => {
+const StudentAppliedOffersList = () => {
 
     const [offers, setOffers] = useState([])
     const [studentOffers, setStudentOffers] = useState([])
     const [student, setStudent] = useState({})
     const history = useHistory()
     const historyState = history.location.state
+    const timeElapsed = Date.now()
+    const today = new Date(timeElapsed).toISOString().split('T')[0]
     
     useEffect(() => {
         if (historyState === undefined)
@@ -16,21 +19,29 @@ const StudentAppliedOffersList = ({useStudent}) => {
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
+            console.log(studentOffersFromServer)
         }
         setStudent(historyState)
         getStudentOffers()
-        console.log(student)
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://localhost:8888/offer/get-all-valid-offers/')
+        const res = await fetch('http://localhost:8888/offer/get-all-valid-offers')
         return await res.json()
     }
 
     const fetchStudentOffers = async () =>{
-        const rest = await fetch(`http://localhost:8888/offers-list/student-offers/student/${student.id}`)
+        const res = await fetch(`http://localhost:8888/offers-list/student-offers/student/${historyState.id}`)
+        return await res.json()
     }
 
+    const findFutureDate = () => {
+        let futureDate = new Date(timeElapsed)
+        futureDate.setDate(futureDate.getDate() + 220)
+        let futureDateFormat = futureDate.toISOString().split('T')[0]
+        return futureDateFormat
+    }
+    
     return (
         <div className="">
             <h2 className="text-center">Mes offres de stages</h2>
@@ -44,20 +55,23 @@ const StudentAppliedOffersList = ({useStudent}) => {
                             <th scope="col" className="text-center">Date d'affichage</th>
                             <th scope="col" className="text-center">Date limite d'affichage</th>
                             <th scope="col" className="text-center">Date de l'entrevue</th>
-
-                            <th scope="col"></th>
+                            <th scope="col" className="text-center"></th>
+                            <th scope="col" className="text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
-                            <tr key={offer.idOffer}>
-                                <th className="text-center">{offer.companyName}</th>
-                                <td className="text-center">{offer.jobTitle}</td>
-                                <td className="text-center">{offer.salary}$</td>
-                                <td className="text-center">{offer.displayDate}</td>
-                                <td className="text-center">{offer.deadlineDate}</td>
-                                <td className="text-center">{offer.deadlineDate}</td>
+                        {studentOffers.map((studentOffer) => (
+                            <tr key={studentOffer.idStudentOffer}>
+                                <th className="text-center">{studentOffer.offer.companyName}</th>
+                                <td className="text-center">{studentOffer.offer.jobTitle}</td>
+                                <td className="text-center">{studentOffer.offer.salary}$</td>
+                                <td className="text-center">{studentOffer.offer.displayDate}</td>
+                                <td className="text-center">{studentOffer.offer.deadlineDate}</td>
+                                <td className="text-center">{studentOffer.interviewDate === null ? "Aucune": studentOffer.interviewDate}</td>
+                                <td className="text-center">test</td>
 
+                                <td className="text-center"><OfferModalView newOffer={studentOffer.offer}/></td>
+                                <td className="text-center">test</td>
                             </tr>
                         ))}
                     </tbody>
