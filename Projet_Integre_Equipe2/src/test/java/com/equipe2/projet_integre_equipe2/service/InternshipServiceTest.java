@@ -41,4 +41,11 @@ public class InternshipServiceTest {
         Optional<Internship> actualInternship = internshipService.saveInternship(internship);
         assertThat(actualInternship.get()).isEqualTo(internship);
     }
+
+    @Test
+    public void testSaveInternshipFails(){
+        when(internshipRepository.save(internship)).thenReturn(null);
+        Optional<Internship> actualInternship = internshipService.saveInternship(internship);
+        assertThat(actualInternship).isEmpty();
+    }
 }
