@@ -20,7 +20,7 @@ public class StudentOffer implements Serializable {
 
     @Id
     @GeneratedValue
-    private int idApplication;
+    private int idStudentOffer;
 
     @OneToOne
     private Offer offer;
@@ -30,4 +30,6 @@ public class StudentOffer implements Serializable {
 
     @OneToOne
     private Student student;
+
+    private String interviewDate;
 }
