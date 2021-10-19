@@ -13,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -107,5 +109,40 @@ public class StudentOfferServiceTest {
         when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),student.getId())).thenReturn(true);
         Optional<Boolean> actualStudentAlreadyAppliedToOffer = studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), student.getId());
         assertThat(actualStudentAlreadyAppliedToOffer.get()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrue(){
+        when(studentOfferRepository.findStudentOffersByAcceptedIsTrue()).thenReturn(getListOfStudentsOffer());
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers.get().size()).isEqualTo(3);
+        assertThat(actualStudentOffers.get().get(0).isAccepted()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrueFails(){
+        when(studentOfferRepository.findStudentOffersByAcceptedIsTrue()).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers).isEmpty();
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        return studentsOfferList;
     }
 }
