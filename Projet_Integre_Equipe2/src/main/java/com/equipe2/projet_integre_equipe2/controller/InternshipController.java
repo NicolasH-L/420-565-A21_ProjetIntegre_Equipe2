@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/internship")
@@ -20,5 +22,12 @@ public class InternshipController {
         return internshipService.saveInternship(internship)
                 .map(internship1 -> ResponseEntity.status(HttpStatus.CREATED).body(internship1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Internship()));
+    }
+
+    @GetMapping("/get-all-internships")
+    public ResponseEntity<List<Internship>> getAllInternships(){
+        return internshipService.getAllInternships()
+                .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }
