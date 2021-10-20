@@ -6,7 +6,7 @@ import AdminNavbar from './../AdminNavbar'
 const AdminStudentAcceptedOffers = () => {
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({
-        isSignedByStudent: false, isSignedByMonitor: false,
+        isSignedByStudent: false, isSignedByMonitor: false, status: "",
         offer: undefined, student: undefined
     })
     const history = useHistory()
@@ -31,6 +31,7 @@ const AdminStudentAcceptedOffers = () => {
     const startSigningProcess = async (acceptedOffer) => {
         internship.offer = acceptedOffer.offer
         internship.student = acceptedOffer.student
+        internship.status = "StudentSignature"
         const res = await fetch('http://localhost:8888/internship/save-internship',
             {
                 method: 'POST',

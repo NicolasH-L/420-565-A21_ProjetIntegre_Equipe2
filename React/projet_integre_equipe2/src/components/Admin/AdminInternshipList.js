@@ -46,9 +46,11 @@ const AdminInternshipList = () => {
                                     <th>{internship.student.firstName + " " + internship.student.lastName}</th>
                                     <td>{internship.offer.jobTitle}</td>
                                     <td>{internship.offer.companyName}</td>
-                                    <td>{internship.status == "StudentSignature" ? "En attente : Siganture étudiant"
-                                        : internship.status == "StudentSignature" ? "En attente : Siganture moniteur"
-                                        : "En attente : Siganture gestionnaire"}
+                                    <td>
+                                        {internship.status == "StudentSignature" ? "En attente : Signature étudiant"
+                                            : internship.status == "MonitorSignature" ? "En attente : Signature moniteur"
+                                            : internship.status == "AdminSignature" ? "En attente : Siganture gestionnaire" 
+                                            : internship.status == "Valide" ? "Valide" : "Erreur"}
                                     </td>
                                     <td className="w-25">
                                         <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
