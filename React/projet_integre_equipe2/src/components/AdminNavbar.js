@@ -23,6 +23,9 @@ const AdminNavbar = () => {
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-light" to="/AdminStudentAcceptedOffers">Offres acceptées</Link>
                         </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminInternshipList">Ententes de stage</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
