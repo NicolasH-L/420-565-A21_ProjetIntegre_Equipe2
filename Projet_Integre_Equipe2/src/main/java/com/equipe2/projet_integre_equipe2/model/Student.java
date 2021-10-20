@@ -14,7 +14,7 @@ public class Student extends User implements Serializable {
     @Column(unique = true, length = 200)
     private String matricule;
     private Boolean isCvValid = false;
-    private String currentStatus = "Recherche";
+    private String currentStatus = "En recherche";
 
 
     @Builder(builderMethodName = "studentBuilder")
