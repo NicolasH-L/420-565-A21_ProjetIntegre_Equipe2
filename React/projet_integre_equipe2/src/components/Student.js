@@ -8,11 +8,9 @@ const Student = () => {
     const history = useHistory()
     const historyState = history.location.state
     const [userStudent, setUserStudent] = useState([])
-    const [status, setStatus] = useState([])
 
     useEffect(() => {
         setUserStudent(historyState)
-        setStatus(historyState.currentStatus)
     }, [])
 
     console.log(userStudent)
@@ -37,7 +35,7 @@ const Student = () => {
                     
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {status}
+                            {userStudent.currentStatus}
                         </button>
                         <div class="dropdown-menu">
                             <button className="dropdown-item" onClick={() => { setUserStudent({...userStudent, currentStatus: "En Recherche"}) }}>En recherche</button>
