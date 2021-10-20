@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Internship {
 
     @Id

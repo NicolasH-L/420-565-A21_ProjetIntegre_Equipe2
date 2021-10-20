@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Internship;
-import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.service.InternshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ public class InternshipController {
     @Autowired
     private InternshipService internshipService;
 
-    @PostMapping("/saveInternship")
+    @PostMapping("/save-internship")
     public ResponseEntity<Internship> saveInternship(@RequestBody Internship internship) {
         return internshipService.saveInternship(internship)
                 .map(internship1 -> ResponseEntity.status(HttpStatus.CREATED).body(internship1))

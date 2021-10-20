@@ -44,7 +44,7 @@ public class InternshipControllerTest {
     public void saveInternshipTest() throws Exception {
         when(internshipService.saveInternship(internship)).thenReturn(Optional.of(internship));
 
-        MvcResult result = mockMvc.perform(post("/internship/saveInternship")
+        MvcResult result = mockMvc.perform(post("/internship/save-internship")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(internship))).andReturn();
 

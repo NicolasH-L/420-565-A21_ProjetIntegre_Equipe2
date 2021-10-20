@@ -5,8 +5,10 @@ import AdminNavbar from './../AdminNavbar'
 
 const AdminStudentAcceptedOffers = () => {
     const [acceptedOffers, setAcceptedOffers] = useState([])
-    const [internship, setInternship] = useState({isSignedByStudent: false, isSignedByMonitor: false, 
-                                                offer: undefined, student: undefined})
+    const [internship, setInternship] = useState({
+        isSignedByStudent: false, isSignedByMonitor: false,
+        offer: undefined, student: undefined
+    })
     const history = useHistory()
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const AdminStudentAcceptedOffers = () => {
     const startSigningProcess = async (acceptedOffer) => {
         internship.offer = acceptedOffer.offer
         internship.student = acceptedOffer.student
-        const res = await fetch('http://localhost:8888/internship/saveInternship',
+        const res = await fetch('http://localhost:8888/internship/save-internship',
             {
                 method: 'POST',
                 headers: {
@@ -38,7 +40,7 @@ const AdminStudentAcceptedOffers = () => {
                 body: JSON.stringify(internship)
             })
         const data = await res.json()
-        
+
         return data
     }
 
