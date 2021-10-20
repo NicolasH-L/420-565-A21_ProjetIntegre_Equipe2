@@ -9,6 +9,11 @@ const MonitorOfferList = () => {
     const history = useHistory()
     const monitor = history.location.state
 
+    function goToMonitorStudentList(idOffer) {
+        let monitorwithIdOffer = {monitor, idOffer: idOffer }
+        history.push("/MonitorStudentList", monitorwithIdOffer)
+    }
+
     useEffect(() => {
         console.log(monitor)
 
@@ -47,7 +52,7 @@ const MonitorOfferList = () => {
                                 <td>{offer.salary}$</td>
                                 <td>{offer.displayDate}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={(e) => console.log(offer.idOffer + ": " + offer.jobTitle)}>Voir étudiants</button>
+                                    <button className="btn btn-primary mx-2" onClick={(e) => goToMonitorStudentList(offer.idOffer)}>Voir étudiants</button>
                                 </td>
                             </tr>
                         ))}
