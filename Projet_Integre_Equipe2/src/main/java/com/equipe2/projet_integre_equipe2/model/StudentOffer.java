@@ -20,9 +20,9 @@ public class StudentOffer implements Serializable {
 
     @Id
     @GeneratedValue
-    private int idApplication;
+    private int idStudentOffer;
 
-    private Boolean isAccepted;
+    private Boolean isAccepted = false;
 
     @OneToOne
     private Offer offer;
@@ -32,4 +32,6 @@ public class StudentOffer implements Serializable {
 
     @OneToOne
     private Student student;
+
+    private String interviewDate;
 }

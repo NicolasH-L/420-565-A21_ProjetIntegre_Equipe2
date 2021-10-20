@@ -32,6 +32,20 @@ public class StudentOfferController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(true));
     }
 
+    @GetMapping("/student-offers/student/{studentId}")
+    public ResponseEntity<List<StudentOffer>> getStudentOffersByStudentId(@PathVariable int studentId) {
+        return studentOfferService.getAllStudentOfferByStudentId(studentId)
+                .map(studentOffersByStudentId1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffersByStudentId1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/student-offer-add-date")
+    public ResponseEntity<StudentOffer> setStudentOfferInterviewDate(@RequestBody StudentOffer studentOffer) {
+        return studentOfferService.saveStudentOffer(studentOffer)
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @GetMapping("/get-all-accepted-offers")
     public ResponseEntity<List<StudentOffer>> getAllAcceptedStudentOffers(){
         return studentOfferService.getAllAcceptedStudentOffers()

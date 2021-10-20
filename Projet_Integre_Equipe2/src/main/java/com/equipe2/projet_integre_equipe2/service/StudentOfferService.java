@@ -28,10 +28,18 @@ public class StudentOfferService {
         return Optional.of(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offerId, studentId));
     }
 
-    public Optional<List<StudentOffer>> getAllAcceptedStudentOffers(){
+    public Optional<List<StudentOffer>> getAllStudentOfferByStudentId(int studentId) {
+        try {
+            return Optional.of(studentOfferRepository.findStudentOffersByStudent_Id(studentId));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<StudentOffer>> getAllAcceptedStudentOffers() {
         try {
             return Optional.of(studentOfferRepository.findStudentOffersByIsAcceptedTrue());
-        } catch (Exception e){
+        } catch (Exception e) {
             return Optional.empty();
         }
     }

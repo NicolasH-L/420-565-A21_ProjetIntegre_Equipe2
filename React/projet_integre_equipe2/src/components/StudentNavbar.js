@@ -17,19 +17,23 @@ const StudentNavbar = ({ useStudent }) => {
         studentMatricule = historyState.matricule
     }, [])
 
-    function goToStudentUploadCV() {
+    const goToStudentUploadCV = () =>{
         history.push("/StudentUploadCV", historyState)
     }
 
-    function goToStudentInternshipOffers() {
+    const goToStudentInternshipOffers = () =>{
         if (historyState === undefined)
             return
         verifyCvValidity(student.matricule)
             .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
     }
 
-    function goToMyDocuments() {
+    const goToMyDocuments = () =>{
         history.push("/StudentDocuments", historyState)
+    }
+
+    const goToMyProfile = () =>{
+        history.push("/Student", historyState)
     }
 
     const verifyCvValidity = async (matricule) => {
@@ -46,14 +50,17 @@ const StudentNavbar = ({ useStudent }) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                        <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={goToStudentUploadCV}>Déposer CV</button>
+                    <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profile</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={goToStudentInternshipOffers}>Offres de stages</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentUploadCV()}>Déposer CV</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={goToMyDocuments}>Mes Documents</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentInternshipOffers()}>Offres de stages</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyDocuments()}>Mes Documents</button>
                         </li>
                     </ul>
                 </div>
