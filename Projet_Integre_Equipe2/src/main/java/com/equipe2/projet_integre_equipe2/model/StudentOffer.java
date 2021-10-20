@@ -22,7 +22,7 @@ public class StudentOffer implements Serializable {
     @GeneratedValue
     private int idStudentOffer;
 
-    private Boolean isAccepted;
+    private Boolean isAccepted = false;
 
     @OneToOne
     private Offer offer;
