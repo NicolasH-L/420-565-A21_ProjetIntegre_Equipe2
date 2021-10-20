@@ -146,4 +146,38 @@ public class StudentOfferServiceTest {
         assertThat(actualStudentOfferList).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrue(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(getListOfStudentsOffer());
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers.get().size()).isEqualTo(3);
+        assertThat(actualStudentOffers.get().get(0).getIsAccepted()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrueFails(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers).isEmpty();
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        return studentsOfferList;
+    }
 }

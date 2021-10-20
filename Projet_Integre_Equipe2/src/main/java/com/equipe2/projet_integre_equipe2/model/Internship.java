@@ -5,33 +5,29 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import java.io.Serializable;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StudentOffer implements Serializable {
+
+public class Internship {
 
     @Id
     @GeneratedValue
-    private int idStudentOffer;
+    private int idInternship;
 
-    private Boolean isAccepted = false;
+    private Boolean isSignedByStudent;
+    private Boolean isSignedByMonitor;
 
     @OneToOne
     private Offer offer;
 
     @OneToOne
-    private Document document;
-
-    @OneToOne
     private Student student;
-
-    private String interviewDate;
 }

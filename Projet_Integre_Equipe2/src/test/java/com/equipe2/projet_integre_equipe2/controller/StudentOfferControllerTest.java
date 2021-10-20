@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.nio.charset.StandardCharsets;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class StudentOfferControllerTest {
     private Offer offer;
 
     private List<StudentOffer> studentOfferList;
+
     @BeforeEach
     void setup() {
         offer = Offer.builder()
@@ -107,7 +109,7 @@ public class StudentOfferControllerTest {
     public void testIsStudentOfferExist() throws Exception {
         when(studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), student.getId())).thenReturn(Optional.of(true));
 
-        MvcResult result = mockMvc.perform(get("/offers-list/offer-applied/"+offer.getIdOffer()+"/"+student.getId())
+        MvcResult result = mockMvc.perform(get("/offers-list/offer-applied/" + offer.getIdOffer() + "/" + student.getId())
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualIsStudentOfferExist = new ObjectMapper().readValue(result.getResponse()
@@ -121,11 +123,12 @@ public class StudentOfferControllerTest {
     public void testGetAllStudentOffersByStudentId() throws Exception {
         when(studentOfferService.getAllStudentOfferByStudentId(student.getId())).thenReturn(Optional.of(studentOfferList));
 
-        MvcResult result = mockMvc.perform(get("/offers-list/student-offers/student/"+student.getId())
+        MvcResult result = mockMvc.perform(get("/offers-list/student-offers/student/" + student.getId())
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualStudentOfferList = new ObjectMapper().readValue(result.getResponse()
-                .getContentAsString(), new TypeReference<List<StudentOffer>>() {});
+                .getContentAsString(), new TypeReference<List<StudentOffer>>() {
+        });
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualStudentOfferList).isEqualTo(studentOfferList);
@@ -133,13 +136,13 @@ public class StudentOfferControllerTest {
     }
 
     @Test
-    public void testSetStudentOfferInterviewDate() throws Exception{
+    public void testSetStudentOfferInterviewDate() throws Exception {
         LocalDate expectedDate = LocalDate.now();
         studentOffer.setInterviewDate(expectedDate.toString());
         when(studentOfferService.saveStudentOffer(studentOffer)).thenReturn(Optional.of(studentOffer));
         MvcResult result = mockMvc.perform(put("/offers-list/student-offer-add-date")
-                        .content(new ObjectMapper().writeValueAsString(studentOffer))
-                        .contentType(MediaType.APPLICATION_JSON)).andReturn();
+                .content(new ObjectMapper().writeValueAsString(studentOffer))
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualStudentOffer = new ObjectMapper().readValue(result.getResponse()
                 .getContentAsString(), StudentOffer.class);
@@ -147,6 +150,39 @@ public class StudentOfferControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualStudentOffer.getInterviewDate()).isEqualTo(expectedDate.toString());
         assertThat(actualStudentOffer).isEqualTo(studentOffer);
+    }
 
+    @Test
+    public void getAllAcceptedStudentOffers() throws Exception {
+        List<StudentOffer> studentOfferList = getListOfStudentsOffer();
+        when(studentOfferService.getAllAcceptedStudentOffers()).thenReturn(Optional.of(studentOfferList));
+
+        MvcResult result = mockMvc.perform(get("/offers-list/get-all-accepted-offers")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student).isAccepted(true)
+                .build());
+        return studentsOfferList;
     }
 }
