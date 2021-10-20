@@ -61,7 +61,7 @@ const AdminStudentAcceptedOffers = () => {
                         </thead>
                         <tbody>
                             {acceptedOffers.map((acceptedOffer) => (
-                                <tr key={acceptedOffer.idApplication}>
+                                <tr key={acceptedOffer.idStudentOffer}>
                                     <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
                                     <td>{acceptedOffer.student.matricule}</td>
                                     <td>{acceptedOffer.offer.jobTitle}</td>
