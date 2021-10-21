@@ -10,6 +10,7 @@ const Student = () => {
     const [userStudent, setUserStudent] = useState([])
     const [studentOffers, setStudentOffers] = useState([])
     const [showStudentAppliedOfferslist, setshowStudentAppliedOfferslist] = useState()
+    const [showSelectStudentAppliedOffer, setshowSelectStudentAppliedOffer] = useState()
     const baseUrl = 'http://localhost:8888/offers-list'
     const [studentOfferKey, setstudentOfferKey] = useState()
 
@@ -39,9 +40,16 @@ const Student = () => {
     const verifyStatus = async (status) => {
         if (status === "En attente") {
             setshowStudentAppliedOfferslist(true)
-        } else {
+            setshowSelectStudentAppliedOffer(false)
+            return
+        } 
+        if (status === "Stage trouvée"){
+            setshowSelectStudentAppliedOffer(true)
             setshowStudentAppliedOfferslist(false)
-        }
+            return
+        } 
+        setshowStudentAppliedOfferslist(false)
+        setshowSelectStudentAppliedOffer(false)
     }
 
     const fetchStudentOffers = async () => {
@@ -95,7 +103,7 @@ const Student = () => {
 
                     {showStudentAppliedOfferslist ? <StudentAppliedOffersList /> : ""}
 
-                    {showStudentAppliedOfferslist ? showSelectStudentAppliedOfferList() : ""}
+                    {showSelectStudentAppliedOffer ? showSelectStudentAppliedOfferList() : ""}
 
                 </div>
             </div>
