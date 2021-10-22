@@ -7,12 +7,12 @@ import StudentAppliedOffersList from './Student/StudentAppliedOffersList'
 const Student = () => {
     const history = useHistory()
     const historyState = history.location.state
+    let studentOfferJSON
     const [userStudent, setUserStudent] = useState([])
     const [studentOffers, setStudentOffers] = useState([])
     const [showStudentAppliedOfferslist, setshowStudentAppliedOfferslist] = useState()
     const [showSelectStudentAppliedOffer, setshowSelectStudentAppliedOffer] = useState()
     const baseUrl = 'http://localhost:8888/offers-list'
-    const [studentOfferKey, setstudentOfferKey] = useState()
 
     useEffect(() => {
         setUserStudent(historyState)
@@ -25,7 +25,6 @@ const Student = () => {
     }, [])
 
     const addStudent = async (student) => {
-        console.log(studentOfferKey)
         const result = await fetch('http://localhost:8888/students/register',
             {
                 method: 'POST',
@@ -35,6 +34,40 @@ const Student = () => {
                 body: JSON.stringify(student)
             })
         return await result.json()
+    }
+
+    const updateStudentOfferDate = async (studentOffer) => {
+        const res = await fetch(`${baseUrl}/student-offer-add-date`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(studentOffer)
+            })
+        const data = await res.json()
+        alert("Ajout de la date d'entrevue avec succès!")
+    }
+
+
+    const saveChanges = () => {
+        if(userStudent.currentStatus === "Stage trouvée"){
+            if(studentOfferJSON !== undefined){
+                alert("Status mise a jour avec succes")
+                addStudent(userStudent).then((data) => history.push("/Student", data))
+                updateStudentOfferDate(studentOfferJSON)
+            } else {
+                alert("Veuillez selectionner le stage trouvée")
+            } 
+        } 
+        if(userStudent.currentStatus === "En attente"){
+            addStudent(userStudent).then((data) => history.push("/Student", data))
+            alert("Status mise a jour avec succes")
+        }
+        if(userStudent.currentStatus === "En recherche"){
+            addStudent(userStudent).then((data) => history.push("/Student", data))
+            alert("Status mise a jour avec succes")
+        }
     }
 
     const verifyStatus = async (status) => {
@@ -58,8 +91,12 @@ const Student = () => {
     }
 
     const getSelectStudentOfferValue = (e) =>{
-        setstudentOfferKey(e.target.value)
-        console.log(e.target.value)
+        if(e.target.value === "default"){
+            alert("Veuillez selectionner le stage trouvée")
+        } else {
+            studentOfferJSON = JSON.parse(e.target.value)
+            studentOfferJSON.isAccepted = true;  
+        }
     }
 
     const showSelectStudentAppliedOfferList = () => {
@@ -68,8 +105,8 @@ const Student = () => {
                 <label htmlFor="studentOffers" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
                 <select defaultValue="default" onChange={getSelectStudentOfferValue} className="form-control text-center" id="studentOffers" name="studentOffers" required>
                     <option value="default">Veuillez choisir le représentant</option>
-                    {studentOffers.map((studentOffer) => (
-                        <option value={studentOffer.offer.idOffer} key={studentOffer.offer.idOffer}>{studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}</option>
+                    {studentOffers.map((studentOffer) => ( 
+                        <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer}>{studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}</option>
                     ))}
                 </select>
             </div>
@@ -97,7 +134,7 @@ const Student = () => {
                             <button className="dropdown-item" onClick={() => { updateStatus("Stage trouvée") }}>Stage trouvée</button>
                         </div>
                     </div>
-                    <button onClick={() => { addStudent(userStudent).then((data) => history.push("/Student", data)) }}>Enregistrer</button>
+                    <button onClick={() => { saveChanges() }}>Enregistrer</button>
 
                     <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
 
