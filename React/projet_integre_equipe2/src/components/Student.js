@@ -125,7 +125,7 @@ const Student = () => {
                 <div className="container my-5">
 
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" disabled={historyState.currentStatus === "Stage trouvée"} class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {userStudent.currentStatus}
                         </button>
                         <div class="dropdown-menu">
@@ -134,7 +134,7 @@ const Student = () => {
                             <button className="dropdown-item" onClick={() => { updateStatus("Stage trouvée") }}>Stage trouvée</button>
                         </div>
                     </div>
-                    <button onClick={() => { saveChanges() }}>Enregistrer</button>
+                    <button onClick={() => { saveChanges() }} disabled={historyState.currentStatus === "Stage trouvée"}>Enregistrer</button>
 
                     <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
 
