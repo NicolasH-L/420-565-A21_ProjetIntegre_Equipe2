@@ -20,6 +20,7 @@ import StudentDocuments from './components/StudentDocuments'
 import MonitorOfferList from './components/MonitorOfferList'
 import AdminStudentAcceptedOffers from './components/Admin/AdminStudentAcceptedOffers'
 import MonitorStudentList from './components/MonitorStudentList'
+import AdminInternshipList from './components/Admin/AdminInternshipList'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/AdminStudentCvList" component={AdminStudentCvList} />
         <Route path="/ViewDocument" component={ViewDocument} />
         <Route path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} />
+        <Route path="/AdminInternshipList" component={AdminInternshipList} />
         <Footer />
       </div>
     </Router>

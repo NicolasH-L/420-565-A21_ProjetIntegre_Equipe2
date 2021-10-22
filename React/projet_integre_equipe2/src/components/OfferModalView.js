@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
-const OfferModalView = ({ newOffer }) => {
+const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
@@ -16,8 +16,8 @@ const OfferModalView = ({ newOffer }) => {
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
     const history = useHistory()
     const historyState = useHistory().location.state
-    const baseUrl = "http://localhost:8888/offers-list/"
-    const appliedMessage = <strong className="text-success">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+    const baseUrl = "http://localhost:8888/offers-list"
+    const appliedMessage = <strong className="text-success ml-5">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
     let studentId
     let offerId
     let studentObject
@@ -72,7 +72,7 @@ const OfferModalView = ({ newOffer }) => {
         addStudentOffer()
         setApplyMessage()
     }
-    
+
     const verifyAppliedToOfferStatus = async () => {
         const res = await fetch(`${baseUrl}/offer-applied/${offerId}/${studentId}`)
         return await res.json()
@@ -94,14 +94,18 @@ const OfferModalView = ({ newOffer }) => {
     }
 
     const showApplyButton = () => {
-        return <button className="btn btn-success mx-5" id="applicationButton" name="button" disabled={applyOfferButton.buttonDisable} onClick={() => applyToOffer()}>Postuler <i className="fas fa-external-link-alt fa-sm"></i></button>
+        return <button className="btn btn-success mx-3" id="applicationButton" name="button" disabled={applyOfferButton.buttonDisable} onClick={() => applyToOffer()}>Postuler <i className="fas fa-external-link-alt fa-sm"></i></button>
+    }
+
+    const displayFunctionality = () => {
+        return applyOfferButton.message !== "" ? applyOfferButton.message : showApplyButton()
     }
 
     return (
         <div>
-            <button className="btn btn-primary mx-3" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
+            <button className="btn btn-primary" data-toggle="modal" data-target={"#offer" + offer.idOffer}>Consulter</button>
             {applyOfferButton.message !== "" ? "" : showSelectDocuments()}
-            {applyOfferButton.message !== "" ? applyOfferButton.message : showApplyButton()}
+            {displayMessageBoolean === true || displayMessageBoolean === undefined ? displayFunctionality() : ""}
             <div className="modal fade justify-content-center" id={"offer" + offer.idOffer} tabIndex="-1" role="dialog" aria-labelledby="offreDeStage" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">

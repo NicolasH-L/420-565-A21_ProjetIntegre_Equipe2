@@ -11,4 +11,8 @@ public interface StudentOfferRepository extends JpaRepository<StudentOffer, Inte
 
     boolean existsStudentOfferByOffer_IdOfferAndStudent_Id(Integer offerId, Integer studentId);
     List<StudentOffer> findAllByOffer_IdOffer(Integer offerId);
+
+    List<StudentOffer> findStudentOffersByStudent_Id(Integer studentId);
+    
+    List<StudentOffer> findStudentOffersByIsAcceptedTrue();
 }

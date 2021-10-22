@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,8 @@ public class StudentOfferServiceTest {
     private Student student2;
 
     private StudentOffer studentOffer;
+
+    private List<StudentOffer> studentOfferList;
 
     @BeforeEach
     void setup() {
@@ -96,6 +99,10 @@ public class StudentOfferServiceTest {
                 .document(document)
                 .student(student)
                 .build();
+
+        studentOfferList = new ArrayList<>();
+        studentOfferList.add(studentOffer);
+
     }
 
     @Test
@@ -148,6 +155,49 @@ public class StudentOfferServiceTest {
         assertThat(studentOfferList).isEmpty();
     }
 
+    @Test    
+    public void testSetInterviewDate(){
+        LocalDate expectedDate = LocalDate.now();
+        studentOffer.setInterviewDate(expectedDate.toString());
+        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer);
+        StudentOffer actualStudentOffer = studentOfferService.saveStudentOffer(studentOffer).get();
+        LocalDate actualDate = LocalDate.parse(actualStudentOffer.getInterviewDate());
+        assertThat(actualStudentOffer).isEqualTo(studentOffer);
+        assertThat(actualDate).isEqualTo(expectedDate);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByStudentId(){
+        when(studentOfferRepository.findStudentOffersByStudent_Id(student.getId())).thenReturn(studentOfferList);
+        Optional<List<StudentOffer>> actualStudentOfferList = studentOfferService.getAllStudentOfferByStudentId(student.getId());
+        assertThat(actualStudentOfferList.get().size()).isEqualTo(studentOfferList.size());
+        assertThat(actualStudentOfferList.get().get(0).getStudent()).isEqualTo(student);
+        assertThat(actualStudentOfferList.get()).isEqualTo(studentOfferList);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByStudentIdFails(){
+        int invalidId = 999;
+        when(studentOfferRepository.findStudentOffersByStudent_Id(invalidId)).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOfferList = studentOfferService.getAllStudentOfferByStudentId(invalidId);
+        assertThat(actualStudentOfferList).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrue(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(getListOfStudentsOffer());
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers.get().size()).isEqualTo(3);
+        assertThat(actualStudentOffers.get().get(0).getIsAccepted()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrueFails(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers).isEmpty();
+    }
+
     private List<StudentOffer> getListOfStudentOffersByIdOffer() {
         List<StudentOffer> studentOfferList = new ArrayList<>();
         studentOfferList.add(StudentOffer.builder()
@@ -161,5 +211,28 @@ public class StudentOfferServiceTest {
                 .student(student2)
                 .build());
         return  studentOfferList;
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        return studentsOfferList;
     }
 }

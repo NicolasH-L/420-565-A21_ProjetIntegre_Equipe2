@@ -31,6 +31,22 @@ public class StudentOfferService {
     public Optional<List<StudentOffer>> getAllStudentOffersByOffer_IdOffer(Integer offerId) {
         try {
             return Optional.of(studentOfferRepository.findAllByOffer_IdOffer(offerId));
+            } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+    
+    public Optional<List<StudentOffer>> getAllStudentOfferByStudentId(int studentId) {
+        try {
+            return Optional.of(studentOfferRepository.findStudentOffersByStudent_Id(studentId));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<StudentOffer>> getAllAcceptedStudentOffers() {
+        try {
+            return Optional.of(studentOfferRepository.findStudentOffersByIsAcceptedTrue());
         } catch (Exception e) {
             return Optional.empty();
         }
