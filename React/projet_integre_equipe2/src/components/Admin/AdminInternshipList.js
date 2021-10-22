@@ -42,7 +42,7 @@ const AdminInternshipList = () => {
                         </thead>
                         <tbody>
                             {internships.map((internship) => (
-                                <tr key={internship.idApplication}>
+                                <tr key={internship.idApplication} className={internship.status == "Valide" ? 'table-success' : 'table-warning'}>
                                     <th>{internship.student.firstName + " " + internship.student.lastName}</th>
                                     <td>{internship.offer.jobTitle}</td>
                                     <td>{internship.offer.companyName}</td>

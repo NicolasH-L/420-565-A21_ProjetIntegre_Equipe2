@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
-import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.StudentOffer;
 import com.equipe2.projet_integre_equipe2.service.StudentOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,13 @@ public class StudentOfferController {
         return studentOfferService.isStudentAppliedToOffer(offerId, studentId)
                 .map(studentApplication1 -> ResponseEntity.status(HttpStatus.OK).body(studentApplication1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(true));
+    }
+
+    @GetMapping("/get-all-studentOffersByIdOffer/{offerId}")
+    public ResponseEntity<List<StudentOffer>> getAllStudentOffersByIdOffer(@PathVariable Integer offerId) {
+        return studentOfferService.getAllStudentOffersByOffer_IdOffer(offerId)
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @GetMapping("/student-offers/student/{studentId}")

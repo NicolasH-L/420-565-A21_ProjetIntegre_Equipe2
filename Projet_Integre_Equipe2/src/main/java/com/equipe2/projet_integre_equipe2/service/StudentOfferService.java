@@ -28,6 +28,14 @@ public class StudentOfferService {
         return Optional.of(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offerId, studentId));
     }
 
+    public Optional<List<StudentOffer>> getAllStudentOffersByOffer_IdOffer(Integer offerId) {
+        try {
+            return Optional.of(studentOfferRepository.findAllByOffer_IdOffer(offerId));
+            } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+    
     public Optional<List<StudentOffer>> getAllStudentOfferByStudentId(int studentId) {
         try {
             return Optional.of(studentOfferRepository.findStudentOffersByStudent_Id(studentId));

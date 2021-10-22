@@ -23,6 +23,7 @@ public class StudentOffer implements Serializable {
     private int idStudentOffer;
 
     private Boolean isAccepted = false;
+    private Boolean isInternshipStarted = false;
 
     @OneToOne
     private Offer offer;

@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
+import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.repository.OfferRepository;
@@ -31,6 +32,8 @@ public class OfferServiceTest {
 
     private Offer offer;
 
+    private Monitor monitor;
+
     @BeforeEach
     void setup() {
         offer = Offer.builder()
@@ -50,6 +53,14 @@ public class OfferServiceTest {
                 .deadlineDate("2021-10-30")
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
+                .build();
+
+        monitor = Monitor.monitorBuilder()
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
                 .build();
     }
 
@@ -138,6 +149,25 @@ public class OfferServiceTest {
         assertThat(actualValidOfferList).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetAllOffersValidByMonitor_Id() {
+        when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
+        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(getListOfOffersByMonitor());
+        final Optional<List<Offer>> expectedMonitorOffer = Optional.of(offerRepository.saveAll(getListOfOffersByMonitor()));
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
+        assertThat(monitorOffers.get().size()).isEqualTo(expectedMonitorOffer.get().size());
+        assertThat(monitorOffers.get().size()).isEqualTo(3);
+    }
+
+    @Test
+    public void testGetAllOffersValidByMonitor_IdFails() {
+        when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
+        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(null);
+        offerRepository.saveAll(getListOfOffersByMonitor());
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
+        assertThat(monitorOffers).isEqualTo(Optional.empty());
+    }
+
     private List<Offer> getListOfOffers() {
         List<Offer> offerList = new ArrayList<>();
         offerList.add(Offer.builder()
@@ -173,5 +203,31 @@ public class OfferServiceTest {
                 .isValid(true)
                 .build());
         return validOfferList;
+    }
+
+    private List<Offer> getListOfOffersByMonitor() {
+        List<Offer> offerList = new ArrayList<>();
+        offerList.add(Offer.builder()
+                .companyName("Cegep21")
+                .salary("22")
+                .jobSchedules("programmer")
+                .isValid(true)
+                .monitor(monitor)
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep18")
+                .salary("18")
+                .jobSchedules("analyst")
+                .isValid(true)
+                .monitor(monitor)
+                .build());
+        offerList.add(Offer.builder()
+                .companyName("Cegep23")
+                .salary("23")
+                .jobSchedules("programmer")
+                .isValid(true)
+                .monitor(monitor)
+                .build());
+        return  offerList;
     }
 }

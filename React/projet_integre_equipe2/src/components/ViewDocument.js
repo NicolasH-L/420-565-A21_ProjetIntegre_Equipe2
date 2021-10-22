@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import AdminNavbar from './AdminNavbar'
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
 const ViewDocument = () => {
@@ -46,7 +45,6 @@ const ViewDocument = () => {
 
   return (
     <div className="grad">
-      <AdminNavbar />
       <div className="py-3">
         <div className="justify-content-start d-flex mx-5">
           <button className="btn btn-light" onClick={e => { e.preventDefault(); history.goBack() }}>
@@ -65,7 +63,7 @@ const ViewDocument = () => {
         </div>
         <div className="justify-content-center d-flex">
           <button className="btn btn-dark mx-3" type="button" disabled={pageNumber <= 1} onClick={previousPage}>
-            Précèdent
+            Précédent
           </button>
           <button className="btn btn-dark" type="button" disabled={pageNumber >= numPages} onClick={nextPage}>
             Suivant
