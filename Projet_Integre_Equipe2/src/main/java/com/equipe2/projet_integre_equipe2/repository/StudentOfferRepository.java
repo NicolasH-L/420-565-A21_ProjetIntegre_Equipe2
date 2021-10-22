@@ -10,6 +10,7 @@ import java.util.List;
 public interface StudentOfferRepository extends JpaRepository<StudentOffer, Integer> {
 
     boolean existsStudentOfferByOffer_IdOfferAndStudent_Id(Integer offerId, Integer studentId);
+
     List<StudentOffer> findAllByOffer_IdOffer(Integer offerId);
 
     List<StudentOffer> findStudentOffersByStudent_Id(Integer studentId);

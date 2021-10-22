@@ -31,11 +31,11 @@ public class StudentOfferService {
     public Optional<List<StudentOffer>> getAllStudentOffersByOffer_IdOffer(Integer offerId) {
         try {
             return Optional.of(studentOfferRepository.findAllByOffer_IdOffer(offerId));
-            } catch (Exception e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
-    
+
     public Optional<List<StudentOffer>> getAllStudentOfferByStudentId(int studentId) {
         try {
             return Optional.of(studentOfferRepository.findStudentOffersByStudent_Id(studentId));

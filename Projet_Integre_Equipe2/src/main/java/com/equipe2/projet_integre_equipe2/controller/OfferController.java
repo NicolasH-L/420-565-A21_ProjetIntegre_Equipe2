@@ -30,6 +30,7 @@ public class OfferController {
                 .map(offer1 -> ResponseEntity.status(HttpStatus.OK).body(offer1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
     @GetMapping("/get-all-valid-offers")
     public ResponseEntity<List<Offer>> getAllValidOffers(){
         return offerService.getAllValidOffers()
