@@ -10,13 +10,10 @@ const MonitorOfferList = () => {
     const monitor = history.location.state
 
     function goToMonitorStudentList(idOffer) {
-        let monitorwithIdOffer = {monitor, idOffer: idOffer }
-        history.push("/MonitorStudentList", monitorwithIdOffer)
+        history.push(`/MonitorStudentList/${idOffer}`, monitor)
     }
 
     useEffect(() => {
-        console.log(monitor)
-
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
             setOffers(offersFromServer)
@@ -32,7 +29,7 @@ const MonitorOfferList = () => {
     return (
         <div className="grad">
             <MonitorNavbar />
-            <h2 className="text-center">Offres de stage</h2>
+            <h2 className="text-center">Mes Offres</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>

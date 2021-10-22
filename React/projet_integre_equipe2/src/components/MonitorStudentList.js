@@ -6,11 +6,14 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])
     const history = useHistory()
-    const monitorwithIdOffer = history.location.state
+    const monitor = history.location.state
+    const idOffer = window.location.href.split('/')[4]
+
+    const viewDocumentCv = async (document) => {
+        history.push("/ViewDocument", document)
+    }
 
     useEffect(() => {
-        console.log(monitorwithIdOffer)
-
         const getStudentOffersByIdOffer = async () => {
             const studentOffersFromServer = await fetchStudentOffersByIdOffer()
             setStudentOffers(studentOffersFromServer)
@@ -19,7 +22,7 @@ const MonitorStudentList = () => {
     }, [])
 
     const fetchStudentOffersByIdOffer = async () => {
-        const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${monitorwithIdOffer.idOffer}`)
+        const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
         return await res.json()
     }
 
@@ -33,14 +36,14 @@ const MonitorStudentList = () => {
                     <i className="fas fa-angle-double-left"></i> Retour
                 </button>
             </div>
-            <h2 className="text-center">Étudiants intéressés</h2>
+            <h2 className="text-center">Candidatures</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
                         <tr>
                             <th scope="col">Nom</th>
                             <th scope="col">Matricule</th>
-                            <th scope="col">Cv</th>
+                            <th scope="col">CV</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -51,7 +54,7 @@ const MonitorStudentList = () => {
                                 <td>{studentOffer.student.matricule}</td>
                                 <td>{studentOffer.document.documentName}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={(e) => console.log(studentOffer.idOffer + ": " + studentOffer.jobTitle)}>consulter</button>
+                                    <button className="btn btn-primary mx-2" onClick={(e) => viewDocumentCv(studentOffer.document)}>consulter</button>
                                 </td>
                             </tr>
                         ))}
