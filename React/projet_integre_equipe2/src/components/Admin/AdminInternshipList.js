@@ -36,7 +36,7 @@ const AdminInternshipList = () => {
                                 <th scope="col">Nom de l'étudiant</th>
                                 <th scope="col">Poste</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Statut</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
