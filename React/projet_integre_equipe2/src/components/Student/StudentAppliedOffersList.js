@@ -1,12 +1,13 @@
 import React from 'react'
+import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import OfferModalView from '../OfferModalView'
 
 const StudentAppliedOffersList = () => {
-
-    const [student, setStudent] = useState()
     const [studentOffers, setStudentOffers] = useState([])
+    const [tmpStudentOffers, setTmpStudentOffers] = useState([])
+
     const history = useHistory()
     const historyState = history.location.state
     const timeElapsed = Date.now()
@@ -16,15 +17,14 @@ const StudentAppliedOffersList = () => {
     useEffect(() => {
         if (historyState === undefined)
             return
-        setStudent(historyState)
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
+            const cloneStudentOffers = _.cloneDeep(studentOffersFromServer)
+            setTmpStudentOffers(cloneStudentOffers)
         }
         getStudentOffers()
     }, [])
-
-    console.log(student)
 
     const fetchStudentOffers = async () => {
         const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
@@ -32,6 +32,11 @@ const StudentAppliedOffersList = () => {
     }
 
     const updateStudentOfferDate = async (studentOffer) => {
+        const studentOfferCopy = retrieveStudentOfferIndex(studentOffers, studentOffer)
+        const st = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
+        console.log(studentOfferCopy)
+        console.log(st)
+
         const res = await fetch(`${baseUrl}/student-offer-add-date`,
             {
                 method: 'PUT',
@@ -54,27 +59,41 @@ const StudentAppliedOffersList = () => {
         let stringToDate = new Date(studentOffer.offer.startInternshipDate)
         let last = new Date(stringToDate.getTime() - (1 * 24 * 60 * 60 * 1000))
         let maxDate = new Date(last).toISOString().split('T')[0]
-        return <input type="date" min={today} max={maxDate} id={"interviewDate" + studentOffer.idStudentOffer} name="interviewDate" className="form-control text-center" onChange={(e) => setInterviewDate(e, studentOffer)} required></input>
+        return <input type="date" min={today} max={maxDate} id={"interviewDate" + studentOffer.idStudentOffer} name="interviewDate" className="form-control text-center" onChange={(e) => setInterviewDate(e, studentOffer)}></input>
     }
 
     const setInterviewDate = (e, studentOffer) => {
-        const indexOfStudentOffer = studentOffers.indexOf(studentOffer)
-        studentOffers[indexOfStudentOffer].interviewDate = e.target.value
+        const indexOfStudentOffer = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
+        tmpStudentOffers[indexOfStudentOffer].interviewDate = e.target.value
     }
 
+    const retrieveStudentOfferIndex = (studentOffersArray, studentOffer) => {
+        let index = 0
+        for (let i = 0; i < studentOffersArray.length; i++) {
+            if (studentOffersArray[i].idStudentOffer !== studentOffer.idStudentOffer) {
+                console.log("enter")
+                index++
+            }
+            else {
+                break
+            }
+        }
+        return index
+    }
+
+
     const addStudentOfferInterviewDate = (studentOffer) => {
-        const index = studentOffers.indexOf(studentOffer)
+        const index = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
         if (index < 0) {
             return
         }
-        let interviewDate = studentOffers[index].interviewDate
+        let interviewDate = tmpStudentOffers[index].interviewDate
         if (interviewDate === null)
             return alert("Erreur! veuillez choisir une date.")
-        else if (student.currentStatus !== "En attente"){
-            return alert("Erreur veuillez mettre à jour votre status")
-        }
-        updateStudentOfferDate(studentOffer)
+        
+        updateStudentOfferDate(tmpStudentOffers[index])
     }
+    
 
     return (
         <div className="">
