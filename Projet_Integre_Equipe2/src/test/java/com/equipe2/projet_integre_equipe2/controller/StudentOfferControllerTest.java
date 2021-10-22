@@ -138,14 +138,16 @@ public class StudentOfferControllerTest {
 
     @Test
     public void testGetAllStudentOffersByOffer_IdOffer() throws Exception {
-        when(studentOfferService.getAllStudentOffersByOffer_IdOffer(offer.getIdOffer())).thenReturn(Optional.of(getListOfStudentOffersByIdOffer()));
+        when(studentOfferService.getAllStudentOffersByOffer_IdOffer(offer.getIdOffer()))
+                .thenReturn(Optional.of(getListOfStudentOffersByIdOffer()));
 
         MvcResult result = mockMvc.perform(get("/offers-list/get-all-studentOffersByIdOffer/" + offer.getIdOffer())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<StudentOffer>>(){
-        });
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
+                new TypeReference<List<StudentOffer>>() {
+                });
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(2);
@@ -163,8 +165,9 @@ public class StudentOfferControllerTest {
                 .document(document2)
                 .student(student2)
                 .build());
-        return  studentOfferList;
-    }   
+        return studentOfferList;
+    }
+
     @Test
     public void testGetAllStudentOffersByStudentId() throws Exception {
         when(studentOfferService.getAllStudentOfferByStudentId(student.getId())).thenReturn(Optional.of(studentOfferList));

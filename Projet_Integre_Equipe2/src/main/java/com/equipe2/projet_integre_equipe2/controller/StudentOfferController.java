@@ -53,7 +53,7 @@ public class StudentOfferController {
     }
 
     @GetMapping("/get-all-accepted-offers")
-    public ResponseEntity<List<StudentOffer>> getAllAcceptedStudentOffers(){
+    public ResponseEntity<List<StudentOffer>> getAllAcceptedStudentOffers() {
         return studentOfferService.getAllAcceptedStudentOffers()
                 .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());

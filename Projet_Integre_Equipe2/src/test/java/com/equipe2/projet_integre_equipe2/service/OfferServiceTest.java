@@ -156,7 +156,6 @@ public class OfferServiceTest {
         final Optional<List<Offer>> expectedMonitorOffer = Optional.of(offerRepository.saveAll(getListOfOffersByMonitor()));
         final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
         assertThat(monitorOffers.get().size()).isEqualTo(expectedMonitorOffer.get().size());
-        assertThat(monitorOffers.get().size()).isEqualTo(3);
     }
 
     @Test

@@ -6,7 +6,6 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])
     const history = useHistory()
-    const monitor = history.location.state
     const idOffer = window.location.href.split('/')[4]
 
     const viewDocumentCv = async (document) => {
@@ -25,8 +24,6 @@ const MonitorStudentList = () => {
         const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
         return await res.json()
     }
-
-
 
     return (
         <div className="grad">
@@ -54,7 +51,7 @@ const MonitorStudentList = () => {
                                 <td>{studentOffer.student.matricule}</td>
                                 <td>{studentOffer.document.documentName}</td>
                                 <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={(e) => viewDocumentCv(studentOffer.document)}>consulter</button>
+                                    <button className="btn btn-primary mx-2" onClick={(e) => viewDocumentCv(studentOffer.document)}>Consulter CV</button>
                                 </td>
                             </tr>
                         ))}
