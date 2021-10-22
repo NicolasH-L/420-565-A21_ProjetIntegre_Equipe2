@@ -36,6 +36,7 @@ const Student = () => {
         return await result.json()
     }
 
+    // TODO remove updateStudentOfferDate
     const updateStudentOfferDate = async (studentOffer) => {
         const res = await fetch(`${baseUrl}/student-offer-add-date`,
             {
@@ -51,20 +52,21 @@ const Student = () => {
 
 
     const saveChanges = () => {
-        if(userStudent.currentStatus === "Stage trouvée"){
-            if(studentOfferJSON !== undefined){
+        if (userStudent.currentStatus === "Stage trouvée") {
+            if (studentOfferJSON !== undefined) {
                 alert("Status mise a jour avec succes")
                 addStudent(userStudent).then((data) => history.push("/Student", data))
+                //TODO remove line 60
                 updateStudentOfferDate(studentOfferJSON)
             } else {
                 alert("Veuillez selectionner le stage trouvée")
-            } 
-        } 
-        if(userStudent.currentStatus === "En attente"){
+            }
+        }
+        if (userStudent.currentStatus === "En attente") {
             addStudent(userStudent).then((data) => history.push("/Student", data))
             alert("Status mise a jour avec succes")
         }
-        if(userStudent.currentStatus === "En recherche"){
+        if (userStudent.currentStatus === "En recherche") {
             addStudent(userStudent).then((data) => history.push("/Student", data))
             alert("Status mise a jour avec succes")
         }
@@ -75,12 +77,12 @@ const Student = () => {
             setshowStudentAppliedOfferslist(true)
             setshowSelectStudentAppliedOffer(false)
             return
-        } 
-        if (status === "Stage trouvée"){
+        }
+        if (status === "Stage trouvée") {
             setshowSelectStudentAppliedOffer(true)
             setshowStudentAppliedOfferslist(false)
             return
-        } 
+        }
         setshowStudentAppliedOfferslist(false)
         setshowSelectStudentAppliedOffer(false)
     }
@@ -90,12 +92,12 @@ const Student = () => {
         return await res.json()
     }
 
-    const getSelectStudentOfferValue = (e) =>{
-        if(e.target.value === "default"){
+    const getSelectStudentOfferValue = (e) => {
+        if (e.target.value === "default") {
             alert("Veuillez selectionner le stage trouvée")
         } else {
             studentOfferJSON = JSON.parse(e.target.value)
-            studentOfferJSON.isAccepted = true;  
+            studentOfferJSON.isAccepted = true;
         }
     }
 
@@ -105,7 +107,7 @@ const Student = () => {
                 <label htmlFor="studentOffers" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
                 <select defaultValue="default" onChange={getSelectStudentOfferValue} className="form-control text-center" id="studentOffers" name="studentOffers" required>
                     <option value="default">Veuillez choisir le représentant</option>
-                    {studentOffers.map((studentOffer) => ( 
+                    {studentOffers.map((studentOffer) => (
                         <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer}>{studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}</option>
                     ))}
                 </select>
@@ -138,7 +140,7 @@ const Student = () => {
 
                     <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
 
-                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={userStudent} /> : ""}
+                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={historyState} /> : ""}
 
                     {showSelectStudentAppliedOffer ? showSelectStudentAppliedOfferList() : ""}
 

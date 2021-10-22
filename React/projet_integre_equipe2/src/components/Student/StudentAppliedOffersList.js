@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import OfferModalView from '../OfferModalView'
 
-const StudentAppliedOffersList = () => {
+const StudentAppliedOffersList = (newStudent) => {
     const [studentOffers, setStudentOffers] = useState([])
     const [tmpStudentOffers, setTmpStudentOffers] = useState([])
-
     const history = useHistory()
     const historyState = history.location.state
     const timeElapsed = Date.now()
@@ -31,12 +30,46 @@ const StudentAppliedOffersList = () => {
         return await res.json()
     }
 
-    const updateStudentOfferDate = async (studentOffer) => {
-        const studentOfferCopy = retrieveStudentOfferIndex(studentOffers, studentOffer)
-        const st = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
-        console.log(studentOfferCopy)
-        console.log(st)
+    const chooseDate = (studentOffer) => {
+        let stringToDate = new Date(studentOffer.offer.startInternshipDate)
+        let last = new Date(stringToDate.getTime() - (1 * 24 * 60 * 60 * 1000))
+        let maxDate = new Date(last).toISOString().split('T')[0]
+        return <input type="date" min={today} max={maxDate} id={"interviewDate" + studentOffer.idStudentOffer} name="interviewDate" className="form-control text-center" onChange={(e) => setInterviewDate(e, studentOffer)}></input>
+    }
 
+    const setInterviewDate = (e, studentOffer) => {
+        const indexOfStudentOffer = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
+        tmpStudentOffers[indexOfStudentOffer].interviewDate = e.target.value
+    }
+
+    const retrieveStudentOfferIndex = (studentOffersArray, studentOffer) => {
+        let index = 0
+        for (let i = 0; i < studentOffersArray.length; i++) {
+            if (studentOffersArray[i].idStudentOffer !== studentOffer.idStudentOffer) {
+                index++
+            }
+            else {
+                break
+            }
+        }
+        return index
+    }
+
+    const addStudentOfferInterviewDate = (studentOffer) => {
+        const index = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
+        if (index < 0) {
+            return
+        }
+        let interviewDate = tmpStudentOffers[index].interviewDate
+        if (interviewDate === null)
+            return alert("Erreur! veuillez choisir une date.")
+        else if (newStudent.student.currentStatus !== "En attente") {
+            return alert("Veuillez mettre à jours votre statut")
+        }
+        updateStudentOfferDate(tmpStudentOffers[index])
+    }
+
+    const updateStudentOfferDate = async (studentOffer) => {
         const res = await fetch(`${baseUrl}/student-offer-add-date`,
             {
                 method: 'PUT',
@@ -54,46 +87,6 @@ const StudentAppliedOffersList = () => {
         )
         alert("Ajout de la date d'entrevue avec succès!")
     }
-
-    const chooseDate = (studentOffer) => {
-        let stringToDate = new Date(studentOffer.offer.startInternshipDate)
-        let last = new Date(stringToDate.getTime() - (1 * 24 * 60 * 60 * 1000))
-        let maxDate = new Date(last).toISOString().split('T')[0]
-        return <input type="date" min={today} max={maxDate} id={"interviewDate" + studentOffer.idStudentOffer} name="interviewDate" className="form-control text-center" onChange={(e) => setInterviewDate(e, studentOffer)}></input>
-    }
-
-    const setInterviewDate = (e, studentOffer) => {
-        const indexOfStudentOffer = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
-        tmpStudentOffers[indexOfStudentOffer].interviewDate = e.target.value
-    }
-
-    const retrieveStudentOfferIndex = (studentOffersArray, studentOffer) => {
-        let index = 0
-        for (let i = 0; i < studentOffersArray.length; i++) {
-            if (studentOffersArray[i].idStudentOffer !== studentOffer.idStudentOffer) {
-                console.log("enter")
-                index++
-            }
-            else {
-                break
-            }
-        }
-        return index
-    }
-
-
-    const addStudentOfferInterviewDate = (studentOffer) => {
-        const index = retrieveStudentOfferIndex(tmpStudentOffers, studentOffer)
-        if (index < 0) {
-            return
-        }
-        let interviewDate = tmpStudentOffers[index].interviewDate
-        if (interviewDate === null)
-            return alert("Erreur! veuillez choisir une date.")
-        
-        updateStudentOfferDate(tmpStudentOffers[index])
-    }
-    
 
     return (
         <div className="">
