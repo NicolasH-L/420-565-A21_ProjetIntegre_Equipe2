@@ -51,20 +51,20 @@ const Student = () => {
 
 
     const saveChanges = () => {
-        if(userStudent.currentStatus === "Stage trouvée"){
-            if(studentOfferJSON !== undefined){
+        if (userStudent.currentStatus === "Stage trouvée") {
+            if (studentOfferJSON !== undefined) {
                 alert("Status mise a jour avec succes")
                 addStudent(userStudent).then((data) => history.push("/Student", data))
                 updateStudentOffer(studentOfferJSON)
             } else {
                 alert("Veuillez selectionner le stage trouvée")
-            } 
-        } 
-        if(userStudent.currentStatus === "En attente"){
+            }
+        }
+        if (userStudent.currentStatus === "En attente") {
             addStudent(userStudent).then((data) => history.push("/Student", data))
             alert("Status mise a jour avec succes")
         }
-        if(userStudent.currentStatus === "En recherche"){
+        if (userStudent.currentStatus === "En recherche") {
             addStudent(userStudent).then((data) => history.push("/Student", data))
             alert("Status mise a jour avec succes")
         }
@@ -75,12 +75,12 @@ const Student = () => {
             setshowStudentAppliedOfferslist(true)
             setshowSelectStudentAppliedOffer(false)
             return
-        } 
-        if (status === "Stage trouvée"){
+        }
+        if (status === "Stage trouvée") {
             setshowSelectStudentAppliedOffer(true)
             setshowStudentAppliedOfferslist(false)
             return
-        } 
+        }
         setshowStudentAppliedOfferslist(false)
         setshowSelectStudentAppliedOffer(false)
     }
@@ -90,12 +90,12 @@ const Student = () => {
         return await res.json()
     }
 
-    const getSelectStudentOfferValue = (e) =>{
-        if(e.target.value === "default"){
+    const getSelectStudentOfferValue = (e) => {
+        if (e.target.value === "default") {
             alert("Veuillez selectionner le stage trouvée")
         } else {
             studentOfferJSON = JSON.parse(e.target.value)
-            studentOfferJSON.isAccepted = true;  
+            studentOfferJSON.isAccepted = true;
         }
     }
 
@@ -104,8 +104,8 @@ const Student = () => {
             <div className="form-group">
                 <label htmlFor="studentOffers" className="text-secondary"> </label>
                 <select defaultValue="default" onChange={getSelectStudentOfferValue} className="form-control text-center" id="studentOffers" name="studentOffers" required>
-                    <option value="default">Veuillez choisir le représentant</option>
-                    {studentOffers.map((studentOffer) => ( 
+                    <option value="default">Veuillez sélectionner le stage trouvée</option>
+                    {studentOffers.map((studentOffer) => (
                         <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer}>{studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}</option>
                     ))}
                 </select>
