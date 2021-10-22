@@ -49,7 +49,7 @@ const MonitorStudentList = () => {
                     </thead>
                     <tbody>
                         {studentOffers.map((studentOffer) => (
-                            <tr key={studentOffer.idApplication}>
+                            <tr key={studentOffer.idStudentOffer}>
                                 <th>{studentOffer.student.firstName + " " + studentOffer.student.lastName}</th>
                                 <td>{studentOffer.student.matricule}</td>
                                 <td>{studentOffer.document.documentName}</td>
