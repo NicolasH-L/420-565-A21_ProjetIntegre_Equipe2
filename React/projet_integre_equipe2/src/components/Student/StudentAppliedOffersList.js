@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import OfferModalView from '../OfferModalView'
 
-const StudentAppliedOffersList = () => {
+const StudentAppliedOffersList = (newStudent) => {
 
-    const [student, setStudent] = useState()
     const [studentOffers, setStudentOffers] = useState([])
     const history = useHistory()
     const historyState = history.location.state
@@ -16,7 +15,6 @@ const StudentAppliedOffersList = () => {
     useEffect(() => {
         if (historyState === undefined)
             return
-        setStudent(historyState)
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
@@ -24,7 +22,7 @@ const StudentAppliedOffersList = () => {
         getStudentOffers()
     }, [])
 
-    console.log(student)
+    console.log(newStudent)
 
     const fetchStudentOffers = async () => {
         const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
@@ -68,9 +66,12 @@ const StudentAppliedOffersList = () => {
             return
         }
         let interviewDate = studentOffers[index].interviewDate
-        if (interviewDate === null)
+        console.log(interviewDate)
+        if (interviewDate === null){
+            interviewDate = null
             return alert("Erreur! veuillez choisir une date.")
-        else if (student.currentStatus !== "En attente"){
+        }   else if (newStudent.student.currentStatus !== "En attente"){
+            interviewDate = null
             return alert("Erreur veuillez mettre à jour votre status")
         }
         updateStudentOfferDate(studentOffer)

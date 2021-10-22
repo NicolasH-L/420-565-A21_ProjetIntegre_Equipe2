@@ -36,7 +36,7 @@ const Student = () => {
         return await result.json()
     }
 
-    const updateStudentOfferDate = async (studentOffer) => {
+    const updateStudentOffer = async (studentOffer) => {
         const res = await fetch(`${baseUrl}/student-offer-add-date`,
             {
                 method: 'PUT',
@@ -46,7 +46,7 @@ const Student = () => {
                 body: JSON.stringify(studentOffer)
             })
         const data = await res.json()
-        alert("Ajout de la date d'entrevue avec succès!")
+        alert("Acceptation de l'offre de stage reussi")
     }
 
 
@@ -55,13 +55,15 @@ const Student = () => {
             if(studentOfferJSON !== undefined){
                 alert("Status mise a jour avec succes")
                 addStudent(userStudent).then((data) => history.push("/Student", data))
-                updateStudentOfferDate(studentOfferJSON)
+                updateStudentOffer(studentOfferJSON)
             } else {
                 alert("Veuillez selectionner le stage trouvée")
             } 
         } 
         if(userStudent.currentStatus === "En attente"){
             addStudent(userStudent).then((data) => history.push("/Student", data))
+            setshowStudentAppliedOfferslist(true)
+            setshowSelectStudentAppliedOffer(false)
             alert("Status mise a jour avec succes")
         }
         if(userStudent.currentStatus === "En recherche"){
@@ -102,7 +104,7 @@ const Student = () => {
     const showSelectStudentAppliedOfferList = () => {
         return (
             <div className="form-group">
-                <label htmlFor="studentOffers" className="text-secondary"><i className="fas fa-at"></i> Courriel du représentant de l'entreprise: </label>
+                <label htmlFor="studentOffers" className="text-secondary"> </label>
                 <select defaultValue="default" onChange={getSelectStudentOfferValue} className="form-control text-center" id="studentOffers" name="studentOffers" required>
                     <option value="default">Veuillez choisir le représentant</option>
                     {studentOffers.map((studentOffer) => ( 
@@ -138,7 +140,7 @@ const Student = () => {
 
                     <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
 
-                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={userStudent} /> : ""}
+                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={historyState} /> : ""}
 
                     {showSelectStudentAppliedOffer ? showSelectStudentAppliedOfferList() : ""}
 
