@@ -166,17 +166,20 @@ public class StudentOfferServiceTest {
         studentsOfferList.add(StudentOffer.builder()
                 .offer(offer)
                 .document(document)
-                .student(student).isAccepted(true)
+                .student(student)
+                .isAccepted(true)
                 .build());
         studentsOfferList.add(StudentOffer.builder()
                 .offer(offer)
                 .document(document)
-                .student(student).isAccepted(true)
+                .student(student)
+                .isAccepted(true)
                 .build());
         studentsOfferList.add(StudentOffer.builder()
                 .offer(offer)
                 .document(document)
-                .student(student).isAccepted(true)
+                .student(student)
+                .isAccepted(true)
                 .build());
         return studentsOfferList;
     }

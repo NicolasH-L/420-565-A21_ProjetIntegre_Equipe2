@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +34,7 @@ public class InternshipServiceTest {
                 .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
+                .status(null)
                 .build();
     }
 
@@ -47,5 +50,46 @@ public class InternshipServiceTest {
         when(internshipRepository.save(internship)).thenReturn(null);
         Optional<Internship> actualInternship = internshipService.saveInternship(internship);
         assertThat(actualInternship).isEmpty();
+    }
+
+    @Test
+    public void testGetAllInternships() {
+        when(internshipRepository.findAll()).thenReturn(getListOfInternships());
+        Optional<List<Internship>> allInternships = internshipService.getAllInternships();
+        assertThat(allInternships.get().size()).isEqualTo(3);
+        assertThat(allInternships.get().get(0).getStatus()).isEqualTo("StudentSignature");
+    }
+
+    @Test
+    public void testGetAllInternshipsFails() {
+        when(internshipRepository.findAll()).thenReturn(null);
+        final Optional<List<Internship>> allInternships = internshipService.getAllInternships();
+        assertThat(allInternships).isEqualTo(Optional.empty());
+    }
+
+    private List<Internship> getListOfInternships() {
+        List<Internship> internshipList = new ArrayList<>();
+        internshipList.add(internship = Internship.builder()
+                .isSignedByStudent(false)
+                .isSignedByMonitor(false)
+                .offer(null)
+                .student(null)
+                .status("StudentSignature")
+                .build());
+        internshipList.add(internship = Internship.builder()
+                .isSignedByStudent(false)
+                .isSignedByMonitor(false)
+                .offer(null)
+                .student(null)
+                .status(null)
+                .build());
+        internshipList.add(internship = Internship.builder()
+                .isSignedByStudent(false)
+                .isSignedByMonitor(false)
+                .offer(null)
+                .student(null)
+                .status(null)
+                .build());
+        return internshipList;
     }
 }

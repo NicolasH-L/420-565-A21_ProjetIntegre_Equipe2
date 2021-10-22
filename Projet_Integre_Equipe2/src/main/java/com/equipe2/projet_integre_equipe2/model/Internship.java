@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Internship {
 
     @Id
@@ -24,6 +23,7 @@ public class Internship {
 
     private Boolean isSignedByStudent;
     private Boolean isSignedByMonitor;
+    private String status;
 
     @OneToOne
     private Offer offer;

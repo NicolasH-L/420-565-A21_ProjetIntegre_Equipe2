@@ -18,6 +18,7 @@ import ViewDocument from './components/ViewDocument'
 import StudentInternshipListOffers from './components/StudentInternshipListOffers'
 import StudentDocuments from './components/StudentDocuments'
 import AdminStudentAcceptedOffers from './components/Admin/AdminStudentAcceptedOffers'
+import AdminInternshipList from './components/Admin/AdminInternshipList'
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/AdminStudentCvList" component={AdminStudentCvList} />
         <Route path="/ViewDocument" component={ViewDocument} />
         <Route path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} />
+        <Route path="/AdminInternshipList" component={AdminInternshipList} />
         <Footer />
       </div>
     </Router>
