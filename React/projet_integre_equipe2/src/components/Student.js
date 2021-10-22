@@ -138,7 +138,7 @@ const Student = () => {
 
                     <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
 
-                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList /> : ""}
+                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={userStudent} /> : ""}
 
                     {showSelectStudentAppliedOffer ? showSelectStudentAppliedOfferList() : ""}
 
