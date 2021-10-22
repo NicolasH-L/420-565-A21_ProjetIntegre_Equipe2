@@ -32,7 +32,8 @@ const StudentAppliedOffersList = (newStudent) => {
 
     const chooseDate = (studentOffer) => {
         let stringToDate = new Date(studentOffer.offer.startInternshipDate)
-        let last = new Date(stringToDate.getTime() - (1 * 24 * 60 * 60 * 1000))
+        let dayOffset = 1
+        let last = new Date(stringToDate.getTime() - (dayOffset * 24 * 60 * 60 * 1000))
         let maxDate = new Date(last).toISOString().split('T')[0]
         return <input type="date" min={today} max={maxDate} id={"interviewDate" + studentOffer.idStudentOffer} name="interviewDate" className="form-control text-center" onChange={(e) => setInterviewDate(e, studentOffer)}></input>
     }

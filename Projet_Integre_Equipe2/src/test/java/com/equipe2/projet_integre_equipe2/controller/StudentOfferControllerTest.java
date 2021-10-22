@@ -153,21 +153,6 @@ public class StudentOfferControllerTest {
         assertThat(actuals.size()).isEqualTo(2);
     }
 
-    private List<StudentOffer> getListOfStudentOffersByIdOffer() {
-        List<StudentOffer> studentOfferList = new ArrayList<>();
-        studentOfferList.add(StudentOffer.builder()
-                .offer(offer)
-                .document(document)
-                .student(student)
-                .build());
-        studentOfferList.add(StudentOffer.builder()
-                .offer(offer)
-                .document(document2)
-                .student(student2)
-                .build());
-        return studentOfferList;
-    }
-
     @Test
     public void testGetAllStudentOffersByStudentId() throws Exception {
         when(studentOfferService.getAllStudentOfferByStudentId(student.getId())).thenReturn(Optional.of(studentOfferList));
@@ -189,6 +174,7 @@ public class StudentOfferControllerTest {
         LocalDate expectedDate = LocalDate.now();
         studentOffer.setInterviewDate(expectedDate.toString());
         when(studentOfferService.saveStudentOffer(studentOffer)).thenReturn(Optional.of(studentOffer));
+
         MvcResult result = mockMvc.perform(put("/offers-list/student-offer-add-date")
                 .content(new ObjectMapper().writeValueAsString(studentOffer))
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
@@ -213,6 +199,21 @@ public class StudentOfferControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<StudentOffer> getListOfStudentOffersByIdOffer() {
+        List<StudentOffer> studentOfferList = new ArrayList<>();
+        studentOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .build());
+        studentOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document2)
+                .student(student2)
+                .build());
+        return studentOfferList;
     }
 
     private List<StudentOffer> getListOfStudentsOffer() {
