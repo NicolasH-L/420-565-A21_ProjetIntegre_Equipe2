@@ -8,14 +8,14 @@ const Student = () => {
     const history = useHistory()
     const historyState = history.location.state
     let studentOfferJSON
-    const [userStudent, setUserStudent] = useState([])
+    const [student, setStudent] = useState([])
     const [studentOffers, setStudentOffers] = useState([])
     const [showStudentAppliedOfferslist, setshowStudentAppliedOfferslist] = useState()
     const [showSelectStudentAppliedOffer, setshowSelectStudentAppliedOffer] = useState()
     const baseUrl = 'http://localhost:8888/offers-list'
 
     useEffect(() => {
-        setUserStudent(historyState)
+        setStudent(historyState)
         verifyStatus(historyState.currentStatus)
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
@@ -51,21 +51,17 @@ const Student = () => {
 
 
     const saveChanges = () => {
-        if (userStudent.currentStatus === "Stage trouvée") {
+        if (student.currentStatus === "Stage trouvé") {
             if (studentOfferJSON !== undefined) {
+                addStudent(student).then((data) => history.push("/Student", data))
                 alert("Status mise a jour avec succes")
-                addStudent(userStudent).then((data) => history.push("/Student", data))
                 updateStudentOffer(studentOfferJSON)
             } else {
-                alert("Veuillez selectionner le stage trouvée")
+                alert("Veuillez selectionner le Stage trouvé")
             }
         }
-        if (userStudent.currentStatus === "En attente") {
-            addStudent(userStudent).then((data) => history.push("/Student", data))
-            alert("Status mise a jour avec succes")
-        }
-        if (userStudent.currentStatus === "En recherche") {
-            addStudent(userStudent).then((data) => history.push("/Student", data))
+        if (student.currentStatus === "En recherche" || student.currentStatus === "En attente") {
+            addStudent(student).then((data) => history.push("/Student", data))
             alert("Status mise a jour avec succes")
         }
     }
@@ -76,7 +72,7 @@ const Student = () => {
             setshowSelectStudentAppliedOffer(false)
             return
         }
-        if (status === "Stage trouvée") {
+        if (status === "Stage trouvé") {
             setshowSelectStudentAppliedOffer(true)
             setshowStudentAppliedOfferslist(false)
             return
@@ -92,7 +88,7 @@ const Student = () => {
 
     const getSelectStudentOfferValue = (e) => {
         if (e.target.value === "default") {
-            alert("Veuillez selectionner le stage trouvée")
+            alert("Veuillez selectionner le Stage trouvé")
         } else {
             studentOfferJSON = JSON.parse(e.target.value)
             studentOfferJSON.isAccepted = true;
@@ -104,7 +100,7 @@ const Student = () => {
             <div className="form-group">
                 <label htmlFor="studentOffers" className="text-secondary"> </label>
                 <select defaultValue="default" onChange={getSelectStudentOfferValue} className="form-control text-center" id="studentOffers" name="studentOffers" required>
-                    <option value="default">Veuillez sélectionner le stage trouvée</option>
+                    <option value="default">Veuillez sélectionner le Stage trouvé</option>
                     {studentOffers.map((studentOffer) => (
                         <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer}>{studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}</option>
                     ))}
@@ -114,7 +110,7 @@ const Student = () => {
     }
 
     const updateStatus = async (status) => {
-        setUserStudent({ ...userStudent, currentStatus: status })
+        setStudent({ ...student, currentStatus: status })
         verifyStatus(status)
     }
 
@@ -125,18 +121,18 @@ const Student = () => {
                 <div className="container my-5">
 
                     <div class="btn-group">
-                        <button type="button" disabled={historyState.currentStatus === "Stage trouvée"} class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {userStudent.currentStatus}
+                        <button type="button" disabled={historyState.currentStatus === "Stage trouvé"} class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Statut: {student.currentStatus}
                         </button>
                         <div class="dropdown-menu">
                             <button className="dropdown-item" onClick={() => { updateStatus("En recherche") }}>En recherche</button>
                             <button className="dropdown-item" onClick={() => { updateStatus("En attente") }} >En attente d'une entrevue</button>
-                            <button className="dropdown-item" onClick={() => { updateStatus("Stage trouvée") }}>Stage trouvée</button>
+                            <button className="dropdown-item" onClick={() => { updateStatus("Stage trouvé") }}>Stage trouvé</button>
                         </div>
                     </div>
-                    <button onClick={() => { saveChanges() }} disabled={historyState.currentStatus === "Stage trouvée"}>Enregistrer</button>
+                    <button onClick={() => { saveChanges() }} disabled={historyState.currentStatus === "Stage trouvé"}>Mettre à jour</button>
 
-                    <h1 className="text-center mb-5">Bienvenue {userStudent.firstName} {userStudent.lastName}</h1>
+                    <h1 className="text-center mb-5">Bienvenue {student.firstName} {student.lastName}</h1>
 
                     {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={historyState} /> : ""}
 
