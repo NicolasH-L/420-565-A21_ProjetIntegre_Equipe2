@@ -22,8 +22,6 @@ const StudentAppliedOffersList = (newStudent) => {
         getStudentOffers()
     }, [])
 
-    console.log(newStudent)
-
     const fetchStudentOffers = async () => {
         const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
         return await res.json()
@@ -68,10 +66,8 @@ const StudentAppliedOffersList = (newStudent) => {
         let interviewDate = studentOffers[index].interviewDate
         console.log(interviewDate)
         if (interviewDate === null){
-            interviewDate = null
             return alert("Erreur! veuillez choisir une date.")
         }   else if (newStudent.student.currentStatus !== "En attente"){
-            interviewDate = null
             return alert("Erreur veuillez mettre à jour votre status")
         }
         updateStudentOfferDate(studentOffer)

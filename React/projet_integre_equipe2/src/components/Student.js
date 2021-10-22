@@ -62,8 +62,6 @@ const Student = () => {
         } 
         if(userStudent.currentStatus === "En attente"){
             addStudent(userStudent).then((data) => history.push("/Student", data))
-            setshowStudentAppliedOfferslist(true)
-            setshowSelectStudentAppliedOffer(false)
             alert("Status mise a jour avec succes")
         }
         if(userStudent.currentStatus === "En recherche"){
