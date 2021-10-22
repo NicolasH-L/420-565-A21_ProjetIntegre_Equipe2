@@ -41,8 +41,33 @@ const AdminStudentAcceptedOffers = () => {
                 body: JSON.stringify(internship)
             })
         const data = await res.json()
+        
+        confirmStudentOfferInternship(acceptedOffer)
 
         return data
+    }
+
+    const confirmStudentOfferInternship = async (acceptedOffer) => {
+        acceptedOffer.isInternshipStarted = true
+        const res = await fetch('http://localhost:8888/offers-list/save-student-offer',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(acceptedOffer)
+            })
+        const data = await res.json()
+
+        setAcceptedOffers(
+            acceptedOffers.map(
+                (offer1) => offer1.idStudentOffer === acceptedOffer.idStudentOffer ? {...offer1, isInternshipStarted: data.isInternshipStarted} : offer1
+            )
+        )
+    }
+
+    const filterAcceptedOffers = (acceptedOffer) => {
+        return acceptedOffer.isInternshipStarted == false
     }
 
     return (
@@ -61,7 +86,9 @@ const AdminStudentAcceptedOffers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {acceptedOffers.map((acceptedOffer) => (
+                            {acceptedOffers
+                            .filter(filterAcceptedOffers)
+                            .map((acceptedOffer) => (
                                 <tr key={acceptedOffer.idStudentOffer}>
                                     <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
                                     <td>{acceptedOffer.student.matricule}</td>
