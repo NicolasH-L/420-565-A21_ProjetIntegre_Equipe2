@@ -5,7 +5,7 @@ const AdminNavbar = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h3>Stage Équipe 2</h3></a>
+                <Link className="navbar-brand text-secondary" to="/Login"><h3>Stage Équipe 2</h3></Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-outline-light"></span>
                 </button>
@@ -19,6 +19,12 @@ const AdminNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-light" to="/AdminStudentList">Liste des étudiants</Link>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminStudentAcceptedOffers">Offres acceptées</Link>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminInternshipList">Ententes de stage</Link>
                         </li>
                     </ul>
                 </div>
