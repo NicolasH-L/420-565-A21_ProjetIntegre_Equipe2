@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/offers-list")
@@ -29,4 +31,31 @@ public class StudentOfferController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(true));
     }
 
+    @GetMapping("/get-all-studentOffersByIdOffer/{offerId}")
+    public ResponseEntity<List<StudentOffer>> getAllStudentOffersByIdOffer(@PathVariable Integer offerId) {
+        return studentOfferService.getAllStudentOffersByOffer_IdOffer(offerId)
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/student-offers/student/{studentId}")
+    public ResponseEntity<List<StudentOffer>> getStudentOffersByStudentId(@PathVariable int studentId) {
+        return studentOfferService.getAllStudentOfferByStudentId(studentId)
+                .map(studentOffersByStudentId1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffersByStudentId1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/student-offer-add-date")
+    public ResponseEntity<StudentOffer> setStudentOfferInterviewDate(@RequestBody StudentOffer studentOffer) {
+        return studentOfferService.saveStudentOffer(studentOffer)
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-all-accepted-offers")
+    public ResponseEntity<List<StudentOffer>> getAllAcceptedStudentOffers() {
+        return studentOfferService.getAllAcceptedStudentOffers()
+                .map(studentOffer1 -> ResponseEntity.status(HttpStatus.OK).body(studentOffer1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

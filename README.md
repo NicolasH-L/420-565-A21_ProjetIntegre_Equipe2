@@ -12,6 +12,12 @@ Rétroaction
 
 2- Pré-assigner les Stories une fois que le Sprint est lancé.
 
+<div align="center">Sprint 03</div>
+
+1- À chaque jour de fin de semaine ou autre congés, il doit y avoir un daily.
+
+2- À la suite des assignations de stories, consulter les responsables de chaque story qui sont reliés avec la mienne.
+
 #Definition de Done:
 
 1. Coverage des test a 80%(minimum)
