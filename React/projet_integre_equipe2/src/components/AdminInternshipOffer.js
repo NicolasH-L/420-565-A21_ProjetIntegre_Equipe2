@@ -11,7 +11,7 @@ const AdminInternshipOffer = () => {
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
         jobSchedules: "", workingHours: "", monitorEmail: "",
-        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: "", session: ""
     })
     const [error, setError] = useState({
         companyName: "", address: "", salary: "",
@@ -23,6 +23,12 @@ const AdminInternshipOffer = () => {
     const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
+    const sessionPrefix = ["winter", "summer"]
+    const lastMothOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
 
     const findFutureDate = () => {
         let futureDate = new Date(timeElapsed)
@@ -58,6 +64,7 @@ const AdminInternshipOffer = () => {
             alert("Veuillez remplir tous les champs correctement!")
             return
         } else {
+            setOfferSession()
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
         }
@@ -70,6 +77,15 @@ const AdminInternshipOffer = () => {
         function submitOfferSuccess() {
             alert("Offre déposée avec succès")
             document.getElementById("AdminInternshipOfferForm").reset()
+        }
+
+        function setOfferSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMothOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            offer.session = session
         }
     }
 
