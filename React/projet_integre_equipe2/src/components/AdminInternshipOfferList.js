@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 const AdminInternshipOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
+    const historyState = history.location.state
 
     useEffect(() => {
         const getOffers = async () => {
@@ -60,6 +61,10 @@ const AdminInternshipOfferList = () => {
         history.push("/OfferView", offer)
     }
 
+    const filterOffers = (offer) => {
+        return offer.session == historyState.actualSession
+    }
+
     return (
         <div className="grad">
             <AdminNavbar />
@@ -77,7 +82,9 @@ const AdminInternshipOfferList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
                             <tr className={`${offer.valid ? 'table-success' : offer.state == null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
