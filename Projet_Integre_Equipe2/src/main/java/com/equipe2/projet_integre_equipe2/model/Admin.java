@@ -19,6 +19,7 @@ public class Admin {
 
     private String username;
     private String password;
+    private String actualSession;
 
     @Builder(builderMethodName = "adminBuilder")
     public Admin(String username, String password) {
