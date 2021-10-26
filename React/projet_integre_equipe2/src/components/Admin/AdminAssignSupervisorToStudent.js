@@ -35,7 +35,7 @@ const AdminAssignSupervisorToStudent = () => {
             <div className="form-group">
                 <label htmlFor="AdminAssignSupervisor" className="text-secondary"> </label>
                 <select defaultValue={defaultValue} onChange={getSelectedSupervisor} className="form-control text-center" id="AdminAssignSupervisor" name="AdminAssignSupervisor" required>
-                    <option value={defaultValue}>Veuillez sélectionner un Superviseur</option>
+                    <option value={defaultValue}>Veuillez sélectionner un élève</option>
                     {interships.map((intership) => (
                         <option value={JSON.stringify(intership)} key={intership.idInternship}> {intership.student.firstName} {intership.student.lastName}</option>
                     ))}

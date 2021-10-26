@@ -1,10 +1,10 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.model.Supervisor;
 import com.equipe2.projet_integre_equipe2.repository.SupervisorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +28,14 @@ public class SupervisorService {
         try {
             return Optional.of(supervisorRepository.findByMatriculeAndPassword(matricule, password));
         } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<Supervisor>> getAllSupervisors() {
+        try {
+            return Optional.of(supervisorRepository.findAll());
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
