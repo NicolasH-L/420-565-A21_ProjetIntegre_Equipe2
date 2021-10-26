@@ -2,29 +2,27 @@
   <div>
     <form className="container-fluid" onSubmit="{onSubmit}">
       <div className="form-group">
-        <label htmlFor="matriculeStudent" className="text-secondary"
-          ><i className="fas fa-id-badge"></i> Matricule:
+        <label htmlFor="usernameAdmin" className="text-secondary"
+          ><i className="fas fa-user"></i> Nom d'utilisateur:
         </label>
         <input
           type="text"
           className="form-control text-center"
-          id="matriculeStudent"
-          name="matricule"
-          placeholder="Entrez votre matricule"
-          required
+          id="usernameAdmin"
+          name="username"
+          placeholder="Entrez votre nom d'utilisateur"
         />
       </div>
       <div className="form-group">
-        <label htmlFor="passwordStudent" className="text-secondary"
+        <label htmlFor="passwordAdmin" className="text-secondary"
           ><i className="fas fa-lock"></i> Mot de passe:
         </label>
         <input
           type="password"
           className="form-control text-center"
-          id="passwordStudent"
+          id="passwordAdmin"
           name="password"
           placeholder="Entrez votre mot de passe"
-          required
         />
       </div>
       <div className="d-flex justify-content-center">
@@ -38,7 +36,7 @@
 
 <script>
 export default {
-  name: "StudentLogin",
+  name: "AdminLogin",
   props: {},
 };
 </script>

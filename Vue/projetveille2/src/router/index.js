@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { createRouter, createWebHistory } from 'vue-router' 
-import StudentLogin from '../components/Login/StudentLogin.vue'
+import Login from '../components/Login/Login.vue'
 
 const routes = [
     {
         name:'StudentLogin',
-        path:'/login',
-        component: StudentLogin,
+        path:'/Login',
+        component: Login,
     }
     ];
     
