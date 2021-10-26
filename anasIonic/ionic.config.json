@@ -1,0 +1,7 @@
+{
+  "name": "anasIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
