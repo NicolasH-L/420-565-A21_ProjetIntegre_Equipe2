@@ -28,7 +28,6 @@ public class DocumentService {
             String[] signatureFile = java.net.URLDecoder.decode(multipartFile.getOriginalFilename(),
                     StandardCharsets.UTF_8).replace("\"","").split(":");
             Document document = new Document();
-            document.setIsValid(true);
             document.setDocumentName(signatureFile[0]);
             document.setData(multipartFile.getBytes());
             document.setStudent(studentRepository.getById(Integer.parseInt(signatureFile[1])));
