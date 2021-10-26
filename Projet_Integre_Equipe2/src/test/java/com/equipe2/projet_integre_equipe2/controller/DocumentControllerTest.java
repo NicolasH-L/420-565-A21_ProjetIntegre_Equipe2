@@ -56,6 +56,8 @@ public class DocumentControllerTest {
                 .documentName("CvInfo")
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
+                .isValid(false)
+                .isRefused(false)
                 .build();
     }
 
@@ -96,15 +98,34 @@ public class DocumentControllerTest {
     }
 
     @Test
-    public void declineDocumentTest() throws Exception {
-        when(documentService.declineDocument(document.getIdDocument())).thenReturn(Optional.of(document));
+    public void updateDocumentTrueTest() throws Exception {
+        document.setIsValid(true);
+        when(documentService.updateDocumentStatus(document.getIdDocument(), true)).thenReturn(Optional.of(document));
 
-        MvcResult result = mockMvc.perform(put("/document/decline-document/1")
+        MvcResult result = mockMvc.perform(put("/document/update-document/"+document.getIdDocument()+"/status/"+document.getIsValid())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(document))).andReturn();
 
         var actualDocument = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Document.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDocument.getIsValid()).isTrue();
+        assertThat(actualDocument.getIsRefused()).isFalse();
+        assertThat(document).isEqualTo(actualDocument);
+    }
+
+    @Test
+    public void updateDocumentFalseTest() throws Exception{
+        document.setIsRefused(true);
+        when(documentService.updateDocumentStatus(document.getIdDocument(), false)).thenReturn(Optional.of(document));
+
+        MvcResult result = mockMvc.perform(put("/document/update-document/"+document.getIdDocument()+"/status/"+document.getIsValid())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(document))).andReturn();
+
+        var actualDocument = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Document.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDocument.getIsValid()).isFalse();
+        assertThat(actualDocument.getIsRefused()).isTrue();
         assertThat(document).isEqualTo(actualDocument);
     }
 

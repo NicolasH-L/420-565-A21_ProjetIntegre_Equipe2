@@ -13,6 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -30,10 +33,14 @@ public class StudentOfferServiceTest {
     private Offer offer;
 
     private Document document;
+    private Document document2;
 
     private Student student;
+    private Student student2;
 
     private StudentOffer studentOffer;
+
+    private List<StudentOffer> studentOfferList;
 
     @BeforeEach
     void setup() {
@@ -62,6 +69,12 @@ public class StudentOfferServiceTest {
                 .data("test".getBytes(StandardCharsets.UTF_8))
                 .build();
 
+        document2 = Document.builder()
+                .documentName("CVExemple2")
+                .student(null)
+                .data("test2".getBytes(StandardCharsets.UTF_8))
+                .build();
+
         student = Student.studentBuilder()
                 .id(1)
                 .firstName("Toto")
@@ -71,11 +84,24 @@ public class StudentOfferServiceTest {
                 .isCvValid(true)
                 .build();
 
+        student2 = Student.studentBuilder()
+                .id(2)
+                .firstName("didi")
+                .lastName("coco")
+                .matricule("1234588")
+                .password("didi1*")
+                .isCvValid(true)
+                .build();
+
         studentOffer = StudentOffer.builder()
                 .offer(offer)
                 .document(document)
                 .student(student)
                 .build();
+
+        studentOfferList = new ArrayList<>();
+        studentOfferList.add(studentOffer);
+
     }
 
     @Test
@@ -107,5 +133,105 @@ public class StudentOfferServiceTest {
         when(studentOfferRepository.existsStudentOfferByOffer_IdOfferAndStudent_Id(offer.getIdOffer(),student.getId())).thenReturn(true);
         Optional<Boolean> actualStudentAlreadyAppliedToOffer = studentOfferService.isStudentAppliedToOffer(offer.getIdOffer(), student.getId());
         assertThat(actualStudentAlreadyAppliedToOffer.get()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentOffersByOffer_IdOffer() {
+        when(studentOfferRepository.saveAll(getListOfStudentOffersByIdOffer())).thenReturn(getListOfStudentOffersByIdOffer());
+        when(studentOfferRepository.findAllByOffer_IdOffer(offer.getIdOffer())).thenReturn(getListOfStudentOffersByIdOffer());
+        final Optional<List<StudentOffer>> expectedStudentOfferList = Optional.of(studentOfferRepository.saveAll(getListOfStudentOffersByIdOffer()));
+        final Optional<List<StudentOffer>> actualStudentOfferList = studentOfferService.getAllStudentOffersByOffer_IdOffer(offer.getIdOffer());
+        assertThat(actualStudentOfferList.get().size()).isEqualTo(expectedStudentOfferList.get().size());
+        assertThat(actualStudentOfferList.get().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByOffer_IdOfferFails() {
+        when(studentOfferRepository.saveAll(getListOfStudentOffersByIdOffer())).thenReturn(getListOfStudentOffersByIdOffer());
+        when(studentOfferRepository.findAllByOffer_IdOffer(offer.getIdOffer())).thenReturn(null);
+        studentOfferRepository.saveAll(getListOfStudentOffersByIdOffer());
+        final Optional<List<StudentOffer>> studentOfferList = studentOfferService.getAllStudentOffersByOffer_IdOffer(offer.getIdOffer());
+        assertThat(studentOfferList).isEmpty();
+    }
+
+    @Test    
+    public void testSetInterviewDate(){
+        LocalDate expectedDate = LocalDate.now();
+        studentOffer.setInterviewDate(expectedDate.toString());
+        when(studentOfferRepository.save(studentOffer)).thenReturn(studentOffer);
+        StudentOffer actualStudentOffer = studentOfferService.saveStudentOffer(studentOffer).get();
+        LocalDate actualDate = LocalDate.parse(actualStudentOffer.getInterviewDate());
+        assertThat(actualStudentOffer).isEqualTo(studentOffer);
+        assertThat(actualDate).isEqualTo(expectedDate);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByStudentId(){
+        when(studentOfferRepository.findStudentOffersByStudent_Id(student.getId())).thenReturn(studentOfferList);
+        Optional<List<StudentOffer>> actualStudentOfferList = studentOfferService.getAllStudentOfferByStudentId(student.getId());
+        assertThat(actualStudentOfferList.get().size()).isEqualTo(studentOfferList.size());
+        assertThat(actualStudentOfferList.get().get(0).getStudent()).isEqualTo(student);
+        assertThat(actualStudentOfferList.get()).isEqualTo(studentOfferList);
+    }
+
+    @Test
+    public void testGetAllStudentOffersByStudentIdFails(){
+        int invalidId = 999;
+        when(studentOfferRepository.findStudentOffersByStudent_Id(invalidId)).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOfferList = studentOfferService.getAllStudentOfferByStudentId(invalidId);
+        assertThat(actualStudentOfferList).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrue(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(getListOfStudentsOffer());
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers.get().size()).isEqualTo(3);
+        assertThat(actualStudentOffers.get().get(0).getIsAccepted()).isTrue();
+    }
+
+    @Test
+    public void testGetAllStudentsOfferAcceptedIsTrueFails(){
+        when(studentOfferRepository.findStudentOffersByIsAcceptedTrue()).thenReturn(null);
+        Optional<List<StudentOffer>> actualStudentOffers = studentOfferService.getAllAcceptedStudentOffers();
+        assertThat(actualStudentOffers).isEmpty();
+    }
+
+    private List<StudentOffer> getListOfStudentOffersByIdOffer() {
+        List<StudentOffer> studentOfferList = new ArrayList<>();
+        studentOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .build());
+        studentOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document2)
+                .student(student2)
+                .build());
+        return  studentOfferList;
+    }
+
+    private List<StudentOffer> getListOfStudentsOffer() {
+        List<StudentOffer> studentsOfferList = new ArrayList<>();
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        studentsOfferList.add(StudentOffer.builder()
+                .offer(offer)
+                .document(document)
+                .student(student)
+                .isAccepted(true)
+                .build());
+        return studentsOfferList;
     }
 }

@@ -101,9 +101,10 @@ public class OfferControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Offer>>(){
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
+                new TypeReference<List<Offer>>() {
+                });
 
-        });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
     }
@@ -227,6 +228,6 @@ public class OfferControllerTest {
                 .isValid(true)
                 .monitor(monitor)
                 .build());
-        return  offerList;
+        return offerList;
     }
 }
