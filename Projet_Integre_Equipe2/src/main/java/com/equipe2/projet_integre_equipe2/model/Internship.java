@@ -30,4 +30,7 @@ public class Internship {
 
     @OneToOne
     private Student student;
+
+    @OneToOne
+    private Supervisor supervisor;
 }
