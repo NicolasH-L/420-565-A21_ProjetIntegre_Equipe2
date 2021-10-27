@@ -26,8 +26,8 @@ const AdminStudentCvList = () => {
         history.push("/ViewDocument", document)
     }
 
-    const declineCv = async (document) => {
-        const res = await fetch(`http://localhost:8888/document/decline-document/${document.idDocument}`,
+    const updateCvStatus = async (document, isValid) => {
+        const res = await fetch(`http://localhost:8888/document/update-document/${document.idDocument}/status/${isValid}`,
             {
                 method: 'PUT',
                 headers: {
@@ -39,8 +39,16 @@ const AdminStudentCvList = () => {
 
         setDocuments(
             documents.map(
-                (document1) => document1.idDocument === document.idDocument ? {...document1, isValid: data.isValid} : document1
+                (document1) => document1.idDocument === document.idDocument ? { ...document1, isValid: data.isValid, isRefused: data.isRefused } : document1
             )
+        )
+    }
+    const displayButtons = (document) => {
+        return (
+            <>
+                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, true) }}>Valider</button>
+                <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>Refuser</button>
+            </>
         )
     }
 
@@ -49,7 +57,7 @@ const AdminStudentCvList = () => {
             <AdminNavbar />
             <div>
                 <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
-            </div>            
+            </div>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
                     <thead>
@@ -60,11 +68,12 @@ const AdminStudentCvList = () => {
                     </thead>
                     <tbody>
                         {documents.map((document) => (
-                            <tr className={`${!document.isValid ? 'table-danger' : ''}`} key={document.idDocument}>
+                            <tr className={`${!document.isValid && !document.isRefused ? 'table-warning' :
+                                !document.isValid && document.isRefused ? 'table-danger' : 'table-success'}`} key={document.idDocument}>
                                 <th>{document.documentName}</th>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
-                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineCv(document) }}>Refuser</button>
+                                    {!document.isValid && !document.isRefused ? displayButtons(document) : ""}
                                 </td>
                             </tr>
                         ))}
