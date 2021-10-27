@@ -26,7 +26,7 @@ public class Contract implements Serializable {
     private Internship internship;
 
     private String collegeResponsability;
-    private String enterpriseResponsability;
+    private String companyResponsability;
     private String studentResponsability;
     private String studentSignature;
     private String monitorSignature;
