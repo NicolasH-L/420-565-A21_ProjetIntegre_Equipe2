@@ -5,14 +5,46 @@ import StudentNavbar from '../StudentNavbar'
 
 const StudentSignContract = () => {
     const history = useHistory()
-    const historyState = history.location.state
+    const historyState = useHistory().location.state
+    const [internship, setInternship] = useState([])
+    const [contract, setContract] = useState({
+        internship: undefined, collegeResponsability: "", companyResponsability: "",
+        studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
+        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
+    })
+    const baseUrl = "http://localhost:8888/"
+    let studentObject
+    let studentId
+    let monitor
+
+    useEffect(() => {
+        if (history !== undefined) {
+            studentObject = historyState
+            studentId = studentObject.id
+        }
+        const getInternship = async () => {
+            const internshipFromServer = await fetchInternship()
+            setInternship(internshipFromServer)
+            monitor = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
+        }
+        getInternship()
+    }, [])
+
+    const fetchInternship = async () => {
+        const res = await fetch(`${baseUrl}/internship/get-internship/${studentId}`)
+        return await res.json()
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+    }
 
     return (
         <div className="grad ">
             <StudentNavbar useStudent={historyState} />
             <div className="d-flex justify-content-center my-5 py-2">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
-                    <form className="container-fluid">
+                    <form className="container-fluid" onSubmit={onSubmit}>
                         <h1 className="text-center">Contrat</h1>
                         <div className="form-group">
                             <label htmlFor="adminName" className="text-secondary">Le gestionnaire de stage : </label>
@@ -47,32 +79,40 @@ const StudentSignContract = () => {
                             <textarea type="text" className="form-control text-center" id="duties" name="duties" readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="responsability" className="text-secondary">Responsabilités : </label>
-                            <textarea type="text" className="form-control text-center" id="responsability" name="responsability" readOnly />
+                            <label htmlFor="responsabilityCollege" className="text-secondary">Responsabilités du collège : </label>
+                            <textarea type="text" className="form-control text-center" id="responsabilityCollege" name="responsabilityCollege" readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="responsabilityCompany" className="text-secondary">Responsabilités de l'entreprise : </label>
+                            <textarea type="text" className="form-control text-center" id="responsabilityCompany" name="responsabilityCompany" readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="responsabilityStudent" className="text-secondary">Responsabilités de l'étudiant : </label>
+                            <textarea type="text" className="form-control text-center" id="responsabilityStudent" name="responsabilityStudent" readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureStudent" className="text-secondary">Signature de l'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" readOnly />
+                            <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="signatureStudentDate" className="text-secondary">Date de signature de l'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="signatureStudentDate" name="signatureStudentDate" readOnly />
+                            <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
+                            <input type="text" className="form-control text-center" id="signatureDateStudent" name="signatureDateStudent" readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
                             <input type="text" className="form-control text-center" id="signatureMonitor" name="signatureMonitor" readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="signatureMonitorDate" className="text-secondary">Date de signature de l'employeur : </label>
-                            <input type="text" className="form-control text-center" id="signatureMonitorDate" name="signatureMonitorDate" readOnly />
+                            <label htmlFor="signatureDateMonitor" className="text-secondary">Date de signature de l'employeur : </label>
+                            <input type="text" className="form-control text-center" id="signatureDateMonitor" name="signatureDateMonitor" readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureAdmin" className="text-secondary">Signature du gestionnaire : </label>
                             <input type="text" className="form-control text-center" id="signatureAdmin" name="signatureAdmin" readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="signatureAdminDate" className="text-secondary">Date de signature du gestionnaire : </label>
-                            <input type="text" className="form-control text-center" id="signatureAdminDate" name="signatureAdminDate" readOnly />
+                            <label htmlFor="signatureDateAdmin" className="text-secondary">Date de signature du gestionnaire : </label>
+                            <input type="text" className="form-control text-center" id="signatureDateAdmin" name="signatureDateAdmin" readOnly />
                         </div>
                         <div className="d-flex justify-content-center mt-4">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
