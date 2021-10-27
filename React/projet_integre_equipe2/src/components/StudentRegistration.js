@@ -5,9 +5,16 @@ import { useHistory } from 'react-router-dom'
 import { RegexPattern } from './RegexPattern'
 
 const StudentRegistration = ({onAdd}) => {
-    const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""})
+    const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:"", actualSession: ""})
     const [error, setError] = useState({lastName: "", firstName: "", password: "", matricule: ""})
     const history = useHistory()
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMothOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -16,9 +23,19 @@ const StudentRegistration = ({onAdd}) => {
             alert("Veuillez remplir tous les champs correctement!")
             return
         } else {
+            setStudentSession()
             onAdd(student)
                 .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existant"))
                 .catch(() => alert("Erreur matricule existant"))
+        }
+
+        function setStudentSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMothOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            student.actualSession = session
         }
     }
 
