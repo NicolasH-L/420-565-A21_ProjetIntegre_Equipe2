@@ -30,4 +30,11 @@ public class InternshipController {
                 .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-internship/{studentId}")
+    public ResponseEntity<Internship> getInternshipByStudentId(@PathVariable Integer studentId){
+        return internshipService.getInternshipByStudentId(studentId)
+                .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

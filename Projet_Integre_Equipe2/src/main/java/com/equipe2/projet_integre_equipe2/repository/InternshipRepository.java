@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InternshipRepository extends JpaRepository<Internship, Integer> {
+
+    Internship findInternshipByStudent_Id(Integer id);
 }
