@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import AdminNavbar from '../AdminNavbar'
 
 const AdminAssignSupervisorToStudent = () => {
-
-    const [interships, setInterships] = useState([])
+    const [internships, setInterships] = useState([])
     const [supervisors, setSupervisors] = useState([])
     const defaultValue = "default"
-    let selectedSupervisorJSON = undefined
-    let selectedStudentIntershipJSON = undefined
+    let selectedSupervisorJSON = defaultValue
+    let selectedStudentIntershipJSON = defaultValue
 
     useEffect(() => {
         const getInterships = async () => {
@@ -23,16 +22,22 @@ const AdminAssignSupervisorToStudent = () => {
         getSupervisors()
     }, [])
 
-    const addSupervisorToIntership = async (intership) => {
+    const addSupervisorToIntership = async (internship) => {
         const result = await fetch('http://localhost:8888/internship/save-internship',
             {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(intership)
+                body: JSON.stringify(internship)
             })
-        return await result.json()
+        const data = await result.json()
+
+        setInterships(
+            internships.map(
+                (internship1) => internship1.idInternship === internship.idInternship ? { ...internship1, supervisor: data.supervisor } : internship1
+            )
+        )
     }
 
     const fetchInternships = async () => {
@@ -46,58 +51,64 @@ const AdminAssignSupervisorToStudent = () => {
     }
 
     const getSelectedSupervisor = (e) => {
-        if (e.target.value === "default") {
-
-
-        } else {
+        if (e.target.value !== "default") {
             selectedSupervisorJSON = JSON.parse(e.target.value)
-            console.log(selectedSupervisorJSON)
         }
     }
 
     const getSelectedStudentIntership = (e) => {
-        if (e.target.value === "default") {
-
-
-        } else {
+        if (e.target.value !== "default") {
             selectedStudentIntershipJSON = JSON.parse(e.target.value)
-            console.log(selectedStudentIntershipJSON)
         }
     }
 
     const assignSupervisorToStudent = () => {
-        selectedStudentIntershipJSON.supervisor = selectedSupervisorJSON
-        addSupervisorToIntership(selectedStudentIntershipJSON)
+        if (selectedStudentIntershipJSON !== defaultValue && selectedSupervisorJSON !== defaultValue) {
+            selectedStudentIntershipJSON.supervisor = selectedSupervisorJSON
+            addSupervisorToIntership(selectedStudentIntershipJSON)
+        } else {
+            alert("Veuillez sélectionner un élève et un superviseur")
+        }
+    }
+
+    const filterInterships = (internship) => {
+        return (internship.supervisor === null && internship.status === "Valide")
     }
 
     return (
         <div>
             <div className="grad">
                 <AdminNavbar />
-                <h2 className="text-center">Assigner un superviseur</h2>
                 <div className="d-flex justify-content-center">
-                     <div className="form-group w-50 p-4">
-                    <label htmlFor="AdminAssignStudent" className="text-secondary"> </label>
-                    <select defaultValue={defaultValue} onChange={getSelectedStudentIntership} className="form-control text-center" id="AdminAssignStudent" name="AdminAssignStudent" required>
-                        <option value={defaultValue}>Sélectionner un élève</option>
-                        {interships.map((intership) => (
-                            <option value={JSON.stringify(intership)} key={intership.idInternship}> {intership.student.firstName} {intership.student.lastName}</option>
-                        ))}
-                    </select>
-
-                    <label htmlFor="AdminAssignSupervisor" className="text-secondary"> </label>
-                    <select defaultValue={defaultValue} onChange={getSelectedSupervisor} className="form-control text-center" id="AdminAssignSupervisor" name="AdminAssignSupervisor" required>
-                        <option value={defaultValue}>Sélectionner un superviseur</option>
-                        {supervisors.map((supervisor) => (
-                            <option value={JSON.stringify(supervisor)} key={supervisor.matricule}> {supervisor.firstName} {supervisor.lastName}</option>
-                        ))}
-                    </select>
-                    <div className="d-flex justify-content-center p-4">
-                        <button className="btn btn-light mx-2 " onClick={() => { assignSupervisorToStudent() }} >Ajouter <i className="fas fa-plus"></i></button>
+                    <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                        <form className="container-fluid" onSubmit={assignSupervisorToStudent}>
+                            <h1 className="text-center text-secondary">Assigner un superviseur à un étudiant</h1>
+                            <div className="form-group">
+                                <label htmlFor="AdminAssignSupervisor" className="text-secondary"> </label>
+                                <select defaultValue={defaultValue} onChange={getSelectedSupervisor} className="form-control text-center" id="AdminAssignSupervisor" name="AdminAssignSupervisor" required>
+                                    <option value={defaultValue}>Sélectionner un superviseur</option>
+                                    {supervisors.map((supervisor) => (
+                                        <option value={JSON.stringify(supervisor)} key={supervisor.matricule}> {supervisor.firstName} {supervisor.lastName}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="AdminAssignStudent" className="text-secondary"> </label>
+                                <select defaultValue={defaultValue} onChange={getSelectedStudentIntership} className="form-control text-center" id="AdminAssignStudent" name="AdminAssignStudent" required>
+                                    <option value={defaultValue}>Sélectionner un étudiant</option>
+                                    {internships
+                                        .filter(filterInterships)
+                                        .map((intership) => (
+                                            <option value={JSON.stringify(intership)} key={intership.idInternship}> {intership.offer.companyName} {intership.offer.jobTitle} - {intership.student.firstName} {intership.student.lastName}</option>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className="d-flex justify-content-center mt-5">
+                                <button className="btn btn-block btn-primary text-white">Assigner <i className="fas fa-link"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                </div>
-               
             </div>
         </div>
     )
