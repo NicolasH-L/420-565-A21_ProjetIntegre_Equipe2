@@ -12,11 +12,10 @@ const StudentSignContract = () => {
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
     })
-    const baseUrl = "http://localhost:8888/"
+    const baseUrl = "http://localhost:8888/internship/"
     let studentObject
     let studentId
     let monitor
-    let studentName
 
     useEffect(() => {
         if (history !== undefined) {
@@ -26,18 +25,34 @@ const StudentSignContract = () => {
         const getInternship = async () => {
             const internshipFromServer = await fetchInternship()
             setInternship(internshipFromServer)
-            studentName = internship.student.firstName + ", " + internship.student.lastName
         }
         getInternship()
     }, [])
 
     const fetchInternship = async () => {
-        const res = await fetch(`${baseUrl}/internship/get-internship/${studentId}`)
+        const res = await fetch(`${baseUrl}/get-internship/${studentId}`)
         return await res.json()
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
+        addStudentContract
+    }
+
+    function weeksBetween(d1, d2) {
+        return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+    }
+
+    const addStudentContract = async () => {
+        const result = await fetch(baseUrl + '/save-internship',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        return await result.json()
     }
 
     return (
@@ -53,54 +68,72 @@ const StudentSignContract = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorName" className="text-secondary"> L'employeur : </label>
-                            <input type="text" className="form-control text-center" id="monitorName" name="monitorName" readOnly />
+                            <input type="text" className="form-control text-center" id="monitorName" name="monitorName"
+                                value={internship.offer.monitor.firstName + ", " + internship.offer.monitor.lastName} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="studentName" className="text-secondary"> L'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="studentName" name="studentName" value={studentName} readOnly />
+                            <input type="text" className="form-control text-center" id="studentName" name="studentName"
+                                value={internship.student.firstName + ", " + internship.student.lastName} readOnly />
                         </div>
                         <h3 className="text-center mt-5">Conditions de stage suivantes :</h3>
                         <div className="form-group">
                             <label htmlFor="location" className="text-secondary">Endroit du stage : </label>
-                            <input type="text" className="form-control text-center" id="location" name="location" readOnly />
+                            <input type="text" className="form-control text-center" id="location" name="location" value={internship.offer.address} readOnly />
+                        </div>
+                        <h6 className="text-secondary">Durée du stage</h6>
+                        <div className="form-group">
+                            <label htmlFor="durationStart" className="text-secondary">Date de début : </label>
+                            <input type="text" className="form-control text-center" id="durationStart" name="durationStart" value={internship.offer.startInternshipDate} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="duration" className="text-secondary">Durée du stage : </label>
-                            <input type="text" className="form-control text-center" id="duration" name="duration" readOnly />
+                            <label htmlFor="durationEnd" className="text-secondary">Date de fin : </label>
+                            <input type="text" className="form-control text-center" id="durationEnd" name="durationEnd" value={internship.offer.endInternshipDate} readOnly />
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="numberOfWeeks" className="text-secondary">Nombre total de semaines : </label>
+                            <input type="text" className="form-control text-center" id="numberOfWeeks" name="numberOfWeeks"
+                                value={weeksBetween(new Date(internship.offer.startInternshipDate), new Date(internship.offer.endInternshipDate))} readOnly />
+                        </div>
+                        <h6 className="text-secondary">Horaire de travail</h6>
                         <div className="form-group">
                             <label htmlFor="schedule" className="text-secondary">Horaire de travail : </label>
-                            <input type="password" className="form-control text-center" id="schedule" name="schedule" readOnly />
+                            <input type="password" className="form-control text-center" id="schedule" name="schedule" value={internship.offer.jobSchedules} readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="schedule" className="text-secondary">Nombre total d'heures par semaine : </label>
+                            <input type="password" className="form-control text-center" id="schedule" name="schedule" value={internship.offer.workingHours} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="salary" className="text-secondary">Salaire : </label>
-                            <input type="password" className="form-control text-center" id="salary" name="salary" readOnly />
+                            <input type="password" className="form-control text-center" id="salary" name="salary" value={internship.offer.salary} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="duties" className="text-secondary">Taches et responsabilités du stagiaire : </label>
-                            <textarea type="text" className="form-control text-center" id="duties" name="duties" readOnly />
+                            <textarea type="text" className="form-control" id="duties" name="duties" value={internship.offer.description} readOnly />
                         </div>
                         <h3 className="text-center mt-5">Responsabilités</h3>
                         <div className="form-group">
-                            <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : : </label>
-                            <textarea type="text" className="form-control text-center" id="responsabilityCollege" name="responsabilityCollege" readOnly />
+                            <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : </label>
+                            <textarea type="text" className="form-control" id="responsabilityCollege" name="responsabilityCollege" readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="responsabilityCompany" className="text-secondary">L’entreprise s’engage à : </label>
-                            <textarea type="text" className="form-control text-center" id="responsabilityCompany" name="responsabilityCompany" readOnly />
+                            <textarea type="text" className="form-control" id="responsabilityCompany" name="responsabilityCompany" readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="responsabilityStudent" className="text-secondary">L’étudiant s’engage à : </label>
-                            <textarea type="text" className="form-control text-center" id="responsabilityStudent" name="responsabilityStudent" readOnly />
+                            <textarea type="text" className="form-control" id="responsabilityStudent" name="responsabilityStudent" readOnly />
                         </div>
                         <h3 className="text-center mt-5">Signatures</h3>
                         <div className="form-group">
                             <label htmlFor="signatureStudent" className="text-secondary">Signature de l'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" />
+                            <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="signatureDateStudent" name="signatureDateStudent" readOnly />
+                            <input type="text" className="form-control text-center" id="signatureDateStudent" name="signatureDateStudent"
+                                value={new Date().toLocaleString("en-US", { month: "long" })} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
