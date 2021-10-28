@@ -12,10 +12,9 @@ const StudentSignContract = () => {
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
     })
-    const baseUrl = "http://localhost:8888/internship/"
+    const baseUrl = "http://localhost:8888"
     let studentObject
     let studentId
-    let monitor
 
     useEffect(() => {
         if (history !== undefined) {
@@ -31,21 +30,21 @@ const StudentSignContract = () => {
     }, [])
 
     const fetchInternship = async () => {
-        const res = await fetch(`${baseUrl}/get-internship/${studentId}`)
+        const res = await fetch(`${baseUrl}/internship/get-internship/${studentId}`)
         return await res.json()
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        addStudentContract
+        addStudentContract(contract)
     }
 
     function weeksBetween(d1, d2) {
         return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
     }
 
-    const addStudentContract = async () => {
-        const result = await fetch(baseUrl + '/save-internship',
+    const addStudentContract = async (contract) => {
+        const result = await fetch(baseUrl + '/contract/save-contract',
             {
                 method: 'POST',
                 headers: {
@@ -54,6 +53,10 @@ const StudentSignContract = () => {
                 body: JSON.stringify(contract)
             })
         return await result.json()
+    }
+
+    const validateInput = (e) => {
+        setContract({ ...contract, internship: internship, [e.target.name]: e.target.value })
     }
 
     return (
@@ -131,7 +134,7 @@ const StudentSignContract = () => {
                                 <h3 className="text-center mt-5">Signatures</h3>
                                 <div className="form-group">
                                     <label htmlFor="signatureStudent" className="text-secondary">Signature de l'étudiant : </label>
-                                    <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" required />
+                                    <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" onChange={validateInput} required />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
