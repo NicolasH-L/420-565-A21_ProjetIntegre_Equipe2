@@ -16,6 +16,7 @@ const StudentSignContract = () => {
     let studentObject
     let studentId
     let monitor
+    let studentName
 
     useEffect(() => {
         if (history !== undefined) {
@@ -25,7 +26,7 @@ const StudentSignContract = () => {
         const getInternship = async () => {
             const internshipFromServer = await fetchInternship()
             setInternship(internshipFromServer)
-            monitor = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
+            studentName = internship.student.firstName + ", " + internship.student.lastName
         }
         getInternship()
     }, [])
@@ -56,8 +57,9 @@ const StudentSignContract = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="studentName" className="text-secondary"> L'étudiant : </label>
-                            <input type="text" className="form-control text-center" id="studentName" name="studentName" readOnly />
+                            <input type="text" className="form-control text-center" id="studentName" name="studentName" value={studentName} readOnly />
                         </div>
+                        <h3 className="text-center mt-5">Conditions de stage suivantes :</h3>
                         <div className="form-group">
                             <label htmlFor="location" className="text-secondary">Endroit du stage : </label>
                             <input type="text" className="form-control text-center" id="location" name="location" readOnly />
@@ -78,18 +80,20 @@ const StudentSignContract = () => {
                             <label htmlFor="duties" className="text-secondary">Taches et responsabilités du stagiaire : </label>
                             <textarea type="text" className="form-control text-center" id="duties" name="duties" readOnly />
                         </div>
+                        <h3 className="text-center mt-5">Responsabilités</h3>
                         <div className="form-group">
-                            <label htmlFor="responsabilityCollege" className="text-secondary">Responsabilités du collège : </label>
+                            <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : : </label>
                             <textarea type="text" className="form-control text-center" id="responsabilityCollege" name="responsabilityCollege" readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="responsabilityCompany" className="text-secondary">Responsabilités de l'entreprise : </label>
+                            <label htmlFor="responsabilityCompany" className="text-secondary">L’entreprise s’engage à : </label>
                             <textarea type="text" className="form-control text-center" id="responsabilityCompany" name="responsabilityCompany" readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="responsabilityStudent" className="text-secondary">Responsabilités de l'étudiant : </label>
+                            <label htmlFor="responsabilityStudent" className="text-secondary">L’étudiant s’engage à : </label>
                             <textarea type="text" className="form-control text-center" id="responsabilityStudent" name="responsabilityStudent" readOnly />
                         </div>
+                        <h3 className="text-center mt-5">Signatures</h3>
                         <div className="form-group">
                             <label htmlFor="signatureStudent" className="text-secondary">Signature de l'étudiant : </label>
                             <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" />
@@ -114,7 +118,7 @@ const StudentSignContract = () => {
                             <label htmlFor="signatureDateAdmin" className="text-secondary">Date de signature du gestionnaire : </label>
                             <input type="text" className="form-control text-center" id="signatureDateAdmin" name="signatureDateAdmin" readOnly />
                         </div>
-                        <div className="d-flex justify-content-center mt-4">
+                        <div className="d-flex justify-content-center mt-5">
                             <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                         </div>
                     </form>

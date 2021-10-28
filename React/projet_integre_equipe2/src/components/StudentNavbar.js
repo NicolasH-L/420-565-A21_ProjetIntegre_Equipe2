@@ -67,7 +67,7 @@ const StudentNavbar = ({ useStudent }) => {
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyDocuments()}>Mes Documents</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Ententes de stage</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Entente de stage</button>
                         </li>
                     </ul>
                 </div>
