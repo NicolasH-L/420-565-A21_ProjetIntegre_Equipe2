@@ -13,6 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.print.attribute.standard.Media;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,5 +69,42 @@ public class SupervisorControllerTest {
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualStudent).isEqualTo(supervisor);
+    }
+
+    @Test
+    public void getAllSupervisorsTest() throws Exception {
+        List<Supervisor> supervisorList = getListOfSupervisors();
+        when(supervisorService.getAllSupervisors()).thenReturn(Optional.of(supervisorList));
+
+        MvcResult result = mockMvc.perform(get("/supervisors/get-all-supervisors")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Supervisor> getListOfSupervisors(){
+        List<Supervisor> supervisorList = new ArrayList<>();
+        supervisorList.add(Supervisor.supervisorBuilder()
+                .firstName("John")
+                .lastName("Doe")
+                .matricule("1234567")
+                .password("password")
+                .build());
+        supervisorList.add(Supervisor.supervisorBuilder()
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("7654321")
+                .password("password")
+                .build());
+        supervisorList.add(Supervisor.supervisorBuilder()
+                .firstName("Pipo")
+                .lastName("Tito")
+                .matricule("1234569")
+                .password("password")
+                .build());
+        return supervisorList;
     }
 }
