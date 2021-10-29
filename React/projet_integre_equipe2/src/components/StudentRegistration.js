@@ -10,7 +10,7 @@ const StudentRegistration = ({onAdd}) => {
     const history = useHistory()
 
     const sessionPrefix = ["winter", "summer"]
-    const lastMothOfTheYear = 11
+    const lastMonthOfTheYear = 11
     const winterStart = 8
     const winterDeadLine = 1
     const summerStart = 2
@@ -31,9 +31,9 @@ const StudentRegistration = ({onAdd}) => {
 
         function setStudentSession() {
             let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMothOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionPrefix[0] + sessionYear
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
                 : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
             student.actualSession = session
         }
