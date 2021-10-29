@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Internship;
+import com.equipe2.projet_integre_equipe2.model.Supervisor;
 import com.equipe2.projet_integre_equipe2.repository.InternshipRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class InternshipServiceTest {
 
     private Internship internship;
 
+    private Supervisor supervisor;
+
     @BeforeEach
     void setup() {
         internship = Internship.builder()
@@ -35,6 +38,14 @@ public class InternshipServiceTest {
                 .offer(null)
                 .student(null)
                 .status(null)
+                .build();
+
+        supervisor = Supervisor.supervisorBuilder()
+                .id(1)
+                .firstName("toto")
+                .lastName("tata")
+                .matricule("1234567")
+                .password("password")
                 .build();
     }
 
@@ -50,6 +61,39 @@ public class InternshipServiceTest {
         when(internshipRepository.save(internship)).thenReturn(null);
         Optional<Internship> actualInternship = internshipService.saveInternship(internship);
         assertThat(actualInternship).isEmpty();
+    }
+
+    @Test
+    public void getListofIntershipsBySupervisorId(){
+        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternshipsBySupervisor());
+        final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
+        assertThat(allInternships.get().size()).isEqualTo(3);
+        assertThat(allInternships.get().get(0).getIdInternship()).isEqualTo(1);
+    }
+
+    @Test
+    public void getListofIntershipsBySupervisorIdFails(){
+        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(null);
+        final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
+        assertThat(allInternships).isEqualTo(Optional.empty());
+    }
+
+    private List<Internship> getListOfInternshipsBySupervisor(){
+        List<Internship> internshipList = new ArrayList<>();
+
+        internshipList.add(Internship.builder()
+                .idInternship(1)
+                .supervisor(null)
+                .build());
+        internshipList.add(Internship.builder()
+                .idInternship(2)
+                .supervisor(null)
+                .build());
+        internshipList.add(Internship.builder()
+                .idInternship(3)
+                .supervisor(null)
+                .build());
+        return internshipList;
     }
 
     @Test
