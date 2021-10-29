@@ -7,7 +7,7 @@ import StudentAuth from '../components/StudentAuth';
 import SupervisorAuth from '../components/SupervisorAuth';
 
 const AuthentificationPage = () => {
-    const { name } = useParams<{ name: string; }>();
+    const { userAuth } = useParams<{ userAuth: string; }>();
 
     return (
         <IonPage>
@@ -25,10 +25,10 @@ const AuthentificationPage = () => {
                         <IonTitle size="large">Menu</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {name === "studentAuth" ? <><StudentAuth/></> 
-                : name === "supervisorAuth" ? <><SupervisorAuth/></> 
-                : name === "monitorAuth" ? <><MonitorAuth/></> 
-                : name === "adminAuth" ? <><AdminAuth/></> : <><StudentAuth/></>}
+                {userAuth === "studentAuth" ? <><StudentAuth/></> 
+                : userAuth === "supervisorAuth" ? <><SupervisorAuth/></> 
+                : userAuth === "monitorAuth" ? <><MonitorAuth/></> 
+                : userAuth === "adminAuth" ? <><AdminAuth/></> : <><StudentAuth/></>}
             </IonContent>
         </IonPage>
     )

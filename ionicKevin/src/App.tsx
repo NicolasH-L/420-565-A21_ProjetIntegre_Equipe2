@@ -23,6 +23,7 @@ import './theme/variables.css';
 import Menu from './components/Menu';
 import AuthentificationPage from './pages/AuthentificationPage';
 import StudentAccount from './components/StudentAuth';
+import StudentAuth from './components/StudentAuth';
 
 const App: React.FC = () => (
   <IonApp>
@@ -31,11 +32,11 @@ const App: React.FC = () => (
         <Menu />
         <IonRouterOutlet id="main">
           <Route path="/" exact={true}>
-            <Redirect to="/authentificationPage/studentAccount" />
+            <Redirect to="/authentificationPage/studentAuth" />
           </Route>
-          <Route path="/authentificationPage/:name" exact={true}>
-              <AuthentificationPage />
-            </Route>
+          <Route path="/authentificationPage/:userAuth" exact={true}>
+            <AuthentificationPage />
+          </Route>
         </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>
