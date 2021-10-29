@@ -1,7 +1,14 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import React from 'react'
+import { useParams } from 'react-router';
+import AdminAuth from '../components/AdminAuth';
+import MonitorAuth from '../components/MonitorAuth';
+import StudentAuth from '../components/StudentAuth';
+import SupervisorAuth from '../components/SupervisorAuth';
 
-const Page = () => {
+const AuthentificationPage = () => {
+    const { name } = useParams<{ name: string; }>();
+
     return (
         <IonPage>
             <IonHeader>
@@ -9,7 +16,6 @@ const Page = () => {
                     <IonButtons slot="start">
                         <IonMenuButton />
                     </IonButtons>
-                    <IonTitle>Menu</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
@@ -19,9 +25,13 @@ const Page = () => {
                         <IonTitle size="large">Menu</IonTitle>
                     </IonToolbar>
                 </IonHeader>
+                {name === "studentAuth" ? <><StudentAuth/></> 
+                : name === "supervisorAuth" ? <><SupervisorAuth/></> 
+                : name === "monitorAuth" ? <><MonitorAuth/></> 
+                : name === "adminAuth" ? <><AdminAuth/></> : <><StudentAuth/></>}
             </IonContent>
         </IonPage>
     )
 }
 
-export default Page
+export default AuthentificationPage

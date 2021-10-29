@@ -21,7 +21,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Menu from './components/Menu';
-import Page from './pages/Page';
+import AuthentificationPage from './pages/AuthentificationPage';
+import StudentAccount from './components/StudentAuth';
 
 const App: React.FC = () => (
   <IonApp>
@@ -29,16 +30,16 @@ const App: React.FC = () => (
       <IonSplitPane contentId="main">
         <Menu />
         <IonRouterOutlet id="main">
-          <Route path="/" exact={true} render={(props) => (
-            <>
-              <Page />
-            </>
-        )} />
-        <Route path="/Page" component={Page} />
-      </IonRouterOutlet>
-    </IonSplitPane>
-  </IonReactRouter>
-    </IonApp >
+          <Route path="/" exact={true}>
+            <Redirect to="/authentificationPage/studentAccount" />
+          </Route>
+          <Route path="/authentificationPage/:name" exact={true}>
+              <AuthentificationPage />
+            </Route>
+        </IonRouterOutlet>
+      </IonSplitPane>
+    </IonReactRouter>
+  </IonApp >
 );
 
 export default App;

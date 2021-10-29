@@ -26,19 +26,19 @@ interface ComptePage {
 const comptePages: ComptePage[] = [
   {
     title: 'Compte étudiant',
-    url: '/page/studentAccount',
+    url: '/authentificationPage/studentAuth',
   },
   {
     title: 'Compte superviseur',
-    url: '/page/supervisorAccount',
+    url: '/authentificationPage/supervisorAuth',
   },
   {
     title: 'Compte moniteur',
-    url: '/page/monitorAccount',
+    url: '/authentificationPage/monitorAuth',
   },
   {
     title: 'Compte gestionnaire',
-    url: '/page/adminAccount',
+    url: '/authentificationPage/adminAuth',
   }
 ];
 
@@ -52,7 +52,7 @@ const Menu = () => {
           <IonListHeader>Comptes</IonListHeader>
           {comptePages.map((comptePage, index) => {
             return (
-              <IonMenuToggle autoHide={false}>
+              <IonMenuToggle key={index} autoHide={false}>
                 <IonItem className={location.pathname === comptePage.url ? 'selected' : ''} routerLink={comptePage.url} routerDirection="none" lines="none" detail={false}>
                   <IonIcon slot="start" />
                   <IonLabel>{comptePage.title}</IonLabel>
