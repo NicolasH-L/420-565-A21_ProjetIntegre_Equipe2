@@ -64,7 +64,7 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void getListofIntershipsBySupervisorId(){
+    public void getListofIntershipsBySupervisorIdTest(){
         when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternshipsBySupervisor());
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships.get().size()).isEqualTo(3);
@@ -72,7 +72,7 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void getListofIntershipsBySupervisorIdFails(){
+    public void getListofIntershipsBySupervisorIdFailsTest(){
         when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(null);
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships).isEqualTo(Optional.empty());
