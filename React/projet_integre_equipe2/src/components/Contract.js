@@ -1,32 +1,33 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, updateMethodContract, studentState, passwordUser }) => {
+const Contract = ({ internshipProp, updateMethodContract, studentState, passwordUser, activeStatus }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState({
-        internship: undefined, collegeResponsability: "", companyResponsability: "",
+        internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
     })
-    const [student, setStudent] = useState()
-    const [password, setPassword] = useState({ password: "", userPassword: "", isValid: false })
+    const [student, setStudent] = useState({})
+    const [contractState, setContractState] = useState({ password: "", userPassword: "", isValid: false, currentStatus: "" })
     const baseUrl = "http://localhost:8888"
-    const collegeTerms = "Communiqué avec le stagiaire pour lui donner tout les ressources qu'il/elle a besoin lors de son stage ainsi que donner toutes les informations nécessaire pour l'entreprise."
-    const monitorTerms = "Suivre le progrès du stagiaire et documenter ce qu'il/elle fait lors de son stage afin de préparer une évaluation lorsque ce dernier ou cette dernière fini son stage."
-    const studentTerms = "Accomplir ou réaliser les taches demandées par le moniteur. Ameliorer ou continuer a developper auprès de l'équipe et s'assurer que tout est conforme. "
     const studentSignatureStatus = "StudentSignature"
     const monitorSignatureStatus = "MonitorSignature"
     const adminSignatureStatus = "AdminSignature"
 
     useEffect(() => {
-        setPassword({ ...password, userPassword: passwordUser })
+        setContractState({ ...contractState, userPassword: passwordUser })
+        student.id = studentState.id
+        setContractState({...contractState, currentStatus : activeStatus})
+        console.log(contractState.currentStatus == activeStatus)
         setStudent(studentState)
         setInternship(internshipProp)
+
         const getContract = async () => {
             const contractFromServer = await fetchContract()
             setContract(contractFromServer)
         }
-        getContract
+        getContract()
     }, [])
 
     const fetchContract = async () => {
@@ -47,10 +48,11 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
 
     const validateInput = () => {
         let isValid = false
-        if (password.password === password.userPassword) {
-            setPassword({ ...password, isValid: true })
+        if (contractState.password === contractState.userPassword) {
+            setContractState({ ...contractState, isValid: true })
             if (internship.status === studentSignatureStatus) {
-                setContract({ ...contract, studentSignature: student.firstName + ", " + student.lastName , signatureDateStudent: getToday()})
+                contract.studentSignature = student.firstName + " " + student.lastName
+                contract.signatureDateStudent = getToday()
             }
             isValid = true
         } else {
@@ -60,12 +62,14 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
     }
 
     const setContractSignature = (e) => {
-        setPassword({ ...password, [e.target.name]: e.target.value })
+        setContractState({ ...contractState, [e.target.name]: e.target.value })
     }
 
     const getToday = () => {
         return new Date().toLocaleString("en-CA", { year: "numeric", month: "numeric", day: "numeric" })
     }
+
+    const showSubmitButton = () => { }
 
     return (
         <div className="d-flex justify-content-center my-5 py-2">
@@ -86,7 +90,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                             <div className="form-group">
                                 <label htmlFor="studentName" className="text-secondary"> L'étudiant : </label>
                                 <input type="text" className="form-control text-center" id="studentName" name="studentName"
-                                    value={internship.student.firstName + ", " + internship.student.lastName} readOnly />
+                                    value={internship.student.firstName + " " + internship.student.lastName} readOnly />
                             </div>
                             <h3 className="text-center mt-5">Conditions de stage suivantes :</h3>
                             <div className="form-group">
@@ -127,20 +131,20 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                             <h3 className="text-center mt-5">Responsabilités</h3>
                             <div className="form-group">
                                 <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : </label>
-                                <textarea type="text" className="form-control" id="responsabilityCollege" name="responsabilityCollege" rows="5" value={collegeTerms} readOnly />
+                                <textarea type="text" className="form-control" id="responsabilityCollege" name="responsabilityCollege" rows="5" value={contract.collegeResponsability} readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="responsabilityCompany" className="text-secondary">L’entreprise s’engage à : </label>
-                                <textarea type="text" className="form-control" id="responsabilityCompany" name="responsabilityCompany" rows="5" value={monitorTerms} readOnly />
+                                <textarea type="text" className="form-control" id="responsabilityCompany" name="responsabilityCompany" rows="5" value={contract.companyResponsability} readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="responsabilityStudent" className="text-secondary">L’étudiant s’engage à : </label>
-                                <textarea type="text" className="form-control" id="responsabilityStudent" name="responsabilityStudent" rows="5" value={studentTerms} readOnly />
+                                <textarea type="text" className="form-control" id="responsabilityStudent" name="responsabilityStudent" rows="5" value={contract.studentResponsability} readOnly />
                             </div>
                             <h3 className="text-center mt-5">Signatures</h3>
                             <div className="form-group">
                                 <label htmlFor="signatureStudent" className="text-secondary">Signature de l'étudiant : </label>
-                                <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" value={contract.studentSignature !== "" ? contract.studentSignature: ""} readOnly />
+                                <input type="text" className="form-control text-center" id="signatureStudent" name="signatureStudent" value={contract.studentSignature !== "" ? contract.studentSignature : ""} readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
@@ -163,15 +167,19 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                                 <label htmlFor="signatureDateAdmin" className="text-secondary">Date de signature du gestionnaire : </label>
                                 <input type="text" className="form-control text-center" id="signatureDateAdmin" name="signatureDateAdmin" readOnly />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="password" className="text-secondary">Entrez votre mot de passe : </label>
-                                <input type="password" className="form-control text-center" id="password" name="password" disabled={password.isValid} onChange={setContractSignature} />
-                            </div>
+                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
+                                <div className="form-group">
+                                    <label htmlFor="password" className="text-secondary">Entrez votre mot de passe : </label>
+                                    <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isValid} onChange={setContractSignature} />
+                                </div>
+                                : ""}
+                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
+                                <div className="d-flex justify-content-center mt-5">
+                                    <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
+                                </div>
+                                : ""}
                         </div>
                     )}
-                    <div className="d-flex justify-content-center mt-5">
-                        <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                    </div>
                 </form>
             </div>
         </div>
