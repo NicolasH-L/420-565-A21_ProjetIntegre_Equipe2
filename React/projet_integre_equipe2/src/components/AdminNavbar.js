@@ -50,6 +50,9 @@ const AdminNavbar = () => {
                         <li className="nav-item mx-2">
                             <a className="nav-link btn btn-light" onClick={() =>goToAdminInternshipList()}>Ententes de stage</a>
                         </li>
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/AdminAssignSupervisorToStudent">Assigner un superviseur</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
