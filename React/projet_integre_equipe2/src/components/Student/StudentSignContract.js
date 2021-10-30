@@ -9,7 +9,8 @@ const StudentSignContract = () => {
     const historyState = useHistory().location.state
     const [internship, setInternship] = useState(null)
     const baseUrl = "http://localhost:8888"
-    let student 
+    const studentSignatureStatus = "StudentSignature"
+    let student
 
     useEffect(() => {
         if (history !== undefined) {
@@ -28,9 +29,9 @@ const StudentSignContract = () => {
     }
 
     const updateContract = async (contract) => {
-        const result = await fetch(`${baseUrl}/contract/update-contract`,
+        const result = await fetch(`${baseUrl}/contract/save-contract`,
             {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -43,7 +44,7 @@ const StudentSignContract = () => {
         <div className="grad ">
             <StudentNavbar useStudent={historyState} />
             {internship && (
-                <Contract internshipProp={internship} updateMethodContract={updateContract} studentState={historyState} passwordUser={historyState.password}/>
+                <Contract internshipProp={internship} updateMethodContract={updateContract} studentState={historyState} passwordUser={historyState.password} activeStatus={studentSignatureStatus} />
             )}
         </div>
     )
