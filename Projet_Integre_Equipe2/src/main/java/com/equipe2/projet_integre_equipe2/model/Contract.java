@@ -29,6 +29,6 @@ public class Contract implements Serializable {
     private String signatureDateMonitor;
     private String signatureDateAdmin;
 
-    @ManyToOne
+    @OneToOne
     private Internship internship;
 }
