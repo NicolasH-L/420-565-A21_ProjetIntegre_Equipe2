@@ -4,7 +4,6 @@ import com.equipe2.projet_integre_equipe2.model.Contract;
 import com.equipe2.projet_integre_equipe2.repository.ContractRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +21,7 @@ public class ContractService {
         }
     }
 
-    public Optional<List<Contract>> getContractByStudentId(Integer id){
+    public Optional<Contract> getContractByStudentId(Integer id){
         try{
             return Optional.of(contractRepository.findContractByInternship_Student_Id(id));
         } catch (Exception e){
