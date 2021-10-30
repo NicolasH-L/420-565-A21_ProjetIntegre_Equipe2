@@ -1,23 +1,57 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonCol, IonGrid, IonRow, IonInput, IonItem, IonLabel, IonList } from '@ionic/react'
-import { text } from 'ionicons/icons'
-import React from 'react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonCol, IonGrid, IonRow, IonInput, IonItem, IonLabel, IonList, IonToast, IonBadge } from '@ionic/react'
+import { text } from 'ionicons/icons';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import _ from 'lodash';
+import { RegexPattern } from '../RegexPattern';
+import { useForm } from 'react-hook-form';
 
 const StudentAuthRegistration = () => {
+    const [showToastAlert, setShowToastAlert] = useState(false);
     const history = useHistory();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+		mode: "onTouched",
+		reValidateMode: "onChange"
+	});
+
+    const onSubmit = (student: any) => {
+        
+    }
+
+    
 
     return (
-        <form className="ion-padding">
-            <IonItem>
-                <IonLabel position="floating">Username</IonLabel>
-                <IonInput />
-            </IonItem>
-            <IonItem>
-                <IonLabel position="floating">Password</IonLabel>
-                <IonInput type="password" />
-            </IonItem>
-            <IonButton className="ion-margin-top" type="submit" expand="block">S'inscrire</IonButton>
-        </form>
+        <div>
+            <form className="ion-padding" onSubmit={handleSubmit(onSubmit)}>
+                <IonItem>
+                    <IonLabel position="floating">Nom: </IonLabel>
+                    <IonInput type="text"  {...register("lastName", { required: true, pattern: RegexPattern.getPatternName() })}/>
+                    { errors.lastName &&  <IonBadge color="danger">First name is required</IonBadge> }
+                </IonItem>
+                <IonItem>
+                    <IonLabel position="floating">Prénom: </IonLabel>
+                    <IonInput type="text" {...register("firstName", { required: true, pattern: RegexPattern.getPatternName() })}/>
+                    { errors.firstName &&  <IonBadge color="danger">First name is required</IonBadge> }
+                </IonItem>
+                <IonItem>
+                    <IonLabel position="floating">Matricule: </IonLabel>
+                    <IonInput type="text" {...register("matricule", { required: true, pattern: RegexPattern.getPatternMatricule() })}/>
+                    { errors.matricule &&  <IonBadge color="danger">Matricule doit contenir 7 chiffres</IonBadge> }
+                </IonItem>
+                <IonItem>
+                    <IonLabel position="floating">Mot de passe </IonLabel>
+                    <IonInput type="password" {...register("password", { required: true, pattern: RegexPattern.getPatternPassword() })}/>
+                    { errors.password &&  <IonBadge color="danger">First name is required</IonBadge> }
+                </IonItem>
+                <IonButton className="ion-margin-top" type="submit" expand="block">S'inscrire</IonButton>
+            </form>
+            <IonToast 
+                isOpen={showToastAlert}
+                onDidDismiss={() => setShowToastAlert(false)}
+                message="Veuillez remplir tous les champs correctement!"
+                duration={2000}
+            />
+        </div>
     )
 }
 

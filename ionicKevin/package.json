@@ -22,6 +22,7 @@
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^7.18.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
@@ -66,7 +67,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "3.2.5",
-    "@ionic/lab": "3.2.10"
+    "@ionic/lab": "3.2.10",
+    "@types/lodash": "^4.14.176"
   },
   "description": "An Ionic project"
 }
