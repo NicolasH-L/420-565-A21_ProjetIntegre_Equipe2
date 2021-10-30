@@ -37,6 +37,7 @@ const Monitor = () => {
     return (
         < div className="grad">
             <MonitorNavbar />
+            <h2 className="text-center mb-3">Bonjour {monitor.firstName + " " + monitor.lastName}</h2>
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-center mb-3">Statistiques</h2>
