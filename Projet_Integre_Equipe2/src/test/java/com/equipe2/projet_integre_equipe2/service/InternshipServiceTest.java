@@ -64,36 +64,18 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void getListofIntershipsBySupervisorIdTest(){
-        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternshipsBySupervisor());
+    public void testGetListofIntershipsBySupervisorId(){
+        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternships());
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships.get().size()).isEqualTo(3);
         assertThat(allInternships.get().get(0).getIdInternship()).isEqualTo(1);
     }
 
     @Test
-    public void getListofIntershipsBySupervisorIdFailsTest(){
+    public void testGetListofIntershipsBySupervisorIdFails(){
         when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(null);
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships).isEqualTo(Optional.empty());
-    }
-
-    private List<Internship> getListOfInternshipsBySupervisor(){
-        List<Internship> internshipList = new ArrayList<>();
-
-        internshipList.add(Internship.builder()
-                .idInternship(1)
-                .supervisor(null)
-                .build());
-        internshipList.add(Internship.builder()
-                .idInternship(2)
-                .supervisor(null)
-                .build());
-        internshipList.add(Internship.builder()
-                .idInternship(3)
-                .supervisor(null)
-                .build());
-        return internshipList;
     }
 
     @Test
@@ -114,6 +96,7 @@ public class InternshipServiceTest {
     private List<Internship> getListOfInternships() {
         List<Internship> internshipList = new ArrayList<>();
         internshipList.add(internship = Internship.builder()
+                .idInternship(1)
                 .isSignedByStudent(false)
                 .isSignedByMonitor(false)
                 .offer(null)
@@ -121,6 +104,7 @@ public class InternshipServiceTest {
                 .status("StudentSignature")
                 .build());
         internshipList.add(internship = Internship.builder()
+                .idInternship(2)
                 .isSignedByStudent(false)
                 .isSignedByMonitor(false)
                 .offer(null)
@@ -128,6 +112,7 @@ public class InternshipServiceTest {
                 .status(null)
                 .build());
         internshipList.add(internship = Internship.builder()
+                .idInternship(3)
                 .isSignedByStudent(false)
                 .isSignedByMonitor(false)
                 .offer(null)
