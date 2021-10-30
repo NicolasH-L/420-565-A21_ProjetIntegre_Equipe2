@@ -26,7 +26,7 @@ public class SessionTask{
     @Autowired
     private AdminService adminService;
 
-    @Scheduled(cron = "0, 0, 0, 1, *, *")
+    @Scheduled(cron = "0 0 0 1 * *")
     public void verifySession() {
         adminList = adminService.getAllAdmin().get();
         LocalDate date = LocalDate.now();
@@ -42,6 +42,7 @@ public class SessionTask{
                 Admin admin = adminList.get(i);
                 List<String> tempSession = admin.getSessions();
                 tempSession.add(calculatedSession);
+                admin.setActualSession(calculatedSession);
                 adminService.saveAdmin(admin);
             }
         }
