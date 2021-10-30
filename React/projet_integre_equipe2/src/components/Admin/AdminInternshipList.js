@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react'
 const AdminInternshipList = () => {
     const [internships, setInternships] = useState([])
     const history = useHistory()
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     useEffect(() => {
         const getInternships = async () => {
@@ -22,6 +24,10 @@ const AdminInternshipList = () => {
 
     const viewOffer = async (offer) => {
         history.push("/OfferView", offer)
+    }
+
+    const filterInterships = (internship) => {
+        return admin.actualSession === internship.session
     }
 
     return (
@@ -41,7 +47,9 @@ const AdminInternshipList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {internships.map((internship) => (
+                            {internships
+                            .filter(filterInterships)
+                            .map((internship) => (
                                 <tr key={internship.idApplication} className={internship.status == "Valide" ? 'table-success' : 'table-warning'}>
                                     <th>{internship.student.firstName + " " + internship.student.lastName}</th>
                                     <td>{internship.offer.jobTitle}</td>
