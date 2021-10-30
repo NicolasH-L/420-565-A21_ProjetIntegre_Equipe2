@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import _ from 'lodash'
 import AdminNavbar from './AdminNavbar'
-import { useHistory } from "react-router-dom"
 import './Form.css'
 import { RegexPattern } from './RegexPattern'
 
@@ -24,7 +23,7 @@ const AdminInternshipOffer = () => {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     const sessionPrefix = ["winter", "summer"]
-    const lastMothOfTheYear = 11
+    const lastMonthOfTheYear = 11
     const winterStart = 8
     const winterDeadLine = 1
     const summerStart = 2
@@ -81,9 +80,9 @@ const AdminInternshipOffer = () => {
 
         function setOfferSession() {
             let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMothOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMothOfTheYear ? sessionPrefix[0] + sessionYear
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
                 : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
             offer.session = session
         }

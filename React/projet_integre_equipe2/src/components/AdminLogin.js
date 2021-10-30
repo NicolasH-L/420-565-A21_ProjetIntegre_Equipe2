@@ -15,7 +15,7 @@ const AdminLogin = ({ onLogin }) => {
             return
         } else {
             onLogin(admin.username, admin.password) 
-                .then((data) => data.username != null ? history.push("/Admin", data) : alert("Nom d'utilisateur ou mot de passe incorrect"))
+                .then((data) => data.username != null ? history.push("/Admin", {admin: data}) : alert("Nom d'utilisateur ou mot de passe incorrect"))
         }
     }  
 

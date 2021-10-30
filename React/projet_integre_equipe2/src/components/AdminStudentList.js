@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react'
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
     const history = useHistory()
-    const admin = history.location.state
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     useEffect(() => {
         const getStudents = async () => {

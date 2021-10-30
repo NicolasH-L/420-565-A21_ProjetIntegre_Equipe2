@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 const AdminInternshipOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
-    const historyState = history.location.state
+    const admin = history.location.state.admin
 
     useEffect(() => {
         const getOffers = async () => {
@@ -62,7 +62,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const filterOffers = (offer) => {
-        return offer.session == historyState.actualSession
+        return offer.session === admin.actualSession
     }
 
     return (
