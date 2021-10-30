@@ -107,60 +107,16 @@ public class ContractServiceTest {
 
     @Test
     public void testGetContractByStudent_Id() {
-        when(contractRepository.saveAll(getListOfContracts())).thenReturn(getListOfContracts());
-        when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(getListOfContracts());
-        final Optional<List<Contract>> expectedContract = Optional.of(contractRepository.saveAll(getListOfContracts()));
-        final Optional<List<Contract>> contract = contractService.getContractByStudentId(student.getId());
-        assertThat(contract.get().size()).isEqualTo(expectedContract.get().size());
+        when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(contract);
+        Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
+        assertThat(expectedContract.get()).isEqualTo(contract);
     }
 
     @Test
     public void testGetContractByStudent_IdFails() {
-        when(contractRepository.saveAll(getListOfContracts())).thenReturn(getListOfContracts());
         when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(null);
-        contractRepository.saveAll(getListOfContracts());
-        final Optional<List<Contract>> contract = contractService.getContractByStudentId(student.getId());
-        assertThat(contract).isEqualTo(Optional.empty());
+        Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
+        assertThat(expectedContract).isEqualTo(Optional.empty());
     }
 
-    private List<Contract> getListOfContracts() {
-        List<Contract> contractList = new ArrayList<>();
-        contractList.add(Contract.builder()
-                .internship(internship)
-                .collegeResponsability("test")
-                .companyResponsability("tester")
-                .studentResponsability("tdd")
-                .studentSignature("signatureStudent")
-                .monitorSignature("signatureMonitor")
-                .adminSignature("signatureAdmin")
-                .signatureDateStudent("2021-10-25")
-                .signatureDateMonitor("2021-10-25")
-                .signatureDateAdmin("2021-10-25")
-                .build());
-        contractList.add(Contract.builder()
-                .internship(internship)
-                .collegeResponsability("Faire travail")
-                .companyResponsability("Bien faire")
-                .studentResponsability("Conception")
-                .studentSignature("signatureStudent")
-                .monitorSignature("signatureMonitor")
-                .adminSignature("signatureAdmin")
-                .signatureDateStudent("2021-10-25")
-                .signatureDateMonitor("2021-10-25")
-                .signatureDateAdmin("2021-10-25")
-                .build());
-        contractList.add(Contract.builder()
-                .internship(internship)
-                .collegeResponsability("Clean Code")
-                .companyResponsability("Algorithme")
-                .studentResponsability("Respecter critere")
-                .studentSignature("signatureStudent")
-                .monitorSignature("signatureMonitor")
-                .adminSignature("signatureAdmin")
-                .signatureDateStudent("2021-10-25")
-                .signatureDateMonitor("2021-10-25")
-                .signatureDateAdmin("2021-10-25")
-                .build());
-        return  contractList;
-    }
 }
