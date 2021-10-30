@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -20,10 +17,7 @@ public class Contract implements Serializable {
 
     @Id
     @GeneratedValue
-    private Integer idContract;
-
-    @OneToOne
-    private Internship internship;
+    private int idContract;
 
     private String collegeResponsability;
     private String companyResponsability;
@@ -35,4 +29,6 @@ public class Contract implements Serializable {
     private String signatureDateMonitor;
     private String signatureDateAdmin;
 
+    @ManyToOne
+    private Internship internship;
 }
