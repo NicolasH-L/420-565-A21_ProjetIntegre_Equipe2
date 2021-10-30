@@ -1,17 +1,21 @@
-import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge, IonPage, IonRouterOutlet, IonRouterLink, IonContent, IonButton, IonGrid, IonRow, IonCol, IonHeader, IonToolbar } from '@ionic/react'
-import React, { useState } from 'react'
-import { triangle, square } from 'ionicons/icons';
-import { Link, Redirect, Route, useHistory } from 'react-router-dom';
+import { IonPage, IonContent, IonButton, IonGrid, IonRow, IonCol, IonHeader, IonToolbar } from '@ionic/react'
+import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import StudentAuthRegistration from './Student/StudentAuthRegistration';
 import StudentAuthLogin from './Student/StudentAuthLogin';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 
 const StudentAuth = () => {
     const { authType } = useParams<{ authType: string; }>();
     const history = useHistory();
+    const location = useLocation();
     const [showRegistrationForm, setShowRegistrationForm] = useState(false)
     const [showLoginForm, setShowLoginForm] = useState(true)
+
+    useEffect(() => {
+        studentLoginForm();
+    }, [location])
 
     const studentRegistrationForm = () => {
         setShowRegistrationForm(true)

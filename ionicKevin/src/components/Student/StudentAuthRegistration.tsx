@@ -16,7 +16,7 @@ const StudentAuthRegistration = () => {
 
     const onSubmit = (student: any) => {
         addStudent(student)
-        .then((data: any) => data.matricule !== undefined ? history.push("/authentificationPage/studentAuth") : setShowToastAlert(true))
+        .then((data: any) => data.matricule !== undefined ? history.push("/") : setShowToastAlert(true))
         .catch(() => setShowToastAlert(true));
     }
 
@@ -34,6 +34,7 @@ const StudentAuthRegistration = () => {
 
     return (
         <div>
+            <IonTitle className="ion-text-center ion-margin-vertical">Inscription</IonTitle>
             <form className="ion-padding" onSubmit={handleSubmit(onSubmit)}>
                 <IonItem>
                     <IonLabel position="floating">Nom: </IonLabel>
@@ -60,7 +61,7 @@ const StudentAuthRegistration = () => {
             <IonToast 
                 isOpen={showToastAlert}
                 onDidDismiss={() => setShowToastAlert(false)}
-                message="Veuillez remplir tous les champs correctement!"
+                message="Matricule existant!"
                 duration={2000}
             />
         </div>
