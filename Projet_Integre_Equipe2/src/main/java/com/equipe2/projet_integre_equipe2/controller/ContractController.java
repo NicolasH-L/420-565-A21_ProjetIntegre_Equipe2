@@ -16,17 +16,9 @@ public class ContractController {
     private ContractService contractService;
 
     @PostMapping("/save-contract")
-    public ResponseEntity<Contract> saveInternship(@RequestBody Contract contract) {
-        System.out.println(contract);
+    public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
         return contractService.saveContract(contract)
                 .map(contract1 -> ResponseEntity.status(HttpStatus.CREATED).body(contract1))
-                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Contract()));
-    }
-
-    @PutMapping("/update-contract")
-    public ResponseEntity<Contract> updateInternship(@RequestBody Contract contract) {
-        return contractService.saveContract(contract)
-                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Contract()));
     }
 
