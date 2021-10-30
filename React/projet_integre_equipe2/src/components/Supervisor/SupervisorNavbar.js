@@ -19,7 +19,7 @@ const SupervisorNavbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToSupervisorAssignedStudentList()}>Liste de mes étudiants</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToSupervisorAssignedStudentList()}>Mes étudiants</button>
                         </li>
                     </ul>
                 </div>
