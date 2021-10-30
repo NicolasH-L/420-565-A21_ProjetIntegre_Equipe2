@@ -15,10 +15,22 @@ const StudentAuthRegistration = () => {
 	});
 
     const onSubmit = (student: any) => {
-        
+        addStudent(student)
+        .then((data: any) => data.matricule !== undefined ? history.push("/authentificationPage/studentAuth") : setShowToastAlert(true))
+        .catch(() => setShowToastAlert(true));
     }
 
-    
+    const addStudent = async (student: any) => {
+        const result = await fetch('http://localhost:8888/students/register',
+          {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify(student)
+          })
+        return await result.json();
+      }
 
     return (
         <div>
