@@ -141,7 +141,7 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testGetAllValidOffersFails(){
+    public void testGetAllValidOffersFails() {
         when(offerRepository.saveAll(getListOfOffers())).thenReturn(getListOfOffers());
         when(offerRepository.findOffersByIsValidTrue()).thenReturn(null);
         offerRepository.saveAll(getListOfOffers());
@@ -165,6 +165,31 @@ public class OfferServiceTest {
         offerRepository.saveAll(getListOfOffersByMonitor());
         final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
         assertThat(monitorOffers).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetWeeksBetweenDates() {
+        when(offerRepository.save(offer)).thenReturn(offer);
+        final Optional<Offer> actualOffer = offerService.saveOffer(offer);
+        final Integer numberOfWeeks = offerService.getWeeksBetweenDates(offer.getStartInternshipDate(), offer.getEndInternshipDate());
+        assertThat(actualOffer.get()).isEqualTo(offer);
+        assertThat(numberOfWeeks).isEqualTo(8);
+        assertThat(numberOfWeeks).isEqualTo(offer.getWeeksBetweenDates());
+    }
+
+    @Test
+    public void testGetWeeksBetweenDatesFails() {
+        final Offer OFFER2 = Offer.builder()
+                .startInternshipDate(null)
+                .endInternshipDate("2021-10-25")
+                .build();
+
+        when(offerRepository.save(OFFER2)).thenReturn(OFFER2);
+        final Optional<Offer> actualOffer = offerService.saveOffer(OFFER2);
+        final Integer numberOfWeeks = offerService.getWeeksBetweenDates(OFFER2.getStartInternshipDate(), OFFER2.getEndInternshipDate());
+        assertThat(actualOffer.get()).isEqualTo(OFFER2);
+        assertThat(numberOfWeeks).isEqualTo(null);
+        assertThat(numberOfWeeks).isEqualTo(OFFER2.getWeeksBetweenDates());
     }
 
     private List<Offer> getListOfOffers() {
@@ -227,6 +252,6 @@ public class OfferServiceTest {
                 .isValid(true)
                 .monitor(monitor)
                 .build());
-        return  offerList;
+        return offerList;
     }
 }
