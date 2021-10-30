@@ -5,24 +5,23 @@ import { useState, useEffect } from 'react'
 
 const SupervisorAssignedStudentList = () => {
     const [interships, setInterships] = useState([])
-    const [matriculeSuperviseur, setMatriculeSuperviseur] = useState()
     const history = useHistory()
     const historyState = history.location.state
 
     useEffect(() => {
         if (historyState === undefined)
             return
-        setMatriculeSuperviseur(historyState.matricule)
+        const idSuperviseur = historyState.id
         const getInternships = async () => {
-            const internshipsFromServer = await fetchInternships(matriculeSuperviseur)
+            const internshipsFromServer = await fetchInternships(idSuperviseur)
             setInterships(internshipsFromServer)
         }
         getInternships()
     }, [])
 
 
-    const fetchInternships = async (matriculeSuperviseur) => {
-        const res = await fetch(`http://localhost:8888/internship/get-all-internships-by-supervisor/${matriculeSuperviseur}`)
+    const fetchInternships = async (idSuperviseur) => {
+        const res = await fetch(`http://localhost:8888/internship/get-all-internships-by-supervisor/${idSuperviseur}`)
         return await res.json()
     }
 
