@@ -2,7 +2,6 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.service.ContractService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,35 +109,18 @@ public class ContractControllerTest {
     }
 
     @Test
-    public void getAllContractByStudent_Id() throws Exception {
-        when(contractService.getContractByStudentId(student.getId())).thenReturn(Optional.of(getListOfContracts()));
+    public void getContractByStudent_Id() throws Exception {
+        when(contractService.getContractByStudentId(student.getId())).thenReturn(Optional.of(contract));
 
         MvcResult result = mockMvc.perform(get("/contract/get-contract/" + student.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         var actualsContract = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
-                new TypeReference<List<Contract>>() {
-                });
+                Contract.class);
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualsContract.size()).isEqualTo(1);
+        assertThat(actualsContract).isEqualTo(contract);
     }
 
-    private List<Contract> getListOfContracts() {
-        List<Contract> contractList = new ArrayList<>();
-        contractList.add(Contract.builder()
-                .internship(internship)
-                .collegeResponsability("test")
-                .companyResponsability("tester")
-                .studentResponsability("tdd")
-                .studentSignature("signatureStudent")
-                .monitorSignature("signatureMonitor")
-                .adminSignature("signatureAdmin")
-                .signatureDateStudent("2021-10-25")
-                .signatureDateMonitor("2021-10-25")
-                .signatureDateAdmin("2021-10-25")
-                .build());
-        return contractList;
-    }
 }
