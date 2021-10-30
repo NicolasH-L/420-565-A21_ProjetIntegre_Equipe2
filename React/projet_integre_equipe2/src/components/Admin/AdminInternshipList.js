@@ -50,15 +50,15 @@ const AdminInternshipList = () => {
                             {internships
                             .filter(filterInterships)
                             .map((internship) => (
-                                <tr key={internship.idApplication} className={internship.status == "Valide" ? 'table-success' : 'table-warning'}>
+                                <tr key={internship.idInternship} className={internship.status == "Valide" ? 'table-success' : 'table-warning'}>
                                     <th>{internship.student.firstName + " " + internship.student.lastName}</th>
                                     <td>{internship.offer.jobTitle}</td>
                                     <td>{internship.offer.companyName}</td>
                                     <td>
-                                        {internship.status == "StudentSignature" ? "En attente : Signature étudiant"
-                                            : internship.status == "MonitorSignature" ? "En attente : Signature moniteur"
-                                            : internship.status == "AdminSignature" ? "En attente : Siganture gestionnaire" 
-                                            : internship.status == "Valide" ? "Valide" : "Erreur"}
+                                        {internship.status === "StudentSignature" ? "En attente : Signature étudiant"
+                                            : internship.status === "MonitorSignature" ? "En attente : Signature moniteur"
+                                            : internship.status === "AdminSignature" ? "En attente : Siganture gestionnaire" 
+                                            : internship.status === "Valide" ? "Valide" : "Erreur"}
                                     </td>
                                     <td className="w-25">
                                         <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>

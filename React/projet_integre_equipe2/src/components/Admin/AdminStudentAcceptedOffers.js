@@ -7,9 +7,16 @@ const AdminStudentAcceptedOffers = () => {
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({
         isSignedByStudent: false, isSignedByMonitor: false, status: "",
-        offer: undefined, student: undefined
+        offer: undefined, student: undefined, session: ""
     })
     const history = useHistory()
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
 
     useEffect(() => {
         const getAcceptedOffers = async () => {
@@ -32,6 +39,7 @@ const AdminStudentAcceptedOffers = () => {
         internship.offer = acceptedOffer.offer
         internship.student = acceptedOffer.student
         internship.status = "StudentSignature"
+        setInternshipSession()
         const res = await fetch('http://localhost:8888/internship/save-internship',
             {
                 method: 'POST',
@@ -45,6 +53,15 @@ const AdminStudentAcceptedOffers = () => {
         confirmStudentOfferInternship(acceptedOffer)
 
         return data
+    }
+
+    const setInternshipSession = () => {
+        let sessionDate = new Date()
+        let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+        let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+        let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+            : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+        internship.session = session
     }
 
     const confirmStudentOfferInternship = async (acceptedOffer) => {
