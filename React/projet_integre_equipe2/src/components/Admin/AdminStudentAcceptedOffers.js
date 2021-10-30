@@ -9,6 +9,9 @@ const AdminStudentAcceptedOffers = () => {
         isSignedByStudent: false, isSignedByMonitor: false, status: "",
         offer: undefined, student: undefined
     })
+    const [contract, setContract] = useState({
+        internship: undefined
+    })
     const history = useHistory()
 
     useEffect(() => {
@@ -41,10 +44,23 @@ const AdminStudentAcceptedOffers = () => {
                 body: JSON.stringify(internship)
             })
         const data = await res.json()
-        
         confirmStudentOfferInternship(acceptedOffer)
-
         return data
+    }
+
+    const createContract = async () => {
+        contract.internship = internship
+        console.log(contract.internship)
+        const res = await fetch('http://localhost:8888/contract/save-contract',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        const data = await res.json()
+        alert("Processus de signature commencé")
     }
 
     const confirmStudentOfferInternship = async (acceptedOffer) => {
@@ -59,11 +75,11 @@ const AdminStudentAcceptedOffers = () => {
             })
         const data = await res.json()
 
-        setAcceptedOffers(
-            acceptedOffers.map(
-                (offer1) => offer1.idStudentOffer === acceptedOffer.idStudentOffer ? {...offer1, isInternshipStarted: data.isInternshipStarted} : offer1
-            )
-        )
+        // setAcceptedOffers(
+        // acceptedOffers.map(
+        //     (offer1) => offer1.idStudentOffer === acceptedOffer.idStudentOffer ? { ...offer1, isInternshipStarted: data.isInternshipStarted } : offer1
+        // )
+        // )
     }
 
     const filterAcceptedOffers = (acceptedOffer) => {
@@ -87,25 +103,26 @@ const AdminStudentAcceptedOffers = () => {
                         </thead>
                         <tbody>
                             {acceptedOffers
-                            .filter(filterAcceptedOffers)
-                            .map((acceptedOffer) => (
-                                <tr key={acceptedOffer.idStudentOffer}>
-                                    <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
-                                    <td>{acceptedOffer.student.matricule}</td>
-                                    <td>{acceptedOffer.offer.jobTitle}</td>
-                                    <td className="w-25">
-                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}>Consulter</button>
-                                        <button className="btn btn-success mx-2"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                startSigningProcess(acceptedOffer)
-                                                    .then((data) => data.student == null ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : alert("Processus de signature commencé"))
-                                            }}>
-                                            Débuter signatures
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                                // .filter(filterAcceptedOffers)
+                                .map((acceptedOffer) => (
+                                    <tr key={acceptedOffer.idStudentOffer}>
+                                        <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
+                                        <td>{acceptedOffer.student.matricule}</td>
+                                        <td>{acceptedOffer.offer.jobTitle}</td>
+                                        <td className="w-25">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}>Consulter</button>
+                                            <button className="btn btn-success mx-2"
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    startSigningProcess(acceptedOffer)
+                                                        .then((data) => data.student == null ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : createContract())
+                                                    // createContract(contract)
+                                                }}>
+                                                Débuter signatures
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
