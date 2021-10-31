@@ -26,19 +26,19 @@ interface ComptePage {
 const comptePages: ComptePage[] = [
   {
     title: 'Compte étudiant',
-    url: '/authentificationPage/studentAuth',
+    url: '/authentificationPage/studentAuth'
   },
   {
     title: 'Compte superviseur',
-    url: '/authentificationPage/supervisorAuth',
+    url: '/authentificationPage/supervisorAuth'
   },
   {
     title: 'Compte moniteur',
-    url: '/authentificationPage/monitorAuth',
+    url: '/authentificationPage/monitorAuth'
   },
   {
     title: 'Compte gestionnaire',
-    url: '/authentificationPage/adminAuth',
+    url: '/authentificationPage/adminAuth'
   }
 ];
 

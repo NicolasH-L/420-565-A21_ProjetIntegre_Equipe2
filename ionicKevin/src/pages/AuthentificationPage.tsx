@@ -16,6 +16,11 @@ const AuthentificationPage = () => {
                     <IonButtons slot="start">
                         <IonMenuButton />
                     </IonButtons>
+                    <IonTitle>{userAuth === "studentAuth" ? "Étudiant"
+                        : userAuth === "supervisorAuth" ? "Superviseur"
+                        : userAuth === "monitorAuth" ? "Moniteur"
+                        : userAuth === "adminAuth" ? "Admin" : ""}
+                    </IonTitle>
                 </IonToolbar>
             </IonHeader>
 
@@ -25,10 +30,10 @@ const AuthentificationPage = () => {
                         <IonTitle size="large">Menu</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {userAuth === "studentAuth" ? <><StudentAuth/></> 
-                : userAuth === "supervisorAuth" ? <><SupervisorAuth/></> 
-                : userAuth === "monitorAuth" ? <><MonitorAuth/></> 
-                : userAuth === "adminAuth" ? <><AdminAuth/></> : <><StudentAuth/></>}
+                {userAuth === "studentAuth" ? <><StudentAuth /></>
+                    : userAuth === "supervisorAuth" ? <><SupervisorAuth /></>
+                        : userAuth === "monitorAuth" ? <><MonitorAuth /></>
+                            : userAuth === "adminAuth" ? <><AdminAuth /></> : <><StudentAuth /></>}
             </IonContent>
         </IonPage>
     )
