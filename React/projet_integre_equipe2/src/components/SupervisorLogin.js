@@ -15,7 +15,7 @@ const SupervisorLogin = ({ onLogin }) => {
             return
         } else {
             onLogin(supervisor.matricule, supervisor.password)
-                .then((data) => data.matricule != null ? history.push("/Supervisor", supervisor) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? history.push("/Supervisor", {supervisor: data}) : alert("Erreur de matricule ou mot de passe"))
                 .catch((err) => console.log(err))
         }
     }
