@@ -50,12 +50,15 @@ const Monitor = () => {
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
                     <div className="container-fluid">
-                        {offers.offerList.map((offer) => (
-                            <div key={offer.idOffer}>
-                                <p className="font-weight-bold">{offer.companyName} - {offer.jobTitle}: <a className="btn btn-link" onClick={(e) => goToMonitorStudentList(offer.idOffer)}> candidatures: {offers.studentNumbers.get(offer.idOffer)}</a></p>
-                            </div>
-                        ))}
-                        <a className="btn btn-link" onClick={goToMonitorOfferList}>Nombre d'offres déposées: {offers.offerList.length}</a>
+                        <ul className="list-group">
+                            {offers.offerList.map((offer) => (
+                                <div key={offer.idOffer} className="list-group-item list-group-item-action">
+                                    <p className="font-weight-bold text-secondary">{offer.companyName} - {offer.jobTitle}</p>
+                                    <a href="#" className="text-decoration-none" onClick={(e) => { e.preventDefault(); goToMonitorStudentList(offer.idOffer) }}>Nombre d'étudiants intéressés: <span className="badge badge-secondary badge-pill">{offers.studentNumbers.get(offer.idOffer)}</span> </a>
+                                </div>
+                            ))}
+                            <a href="#" className="list-group-item list-group-item-action text-primary" onClick={(e) => { e.preventDefault(); goToMonitorOfferList() }}>Nombre d'offres déposées: <span className="badge badge-primary badge-pill">{offers.offerList.length}</span></a>
+                        </ul>
                     </div>
                 </div>
             </div>
