@@ -34,6 +34,14 @@ const Monitor = () => {
         return await res.json()
     }
 
+    function goToMonitorOfferList() {
+        history.push("/MonitorOfferList", monitor)
+    }
+
+    function goToMonitorStudentList(idOffer) {
+        history.push(`/MonitorStudentList/${idOffer}`, monitor)
+    }
+
     return (
         < div className="grad">
             <MonitorNavbar />
@@ -44,14 +52,13 @@ const Monitor = () => {
                     <div className="container-fluid">
                         {offers.offerList.map((offer) => (
                             <div key={offer.idOffer}>
-                                <p>{offer.companyName} - {offer.jobTitle}: Candidatures: {offers.studentNumbers.get(offer.idOffer)} </p>
+                                <p className="font-weight-bold">{offer.companyName} - {offer.jobTitle}: <a className="btn btn-link" onClick={(e) => goToMonitorStudentList(offer.idOffer)}> candidatures: {offers.studentNumbers.get(offer.idOffer)}</a></p>
                             </div>
                         ))}
-                        <p>Nombre d'offres déposées: {offers.offerList.length}</p>
+                        <a className="btn btn-link" onClick={goToMonitorOfferList}>Nombre d'offres déposées: {offers.offerList.length}</a>
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
