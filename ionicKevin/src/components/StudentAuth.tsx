@@ -7,8 +7,6 @@ import { useLocation, useParams } from 'react-router';
 
 
 const StudentAuth = () => {
-    const { authType } = useParams<{ authType: string; }>();
-    const history = useHistory();
     const location = useLocation();
     const [showRegistrationForm, setShowRegistrationForm] = useState(false)
     const [showLoginForm, setShowLoginForm] = useState(true)

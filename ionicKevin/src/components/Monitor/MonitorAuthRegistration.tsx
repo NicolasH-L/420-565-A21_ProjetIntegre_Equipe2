@@ -1,34 +1,33 @@
-import { IonTitle, IonButton, IonInput, IonItem, IonLabel, IonToast, IonBadge } from '@ionic/react'
-import { text } from 'ionicons/icons';
-import { useState } from 'react';
+import { IonBadge, IonButton, IonInput, IonItem, IonLabel, IonTitle, IonToast } from '@ionic/react';
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { RegexPattern } from '../RegexPattern';
-import { useForm } from 'react-hook-form';
 
-const StudentAuthRegistration = () => {
+const MonitorAuthRegistration = () => {
     const [showToastAlert, setShowToastAlert] = useState(false);
     const history = useHistory();
     const { register, handleSubmit, formState: { errors } } = useForm({
 		mode: "onTouched",
 		reValidateMode: "onChange"
 	});
-
-    const onSubmit = (student: any) => {
-        addStudent(student)
-        .then((data: any) => data.matricule !== undefined ? history.push("/authentificationPage/studentAuth") : setShowToastAlert(true))
+    
+    const onSubmit = (monitor: any) => {
+        addMonitor(monitor)
+        .then((data: any) => data.email !== undefined ? history.push("/authentificationPage/monitorAuth") : setShowToastAlert(true))
         .catch(() => setShowToastAlert(true));
     }
 
-    const addStudent = async (student: any) => {
-        const result = await fetch('http://localhost:8888/students/register',
+    const addMonitor = async (monitor: any) => {
+        const result = await fetch('http://localhost:8888/monitors/register',
           {
             method: 'POST',
             headers: {
               'Content-type': 'application/json'
             },
-            body: JSON.stringify(student)
+            body: JSON.stringify(monitor)
           })
-        return await result.json();
+        return await result.json()
       }
 
     return (
@@ -46,9 +45,14 @@ const StudentAuthRegistration = () => {
                     { errors.firstName &&  <IonBadge color="danger">Prénom invalide</IonBadge> }
                 </IonItem>
                 <IonItem>
-                    <IonLabel position="floating">Matricule: </IonLabel>
-                    <IonInput type="text" {...register("matricule", { required: true, pattern: RegexPattern.getPatternMatricule() })}/>
-                    { errors.matricule &&  <IonBadge color="danger">Matricule doit contenir 7 chiffres</IonBadge> }
+                    <IonLabel position="floating">Nom de l'entreprise: </IonLabel>
+                    <IonInput type="text" {...register("companyName", { required: true, pattern: RegexPattern.getPatternCompany() })}/>
+                    { errors.companyName &&  <IonBadge color="danger">Nom de l'entreprise invalide</IonBadge> }
+                </IonItem>
+                <IonItem>
+                    <IonLabel position="floating">Courriel: </IonLabel>
+                    <IonInput type="text" {...register("email", { required: true, pattern: RegexPattern.getPatternEmail() })}/>
+                    { errors.email &&  <IonBadge color="danger">Courriel invalide</IonBadge> }
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Mot de passe </IonLabel>
@@ -67,4 +71,4 @@ const StudentAuthRegistration = () => {
     )
 }
 
-export default StudentAuthRegistration
+export default MonitorAuthRegistration
