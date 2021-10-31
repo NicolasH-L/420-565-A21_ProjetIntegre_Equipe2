@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const AdminNavbar = () => {
     return (
@@ -11,6 +11,9 @@ const AdminNavbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
+                        <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/Admin"><i className="fas fa-home fa-lg"></i></Link>
+                        </li>
                         <li className="nav-item mx-2">
                             <Link className="nav-link btn btn-light" to="/AdminOffer">Déposer offre</Link>
                         </li>

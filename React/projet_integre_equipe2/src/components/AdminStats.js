@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 const AdminStats = () => {
     const [students, setStudents] = useState([])
     const [offers, setOffers] = useState([])
     const [documents, setDocuments] = useState([])
     const [validStudentsCount, setValidStudentsCount] = useState(0)
+    const history = useHistory()
 
     useEffect(() => {
         const getAllStudents = async () => {
@@ -45,6 +47,14 @@ const AdminStats = () => {
         return await res.json()
     }
 
+    function goToAdminStudentList() {
+        history.push("/AdminStudentList", {})
+    }
+
+    function goToAdminOffersList() {
+        history.push("/AdminOffersList", {})
+    }
+
     return (
         <div>
             <h2 className="text-center mb-3">Bonjour</h2>
@@ -53,10 +63,10 @@ const AdminStats = () => {
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
                     <div className="container-fluid">
                         <ul className="list-group">
-                            <a href="#" className="list-group-item list-group-item-action">Nombre d'étudiants inscrits: <span className="badge badge-primary badge-pill">{students.length}</span> </a>
-                            <a href="#" className="list-group-item list-group-item-action">Nombre de CV non-valides: <span className="badge badge-danger badge-pill">{documents.length}</span> </a>
-                            <a href="#" className="list-group-item list-group-item-action">Nombre d'offres téléversées: <span className="badge badge-primary badge-pill">{offers.length}</span> </a>
-                            <a href="#" className="list-group-item list-group-item-action">Nombre d'étudiants valides: <span className="badge badge-success badge-pill">{validStudentsCount}</span> </a>
+                            <a href="#" className="list-group-item list-group-item-action text-primary" onClick={(e) => { e.preventDefault(); goToAdminStudentList() }}>Nombre d'étudiants inscrits: <span className="badge badge-primary badge-pill">{students.length}</span> </a>
+                            <a href="#" className="list-group-item list-group-item-action text-primary" onClick={(e) => { e.preventDefault(); goToAdminStudentList() }}>Nombre de CV non-valides: <span className="badge badge-danger badge-pill">{documents.length}</span> </a>
+                            <a href="#" className="list-group-item list-group-item-action text-primary" onClick={(e) => { e.preventDefault(); goToAdminOffersList() }}>Nombre d'offres téléversées: <span className="badge badge-primary badge-pill">{offers.length}</span> </a>
+                            <a href="#" className="list-group-item list-group-item-action text-primary" onClick={(e) => { e.preventDefault(); goToAdminStudentList() }}>Nombre d'étudiants valides: <span className="badge badge-success badge-pill">{validStudentsCount}</span> </a>
                         </ul>
                     </div>
                 </div>
