@@ -1,10 +1,12 @@
 import React from 'react'
-import AdminInternshipOfferList from './AdminInternshipOfferList'
+import AdminNavbar from './AdminNavbar'
+import AdminStats from './AdminStats'
 
 const Admin = () => {
     return (
         <div className="grad">
-            <AdminInternshipOfferList/>
+            <AdminNavbar/>
+            <AdminStats/>
         </div>
     )
 }

@@ -48,7 +48,7 @@ const Monitor = () => {
             <h2 className="text-center mb-3">Bonjour {monitor.firstName + " " + monitor.lastName}</h2>
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
-                    <h2 className="text-center mb-3">Statistiques</h2>
+                    <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
                     <div className="container-fluid">
                         {offers.offerList.map((offer) => (
                             <div key={offer.idOffer}>
