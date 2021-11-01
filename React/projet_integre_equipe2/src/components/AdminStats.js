@@ -24,7 +24,7 @@ const AdminStats = () => {
         }
         const getAllInvalidDocuments = async () => {
             const documentsFromServer = await fetchAllDocuments()
-            setDocuments(documentsFromServer.filter((document) => document.isValid === false))
+            setDocuments(documentsFromServer.filter((document) => document.isValid === false && document.isRefused === true))
         }
         getAllStudents()
         getAllOffers()
