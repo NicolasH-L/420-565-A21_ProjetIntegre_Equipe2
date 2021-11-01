@@ -23,7 +23,7 @@ const MonitorAuthLogin = () => {
 
     return (
         <div>
-            <IonTitle className="ion-text-center ion-margin-vertical">Inscription</IonTitle>
+            <IonTitle className="ion-text-center ion-margin-vertical">Connexion</IonTitle>
             <form className="ion-padding" onSubmit={handleSubmit(onSubmit)}>
                 <IonItem>
                     <IonLabel position="floating">Courriel: </IonLabel>
