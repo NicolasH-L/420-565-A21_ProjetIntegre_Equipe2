@@ -2,7 +2,6 @@ import { IonBadge, IonButton, IonInput, IonItem, IonLabel, IonTitle, IonToast } 
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { RegexPattern } from '../RegexPattern';
 
 const SupervisorAuthLogin = () => {
     const [showToastAlert, setShowToastAlert] = useState(false);
@@ -41,7 +40,7 @@ const SupervisorAuthLogin = () => {
             <IonToast 
                 isOpen={showToastAlert}
                 onDidDismiss={() => setShowToastAlert(false)}
-                message="Matricule existant!"
+                message="Erreur dans les identifiants!"
                 duration={2000}
             />
         </div>

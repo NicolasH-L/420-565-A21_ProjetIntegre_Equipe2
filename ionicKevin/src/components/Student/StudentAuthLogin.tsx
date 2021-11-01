@@ -2,7 +2,6 @@ import { IonTitle, IonButton, IonInput, IonItem, IonLabel, IonToast, IonBadge } 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { RegexPattern } from '../RegexPattern';
 
 const StudentAuthLogin = () => {
     const [showToastAlert, setShowToastAlert] = useState(false);
