@@ -13,13 +13,13 @@ const AuthentificationPage = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons slot="start">
+                    <IonButtons slot="start" className="ion-margin-top">
                         <IonMenuButton />
                     </IonButtons>
-                    <IonTitle>{userAuth === "studentAuth" ? "Étudiant"
+                    <IonTitle className="ion-margin-top">{userAuth === "studentAuth" ? "Étudiant"
                         : userAuth === "supervisorAuth" ? "Superviseur"
                         : userAuth === "monitorAuth" ? "Moniteur"
-                        : userAuth === "adminAuth" ? "Admin" : ""}
+                        : userAuth === "adminAuth" ? "Gestionnaire" : ""}
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
