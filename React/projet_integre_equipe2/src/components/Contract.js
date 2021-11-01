@@ -16,7 +16,8 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
     const adminSignatureStatus = "AdminSignature"
 
     useEffect(() => {
-        setContractState({ ...contractState, userPassword: passwordUser })
+        // setContractState({ ...contractState, userPassword: passwordUser })
+        contractState.userPassword = passwordUser
         student.id = studentState.id
         setContractState({...contractState, currentStatus : activeStatus})
         console.log(contractState.currentStatus == activeStatus)
@@ -68,8 +69,6 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
     const getToday = () => {
         return new Date().toLocaleString("en-CA", { year: "numeric", month: "numeric", day: "numeric" })
     }
-
-    const showSubmitButton = () => { }
 
     return (
         <div className="d-flex justify-content-center my-5 py-2">
@@ -173,11 +172,11 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                                     <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isValid} onChange={setContractSignature} />
                                 </div>
                                 : ""}
-                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
+                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status && contractState.password === null?
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>
-                                : ""}
+                                : <strong className="text-success">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>}
                         </div>
                     )}
                 </form>
