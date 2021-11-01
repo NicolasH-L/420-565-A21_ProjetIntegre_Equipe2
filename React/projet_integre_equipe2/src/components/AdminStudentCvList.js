@@ -43,6 +43,14 @@ const AdminStudentCvList = () => {
             )
         )
     }
+    const displayButtons = (document) => {
+        return (
+            <>
+                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, true) }}>Valider</button>
+                <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>Refuser</button>
+            </>
+        )
+    }
 
     return (
         <div className="grad">
@@ -65,12 +73,7 @@ const AdminStudentCvList = () => {
                                 <th>{document.documentName}</th>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
-                                    {!document.isValid && !document.isRefused ?
-                                        <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, true) }}>Valider</button>
-                                        : ""}
-                                    {!document.isValid && !document.isRefused ?
-                                        <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>Refuser</button>
-                                        : ""}
+                                    {!document.isValid && !document.isRefused ? displayButtons(document) : ""}
                                 </td>
                             </tr>
                         ))}
