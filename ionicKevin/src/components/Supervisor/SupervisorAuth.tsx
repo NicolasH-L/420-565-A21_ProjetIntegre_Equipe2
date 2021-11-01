@@ -1,24 +1,24 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonToolbar } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonContent, IonGrid, IonRow, IonCol, IonButton } from '@ionic/react';
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import MonitorAuthLogin from './Monitor/MonitorAuthLogin';
-import MonitorAuthRegistration from './Monitor/MonitorAuthRegistration';
+import SupervisorAuthLogin from './SupervisorAuthLogin';
+import SupervisorAuthRegistration from './SupervisorAuthRegistration';
 
-const MonitorAuth = () => {
+const SupervisorAuth = () => {
     const location = useLocation();
     const [showRegistrationForm, setShowRegistrationForm] = useState(false)
     const [showLoginForm, setShowLoginForm] = useState(true)
 
     useEffect(() => {
-        monitorLoginForm();
+        supervisorLoginForm();
     }, [location])
 
-    const monitorRegistrationForm = () => {
+    const supervisorRegistrationForm = () => {
         setShowRegistrationForm(true)
         setShowLoginForm(false)
     }
 
-    const monitorLoginForm = () => {
+    const supervisorLoginForm = () => {
         setShowRegistrationForm(false)
         setShowLoginForm(true)
     }
@@ -32,18 +32,18 @@ const MonitorAuth = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol>
-                            <IonButton color="light" onClick={e => { e.preventDefault(); monitorLoginForm() }}>Connexion</IonButton>
+                            <IonButton color="light" onClick={e => { e.preventDefault(); supervisorLoginForm() }}>Connexion</IonButton>
                         </IonCol>
                         <IonCol>
-                            <IonButton color="light" onClick={e => { e.preventDefault(); monitorRegistrationForm() }}>Inscription</IonButton>
+                            <IonButton color="light" onClick={e => { e.preventDefault(); supervisorRegistrationForm() }}>Inscription</IonButton>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-                {showRegistrationForm ? <MonitorAuthRegistration/>
-                    : showLoginForm ? <MonitorAuthLogin /> : ""}
+                {showRegistrationForm ? <SupervisorAuthRegistration />
+                    : showLoginForm ? <SupervisorAuthLogin /> : ""}
             </IonContent>
         </IonPage>
     )
 }
 
-export default MonitorAuth
+export default SupervisorAuth

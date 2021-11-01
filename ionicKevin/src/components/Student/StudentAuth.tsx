@@ -1,8 +1,8 @@
 import { IonPage, IonContent, IonButton, IonGrid, IonRow, IonCol, IonHeader, IonToolbar } from '@ionic/react'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import StudentAuthRegistration from './Student/StudentAuthRegistration';
-import StudentAuthLogin from './Student/StudentAuthLogin';
+import StudentAuthRegistration from './StudentAuthRegistration';
+import StudentAuthLogin from './StudentAuthLogin';
 import { useLocation, useParams } from 'react-router';
 
 

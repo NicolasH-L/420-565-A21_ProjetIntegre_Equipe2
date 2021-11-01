@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonToolbar } from '@ionic/react';
-import AdminAuthLogin from './Admin/AdminAuthLogin';
+import AdminAuthLogin from './AdminAuthLogin';
 
 const AdminAuth = () => {
     return (

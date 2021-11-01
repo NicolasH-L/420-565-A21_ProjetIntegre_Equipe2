@@ -1,9 +1,9 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { useParams } from 'react-router';
-import AdminAuth from '../components/AdminAuth';
-import MonitorAuth from '../components/MonitorAuth';
-import StudentAuth from '../components/StudentAuth';
-import SupervisorAuth from '../components/SupervisorAuth';
+import AdminAuth from '../components/Admin/AdminAuth';
+import MonitorAuth from '../components/Monitor/MonitorAuth';
+import StudentAuth from '../components/Student/StudentAuth';
+import SupervisorAuth from '../components/Supervisor/SupervisorAuth';
 
 const AuthentificationPage = () => {
     const { userAuth } = useParams<{ userAuth: string; }>();

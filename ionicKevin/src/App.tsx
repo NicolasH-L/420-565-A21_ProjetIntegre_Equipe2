@@ -22,8 +22,8 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Menu from './components/Menu';
 import AuthentificationPage from './pages/AuthentificationPage';
-import StudentAccount from './components/StudentAuth';
-import StudentAuth from './components/StudentAuth';
+import StudentAccount from './components/Student/StudentAuth';
+import StudentAuth from './components/Student/StudentAuth';
 
 const App: React.FC = () => (
   <IonApp>
