@@ -47,4 +47,11 @@ public class DocumentController {
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("document/get-all-documents")
+    public ResponseEntity<List<Document>> getAllDocuments() {
+        return documentService.getAllDocuments()
+                .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

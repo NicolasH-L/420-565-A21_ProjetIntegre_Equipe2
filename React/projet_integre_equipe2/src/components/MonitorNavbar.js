@@ -10,6 +10,9 @@ const MonitorNavbar = () => {
     function goToMonitorOfferList() {
         history.push("/MonitorOfferList", historyState)
     }
+    function goToMonitorDashboard() {
+        history.push("/Monitor", historyState)
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -19,6 +22,9 @@ const MonitorNavbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMonitorDashboard}><i className="fas fa-home fa-lg"></i></button>
+                        </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOffer}>Déposer offre</button>
                         </li>

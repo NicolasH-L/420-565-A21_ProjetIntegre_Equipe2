@@ -5,6 +5,7 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,7 +91,7 @@ public class DocumentControllerTest {
 
         MvcResult result = mockMvc.perform(get("/document/get-all-documents/{idStudent}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                        .andReturn();
+                .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -102,7 +103,7 @@ public class DocumentControllerTest {
         document.setIsValid(true);
         when(documentService.updateDocumentStatus(document.getIdDocument(), true)).thenReturn(Optional.of(document));
 
-        MvcResult result = mockMvc.perform(put("/document/update-document/"+document.getIdDocument()+"/status/"+document.getIsValid())
+        MvcResult result = mockMvc.perform(put("/document/update-document/" + document.getIdDocument() + "/status/" + document.getIsValid())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(document))).andReturn();
 
@@ -114,11 +115,11 @@ public class DocumentControllerTest {
     }
 
     @Test
-    public void updateDocumentFalseTest() throws Exception{
+    public void updateDocumentFalseTest() throws Exception {
         document.setIsRefused(true);
         when(documentService.updateDocumentStatus(document.getIdDocument(), false)).thenReturn(Optional.of(document));
 
-        MvcResult result = mockMvc.perform(put("/document/update-document/"+document.getIdDocument()+"/status/"+document.getIsValid())
+        MvcResult result = mockMvc.perform(put("/document/update-document/" + document.getIdDocument() + "/status/" + document.getIsValid())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(document))).andReturn();
 
@@ -166,6 +167,20 @@ public class DocumentControllerTest {
         assertThat(actuals.size()).isEqualTo(2);
     }
 
+    @Test
+    public void getAllDocumentsTest() throws Exception {
+        List<Document> documentList = getListOfDocuments();
+        when(documentService.getAllDocuments()).thenReturn(Optional.of(documentList));
+
+        MvcResult result = mockMvc.perform(get("/document/get-all-documents")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
+                new TypeReference<List<Document>>() {});
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
     private List<Document> getListOfDocumentsByStudent() {
         List<Document> documentList = new ArrayList<>();
         documentList.add(Document.builder()
@@ -182,6 +197,29 @@ public class DocumentControllerTest {
                 .student(null)
                 .build());
 
+        return documentList;
+    }
+
+    private List<Document> getListOfDocuments() {
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .documentName("cv1")
+                .isValid(false)
+                .data(null)
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("cv2")
+                .isValid(true)
+                .data(null)
+                .student(null)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("cv3")
+                .isValid(true)
+                .data(null)
+                .student(null)
+                .build());
         return documentList;
     }
 }
