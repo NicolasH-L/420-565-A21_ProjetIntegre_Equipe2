@@ -38,6 +38,7 @@ public class SupervisorControllerTest {
     @BeforeEach
     void setup() {
         supervisor = Supervisor.supervisorBuilder()
+                .id(1)
                 .firstName("toto")
                 .lastName("toto")
                 .matricule("1234567")
@@ -88,18 +89,21 @@ public class SupervisorControllerTest {
     private List<Supervisor> getListOfSupervisors(){
         List<Supervisor> supervisorList = new ArrayList<>();
         supervisorList.add(Supervisor.supervisorBuilder()
+                .id(1)
                 .firstName("John")
                 .lastName("Doe")
                 .matricule("1234567")
                 .password("password")
                 .build());
         supervisorList.add(Supervisor.supervisorBuilder()
+                .id(2)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("7654321")
                 .password("password")
                 .build());
         supervisorList.add(Supervisor.supervisorBuilder()
+                .id(3)
                 .firstName("Pipo")
                 .lastName("Tito")
                 .matricule("1234569")
