@@ -39,4 +39,12 @@ public class InternshipService {
             return Optional.empty();
         }
     }
+    public Optional<List<Internship>> getAllInternshipBySupervisorId(Integer idSupervisor){
+        try{
+            return Optional.of(internshipRepository.findInternshipsBySupervisor_Id(idSupervisor));
+        } catch(Exception e){
+            return Optional.empty();
+        }
+    }
+
 }

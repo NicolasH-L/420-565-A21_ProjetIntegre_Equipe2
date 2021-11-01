@@ -3,10 +3,13 @@ package com.equipe2.projet_integre_equipe2.controller;
 import com.equipe2.projet_integre_equipe2.model.Internship;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.model.Supervisor;
+import com.equipe2.projet_integre_equipe2.repository.SupervisorRepository;
 import com.equipe2.projet_integre_equipe2.service.InternshipService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +35,9 @@ public class InternshipControllerTest {
 
     @MockBean
     private InternshipService internshipService;
+
+    @Mock
+    private SupervisorRepository supervisorRepository;
 
     private Internship internship;
 
@@ -127,6 +133,29 @@ public class InternshipControllerTest {
         assertThat(actuals).isEqualTo(internship2);
     }
 
+    @Test
+    public void getAllInternshipsBySupervisorIdTest() throws Exception {
+        Supervisor supervisor = Supervisor.supervisorBuilder()
+                .id(1)
+                .firstName("toto")
+                .lastName("tata")
+                .matricule("1234567")
+                .password("password")
+                .build();
+
+        List<Internship> internshipList = getListOfInternships();
+
+        when(internshipService.getAllInternshipBySupervisorId(supervisor.getId())).thenReturn(Optional.of(internshipList));
+
+        MvcResult result = mockMvc.perform(get("/internship/get-all-internships-by-supervisor/{idSupervisor}",1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
     private List<Internship> getListOfInternships() {
         List<Internship> internshipList = new ArrayList<>();
         internshipList.add(internship = Internship.builder()
@@ -134,6 +163,7 @@ public class InternshipControllerTest {
                 .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
+                .supervisor(null)
                 .status("StudentSignature")
                 .build());
         internshipList.add(internship = Internship.builder()
@@ -141,6 +171,7 @@ public class InternshipControllerTest {
                 .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
+                .supervisor(null)
                 .status(null)
                 .build());
         internshipList.add(internship = Internship.builder()
@@ -148,6 +179,7 @@ public class InternshipControllerTest {
                 .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
+                .supervisor(null)
                 .status(null)
                 .build());
         return internshipList;
