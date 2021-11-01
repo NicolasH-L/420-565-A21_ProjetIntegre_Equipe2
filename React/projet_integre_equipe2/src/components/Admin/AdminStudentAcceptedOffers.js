@@ -10,6 +10,8 @@ const AdminStudentAcceptedOffers = () => {
         offer: undefined, student: undefined, session: ""
     })
     const history = useHistory()
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
@@ -84,7 +86,7 @@ const AdminStudentAcceptedOffers = () => {
     }
 
     const filterAcceptedOffers = (acceptedOffer) => {
-        return acceptedOffer.isInternshipStarted == false
+        return acceptedOffer.isInternshipStarted === false && admin.actualSession === acceptedOffer.session
     }
 
     return (
