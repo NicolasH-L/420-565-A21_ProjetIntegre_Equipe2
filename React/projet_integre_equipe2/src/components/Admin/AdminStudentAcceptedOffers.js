@@ -86,7 +86,8 @@ const AdminStudentAcceptedOffers = () => {
     }
 
     const filterAcceptedOffers = (acceptedOffer) => {
-        return acceptedOffer.isInternshipStarted === false && admin.actualSession === acceptedOffer.session
+        return acceptedOffer.isInternshipStarted === false 
+            && admin.actualSession === acceptedOffer.session
     }
 
     return (

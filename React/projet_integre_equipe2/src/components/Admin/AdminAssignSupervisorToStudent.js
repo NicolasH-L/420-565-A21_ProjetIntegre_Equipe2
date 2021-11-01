@@ -1,10 +1,14 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AdminNavbar from '../AdminNavbar'
 
 const AdminAssignSupervisorToStudent = () => {
     const [internships, setInterships] = useState([])
     const [supervisors, setSupervisors] = useState([])
+    const history = useHistory();
+    const historyState = history.location.state
+    const admin = historyState.admin
     const defaultValue = "default"
     let selectedSupervisorJSON = defaultValue
     let selectedStudentIntershipJSON = defaultValue
@@ -72,7 +76,9 @@ const AdminAssignSupervisorToStudent = () => {
     }
 
     const filterInterships = (internship) => {
-        return (internship.supervisor === null && internship.status === "Valide")
+        return (internship.supervisor === null 
+            && internship.status === "Valide" 
+            && admin.actualSession === internship.session)
     }
 
     return (
