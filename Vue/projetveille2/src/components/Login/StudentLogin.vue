@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form className="container-fluid" onSubmit="{onSubmit}">
+    <form @submit.prevent="login()" className="container-fluid" >
       <div className="form-group">
         <label htmlFor="matriculeStudent" className="text-secondary"
           ><i className="fas fa-id-badge"></i> Matricule:
@@ -11,6 +11,7 @@
           id="matriculeStudent"
           name="matricule"
           placeholder="Entrez votre matricule"
+          v-model="student.matricule"
           required
         />
       </div>
@@ -24,11 +25,12 @@
           id="passwordStudent"
           name="password"
           placeholder="Entrez votre mot de passe"
+          v-model="student.password"
           required
         />
       </div>
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-block grad text-white ">
+        <button type="submit" className="btn btn-block btn-primary grad text-white">
           Connexion
         </button>
       </div>
@@ -37,10 +39,28 @@
 </template>
 
 <script>
+import router from '../../router'
+import LoginService from './LoginService'
+
 export default {
   name: "StudentLogin",
-  props: {},
-};
+  data(){
+    return {
+      student: {
+        matricule: "",
+        password: ""
+      }
+    }
+  },
+  methods: {
+    login(){
+      LoginService.loginStudent(this.student.matricule,this.student.password).then((response) => {
+        console.log(response)
+        router.push("/succes", response)
+      })
+    }
+  },
+}
 </script>
 
 <style></style>

@@ -26,7 +26,7 @@
         />
       </div>
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-block grad text-white ">
+        <button type="submit" className="btn btn-block btn-primary grad text-white">
           Connexion
         </button>
       </div>
