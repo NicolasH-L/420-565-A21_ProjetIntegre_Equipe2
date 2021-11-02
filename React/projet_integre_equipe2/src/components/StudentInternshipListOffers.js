@@ -8,6 +8,8 @@ const StudentInternshipListOffers = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    const student = historyState.student
+
     useEffect(() => {
         if (historyState === undefined)
             return
@@ -23,9 +25,13 @@ const StudentInternshipListOffers = () => {
         return await res.json()
     }
 
+    const filterOffers = (offer) => {
+        return offer.session === student.actualSession
+    }
+
     return (
         <div className="grad">
-            <StudentNavbar useStudent={historyState} />
+            <StudentNavbar useStudent={student} />
             <h2 className="text-center">Offres de stage</h2>
             <div className="p-5 table-responsive">
                 <table className="table table-hover bg-light shadow-lg">
@@ -40,7 +46,9 @@ const StudentInternshipListOffers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
                             <tr key={offer.idOffer}>
                                 <th className="text-center">{offer.companyName}</th>
                                 <td className="text-center">{offer.jobTitle}</td>

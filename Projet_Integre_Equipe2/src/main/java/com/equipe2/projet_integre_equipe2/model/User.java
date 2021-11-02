@@ -19,4 +19,5 @@ public class User implements Serializable {
     private String password;
     private String lastName;
     private String firstName;
+    private String actualSession;
 }

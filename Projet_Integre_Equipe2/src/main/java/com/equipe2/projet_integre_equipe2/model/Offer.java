@@ -38,6 +38,7 @@ public class Offer implements Serializable {
     private String startInternshipDate;
     private String endInternshipDate;
     private Integer weeksBetweenDates;
+    private String session;
 
     @OneToOne
     private Monitor monitor;

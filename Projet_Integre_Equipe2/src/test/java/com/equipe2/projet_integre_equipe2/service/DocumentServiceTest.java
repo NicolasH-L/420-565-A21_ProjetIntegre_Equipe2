@@ -47,6 +47,7 @@ public class DocumentServiceTest {
                 .isRefused(false)
                 .student(null)
                 .data("test".getBytes(StandardCharsets.UTF_8))
+                .session("winter2022")
                 .build();
 
         student = Student.studentBuilder()
@@ -60,7 +61,7 @@ public class DocumentServiceTest {
 
     @Test
     public void testCreateDocument(){
-        multipartFile = new MockMultipartFile("uploadFile","CvInfo:0",null,"test".getBytes(StandardCharsets.UTF_8));
+        multipartFile = new MockMultipartFile("uploadFile","CvInfo:0:winter2022",null,"test".getBytes(StandardCharsets.UTF_8));
         when(documentRepository.save(document)).thenReturn(document);
         Optional<Document> actualDocument = documentService.createDocument(multipartFile);
         assertThat(actualDocument.get()).isEqualTo(document);
@@ -68,7 +69,7 @@ public class DocumentServiceTest {
 
     @Test
     public void testCreateDocumentFails(){
-        multipartFile = new MockMultipartFile("uploadFile","CvInfo:0",null,"test".getBytes(StandardCharsets.UTF_8));
+        multipartFile = new MockMultipartFile("uploadFile","CvInfo:0:winter2022",null,"test".getBytes(StandardCharsets.UTF_8));
         when(documentRepository.save(document)).thenReturn(null);
         Optional<Document> actualDocument = documentService.createDocument(multipartFile);
         assertThat(actualDocument).isEqualTo(Optional.empty());

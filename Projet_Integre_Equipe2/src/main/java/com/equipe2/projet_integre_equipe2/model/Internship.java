@@ -24,6 +24,7 @@ public class Internship {
     private Boolean isSignedByStudent;
     private Boolean isSignedByMonitor;
     private String status;
+    private String session;
 
     @OneToOne
     private Offer offer;
