@@ -54,6 +54,14 @@ const AdminNavbar = () => {
         return await res.json()
     }
 
+    const sessionValueToFrench = (session) => {
+        let sessionSeason = session.slice(0, -4)
+        let sessionYear = session.slice(-4)
+        let sessionSeasonToFrench = sessionSeason === "winter" ? "Hiver"
+            : sessionSeason === "summer" ? "Été" : ""
+        return sessionSeasonToFrench + " " + sessionYear
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -61,7 +69,7 @@ const AdminNavbar = () => {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-outline-light"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
                             <a className="nav-link btn btn-light" onClick={() => goToAdminOffer()}>Déposer offre</a>
@@ -81,22 +89,23 @@ const AdminNavbar = () => {
                         <li className="nav-item mx-2">
                             <a className="nav-link btn btn-light" onClick={() => goTodminAssignSupervisorToStudent()}>Assigner un superviseur</a>
                         </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle btn btn-primary" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-                                Sessions
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {sessions.map((session, index) => (
-                                    <a 
-                                    key={index} 
-                                    className={`dropdown-item ${session === admin.actualSession ? 'active' : ''}`} 
-                                    onClick={() => changeSession(session)}>
-                                        {session}
-                                    </a>
-                                ))}
-                            </div>
-                        </li>
                     </ul>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-primary dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Sessions
+                        </button>
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            {sessions.map((session, index) => (
+                                <button
+                                    type="button"
+                                    key={index}
+                                    className={`dropdown-item ${session === admin.actualSession ? 'active' : ''}`}
+                                    onClick={() => changeSession(session)}>
+                                    {sessionValueToFrench(session)}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
