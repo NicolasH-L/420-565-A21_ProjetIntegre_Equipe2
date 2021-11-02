@@ -5,8 +5,8 @@ class LoginService{
         return await res.json()
     }
 
-    async loginSupervisor(email, password){
-        const res = await fetch(`http://localhost:8888/supervisors/${email}/${password}`)
+    async loginSupervisor(matricule, password){
+        const res = await fetch(`http://localhost:8888/supervisors/${matricule}/${password}`)
         return await res.json()
     }
 

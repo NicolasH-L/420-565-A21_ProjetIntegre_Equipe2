@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form className="container-fluid" onSubmit="{onSubmit}">
+    <form className="container-fluid" @submit.prevent="login()">
       <div className="form-group">
         <label htmlFor="emailMonitor" className="text-secondary"
           ><i className="fas fa-at"></i> Courriel:
@@ -11,6 +11,7 @@
           id="emailMonitor"
           name="email"
           placeholder="Entrez votre adresse courriel"
+          v-model="monitor.email"
         />
       </div>
       <div className="form-group">
@@ -23,6 +24,7 @@
           id="passwordMonitor"
           name="password"
           placeholder="Entrez votre mot de passe"
+          v-model="monitor.password"
         />
       </div>
       <div className="d-flex justify-content-center">
@@ -35,9 +37,43 @@
 </template>
 
 <script>
+import router from "../../router";
+import LoginService from "./LoginService";
+import _ from "lodash";
+
 export default {
   name: "MonitorLogin",
-  props: {},
+  data() {
+    return {
+      monitor: {
+        email: "",
+        password: "",
+      },
+      error: {
+        error: "",
+      },
+    };
+  },
+   methods: {
+    login() {
+      if (
+        !_.isEmpty(this.error.credentials) ||
+        _.isEmpty(this.monitor.password) ||
+        _.isEmpty(this.monitor.email)
+      ) {
+        alert("Matricule ou mot de passe incorrect")
+        this.error.error = "Matricule ou mot de passe incorrect";
+        return;
+      } else {
+        LoginService.loginMonitor(
+          this.monitor.email,
+          this.monitor.password
+        ).then((response) => { 
+          response.email != null ? router.push("/Monitor", response): alert("Erreur de matricule ou mot de passe")
+        });
+      }
+    },
+  },
 };
 </script>
 

@@ -9,6 +9,11 @@ import Supervisor from '../components/Supevisor/Supervisor.vue';
 
 const routes = [
     {
+        name:'',
+        path:'/',
+        component: Login,
+    },
+    {
         name:'Login',
         path:'/Login',
         component: Login,
