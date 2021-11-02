@@ -37,7 +37,7 @@ const StudentNavbar = ({ useStudent }) => {
     }
 
     const goToContract = () => {
-        history.push("/StudentSignContract", {student : historyState})
+        history.push("/StudentSignContract", historyState)
     }
 
     const verifyCvValidity = async (matricule) => {

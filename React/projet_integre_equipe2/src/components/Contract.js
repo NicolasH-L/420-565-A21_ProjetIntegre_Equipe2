@@ -19,7 +19,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser }) => {
         // setContractState({ ...contractState, userPassword: passwordUser })
         setInternship(internshipProp)
         contractState.userPassword = passwordUser
-        studentId = internship.student.id
+        studentId = internshipProp.student.id
         setContractState({...contractState, currentStatus : internshipProp.status})
 
         const getContract = async () => {
