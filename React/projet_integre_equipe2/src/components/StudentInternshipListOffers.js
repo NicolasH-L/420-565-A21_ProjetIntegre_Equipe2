@@ -8,6 +8,8 @@ const StudentInternshipListOffers = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    const student = historyState.student
+
     useEffect(() => {
         if (historyState === undefined)
             return
@@ -25,7 +27,7 @@ const StudentInternshipListOffers = () => {
 
     return (
         <div className="grad">
-            <StudentNavbar useStudent={historyState} />
+            <StudentNavbar useStudent={student} />
             <h2 className="text-center">Offres de stage</h2>
             <div className="p-5 table-responsive">
                 <table className="table table-hover bg-light shadow-lg">

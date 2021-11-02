@@ -10,12 +10,14 @@ const StudentUploadCV = () => {
   const [uploadFile, setUploadFile] = useState()
   const [uploadFileName, setUploadFileName] = useState()
   const history = useHistory()
+  const historyState = history.location.state
+  const student = historyState.student
 
   const submitForm = (event) => {
     event.preventDefault()
 
-    if (typeof(uploadFile) !== 'undefined' && typeof(history.location.state) !== 'undefined' && !_.isEmpty(uploadFileName)) {
-      var fileSignature = uploadFileName + ":" + history.location.state.id
+    if (typeof(uploadFile) !== 'undefined' && typeof(historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
+      var fileSignature = uploadFileName + ":" + student.id
       var fileSignatureJSON = JSON.stringify(fileSignature)
       const formData = new FormData()
       formData.append("uploadFile", uploadFile, fileSignatureJSON)
@@ -39,7 +41,7 @@ const StudentUploadCV = () => {
 
   return (
     <div className="grad">
-      <StudentNavbar useStudent={history.location.state}/>
+      <StudentNavbar useStudent={student}/>
       <div className="d-flex justify-content-center">
         <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
           <form className="container-fluid" onSubmit={submitForm}>
@@ -49,9 +51,9 @@ const StudentUploadCV = () => {
               <input type='text' className="form-control form-control-lg" id="fileName" name="fileName" onChange={(e) => setUploadFileName(e.target.value)} />
             </div>
             <div className="form-group">
-              <div class="custom-file">
+              <div className="custom-file">
                 <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init()}} />
-                <label class="custom-file-label" for="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
+                <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
               </div>
             </div>
             <div className="d-flex justify-content-center">
