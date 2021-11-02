@@ -25,6 +25,10 @@ const StudentInternshipListOffers = () => {
         return await res.json()
     }
 
+    const filterOffers = (offer) => {
+        return offer.session === student.actualSession
+    }
+
     return (
         <div className="grad">
             <StudentNavbar useStudent={student} />
@@ -42,7 +46,9 @@ const StudentInternshipListOffers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
                             <tr key={offer.idOffer}>
                                 <th className="text-center">{offer.companyName}</th>
                                 <td className="text-center">{offer.jobTitle}</td>
