@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom'
 import AdminNavbar from './../AdminNavbar'
 
 const AdminStudentAcceptedOffers = () => {
-    const collegeTerms = "Communiqué avec le stagiaire pour lui donner tout les ressources qu'il/elle a besoin lors de son stage ainsi que donner toutes les informations nécessaire pour l'entreprise."
-    const monitorTerms = "Suivre le progrès du stagiaire et documenter ce qu'il/elle fait lors de son stage afin de préparer une évaluation lorsque ce dernier ou cette dernière fini son stage."
-    const studentTerms = "Accomplir ou réaliser les taches demandées par le moniteur. Ameliorer ou continuer a developper auprès de l'équipe et s'assurer que tout est conforme. "
+    const collegeTerms = "Communiqué avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner toutes les renseignements nécessaire pour l'entreprise. Fournir un document d'évaluation pour le moniteur qui s'occupera du stagiaire ainsi que les renseignement du superviseur si un problème survient."
+    const monitorTerms = "Suivre le progrès du stagiaire et documenter ce qu'il/elle fait lors de son stage afin de préparer une évaluation lorsque ce dernier ou cette dernière fini son stage. Rencontrer le superviseur qui est assigné à l'élève pour lui donner des commentaires sur sa performance ou des remarques."
+    const studentTerms = "Accomplir ou réaliser les taches demandées par le moniteur. Ameliorer ou continuer à developper les besoins auprès de l'équipe et s'assurer que tout est conforme et respecte les critères demandées par l'entreprise."
     
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({

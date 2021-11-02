@@ -111,14 +111,14 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testGetContractByStudent_Id() {
+    public void testGetContractByStudentId() {
         when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(contract);
         Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
         assertThat(expectedContract.get()).isEqualTo(contract);
     }
 
     @Test
-    public void testGetContractByStudent_IdFails() {
+    public void testGetContractByStudentIdFails() {
         when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(null);
         Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
         assertThat(expectedContract).isEqualTo(Optional.empty());
