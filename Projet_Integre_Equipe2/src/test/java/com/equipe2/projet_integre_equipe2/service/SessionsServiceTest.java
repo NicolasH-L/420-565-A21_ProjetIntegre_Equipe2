@@ -1,8 +1,8 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Admin;
 import com.equipe2.projet_integre_equipe2.model.Sessions;
 import com.equipe2.projet_integre_equipe2.repository.SessionsRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +25,16 @@ public class SessionsServiceTest {
     @InjectMocks
     private SessionsService sessionsService;
 
+    private Sessions session;
+
+    @BeforeEach
+    void setup(){
+        session = Sessions.builder()
+                .idSession(1)
+                .session("winter2022")
+                .build();
+    }
+
     @Test
     public void testGetAllSessions() {
         when(sessionsRepository.findAll()).thenReturn(getListOfSessions());
@@ -38,6 +48,20 @@ public class SessionsServiceTest {
         when(sessionsRepository.findAll()).thenReturn(null);
         final Optional<List<Sessions>> allSessions = sessionsService.getAllSessions();
         assertThat(allSessions).isEmpty();
+    }
+
+    @Test
+    public void testSaveOffer() {
+        when(sessionsRepository.save(session)).thenReturn(session);
+        Optional<Sessions> actualSession = sessionsService.saveSession(session);
+        assertThat(actualSession.get()).isEqualTo(session);
+    }
+
+    @Test
+    public void testSaveOfferFails() {
+        when(sessionsRepository.save(session)).thenReturn(null);
+        Optional<Sessions> actualSession = sessionsService.saveSession(session);
+        assertThat(actualSession).isEmpty();
     }
 
     private List<Sessions> getListOfSessions(){

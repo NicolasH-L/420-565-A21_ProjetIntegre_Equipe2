@@ -24,9 +24,6 @@ public class Admin {
     private String password;
     private String actualSession;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> sessions = new ArrayList<>();
-
     @Builder(builderMethodName = "adminBuilder")
     public Admin(String username, String password) {
         this.username = username;

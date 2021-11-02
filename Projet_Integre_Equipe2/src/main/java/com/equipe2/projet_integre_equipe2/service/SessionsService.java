@@ -1,6 +1,5 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Admin;
 import com.equipe2.projet_integre_equipe2.model.Sessions;
 import com.equipe2.projet_integre_equipe2.repository.SessionsRepository;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,14 @@ public class SessionsService {
         try {
             return Optional.of(sessionsRepository.findAll());
         } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Sessions> saveSession(Sessions session) {
+        try {
+            return Optional.of(sessionsRepository.save(session));
+        } catch (Exception exception) {
             return Optional.empty();
         }
     }
