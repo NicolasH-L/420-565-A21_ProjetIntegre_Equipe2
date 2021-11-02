@@ -142,6 +142,21 @@ public class DocumentServiceTest {
         assertThat(allDocuments).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetAllDocuments() {
+        when(documentRepository.findAll()).thenReturn(getListOfDocuments());
+        final Optional<List<Document>> allDocuments = documentService.getAllDocuments();
+        assertThat(allDocuments.get().size()).isEqualTo(3);
+        assertThat(allDocuments.get().get(0).getDocumentName()).isEqualTo("cv1");
+    }
+
+    @Test
+    public void testGetAllDocumentsFails() {
+        when(documentRepository.findAll()).thenReturn(null);
+        final Optional<List<Document>> allDocuments = documentService.getAllDocuments();
+        assertThat(allDocuments).isEqualTo(Optional.empty());
+    }
+
     private List<Document> getListOfDocumentsByStudent() {
         List<Document> documentList = new ArrayList<>();
         documentList.add(Document.builder()
@@ -178,6 +193,29 @@ public class DocumentServiceTest {
                 .student(student)
                 .build());
 
+        return documentList;
+    }
+
+    private List<Document> getListOfDocuments() {
+        List<Document> documentList = new ArrayList<>();
+        documentList.add(Document.builder()
+                .documentName("cv1")
+                .isValid(false)
+                .data(null)
+                .student(student)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("cv2")
+                .isValid(true)
+                .data(null)
+                .student(student)
+                .build());
+        documentList.add(Document.builder()
+                .documentName("cv3")
+                .isValid(true)
+                .data(null)
+                .student(student)
+                .build());
         return documentList;
     }
 }

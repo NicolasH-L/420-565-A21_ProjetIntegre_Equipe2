@@ -1,32 +1,32 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, updateMethodContract, passwordUser }) => {
+const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentStatus }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
     })
-    const [contractState, setContractState] = useState({ password: "", userPassword: "", isValid: false, currentStatus: "" })
+    const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
     const baseUrl = "http://localhost:8888"
     const studentSignatureStatus = "StudentSignature"
     const monitorSignatureStatus = "MonitorSignature"
     const adminSignatureStatus = "AdminSignature"
+    const completeSignatureStatus = "Completed"
+    const signatureStatusList = [studentSignatureStatus, monitorSignatureStatus, adminSignatureStatus, completeSignatureStatus]
     let studentId
 
     useEffect(() => {
-        // setContractState({ ...contractState, userPassword: passwordUser })
         setInternship(internshipProp)
         contractState.userPassword = passwordUser
         studentId = internshipProp.student.id
-        setContractState({...contractState, currentStatus : internshipProp.status})
-
         const getContract = async () => {
             const contractFromServer = await fetchContract()
             setContract(contractFromServer)
         }
         getContract()
+        setContractState({ ...contractState, currentStatus: internshipProp.status, isDisabled: currentStatus !== internshipProp.status })
     }, [])
 
     const fetchContract = async () => {
@@ -60,11 +60,14 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser }) => {
     const validateInput = () => {
         let isValid = false
         if (contractState.password === contractState.userPassword) {
-            setContractState({ ...contractState, isValid: true })
+            setContractState({ ...contractState, isDisabled: true })
             if (internship.status === studentSignatureStatus) {
                 contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
-                internship.status = monitorSignatureStatus
+                var nextStatusIndex = signatureStatusList.indexOf(internship.status) + 1
+                if (nextStatusIndex > signatureStatusList.length)
+                    nextStatusIndex = signatureStatusList.length - 1
+                internship.status = signatureStatusList[nextStatusIndex]
             }
             isValid = true
             updateInternship()
@@ -181,10 +184,10 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser }) => {
                             {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
                                 <div className="form-group">
                                     <label htmlFor="password" className="text-secondary">Entrez votre mot de passe : </label>
-                                    <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isValid} onChange={setContractSignature} />
+                                    <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isDisabled} onChange={setContractSignature} />
                                 </div>
                                 : ""}
-                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
+                            {contractState.currentStatus !== undefined && !contractState.isDisabled ?
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>

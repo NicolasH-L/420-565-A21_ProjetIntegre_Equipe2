@@ -4,7 +4,6 @@ import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
@@ -61,6 +60,14 @@ public class DocumentService {
     public Optional<List<Document>> getAllDocumentsValidByStudentId(Integer idStudent){
         try {
             return Optional.of(documentRepository.findDocumentsByIsValidTrueAndStudent_Id(idStudent));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<Document>> getAllDocuments() {
+        try {
+            return Optional.of(documentRepository.findAll());
         } catch (Exception e) {
             return Optional.empty();
         }
