@@ -1,9 +1,5 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <br>
-  <router-link to="/Login">Vers login</router-link>
-  <br>
-  <router-link to="/Registration">Inscription</router-link>
   <router-view/>
 </template>
 

@@ -69,7 +69,7 @@ export default {
           this.student.matricule,
           this.student.password
         ).then((response) => { 
-          response.matricule != null ? router.push("/succes", response): alert("Erreur de matricule ou mot de passe")
+          response.matricule != null ? router.push("/Student", response): alert("Erreur de matricule ou mot de passe")
         });
       }
     },
