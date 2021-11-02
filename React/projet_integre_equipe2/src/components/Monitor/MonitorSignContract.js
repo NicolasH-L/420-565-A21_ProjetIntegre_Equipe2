@@ -4,14 +4,13 @@ import { useHistory } from 'react-router-dom'
 import MonitorNavbar from '../MonitorNavbar'
 
 const MonitorSignContract = () => {
-    const [monitor, setMonitor] = useState({})
     const [contracts, setContracts] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    // Todo convert to historyState.monitor
+    const monitor = historyState
 
     useEffect(() => {
-        setMonitor(historyState)    
-
         const getAllContracts = async () =>{
             const contractsFromServer = await fetchContracts()
             setContracts(contractsFromServer)
@@ -20,7 +19,7 @@ const MonitorSignContract = () => {
     }, [])
 
     const fetchContracts = async () =>{
-        const res = await fetch('http://localhost:8888/contract/get-all')
+        const res = await fetch(`http://localhost:8888/contract/get-all-by-monitor/${monitor.id}`)
         return await res.json()
     }
 
