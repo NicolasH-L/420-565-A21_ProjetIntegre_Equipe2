@@ -1,13 +1,13 @@
 <template>
   <div>
-    <form @submit.prevent="login()" className="container-fluid" >
-      <div className="form-group">
-        <label htmlFor="matriculeStudent" className="text-secondary"
-          ><i className="fas fa-id-badge"></i> Matricule:
+    <form @submit.prevent="login()" class="container-fluid">
+      <div class="form-group">
+        <label for="matriculeStudent" class="text-secondary">
+          <i class="fas fa-id-badge"></i> Matricule:
         </label>
         <input
           type="text"
-          className="form-control text-center"
+          class="form-control text-center"
           id="matriculeStudent"
           name="matricule"
           placeholder="Entrez votre matricule"
@@ -15,13 +15,13 @@
           required
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="passwordStudent" className="text-secondary"
-          ><i className="fas fa-lock"></i> Mot de passe:
+      <div class="form-group">
+        <label for="passwordStudent" class="text-secondary">
+          <i class="fas fa-lock"></i> Mot de passe:
         </label>
         <input
           type="password"
-          className="form-control text-center"
+          class="form-control text-center"
           id="passwordStudent"
           name="password"
           placeholder="Entrez votre mot de passe"
@@ -29,38 +29,53 @@
           required
         />
       </div>
-      <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-block btn-primary grad text-white">
-          Connexion
-        </button>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-block btn-primary grad text-white">Connexion</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import router from '../../router'
-import LoginService from './LoginService'
+import router from "../../router";
+import LoginService from "./LoginService";
+import _ from "lodash";
 
 export default {
   name: "StudentLogin",
-  data(){
+  data() {
     return {
       student: {
         matricule: "",
-        password: ""
-      }
-    }
+        password: "",
+      },
+      error: {
+        error: "",
+      },
+    };
   },
   methods: {
-    login(){
-      LoginService.loginStudent(this.student.matricule,this.student.password).then((response) => {
-        console.log(response)
-        router.push("/succes", response)
-      })
-    }
+    login() {
+      if (
+        !_.isEmpty(this.error.credentials) ||
+        _.isEmpty(this.student.password) ||
+        _.isEmpty(this.student.matricule)
+      ) {
+        alert("Matricule ou mot de passe incorrect")
+        this.error.error = "Matricule ou mot de passe incorrect";
+        return;
+      } else {
+        LoginService.loginStudent(
+          this.student.matricule,
+          this.student.password
+        ).then((response) => { 
+          response.matricule != null ? router.push("/succes", response): alert("Erreur de matricule ou mot de passe")
+        });
+      }
+    },
   },
-}
+};
 </script>
 
-<style></style>
+<style>
+</style>
