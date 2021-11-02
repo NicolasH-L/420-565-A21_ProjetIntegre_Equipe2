@@ -3,7 +3,8 @@ import { alertCircleOutline, idCardOutline, idCardSharp, lockClosedOutline, lock
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 const StudentRegistration: React.FC = () => {
-    const [showToastAlert, setShowToastAlert] = useState(false)
+    const [showToastAlert1, setShowToastAlert1] = useState(false)
+    const [showToastAlert2, setShowToastAlert2] = useState(false)
     const initialValues = {
         lastName: '',
         firstName: '',
@@ -19,8 +20,8 @@ const StudentRegistration: React.FC = () => {
 
     const onSubmit = (student: any) => {
         postStudent(student)
-            .then((data: any) => data.matricule !== undefined ? alert("Inscription réussie") : setShowToastAlert(true))
-            .catch(() => setShowToastAlert(true))
+            .then((data: any) => data.matricule !== undefined ? setShowToastAlert2(true) : setShowToastAlert1(true))
+            .catch(() => setShowToastAlert1(true))
     }
 
     const postStudent = async (student: any) => {
@@ -75,10 +76,18 @@ const StudentRegistration: React.FC = () => {
                     </form>
                 </IonCard>
                 <IonToast
-                    isOpen={showToastAlert}
-                    onDidDismiss={() => setShowToastAlert(false)}
-                    message="Erreur: Matricule existant!"
-                    duration={5000}
+                    color="danger"
+                    isOpen={showToastAlert1}
+                    onDidDismiss={() => setShowToastAlert1(false)}
+                    message="Erreur: Matricule existant !"
+                    duration={3000}
+                />
+                <IonToast
+                    color="success"
+                    isOpen={showToastAlert2}
+                    onDidDismiss={() => setShowToastAlert2(false)}
+                    message="Inscription réussie !"
+                    duration={3000}
                 />
             </IonContent>
         </IonPage >
