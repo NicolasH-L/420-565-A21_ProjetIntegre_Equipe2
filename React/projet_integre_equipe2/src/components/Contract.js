@@ -6,7 +6,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
-        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
+        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
     })
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
     const baseUrl = "http://localhost:8888"
@@ -18,6 +18,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     let studentId
 
     useEffect(() => {
+        console.log(internshipProp)
         setInternship(internshipProp)
         contractState.userPassword = passwordUser
         studentId = internshipProp.student.id
@@ -106,12 +107,16 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <input type="text" className="form-control text-center" id="studentName" name="studentName"
                                     value={internship.student.firstName + " " + internship.student.lastName} readOnly />
                             </div>
-                            <h3 className="text-center mt-5">Conditions de stage suivantes :</h3>
+                            <h2 className="text-center mt-5">Conditions de stage suivantes :</h2>
+                            <div className="form-group">
+                                <label htmlFor="session" className="text-secondary">Session du stage : </label>
+                                <input type="text" className="form-control text-center" id="session" name="session" value={internship.session} readOnly />
+                            </div>
                             <div className="form-group">
                                 <label htmlFor="location" className="text-secondary">Endroit du stage : </label>
                                 <input type="text" className="form-control text-center" id="location" name="location" value={internship.offer.address} readOnly />
                             </div>
-                            <h6 className="text-secondary">Durée du stage</h6>
+                            <h4 className="text-center mt-5">Durée du stage</h4>
                             <div className="form-group">
                                 <label htmlFor="durationStart" className="text-secondary">Date de début : </label>
                                 <input type="text" className="form-control text-center" id="durationStart" name="durationStart" value={internship.offer.startInternshipDate} readOnly />
@@ -125,7 +130,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <input type="text" className="form-control text-center" id="numberOfWeeks" name="numberOfWeeks"
                                     value={internship.offer.weeksBetweenDates} readOnly />
                             </div>
-                            <h6 className="text-secondary">Horaire de travail</h6>
+                            <h4 className="text-center mt-5">Horaire de travail</h4>
                             <div className="form-group">
                                 <label htmlFor="schedule" className="text-secondary">Horaire de travail : </label>
                                 <input type="text" className="form-control text-center" id="schedule" name="schedule" value={internship.offer.jobSchedules} readOnly />
@@ -142,7 +147,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <label htmlFor="duties" className="text-secondary">Taches et responsabilités du stagiaire : </label>
                                 <textarea type="text" className="form-control" id="duties" name="duties" rows="5" value={internship.offer.description} readOnly />
                             </div>
-                            <h3 className="text-center mt-5">Responsabilités</h3>
+                            <h4 className="text-center mt-5">Responsabilités</h4>
                             <div className="form-group">
                                 <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : </label>
                                 <textarea type="text" className="form-control" id="responsabilityCollege" name="responsabilityCollege" rows="5" value={contract.collegeResponsability} readOnly />
@@ -191,9 +196,11 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>
-                                :   <div className="text-center mt-5">
-                                        <strong className="text-success">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
-                                    </div>}
+                                :
+                                <div className="d-flex justify-content-center">
+                                    <strong className="text-success text-center">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+                                </div>
+                                }
                         </div>
                     )}
                 </form>

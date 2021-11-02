@@ -1,9 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
-
-import com.equipe2.projet_integre_equipe2.model.Student;
-import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
 import com.equipe2.projet_integre_equipe2.service.MonitorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +20,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(MonitorController.class)
 class MonitorControllerTest {
@@ -38,6 +36,7 @@ class MonitorControllerTest {
     @BeforeEach
     void setup() {
         monitor = Monitor.monitorBuilder()
+                .id(1)
                 .password("1234")
                 .lastName("toto")
                 .firstName("toto")
@@ -46,6 +45,7 @@ class MonitorControllerTest {
                 .build();
 
         monitorDuplicateEmail = Monitor.monitorBuilder()
+                .id(2)
                 .firstName("tata")
                 .lastName("toto")
                 .email("toto@toto")
@@ -133,6 +133,7 @@ class MonitorControllerTest {
     private List<Monitor> getListOfMonitors() {
         List<Monitor> monitorList = new ArrayList<>();
         monitorList.add(Monitor.monitorBuilder()
+                .id(3)
                 .password("didi1*")
                 .lastName("didi")
                 .firstName("didi")
@@ -140,6 +141,7 @@ class MonitorControllerTest {
                 .email("didi@kong.com")
                 .build());
         monitorList.add(Monitor.monitorBuilder()
+                .id(4)
                 .password("dodo1*")
                 .lastName("dodo")
                 .firstName("dodo")
@@ -147,6 +149,7 @@ class MonitorControllerTest {
                 .email("dodo@kong.com")
                 .build());
         monitorList.add(Monitor.monitorBuilder()
+                .id(5)
                 .password("donkey1*")
                 .lastName("donkey")
                 .firstName("donkey")

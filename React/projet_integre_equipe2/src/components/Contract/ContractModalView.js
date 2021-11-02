@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MonitorSignContract = () => {
+const ContractModalView = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const MonitorSignContract = () => {
     )
 }
 
-export default MonitorSignContract
+export default ContractModalView

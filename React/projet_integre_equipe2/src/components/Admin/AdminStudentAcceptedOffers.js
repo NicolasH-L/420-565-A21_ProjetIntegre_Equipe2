@@ -17,7 +17,7 @@ const AdminStudentAcceptedOffers = () => {
         internship: undefined,
         collegeResponsability: collegeTerms, companyResponsability: monitorTerms,
         studentResponsability: studentTerms, studentSignature: "", monitorSignature: "", adminSignature: "",
-        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
+        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
     })
 
     const history = useHistory()

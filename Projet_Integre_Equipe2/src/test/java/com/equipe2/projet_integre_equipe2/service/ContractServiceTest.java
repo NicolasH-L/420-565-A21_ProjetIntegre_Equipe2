@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +30,7 @@ public class ContractServiceTest {
     private Internship internship;
     private Monitor monitor;
     private Student student;
+    private List<Contract> contractListByMonitorId = new ArrayList<>();
 
     @BeforeEach
     void setup() {
@@ -51,6 +54,7 @@ public class ContractServiceTest {
                 .build();
 
         monitor = Monitor.monitorBuilder()
+                .id(1)
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -87,6 +91,8 @@ public class ContractServiceTest {
                 .signatureDateMonitor("2021-10-25")
                 .signatureDateAdmin("2021-10-25")
                 .build();
+
+        contractListByMonitorId.add(contract);
     }
 
     @Test
@@ -117,4 +123,18 @@ public class ContractServiceTest {
         assertThat(expectedContract).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetContractsByMonitorId() {
+        when(contractRepository.findContractsByInternship_Offer_Monitor_Id(monitor.getId())).thenReturn(contractListByMonitorId);
+        Optional<List<Contract>> actualContractList = contractService.getContractsByMonitorId(monitor.getId());
+        assertThat(actualContractList.get()).isEqualTo(contractListByMonitorId);
+        assertThat(actualContractList.get().size()).isEqualTo(contractListByMonitorId.size());
+    }
+
+    @Test
+    public void testGetContractsByMonitorIdFails() {
+        when(contractRepository.findContractsByInternship_Offer_Monitor_Id(0)).thenReturn(null);
+        Optional<List<Contract>> actualContractList = contractService.getContractsByMonitorId(0);
+        assertThat(actualContractList).isEqualTo(Optional.empty());
+    }
 }

@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.service.ContractService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +37,7 @@ public class ContractControllerTest {
     private Internship internship;
     private Monitor monitor;
     private Student student;
+    private List<Contract> contractListByMonitorId = new ArrayList<>();
 
     @BeforeEach
     void setup() {
@@ -57,6 +61,7 @@ public class ContractControllerTest {
                 .build();
 
         monitor = Monitor.monitorBuilder()
+                .id(1)
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -93,6 +98,8 @@ public class ContractControllerTest {
                 .signatureDateMonitor("2021-10-25")
                 .signatureDateAdmin("2021-10-25")
                 .build();
+
+        contractListByMonitorId.add(contract);
     }
 
     @Test
@@ -121,6 +128,34 @@ public class ContractControllerTest {
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualsContract).isEqualTo(contract);
+    }
+
+    @Test
+    public void getContractsByMonitorId() throws Exception {
+        when(contractService.getContractsByMonitorId(monitor.getId())).thenReturn(Optional.of(contractListByMonitorId));
+
+        MvcResult result = mockMvc.perform(get("/contract/get-all-by-monitor/" + monitor.getId())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualContractListByMonitorId = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
+                new TypeReference<List<Contract>>() {});
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualContractListByMonitorId).isEqualTo(contractListByMonitorId);
+        assertThat(actualContractListByMonitorId.size()).isEqualTo(contractListByMonitorId.size());
+    }
+
+    @Test
+    public void getContractsByMonitorIdFails() throws Exception {
+        when(contractService.getContractsByMonitorId(0)).thenReturn(Optional.empty());
+
+        MvcResult result = mockMvc.perform(get("/contract/get-all-by-monitor/" + 0)
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        var actualContractListByMonitorId = result.getResponse().getContentAsString();
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CONFLICT.value());
+        assertThat(actualContractListByMonitorId).isEmpty();
     }
 
 }
