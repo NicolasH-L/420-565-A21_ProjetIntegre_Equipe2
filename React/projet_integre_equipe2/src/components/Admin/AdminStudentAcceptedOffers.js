@@ -17,7 +17,7 @@ const AdminStudentAcceptedOffers = () => {
         internship: undefined,
         collegeResponsability: collegeTerms, companyResponsability: monitorTerms,
         studentResponsability: studentTerms, studentSignature: "", monitorSignature: "", adminSignature: "",
-        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
+        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
     })
 
     const history = useHistory()
@@ -97,6 +97,21 @@ const AdminStudentAcceptedOffers = () => {
     const filterAcceptedOffers = (acceptedOffer) => {
         return acceptedOffer.isInternshipStarted === false 
             && admin.actualSession === acceptedOffer.session
+    }
+
+    const createContract = async (internship) => {
+        contract.internship = internship
+        contract.session = internship.session
+        const res = await fetch('http://localhost:8888/contract/save-contract',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        const data = await res.json()
+        alert("Processus de signature commencé")
     }
 
     return (
