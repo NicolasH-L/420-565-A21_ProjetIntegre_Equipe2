@@ -12,12 +12,21 @@ const StudentUploadCV = () => {
   const history = useHistory()
   const historyState = history.location.state
   const student = historyState.student
+  const sessionPrefix = ["winter", "summer"]
+  const lastMonthOfTheYear = 11
+  const winterStart = 8
+  const winterDeadLine = 1
+  const summerStart = 2
+  const summerDeadLine = 5
 
   const submitForm = (event) => {
+    let documentSession = ""
+    
     event.preventDefault()
 
-    if (typeof(uploadFile) !== 'undefined' && typeof(historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
-      var fileSignature = uploadFileName + ":" + student.id
+    if (typeof (uploadFile) !== 'undefined' && typeof (historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
+      setDocumentSession()
+      var fileSignature = uploadFileName + ":" + student.id + ":" + documentSession
       var fileSignatureJSON = JSON.stringify(fileSignature)
       const formData = new FormData()
       formData.append("uploadFile", uploadFile, fileSignatureJSON)
@@ -37,11 +46,20 @@ const StudentUploadCV = () => {
     } else {
       alert("Une erreur est survenue lors du transfert de fichier")
     }
+
+    function setDocumentSession() {
+      let sessionDate = new Date()
+      let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+      let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+      let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+        : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+      documentSession = session
+    }
   }
 
   return (
     <div className="grad">
-      <StudentNavbar useStudent={student}/>
+      <StudentNavbar useStudent={student} />
       <div className="d-flex justify-content-center">
         <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
           <form className="container-fluid" onSubmit={submitForm}>
@@ -52,7 +70,7 @@ const StudentUploadCV = () => {
             </div>
             <div className="form-group">
               <div className="custom-file">
-                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init()}} />
+                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
                 <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
               </div>
             </div>
