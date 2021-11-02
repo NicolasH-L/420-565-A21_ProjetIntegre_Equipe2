@@ -41,7 +41,7 @@ const StudentSignContract = () => {
 
     return (
         <div className="grad ">
-            <StudentNavbar useStudent={historyState} />
+            <StudentNavbar useStudent={student} />
             {internship && (
                 <Contract internshipProp={internship} updateMethodContract={updateContract}
                     passwordUser={student.password} currentStatus={studentSignatureStatus} />
