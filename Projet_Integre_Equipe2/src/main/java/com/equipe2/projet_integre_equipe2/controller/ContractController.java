@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/contract")
@@ -25,6 +27,13 @@ public class ContractController {
     @GetMapping("/get-contract/{id}")
     public ResponseEntity<Contract> getContractByStudent_id(@PathVariable Integer id){
         return contractService.getContractByStudentId(id)
+                .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-all-by-monitor/{id}")
+    public ResponseEntity<List<Contract>> getContractsByMonitorId(@PathVariable Integer id){
+        return contractService.getContractsByMonitorId(id)
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

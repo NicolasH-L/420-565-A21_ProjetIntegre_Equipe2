@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Monitor extends User implements Serializable {
 
@@ -15,7 +16,8 @@ public class Monitor extends User implements Serializable {
     private String companyName;
 
     @Builder(builderMethodName = "monitorBuilder")
-    public Monitor(String password, String lastName, String firstName, String companyName, String email) {
+    public Monitor(Integer id, String password, String lastName, String firstName, String companyName, String email) {
+        super.setId(id);
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
