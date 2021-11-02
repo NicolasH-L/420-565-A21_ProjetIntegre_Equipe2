@@ -1,8 +1,9 @@
-import { IonContent, IonPage, IonText, IonItem, IonLabel, IonInput, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonCard, IonCardHeader, IonCardContent, IonTextarea, IonBadge, IonIcon } from "@ionic/react";
+import { IonContent, IonPage, IonText, IonItem, IonLabel, IonAlert, IonInput, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonCard, IonCardHeader, IonCardContent, IonTextarea, IonBadge, IonIcon, IonToast } from "@ionic/react";
 import { alertCircleOutline, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 const StudentRegistration: React.FC = () => {
+    const [showToastAlert, setShowToastAlert] = useState(false)
     const initialValues = {
         lastName: '',
         firstName: '',
@@ -16,12 +17,22 @@ const StudentRegistration: React.FC = () => {
         reValidateMode: "onChange"
     });
 
-    const resetForm = () => {
-        reset(initialValues)
+    const onSubmit = (student: any) => {
+        postStudent(student)
+            .then((data: any) => data.matricule !== undefined ? alert("Inscription réussie") : setShowToastAlert(true))
+            .catch(() => setShowToastAlert(true))
     }
 
-    const onSubmit = (data: any) => {
-        alert(JSON.stringify(data, null, 2))
+    const postStudent = async (student: any) => {
+        const result = await fetch('http://localhost:8888/students/register',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        return await result.json();
     }
 
     return (
@@ -59,10 +70,16 @@ const StudentRegistration: React.FC = () => {
                                 {errors.password && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Password invalide</p>}
                             </IonItem>
                             <IonButton type="submit" className="ion-margin">Soumettre<IonIcon icon={sendSharp} style={{ marginLeft: 5 }}></IonIcon></IonButton>
-                            <IonButton onClick={(e) => resetForm()}>Réinitialier<IonIcon icon={refreshSharp} style={{ marginLeft: 5 }}></IonIcon> </IonButton>
+                            <IonButton type="reset" >Réinitialier<IonIcon icon={refreshSharp} style={{ marginLeft: 5 }}></IonIcon> </IonButton>
                         </IonCardContent>
                     </form>
                 </IonCard>
+                <IonToast
+                    isOpen={showToastAlert}
+                    onDidDismiss={() => setShowToastAlert(false)}
+                    message="Erreur: Matricule existant!"
+                    duration={5000}
+                />
             </IonContent>
         </IonPage >
     );
