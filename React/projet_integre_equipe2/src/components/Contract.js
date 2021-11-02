@@ -1,28 +1,26 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, updateMethodContract, studentState, passwordUser, activeStatus }) => {
+const Contract = ({ internshipProp, updateMethodContract, passwordUser }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: ""
     })
-    const [student, setStudent] = useState({})
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isValid: false, currentStatus: "" })
     const baseUrl = "http://localhost:8888"
     const studentSignatureStatus = "StudentSignature"
     const monitorSignatureStatus = "MonitorSignature"
     const adminSignatureStatus = "AdminSignature"
+    let studentId
 
     useEffect(() => {
         // setContractState({ ...contractState, userPassword: passwordUser })
-        contractState.userPassword = passwordUser
-        student.id = studentState.id
-        setContractState({...contractState, currentStatus : activeStatus})
-        console.log(contractState.currentStatus == activeStatus)
-        setStudent(studentState)
         setInternship(internshipProp)
+        contractState.userPassword = passwordUser
+        studentId = internship.student.id
+        setContractState({...contractState, currentStatus : internshipProp.status})
 
         const getContract = async () => {
             const contractFromServer = await fetchContract()
@@ -32,7 +30,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
     }, [])
 
     const fetchContract = async () => {
-        const res = await fetch(`${baseUrl}/contract/get-contract/${student.id}`)
+        const res = await fetch(`${baseUrl}/contract/get-contract/${studentId}`)
         return await res.json()
     }
 
@@ -64,7 +62,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
         if (contractState.password === contractState.userPassword) {
             setContractState({ ...contractState, isValid: true })
             if (internship.status === studentSignatureStatus) {
-                contract.studentSignature = student.firstName + " " + student.lastName
+                contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
                 internship.status = monitorSignatureStatus
             }
