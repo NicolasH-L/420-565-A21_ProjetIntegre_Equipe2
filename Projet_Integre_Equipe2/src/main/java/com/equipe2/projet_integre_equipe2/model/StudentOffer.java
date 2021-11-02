@@ -24,6 +24,7 @@ public class StudentOffer implements Serializable {
 
     private Boolean isAccepted = false;
     private Boolean isInternshipStarted = false;
+    private String session;
 
     @OneToOne
     private Offer offer;

@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react'
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
     const history = useHistory()
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     useEffect(() => {
         const getStudents = async () => {
@@ -21,7 +23,7 @@ const AdminStudentList = () => {
     }
 
     const viewStudentCvList = async (student) => {
-        history.push("/AdminStudentCvList", student)
+        history.push("/AdminStudentCvList", {student, admin})
     }
 
     const validateStudent = async (student) => {
@@ -42,6 +44,10 @@ const AdminStudentList = () => {
         )
     }
 
+    const filterStudents = (student) => {
+        return student.actualSession == admin.actualSession
+    }
+
     return (
         <div className="grad">
             <AdminNavbar/>
@@ -57,7 +63,9 @@ const AdminStudentList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((student) => (
+                        {students
+                        .filter(filterStudents)
+                        .map((student) => (
                             <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.id}>
                                 <th>{student.firstName + " " + student.lastName}</th>
                                 <td>{student.matricule}</td>

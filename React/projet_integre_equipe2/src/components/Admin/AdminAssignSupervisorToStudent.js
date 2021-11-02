@@ -1,10 +1,14 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AdminNavbar from '../AdminNavbar'
 
 const AdminAssignSupervisorToStudent = () => {
     const [internships, setInterships] = useState([])
     const [supervisors, setSupervisors] = useState([])
+    const history = useHistory();
+    const historyState = history.location.state
+    const admin = historyState.admin
     const defaultValue = "default"
     let selectedSupervisorJSON = defaultValue
     let selectedStudentIntershipJSON = defaultValue
@@ -51,18 +55,21 @@ const AdminAssignSupervisorToStudent = () => {
     }
 
     const getSelectedSupervisor = (e) => {
+        e.preventDefault()
         if (e.target.value !== "default") {
             selectedSupervisorJSON = JSON.parse(e.target.value)
         }
     }
 
     const getSelectedStudentIntership = (e) => {
+        e.preventDefault()
         if (e.target.value !== "default") {
             selectedStudentIntershipJSON = JSON.parse(e.target.value)
         }
     }
 
-    const assignSupervisorToStudent = () => {
+    const assignSupervisorToStudent = (e) => {
+        e.preventDefault()
         if (selectedStudentIntershipJSON !== defaultValue && selectedSupervisorJSON !== defaultValue) {
             selectedStudentIntershipJSON.supervisor = selectedSupervisorJSON
             addSupervisorToIntership(selectedStudentIntershipJSON)
@@ -72,7 +79,9 @@ const AdminAssignSupervisorToStudent = () => {
     }
 
     const filterInterships = (internship) => {
-        return (internship.supervisor === null && internship.status === "Valide")
+        return (internship.supervisor === null 
+            && internship.status === "Valide" 
+            && admin.actualSession === internship.session)
     }
 
     return (

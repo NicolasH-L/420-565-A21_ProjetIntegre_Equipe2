@@ -7,6 +7,7 @@ import StudentAppliedOffersList from './Student/StudentAppliedOffersList'
 const Student = () => {
     const history = useHistory()
     const historyState = history.location.state
+    const studentFromHistoryState = historyState.student
     let studentOfferJSON
     const [student, setStudent] = useState([])
     const [studentOffers, setStudentOffers] = useState([])
@@ -19,8 +20,8 @@ const Student = () => {
     const defaultValue = "default"
 
     useEffect(() => {
-        setStudent(historyState)
-        verifyStatus(historyState.currentStatus)
+        setStudent(studentFromHistoryState)
+        verifyStatus(studentFromHistoryState.currentStatus)
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
@@ -56,7 +57,7 @@ const Student = () => {
     const saveChanges = () => {
         if (student.currentStatus === stageTrouve) {
             if (studentOfferJSON !== undefined) {
-                addStudent(student).then((data) => history.push("/Student", data))
+                addStudent(student).then((data) => history.push("/Student", {student: data}))
                 updateStudentOffer(studentOfferJSON)
                 alert("Statut mise à jour avec succès")
             } else {
@@ -64,7 +65,7 @@ const Student = () => {
             }
         }
         if (student.currentStatus === enRecherche || student.currentStatus === enAttente) {
-            addStudent(student).then((data) => history.push("/Student", data))
+            addStudent(student).then((data) => history.push("/Student", {student: data}))
             alert("Statut mise à jour avec succès")
         }
     }
@@ -85,7 +86,7 @@ const Student = () => {
     }
 
     const fetchStudentOffers = async () => {
-        const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
+        const res = await fetch(`${baseUrl}/student-offers/student/${studentFromHistoryState.id}`)
         return await res.json()
     }
 
@@ -120,22 +121,22 @@ const Student = () => {
 
     return (
         <div className="grad">
-            <StudentNavbar useStudent={historyState} />
-            <div class="btn-group mx-3">
-                        <button type="button" disabled={historyState.currentStatus === stageTrouve} class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <StudentNavbar useStudent={studentFromHistoryState} />
+            <div className="btn-group mx-3">
+                        <button type="button" disabled={studentFromHistoryState.currentStatus === stageTrouve} className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Statut: {student.currentStatus}
                         </button>
-                        <div class="dropdown-menu">
+                        <div className="dropdown-menu">
                             <button className="dropdown-item" onClick={() => { updateStatus(enRecherche) }}>En recherche</button>
                             <button className="dropdown-item" onClick={() => { updateStatus(enAttente) }} >En attente d'une entrevue</button>
                             <button className="dropdown-item" onClick={() => { updateStatus(stageTrouve) }}>Stage trouvé</button>
                         </div>
                     </div>
-                    <button className="btn btn-light mx-2 " onClick={() => { saveChanges() }} disabled={historyState.currentStatus === stageTrouve}>Mettre à jour <i className="fas fa-sync-alt"></i></button>
+                    <button className="btn btn-light mx-2 " onClick={() => { saveChanges() }} disabled={studentFromHistoryState.currentStatus === stageTrouve}>Mettre à jour <i className="fas fa-sync-alt"></i></button>
             <div className="d-flex justify-content-center">
                 <div className="container my-5">
                     <h1 className="text-center mb-5">Bienvenue {student.firstName} {student.lastName}</h1>
-                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={historyState} /> : ""}
+                    {showStudentAppliedOfferslist ? <StudentAppliedOffersList student={studentFromHistoryState} /> : ""}
                     {showSelectStudentAppliedOffer ? showSelectStudentAppliedOfferList() : ""}
                 </div>
             </div>
