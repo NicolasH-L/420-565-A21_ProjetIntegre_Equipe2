@@ -41,6 +41,15 @@ public class ContractControllerTest {
 
     @BeforeEach
     void setup() {
+        monitor = Monitor.monitorBuilder()
+                .id(1)
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
+                .build();
+
         offer = Offer.builder()
                 .idOffer(1)
                 .companyName("Cegep")
@@ -51,22 +60,14 @@ public class ContractControllerTest {
                 .skills("Debrouillard")
                 .jobSchedules("Temps plein")
                 .workingHours("37.5")
-                .monitorEmail("cegep@email.com")
+                .monitorEmail("toto@toto.toto")
                 .isValid(false)
                 .state("Invalide")
                 .displayDate("2021-10-15")
                 .deadlineDate("2021-10-30")
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
-                .build();
-
-        monitor = Monitor.monitorBuilder()
-                .id(1)
-                .password("toto")
-                .lastName("toto")
-                .firstName("toto")
-                .companyName("toto")
-                .email("toto@toto.toto")
+                .monitor(monitor)
                 .build();
 
         student = Student.studentBuilder()
