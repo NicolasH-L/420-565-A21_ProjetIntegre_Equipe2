@@ -25,7 +25,6 @@ public class AdminService {
        }
     }
 
-    @Transactional
     public Optional<List<Admin>> getAllAdmin() {
         try {
             return Optional.of(adminRepository.findAll());
