@@ -24,7 +24,7 @@ import AdminInternshipList from './components/Admin/AdminInternshipList'
 import StudentSignContract from './components/Student/StudentSignContract'
 import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSupervisorToStudent'
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
-import MonitorSignContract from './components/Monitor/MonitorSignContract'
+import MonitorContracts from './components/Monitor/MonitorContracts'
 
 function App() {
   return (
@@ -58,7 +58,7 @@ function App() {
         <Route path="/StudentSignContract" component={StudentSignContract} />
         <Route path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent}></Route>
         <Route path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList}></Route>
-        <Route path="/MonitorContracts" component={MonitorSignContract}/>
+        <Route path="/MonitorContracts" component={MonitorContracts}/>
         <Footer />
       </div>
     </Router>
