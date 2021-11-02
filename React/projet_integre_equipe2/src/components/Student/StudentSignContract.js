@@ -6,16 +6,15 @@ import Contract from '../Contract'
 
 const StudentSignContract = () => {
     const history = useHistory()
-    const historyState = useHistory().location.state
+    const historyState = history.location.state
+    const student = historyState.student
     const [internship, setInternship] = useState(null)
     const baseUrl = "http://localhost:8888"
     const studentSignatureStatus = "StudentSignature"
-    let student
 
     useEffect(() => {
-        if (history !== undefined) {
-            student = historyState
-        }
+        if (historyState === undefined)
+            return
         const getInternship = async () => {
             const internshipFromServer = await fetchInternship()
             setInternship(internshipFromServer)
@@ -44,7 +43,7 @@ const StudentSignContract = () => {
         <div className="grad ">
             <StudentNavbar useStudent={historyState} />
             {internship && (
-                <Contract internshipProp={internship} updateMethodContract={updateContract} studentState={historyState} passwordUser={historyState.password} activeStatus={studentSignatureStatus} />
+                <Contract internshipProp={internship} updateMethodContract={updateContract} studentState={student} passwordUser={student.password} activeStatus={studentSignatureStatus} />
             )}
         </div>
     )

@@ -36,6 +36,18 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
         return await res.json()
     }
 
+    const updateInternship = async () => {
+        const result = await fetch(`${baseUrl}/internship/save-internship`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(internship)
+            })
+        return await result.json()
+    }
+
     const checkCurrentSignatureStatus = (signature) => {
         return !(internship.status === signature)
     }
@@ -44,6 +56,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
         e.preventDefault()
         if (validateInput()) {
             updateMethodContract(contract)
+            updateInternship()
         }
     }
 
@@ -54,6 +67,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
             if (internship.status === studentSignatureStatus) {
                 contract.studentSignature = student.firstName + " " + student.lastName
                 contract.signatureDateStudent = getToday()
+                internship.status = monitorSignatureStatus
             }
             isValid = true
         } else {
@@ -172,7 +186,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                                     <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isValid} onChange={setContractSignature} />
                                 </div>
                                 : ""}
-                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status && contractState.password === null?
+                            {contractState.currentStatus !== undefined && contractState.currentStatus === internship.status ?
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>
