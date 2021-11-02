@@ -109,7 +109,7 @@ public class ContractControllerTest {
     }
 
     @Test
-    public void getContractByStudent_Id() throws Exception {
+    public void getContractByStudentId() throws Exception {
         when(contractService.getContractByStudentId(student.getId())).thenReturn(Optional.of(contract));
 
         MvcResult result = mockMvc.perform(get("/contract/get-contract/" + student.getId())
