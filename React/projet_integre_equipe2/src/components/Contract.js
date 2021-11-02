@@ -56,7 +56,6 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
         e.preventDefault()
         if (validateInput()) {
             updateMethodContract(contract)
-            updateInternship()
         }
     }
 
@@ -70,6 +69,7 @@ const Contract = ({ internshipProp, updateMethodContract, studentState, password
                 internship.status = monitorSignatureStatus
             }
             isValid = true
+            updateInternship()
         } else {
             alert("Veuillez entrer votre mot de passe correctement")
         }
