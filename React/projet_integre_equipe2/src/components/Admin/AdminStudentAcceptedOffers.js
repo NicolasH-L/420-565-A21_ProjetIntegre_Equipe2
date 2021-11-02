@@ -115,21 +115,6 @@ const AdminStudentAcceptedOffers = () => {
             && admin.actualSession === acceptedOffer.session
     }
 
-    const createContract = async (internship) => {
-        contract.internship = internship
-        contract.session = internship.session
-        const res = await fetch('http://localhost:8888/contract/save-contract',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(contract)
-            })
-        const data = await res.json()
-        alert("Processus de signature commencé")
-    }
-
     return (
         <div>
             <div className="grad">
