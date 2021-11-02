@@ -57,6 +57,7 @@ public class ContractControllerTest {
                 .build();
 
         monitor = Monitor.monitorBuilder()
+                .id(1)
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
