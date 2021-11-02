@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentStatus }) => {
-    const [internship, setInternship] = useState(null)
+const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
+    const [internship, setInternship] = useState(undefined)
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
@@ -18,7 +18,6 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     let studentId
 
     useEffect(() => {
-        console.log(internshipProp)
         setInternship(internshipProp)
         contractState.userPassword = passwordUser
         studentId = internshipProp.student.id
@@ -33,6 +32,18 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     const fetchContract = async () => {
         const res = await fetch(`${baseUrl}/contract/get-contract/${studentId}`)
         return await res.json()
+    }
+
+    const updateContract = async (contract) => {
+        const result = await fetch(`${baseUrl}/contract/save-contract`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        return await result.json()
     }
 
     const updateInternship = async () => {
@@ -54,7 +65,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     const onSubmit = (e) => {
         e.preventDefault()
         if (validateInput()) {
-            updateMethodContract(contract)
+            updateContract(contract)
         }
     }
 
