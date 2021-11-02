@@ -18,7 +18,7 @@ import {
 import React, { useState } from 'react'
 import { alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
 import { useForm, Controller } from "react-hook-form";
-import { useHistory } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 
 const StudentLogin: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
@@ -48,6 +48,11 @@ const StudentLogin: React.FC = () => {
 
     function goToStudentRegistration() {
         history.push("/StudentRegistration", {})
+    }
+
+    const logout = () => {
+        history.location.state = ''
+        history.push("/home", {})
     }
 
     return (
