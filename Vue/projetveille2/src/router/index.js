@@ -6,6 +6,7 @@ import Admin from '../components/Admin/Admin.vue';
 import Student from '../components/Student/Student.vue';
 import Monitor from '../components/Monitor/Monitor.vue';
 import Supervisor from '../components/Supevisor/Supervisor.vue';
+import MonitorIntershipOffer from '../components/Monitor/MonitorIntershipOffer.vue';
 
 const routes = [
     {
@@ -43,8 +44,12 @@ const routes = [
         path:'/Supervisor',
         component: Supervisor,
     },
+    {
+        name:'MonitorOffer',
+        path:'/MonitorOffer',
+        component: MonitorIntershipOffer,
+    }
     ];
-    
     const router = createRouter({
         history: createWebHistory(),
         routes,

@@ -1,13 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <router-view/>
+  <Footer></Footer>
 </template>
 
 <script>
+import Footer from "./components/Footer.vue"
 
 export default {
   name: 'App',
   components: {
+    Footer,
   }
 }
 
