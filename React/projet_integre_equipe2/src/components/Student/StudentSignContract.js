@@ -10,6 +10,7 @@ const StudentSignContract = () => {
     const student = historyState.student
     const [internship, setInternship] = useState(null)
     const baseUrl = "http://localhost:8888"
+    const studentSignatureStatus = "StudentSignature"
 
     useEffect(() => {
         if (historyState === undefined)
@@ -42,7 +43,8 @@ const StudentSignContract = () => {
         <div className="grad ">
             <StudentNavbar useStudent={historyState} />
             {internship && (
-                <Contract internshipProp={internship} updateMethodContract={updateContract} passwordUser={student.password} />
+                <Contract internshipProp={internship} updateMethodContract={updateContract}
+                    passwordUser={student.password} currentStatus={studentSignatureStatus} />
             )}
         </div>
     )
