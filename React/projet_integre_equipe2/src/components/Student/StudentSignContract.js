@@ -7,7 +7,7 @@ import Contract from '../Contract'
 const StudentSignContract = () => {
     const history = useHistory()
     const historyState = history.location.state
-    const [internship, setInternship] = useState(null)
+    const [internship, setInternship] = useState(undefined)
     const baseUrl = "http://localhost:8888"
     const studentSignatureStatus = "StudentSignature"
     const student = historyState.student
@@ -27,24 +27,11 @@ const StudentSignContract = () => {
         return await res.json()
     }
 
-    const updateContract = async (contract) => {
-        const result = await fetch(`${baseUrl}/contract/save-contract`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(contract)
-            })
-        return await result.json()
-    }
-
     return (
         <div className="grad ">
             <StudentNavbar useStudent={student} />
             {internship && (
-                <Contract internshipProp={internship} updateMethodContract={updateContract}
-                    passwordUser={student.password} currentStatus={studentSignatureStatus} />
+                <Contract internshipProp={internship} passwordUser={student.password} currentStatus={studentSignatureStatus} />
             )}
         </div>
     )
