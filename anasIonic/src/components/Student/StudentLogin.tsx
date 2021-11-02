@@ -16,7 +16,7 @@ import {
     IonToast
 } from '@ionic/react';
 import React, { useState } from 'react'
-import { alertCircleOutline, personCircle } from 'ionicons/icons'
+import { alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ const StudentLogin: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonItem>
-                                <IonLabel position="floating"> Matricule</IonLabel>
+                                <IonLabel position="floating"><IonIcon icon={idCardSharp} style={{ marginRight: 5 }}></IonIcon> Matricule</IonLabel>
                                 <IonInput
                                     type="text"
                                     {...register("matricule", { required: true, pattern: /^[0-9]{7}$/i })} >
@@ -83,7 +83,7 @@ const StudentLogin: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonItem>
-                                <IonLabel position="floating"> Password</IonLabel>
+                                <IonLabel position="floating"><IonIcon icon={lockClosedSharp} style={{ marginRight: 5 }}></IonIcon> Password</IonLabel>
                                 <IonInput
                                     type="password"
                                     {...register("password", { required: true, pattern: patternPassword })}>

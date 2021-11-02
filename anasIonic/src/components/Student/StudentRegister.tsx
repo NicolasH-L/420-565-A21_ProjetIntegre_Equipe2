@@ -2,9 +2,12 @@ import { IonContent, IonPage, IonText, IonItem, IonLabel, IonAlert, IonInput, Io
 import { alertCircleOutline, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
+
 const StudentRegistration: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const [showToastAlert2, setShowToastAlert2] = useState(false)
+    const history = useHistory();
     const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     const patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/
     const initialValues = {
@@ -36,6 +39,10 @@ const StudentRegistration: React.FC = () => {
                 body: JSON.stringify(student)
             })
         return await result.json();
+    }
+
+    function goToStudentLogin() {
+        history.push("/studentLogin", {})
     }
 
     return (
@@ -74,6 +81,9 @@ const StudentRegistration: React.FC = () => {
                             </IonItem>
                             <IonButton type="submit" className="ion-margin">Soumettre<IonIcon icon={sendSharp} style={{ marginLeft: 5 }}></IonIcon></IonButton>
                             <IonButton type="reset" className="ion-margin">Réinitialiser<IonIcon icon={refreshSharp} style={{ marginLeft: 5 }}></IonIcon> </IonButton>
+                            <p style={{ fontSize: "medium" }}>
+                                Already have an account? <a href="#" onClick={(e) => { e.preventDefault(); goToStudentLogin() }}>Sign in!</a>
+                            </p>
                         </IonCardContent>
                     </form>
                 </IonCard>
