@@ -14,6 +14,7 @@ const MonitorNavbar = () => {
         history.push("/Monitor", historyState)
     }
     
+    //TODO convert history state to {monitor:historyState}
     const goToMonitorContracts = () => {
         history.push("/MonitorContracts", historyState)
     }
