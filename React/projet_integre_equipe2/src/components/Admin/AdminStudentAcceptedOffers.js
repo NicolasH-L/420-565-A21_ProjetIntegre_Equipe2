@@ -66,6 +66,22 @@ const AdminStudentAcceptedOffers = () => {
         return data
     }
 
+    const createContract = async (internship) => {
+        contract.internship = internship
+        console.log("Create")
+        console.log(contract)
+        const res = await fetch('http://localhost:8888/contract/save-contract',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        const data = await res.json()
+        alert("Processus de signature commencé")
+    }
+
     const setInternshipSession = () => {
         let sessionDate = new Date()
         let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()

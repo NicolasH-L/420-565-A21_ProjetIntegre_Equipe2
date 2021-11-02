@@ -72,6 +72,9 @@ const AdminNavbar = () => {
                 <div className="collapse navbar-collapse d-flex justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
+                            <Link className="nav-link btn btn-light" to="/Admin"><i className="fas fa-home fa-lg"></i></Link>
+                        </li>
+                        <li className="nav-item mx-2">
                             <a className="nav-link btn btn-light" onClick={() => goToAdminOffer()}>Déposer offre</a>
                         </li>
                         <li className="nav-item mx-2">
