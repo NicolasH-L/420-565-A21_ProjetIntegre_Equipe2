@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.service.ContractService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -156,6 +158,64 @@ public class ContractControllerTest {
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CONFLICT.value());
         assertThat(actualContractListByMonitorId).isEmpty();
+    }
+
+    @Test
+    public void getAllContractsTest() throws Exception {
+        List<Contract> contractList = getListOfContracts();
+        when(contractService.getAllContracts()).thenReturn(Optional.of(contractList));
+
+        MvcResult result = mockMvc.perform(get("/contract/get-all-contracts/")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Contract> getListOfContracts(){
+        List<Contract> contractList = new ArrayList<>();
+        contractList.add(Contract.builder()
+                .idContract(1)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation1")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        contractList.add(Contract.builder()
+                .idContract(2)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation2")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        contractList.add(Contract.builder()
+                .idContract(3)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation3")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        return contractList;
     }
 
 }

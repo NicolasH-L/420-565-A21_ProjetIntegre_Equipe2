@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,5 +137,57 @@ public class ContractServiceTest {
         when(contractRepository.findContractsByInternship_Offer_Monitor_Id(0)).thenReturn(null);
         Optional<List<Contract>> actualContractList = contractService.getContractsByMonitorId(0);
         assertThat(actualContractList).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testGetAllStudent(){
+        when(contractRepository.findAll()).thenReturn(getListOfContracts());
+        final Optional<List<Contract>> allContracts = contractService.getAllContracts();
+        assertThat(allContracts.get().size()).isEqualTo(3);
+        assertThat(allContracts.get().get(0).getCompanyResponsability()).isEqualTo("Faire des evaluation1");
+    }
+
+    private List<Contract> getListOfContracts(){
+        List<Contract> contractList = new ArrayList<>();
+        contractList.add(Contract.builder()
+                .idContract(1)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation1")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        contractList.add(Contract.builder()
+                .idContract(2)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation2")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        contractList.add(Contract.builder()
+                .idContract(3)
+                .internship(null)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation3")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build());
+        return contractList;
     }
 }
