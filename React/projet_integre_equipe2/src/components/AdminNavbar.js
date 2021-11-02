@@ -10,7 +10,7 @@ const AdminNavbar = () => {
     const location = useLocation()
 
     useEffect(() => {
-        getAdmins()
+        getSessions()
     }, [])
 
     const goToAdminOffer = () => {
@@ -43,14 +43,13 @@ const AdminNavbar = () => {
         history.push(location.pathname, historyState)
     }
 
-    const getAdmins = async () => {
-        const adminsFromServer = await fetchAdmins()
-        let fetchedAdmin = adminsFromServer.find(admin1 => admin1.id === admin.id)
-        setSessions(fetchedAdmin.sessions)
+    const getSessions = async () => {
+        const sessionsFromServer = await fetchSessions()
+        setSessions(sessionsFromServer)
     }
 
-    const fetchAdmins = async () => {
-        const res = await fetch('http://localhost:8888/admin/get-all-admins')
+    const fetchSessions = async () => {
+        const res = await fetch('http://localhost:8888/sessions/get-all-sessions')
         return await res.json()
     }
 
@@ -95,13 +94,13 @@ const AdminNavbar = () => {
                             Sessions
                         </button>
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            {sessions.map((session, index) => (
+                            {sessions.map((session) => (
                                 <button
                                     type="button"
-                                    key={index}
-                                    className={`dropdown-item ${session === admin.actualSession ? 'active' : ''}`}
-                                    onClick={() => changeSession(session)}>
-                                    {sessionValueToFrench(session)}
+                                    key={session.idSession}
+                                    className={`dropdown-item ${session.session === admin.actualSession ? 'active' : ''}`}
+                                    onClick={() => changeSession(session.session)}>
+                                    {sessionValueToFrench(session.session)}
                                 </button>
                             ))}
                         </div>
