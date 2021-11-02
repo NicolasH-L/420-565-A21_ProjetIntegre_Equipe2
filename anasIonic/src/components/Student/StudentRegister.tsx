@@ -5,6 +5,8 @@ import { useForm, Controller } from "react-hook-form";
 const StudentRegistration: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const [showToastAlert2, setShowToastAlert2] = useState(false)
+    const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+    const patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/
     const initialValues = {
         lastName: '',
         firstName: '',
@@ -52,26 +54,26 @@ const StudentRegistration: React.FC = () => {
                         <IonCardContent>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={personSharp} style={{ marginRight: 5 }}></IonIcon>Nom</IonLabel>
-                                <IonInput type="text" {...register("lastName", { required: true, pattern: /^[A-Za-z]+$/i })}></IonInput>
+                                <IonInput type="text" {...register("lastName", { required: true, pattern: patternName })}></IonInput>
                                 {errors.lastName && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Nom invalide</p>}
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={personSharp} style={{ marginRight: 5 }}></IonIcon>Prénom</IonLabel>
-                                <IonInput type="text" {...register("firstName", { required: true, pattern: /^[A-Za-z]+$/i })}></IonInput>
+                                <IonInput type="text" {...register("firstName", { required: true, pattern: patternName })}></IonInput>
                                 {errors.firstName && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Prénom invalide</p>}
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={idCardSharp} style={{ marginRight: 5 }}></IonIcon>Matricule</IonLabel>
-                                <IonInput type="text" {...register("matricule", { required: true, pattern: /^[0-9]+$/i })}></IonInput>
+                                <IonInput type="text" {...register("matricule", { required: true, pattern: /^[0-9]{7}$/i })}></IonInput>
                                 {errors.matricule && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Matricule invalide</p>}
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={lockClosedSharp} style={{ marginRight: 5 }}></IonIcon>Password</IonLabel>
-                                <IonInput type="password" {...register("password", { required: true, pattern: /^[A-Za-z]+$/i })}></IonInput>
+                                <IonInput type="password" {...register("password", { required: true, pattern: patternPassword })}></IonInput>
                                 {errors.password && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Password invalide</p>}
                             </IonItem>
                             <IonButton type="submit" className="ion-margin">Soumettre<IonIcon icon={sendSharp} style={{ marginLeft: 5 }}></IonIcon></IonButton>
-                            <IonButton type="reset" >Réinitialier<IonIcon icon={refreshSharp} style={{ marginLeft: 5 }}></IonIcon> </IonButton>
+                            <IonButton type="reset" className="ion-margin">Réinitialiser<IonIcon icon={refreshSharp} style={{ marginLeft: 5 }}></IonIcon> </IonButton>
                         </IonCardContent>
                     </form>
                 </IonCard>
