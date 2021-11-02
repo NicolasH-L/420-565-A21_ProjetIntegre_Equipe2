@@ -36,6 +36,10 @@ const StudentNavbar = ({ useStudent }) => {
         history.push("/Student", historyState)
     }
 
+    const goToContract = () => {
+        history.push("/StudentSignContract", historyState)
+    }
+
     const verifyCvValidity = async (matricule) => {
         const res = await fetch('http://localhost:8888/students/valid-cv/' + matricule)
         return await res.json()
@@ -61,6 +65,9 @@ const StudentNavbar = ({ useStudent }) => {
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyDocuments()}>Mes Documents</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Entente de stage</button>
                         </li>
                     </ul>
                 </div>
