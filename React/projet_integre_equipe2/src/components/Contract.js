@@ -196,7 +196,11 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>
-                                : <strong className="text-success">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>}
+                                : 
+                                <div className="d-flex justify-content-center">
+                                    <strong className="text-success text-center">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+                                </div>
+                                }
                         </div>
                     )}
                 </form>
