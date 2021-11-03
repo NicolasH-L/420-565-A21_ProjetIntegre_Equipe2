@@ -39,11 +39,16 @@ const StudentSignContract = () => {
     }
 
     return (
-        <div className="grad ">
+        <div className="grad">
             <StudentNavbar useStudent={student} />
             {internship && contract && (
-                <Contract passwordUser={student.password} 
-                    currentStatus={studentSignatureStatus} contractProp={contract} />
+                <div className="d-flex justify-content-center my-5 py-2">
+                    <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                        <Contract passwordUser={student.password}
+                            currentStatus={studentSignatureStatus} contractProp={contract} 
+                            viewerStatus={studentSignatureStatus}/>
+                    </div>
+                </div>
             )}
         </div>
     )
