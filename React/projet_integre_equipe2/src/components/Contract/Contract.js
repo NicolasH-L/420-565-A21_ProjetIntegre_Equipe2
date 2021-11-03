@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) => {
+const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
@@ -204,10 +204,10 @@ const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) =
                             </div>
                             : ""}
                         <div className="d-flex justify-content-center mt-5">
-                            {internship.status !== undefined && !contractState.isDisabled ?
+                            {internship.status !== undefined && !contractState.isDisabled && (signature !== null || signature === "") ?
                                 <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                                : currentStatus === viewerStatus && contractState.isDisabled && viewerStatus !== internship.status?
-                                <strong className="text-success text-center">Contrat signée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+                                : internship.status !== undefined && contractState.isDisabled && signature !== null && signature !== "" ?
+                                <strong className="text-success text-center">Contrat signé <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
                                 :
                                 <strong className="text-danger text-center">Ce n'est pas à votre tour de signer <i className="fas fa-exclamation-circle text-danger fa-sm"></i></strong>
                             }
