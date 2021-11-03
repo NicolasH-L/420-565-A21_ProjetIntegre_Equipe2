@@ -1,17 +1,10 @@
 import React from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import SessionsButton from './SessionsButton'
 
 const AdminNavbar = () => {
-    const [sessions, setSessions] = useState([])
     const history = useHistory()
     const historyState = history.location.state
-    const admin = historyState.admin
-    const location = useLocation()
-
-    useEffect(() => {
-        getSessions()
-    }, [])
 
     const goToAdminDashboard = () => {
         history.push("/Admin", historyState)
@@ -39,30 +32,6 @@ const AdminNavbar = () => {
 
     const goToAdminAssignSupervisorToStudent = () => {
         history.push("/AdminAssignSupervisorToStudent", historyState)
-    }
-
-    const changeSession = (selectedSession) => {
-        admin.actualSession = selectedSession
-        historyState.admin = admin
-        history.push(location.pathname, historyState)
-    }
-
-    const getSessions = async () => {
-        const sessionsFromServer = await fetchSessions()
-        setSessions(sessionsFromServer)
-    }
-
-    const fetchSessions = async () => {
-        const res = await fetch('http://localhost:8888/sessions/get-all-sessions')
-        return await res.json()
-    }
-
-    const sessionValueToFrench = (session) => {
-        let sessionSeason = session.slice(0, -4)
-        let sessionYear = session.slice(-4)
-        let sessionSeasonToFrench = sessionSeason === "winter" ? "Hiver"
-            : sessionSeason === "summer" ? "Été" : ""
-        return sessionSeasonToFrench + " " + sessionYear
     }
 
     return (
@@ -96,22 +65,7 @@ const AdminNavbar = () => {
                             <a className="nav-link btn btn-light" onClick={() => goToAdminAssignSupervisorToStudent()}>Assigner un superviseur</a>
                         </li>
                     </ul>
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-primary dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-                            Sessions
-                        </button>
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            {sessions.map((session) => (
-                                <button
-                                    type="button"
-                                    key={session.idSession}
-                                    className={`dropdown-item ${session.session === admin.actualSession ? 'active' : ''}`}
-                                    onClick={() => changeSession(session.session)}>
-                                    {sessionValueToFrench(session.session)}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    <SessionsButton/>
                 </div>
             </nav>
         </div>
