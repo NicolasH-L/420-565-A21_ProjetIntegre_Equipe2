@@ -25,7 +25,7 @@ public class ContractController {
     }
 
     @GetMapping("/get-contract/{id}")
-    public ResponseEntity<Contract> getContractByStudent_id(@PathVariable Integer id){
+    public ResponseEntity<Contract> getContractByStudentId(@PathVariable Integer id){
         return contractService.getContractByStudentId(id)
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());

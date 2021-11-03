@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentStatus }) => {
+const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
@@ -35,6 +35,18 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
         return await res.json()
     }
 
+    const updateContract = async (contract) => {
+        const result = await fetch(`${baseUrl}/contract/save-contract`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        return await result.json()
+    }
+
     const updateInternship = async () => {
         const result = await fetch(`${baseUrl}/internship/save-internship`,
             {
@@ -54,7 +66,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
     const onSubmit = (e) => {
         e.preventDefault()
         if (validateInput()) {
-            updateMethodContract(contract)
+            updateContract(contract)
         }
     }
 
@@ -196,7 +208,7 @@ const Contract = ({ internshipProp, updateMethodContract, passwordUser, currentS
                                 <div className="d-flex justify-content-center mt-5">
                                     <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 </div>
-                                : 
+                                :
                                 <div className="d-flex justify-content-center">
                                     <strong className="text-success text-center">Contrat signée avec succès <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
                                 </div>
