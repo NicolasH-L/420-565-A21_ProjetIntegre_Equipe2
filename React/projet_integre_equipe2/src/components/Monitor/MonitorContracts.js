@@ -10,6 +10,7 @@ const MonitorContracts = () => {
     const historyState = history.location.state
     // Todo convert to historyState.monitor
     const monitor = historyState
+    const monitorSignatureStatus = "MonitorSignature"
 
     useEffect(() => {
         const getAllContracts = async () =>{
@@ -24,6 +25,7 @@ const MonitorContracts = () => {
         return await res.json()
     }
 
+    //TODO 
     const filterContracts = (contract) => {
         return contract.isInternshipStarted === false 
             && monitor.actualSession === contract.session
@@ -50,32 +52,33 @@ const MonitorContracts = () => {
                         </thead>
                         <tbody>
                             {contracts
+                                // TODO filtre pour sessions + filtre de status ex: signature Etudiant, signature Monitor, signature Admin, etc.
                                 // .filter(filterContracts)
                                 .map((contract) => (
                                     <tr key={contract.idContract} className="text-center">
                                         <td>{contract.internship.offer.jobTitle}</td>
                                         <td>{contract.internship.offer.startInternshipDate}</td>
                                         <td>{contract.internship.student.firstName + " " + contract.internship.student.lastName }</td>
-                                        <td className={contract.internship.studentSignature !== null && contract.internship.studentSignature !== undefined 
-                                            && contract.internship.studentSignature !==  "" ? "table-success": "table-warning"}>
-                                                {contract.internship.studentSignature !== null && contract.internship.studentSignature !== undefined 
-                                                    && contract.internship.studentSignature !==  "" ? "Signé" : "En attente de signature" }
+                                        <td className={contract.studentSignature !== null && contract.studentSignature !== undefined 
+                                            && contract.studentSignature !==  "" ? "table-success": "table-warning"}>
+                                                {contract.studentSignature !== null && contract.studentSignature !== undefined 
+                                                    && contract.studentSignature !==  "" ? "Signé" : "En attente de signature" }
                                         </td>
-                                        <td className={contract.internship.monitorSignature !== null && contract.internship.monitorSignature !== undefined 
-                                            && contract.internship.monitorSignature !==  "" ? "table-success": "table-warning"}>
-                                                {contract.internship.monitorSignature !== null && contract.internship.monitorSignature !== undefined 
-                                                    && contract.internship.monitorSignature !==  "" ? "Signé" : "En attente de signature" }
+                                        <td className={contract.monitorSignature !== null && contract.monitorSignature !== undefined 
+                                            && contract.monitorSignature !==  "" ? "table-success": "table-warning"}>
+                                                {contract.monitorSignature !== null && contract.monitorSignature !== undefined 
+                                                    && contract.monitorSignature !==  "" ? "Signé" : "En attente de signature" }
                                         </td>
-                                        <td className={contract.internship.adminSignature !== null && contract.internship.adminSignature !== undefined 
-                                            && contract.internship.adminSignature !==  "" ? "table-success": "table-warning"}>
-                                                {contract.internship.adminSignature !== null && contract.internship.adminSignature !== undefined 
-                                                    && contract.internship.adminSignature !==  "" ? "Signé" : "En attente de signature" }
+                                        <td className={contract.adminSignature !== null && contract.adminSignature !== undefined 
+                                            && contract.adminSignature !==  "" ? "table-success": "table-warning"}>
+                                                {contract.adminSignature !== null && contract.adminSignature !== undefined 
+                                                    && contract.adminSignature !==  "" ? "Signé" : "En attente de signature" }
                                         </td>
                                         <td className="w-25">
-                                            <ContractModalView contractProp={contract} />
-                                        </td> 
-                                        {/* 
-                                        */}
+                                            <ContractModalView userPasswordProp={monitor.password}
+                                                currentStatusProp={monitorSignatureStatus} contractProp={contract} 
+                                                viewerStatus={monitorSignatureStatus} />
+                                        </td>
                                     </tr>
                                     ))}
                         </tbody>
