@@ -1,6 +1,6 @@
 import React from 'react'
 import MonitorNavbar from './MonitorNavbar'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Form.css'
 
@@ -9,6 +9,7 @@ const Monitor = () => {
     const history = useHistory()
     const historyState = history.location.state
     const monitor = historyState.monitor
+    const location = useLocation()
 
     useEffect(() => {
         const getOffersByMonitor = async () => {
@@ -24,7 +25,7 @@ const Monitor = () => {
         }
         getOffersByMonitor()
         getStudentNumbersForAllOffers()
-    }, [offers.offerList.length, monitor.actualSession])
+    }, [offers.offerList.length])
 
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
