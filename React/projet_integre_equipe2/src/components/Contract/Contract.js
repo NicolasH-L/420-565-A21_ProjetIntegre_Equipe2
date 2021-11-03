@@ -207,7 +207,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) =
                             {internship.status !== undefined && !contractState.isDisabled ?
                                 <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
                                 : currentStatus === viewerStatus && contractState.isDisabled && viewerStatus !== internship.status?
-                                <strong className="text-success text-center">Contrat signée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+                                <strong className="text-success text-center">Contrat signé <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
                                 :
                                 <strong className="text-danger text-center">Ce n'est pas à votre tour de signer <i className="fas fa-exclamation-circle text-danger fa-sm"></i></strong>
                             }
