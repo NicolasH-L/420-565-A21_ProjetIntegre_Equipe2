@@ -6,7 +6,9 @@ import { useState, useEffect } from 'react'
 const AdminStudentCvList = () => {
     const [documents, setDocuments] = useState([])
     const history = useHistory()
-    const student = history.location.state
+    const historyState = history.location.state
+    const student = historyState.student
+    const admin = historyState.admin
 
     useEffect(() => {
         const getDocuments = async () => {
@@ -17,7 +19,6 @@ const AdminStudentCvList = () => {
     }, [])
 
     const fetchDocuments = async (student) => {
-        console.log(student)
         const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
         return await res.json()
     }
@@ -43,6 +44,7 @@ const AdminStudentCvList = () => {
             )
         )
     }
+
     const displayButtons = (document) => {
         return (
             <>
@@ -50,6 +52,10 @@ const AdminStudentCvList = () => {
                 <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>Refuser</button>
             </>
         )
+    }
+
+    const filterDocuments = (document) => {
+        return document.session == admin.actualSession
     }
 
     return (
@@ -67,7 +73,9 @@ const AdminStudentCvList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {documents.map((document) => (
+                        {documents
+                        .filter(filterDocuments)
+                        .map((document) => (
                             <tr className={`${!document.isValid && !document.isRefused ? 'table-warning' :
                                 !document.isValid && document.isRefused ? 'table-danger' : 'table-success'}`} key={document.idDocument}>
                                 <th>{document.documentName}</th>

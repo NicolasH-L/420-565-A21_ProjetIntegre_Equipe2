@@ -28,6 +28,7 @@ public class DocumentService {
                     StandardCharsets.UTF_8).replace("\"","").split(":");
             Document document = new Document();
             document.setDocumentName(signatureFile[0]);
+            document.setSession(signatureFile[2]);
             document.setData(multipartFile.getBytes());
             document.setStudent(studentRepository.getById(Integer.parseInt(signatureFile[1])));
             document.setIsValid(false);

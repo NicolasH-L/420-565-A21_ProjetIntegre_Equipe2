@@ -22,6 +22,8 @@ public class Document implements Serializable {
     private String documentName;
     private Boolean isValid;
     private Boolean isRefused;
+    private String session;
+
     @Lob
     private byte[] data;
 

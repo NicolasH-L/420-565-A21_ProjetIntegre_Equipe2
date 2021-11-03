@@ -8,15 +8,16 @@ import MonitorNavbar from './MonitorNavbar'
 
 const MonitorInternshipOffer = () => {
     const history = useHistory()
-    const historyState = useHistory().location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     let emailMonitor
     let company
 
     if (historyState !== undefined) {
-        emailMonitor = historyState.email
-        company = historyState.companyName
+        emailMonitor = monitor.email
+        company = monitor.companyName
     }
 
     const [offer, setOffer] = useState({
@@ -68,7 +69,7 @@ const MonitorInternshipOffer = () => {
     function submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
-        history.push("/MonitorOfferList", historyState)
+        history.push("/MonitorOfferList", { monitor })
     }
 
     const verifyMonitorExists = async (email) => {

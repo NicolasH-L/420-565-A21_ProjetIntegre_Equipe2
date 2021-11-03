@@ -7,12 +7,14 @@ import './Form.css'
 const Monitor = () => {
     const [offers, setOffers] = useState({ offerList: [], studentNumbers: new Map() })
     const history = useHistory()
-    const monitor = history.location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
 
     useEffect(() => {
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
-            setOffers({ ...offers, offerList: offersFromServer })
+            const tmpOffersFromServer = offersFromServer.filter((offer) => offer.session === monitor.actualSession)
+            setOffers({ ...offers, offerList: tmpOffersFromServer })
         }
         const getStudentNumbersForAllOffers = async () => {
             for (const offer of offers.offerList) {
@@ -22,7 +24,7 @@ const Monitor = () => {
         }
         getOffersByMonitor()
         getStudentNumbersForAllOffers()
-    }, [offers.offerList.length])
+    }, [offers.offerList.length, monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
@@ -35,11 +37,11 @@ const Monitor = () => {
     }
 
     function goToMonitorOfferList() {
-        history.push("/MonitorOfferList", monitor)
+        history.push("/MonitorOfferList", { monitor })
     }
 
     function goToMonitorStudentList(idOffer) {
-        history.push(`/MonitorStudentList/${idOffer}`, monitor)
+        history.push(`/MonitorStudentList/${idOffer}`, { monitor })
     }
 
     return (

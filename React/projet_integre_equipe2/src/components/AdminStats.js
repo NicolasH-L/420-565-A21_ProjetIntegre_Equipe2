@@ -8,29 +8,31 @@ const AdminStats = () => {
     const [documents, setDocuments] = useState([])
     const [validStudentsCount, setValidStudentsCount] = useState(0)
     const history = useHistory()
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     useEffect(() => {
         const getAllStudents = async () => {
             const studentsFromServer = await fetchAllStudents()
-            setStudents(studentsFromServer)
+            setStudents(studentsFromServer.filter((student) => student.actualSession === admin.actualSession))
         }
         const getAllOffers = async () => {
             const offersFromServer = await fetchAllOffers()
-            setOffers(offersFromServer)
+            setOffers(offersFromServer.filter((offer) => offer.session === admin.actualSession))
         }
         const getAllValidStudents = async () => {
-            let validStudents = students.filter((student) => student.isCvValid === true)
+            let validStudents = students.filter((student) => student.isCvValid === true && student.actualSession === admin.actualSession)
             setValidStudentsCount(validStudents.length)
         }
         const getAllInvalidDocuments = async () => {
             const documentsFromServer = await fetchAllDocuments()
-            setDocuments(documentsFromServer.filter((document) => document.isValid === false && document.isRefused === true))
+            setDocuments(documentsFromServer.filter((document) => document.isValid === false && document.isRefused === true && document.session === admin.actualSession))
         }
         getAllStudents()
         getAllOffers()
         getAllValidStudents()
         getAllInvalidDocuments()
-    }, [offers.length])
+    }, [admin.actualSession, offers.length])
 
     const fetchAllStudents = async () => {
         const res = await fetch("http://localhost:8888/students/get-all-students")
@@ -48,16 +50,16 @@ const AdminStats = () => {
     }
 
     function goToAdminStudentList() {
-        history.push("/AdminStudentList", {})
+        history.push("/AdminStudentList", { admin })
     }
 
     function goToAdminOffersList() {
-        history.push("/AdminOffersList", {})
+        history.push("/AdminOffersList", { admin })
     }
 
     return (
         <div>
-            <h2 className="text-center mb-3">Bonjour</h2>
+            <h2 className="text-center mb-3">Bonjour {admin.username}</h2>
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>

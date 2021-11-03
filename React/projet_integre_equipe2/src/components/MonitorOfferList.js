@@ -7,7 +7,8 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
-    const monitor = history.location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
 
     function goToMonitorStudentList(idOffer) {
         history.push(`/MonitorStudentList/${idOffer}`, monitor)
