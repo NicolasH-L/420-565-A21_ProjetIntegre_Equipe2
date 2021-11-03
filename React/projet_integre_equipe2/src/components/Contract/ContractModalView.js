@@ -1,37 +1,25 @@
 import React from 'react'
 import Contract from '../Contract/Contract'
 
-const ContractModalView = ({ contractProp }) => {
+const ContractModalView = ({ userPasswordProp, currentStatusProp, contractProp, viewerStatusProp }) => {
     const contract = contractProp
+    const currentStatus = currentStatusProp
+    const userPassword = userPasswordProp
 
     return (
         <div>
-            <button className="btn btn-primary" data-toggle="modal" data-target={"#contract"+contract.id}>Consulter</button>
-            
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Launch demo modal
-            </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+            <button className="btn btn-primary" data-toggle="modal" data-target={"#contract" + contract.idContract}>Consulter</button>
+            <div className="modal fade" id={"contract" + contract.idContract} tabIndex="-1" role="dialog">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                        <Contract passwordUser={userPassword} currentStatus={currentStatus}
+                            contractProp={contract} viewerStatus={viewerStatusProp}/>
+                        <div className="modal-footer mt-4">
+                            <button type="button" className="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
-
-
         </div>
     )
 }
