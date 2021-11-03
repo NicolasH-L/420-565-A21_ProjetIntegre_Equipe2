@@ -68,8 +68,7 @@ const AdminStudentAcceptedOffers = () => {
 
     const createContract = async (internship) => {
         contract.internship = internship
-        console.log("Create")
-        console.log(contract)
+        contract.session = internship.session
         const res = await fetch('http://localhost:8888/contract/save-contract',
             {
                 method: 'POST',
