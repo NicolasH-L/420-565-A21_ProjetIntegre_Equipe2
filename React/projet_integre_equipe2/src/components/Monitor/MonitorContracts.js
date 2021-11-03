@@ -16,7 +16,6 @@ const MonitorContracts = () => {
     useEffect(() => {
         filters.session = monitor.actualSession
         filters.signatureStatus = monitorSignatureStatus
-
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
             setContracts(contractsFromServer)
@@ -29,13 +28,13 @@ const MonitorContracts = () => {
         return await res.json()
     }
 
-    //TODO 
+
     const filterContractsBySession = (contract) => {
         return filters.session === contract.session
     }
 
     const filterContractsByStatus = (contract) => {
-        return filters.signatureStatus === contract.internship.status
+        return filters.signatureStatus !== "" ? filters.signatureStatus === contract.session : true 
     }
 
     const getStatusValue = (userSignature, trueValue, falseValue) => {
@@ -47,7 +46,11 @@ const MonitorContracts = () => {
         var temp = contracts.filter(filterContractsBySession).filter(filterContractsByStatus)
         return temp.length > 0
     }
-    
+
+    const changeStatusFilter = () => {
+        
+    }
+
     const displayEmptyErrorMessage = () => {
         return (
             <div className="container">
@@ -57,11 +60,17 @@ const MonitorContracts = () => {
             </div>
         )
     }
-    
+
     // TODO Bouton filtre pour sessions + Bouton filtre de status ex: signature Etudiant, signature Monitor, signature Admin, etc.
     return (
         <div className="grad">
             <MonitorNavbar />
+            <div className="d-flex justify-content-end m-5">
+                <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={(e) => e.preventDefault(), changeStatusFilter} required>
+                    <option className="bg-light text-dark" value="default">Afficher tous les contrats</option>
+                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher  </option>
+                </select>
+            </div>
             <h2 className="text-center">Mes contrats</h2>
             <div className="container-fluid">
                 <div className="p-5 table-responsive">
@@ -98,8 +107,7 @@ const MonitorContracts = () => {
                                             </td>
                                             <td className="w-25">
                                                 <ContractModalView userPasswordProp={monitor.password}
-                                                    currentStatusProp={monitorSignatureStatus} contractProp={contract}
-                                                    viewerStatus={monitorSignatureStatus} />
+                                                    currentStatusProp={monitorSignatureStatus} contractProp={contract} signature={contract.monitorSignature} />
                                             </td>
                                         </tr>
                                     ))}

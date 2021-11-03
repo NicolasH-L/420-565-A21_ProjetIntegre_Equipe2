@@ -46,7 +46,7 @@ const StudentSignContract = () => {
                     <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                         <Contract passwordUser={student.password}
                             currentStatus={studentSignatureStatus} contractProp={contract} 
-                            viewerStatus={studentSignatureStatus}/>
+                            signature={contract.studentSignature}/>
                     </div>
                 </div>
             )}
