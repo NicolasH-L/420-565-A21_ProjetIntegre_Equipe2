@@ -47,11 +47,11 @@ const SessionsButton = () => {
     }
 
     return (
-        <div className="btn-group">
+        <div className="btn-group mr-5">
             <button type="button" className="btn btn-primary dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                 Sessions
             </button>
-            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 {sessions.map((session) => (
                     <button
                         type="button"

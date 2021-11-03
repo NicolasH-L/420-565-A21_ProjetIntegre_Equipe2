@@ -11,7 +11,7 @@ const MonitorOfferList = () => {
     const monitor = historyState.monitor
 
     function goToMonitorStudentList(idOffer) {
-        history.push(`/MonitorStudentList/${idOffer}`, monitor)
+        history.push(`/MonitorStudentList/${idOffer}`, {monitor})
     }
 
     useEffect(() => {
@@ -25,6 +25,10 @@ const MonitorOfferList = () => {
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
         return await res.json()
+    }
+
+    const filterOffers = (offer) => {
+        return offer.session == monitor.actualSession
     }
 
     return (
@@ -43,7 +47,9 @@ const MonitorOfferList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
                             <tr key={offer.idOffer}>
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
