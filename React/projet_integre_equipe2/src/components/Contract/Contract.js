@@ -51,10 +51,6 @@ const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) =
         return data
     }
 
-    const checkCurrentSignatureStatus = (signature) => {
-        return !(internship.status === signature)
-    }
-
     const onSubmit = (e) => {
         e.preventDefault()
         if (validateInput()) {
@@ -105,7 +101,10 @@ const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) =
                     <div>
                         <div className="form-group">
                             <label htmlFor="adminName" className="text-secondary">Le gestionnaire de stage : </label>
-                            <input type="text" className="form-control text-center" id="adminName" name="adminName" disabled={checkCurrentSignatureStatus(adminSignatureStatus)} />
+                            {/* TODO: ajouter la condition pour enable le input de admin name 
+                                il va falloir aussi rajouter la methode qui permet de SET le nom de l'admin.
+                                */}
+                            <input type="text" className="form-control text-center" id="adminName" name="adminName" disabled={true} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorName" className="text-secondary"> L'employeur : </label>
@@ -207,7 +206,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, viewerStatus }) =
                         <div className="d-flex justify-content-center mt-5">
                             {internship.status !== undefined && !contractState.isDisabled ?
                                 <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                                : currentStatus === viewerStatus && internship.status !== viewerStatus && contractState.isDisabled ?
+                                : currentStatus === viewerStatus && contractState.isDisabled && viewerStatus !== internship.status?
                                 <strong className="text-success text-center">Contrat signée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
                                 :
                                 <strong className="text-danger text-center">Ce n'est pas à votre tour de signer <i className="fas fa-exclamation-circle text-danger fa-sm"></i></strong>
