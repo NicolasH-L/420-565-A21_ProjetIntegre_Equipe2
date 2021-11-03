@@ -1,13 +1,9 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
+const Contract = ({passwordUser, currentStatus, contractProp }) => {
     const [internship, setInternship] = useState(null)
-    const [contract, setContract] = useState({
-        internship: "", collegeResponsability: "", companyResponsability: "",
-        studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
-        signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
-    })
+    const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
     const baseUrl = "http://localhost:8888"
     const studentSignatureStatus = "StudentSignature"
@@ -15,25 +11,14 @@ const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
     const adminSignatureStatus = "AdminSignature"
     const completeSignatureStatus = "Completed"
     const signatureStatusList = [studentSignatureStatus, monitorSignatureStatus, adminSignatureStatus, completeSignatureStatus]
-    let studentId
 
     useEffect(() => {
-        console.log(internshipProp)
-        setInternship(internshipProp)
+        setInternship(contractProp.internship)
+        setContract(contractProp)
         contractState.userPassword = passwordUser
-        studentId = internshipProp.student.id
-        const getContract = async () => {
-            const contractFromServer = await fetchContract()
-            setContract(contractFromServer)
-        }
-        getContract()
-        setContractState({ ...contractState, currentStatus: internshipProp.status, isDisabled: currentStatus !== internshipProp.status })
+        setContractState({ ...contractState, currentStatus: contractProp.internship.status, 
+            isDisabled: currentStatus !== contractProp.internship.status })
     }, [])
-
-    const fetchContract = async () => {
-        const res = await fetch(`${baseUrl}/contract/get-contract/${studentId}`)
-        return await res.json()
-    }
 
     const updateContract = async (contract) => {
         const result = await fetch(`${baseUrl}/contract/save-contract`,
@@ -47,6 +32,7 @@ const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
         return await result.json()
     }
 
+    // TODO il manque la mise a jours de isStudentSigned, etc.
     const updateInternship = async () => {
         const result = await fetch(`${baseUrl}/internship/save-internship`,
             {
@@ -103,7 +89,7 @@ const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
             <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                 <form className="container-fluid" onSubmit={onSubmit} >
                     <h1 className="text-center">Contrat</h1>
-                    {internship && (
+                    {internship && contract && (
                         <div>
                             <div className="form-group">
                                 <label htmlFor="adminName" className="text-secondary">Le gestionnaire de stage : </label>
@@ -184,11 +170,12 @@ const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
-                                <input type="text" className="form-control text-center" id="signatureMonitor" name="signatureMonitor" readOnly />
+                                <input type="text" className="form-control text-center" id="signatureMonitor" name="signatureMonitor" value={contract.monitorSignature !== "" ? contract.monitorSignature: ""} readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signatureDateMonitor" className="text-secondary">Date de signature de l'employeur : </label>
-                                <input type="text" className="form-control text-center" id="signatureDateMonitor" name="signatureDateMonitor" readOnly />
+                                <input type="text" className="form-control text-center" id="signatureDateMonitor" name="signatureDateMonitor"
+                                    value={(contract.monitorSignature !== "") ? contract.monitorSignature : (internship.status === monitorSignatureStatus && contract.monitorSignature !== "") ? getToday() : ""}  readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signatureAdmin" className="text-secondary">Signature du gestionnaire : </label>
