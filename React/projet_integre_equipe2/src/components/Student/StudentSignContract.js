@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import StudentNavbar from '../StudentNavbar'
-import Contract from '../Contract'
+import Contract from '../Contract/Contract'
 
 const StudentSignContract = () => {
     const history = useHistory()

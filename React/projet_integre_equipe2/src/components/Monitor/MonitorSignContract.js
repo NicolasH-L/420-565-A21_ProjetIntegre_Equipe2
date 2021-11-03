@@ -8,7 +8,7 @@ const MonitorSignContract = ({monitorProp, contractProp}) => {
 
     return (
         <div>
-            
+                
         </div>
     )
 }
