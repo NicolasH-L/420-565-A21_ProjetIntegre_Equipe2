@@ -1,7 +1,7 @@
 import React from 'react'
 import Contract from '../Contract/Contract'
 
-const ContractModalView = ({ userPasswordProp, currentStatusProp, contractProp, viewerStatusProp }) => {
+const ContractModalView = ({ userPasswordProp, currentStatusProp, contractProp, viewerStatus }) => {
     const contract = contractProp
     const currentStatus = currentStatusProp
     const userPassword = userPasswordProp
@@ -13,7 +13,7 @@ const ContractModalView = ({ userPasswordProp, currentStatusProp, contractProp, 
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <Contract passwordUser={userPassword} currentStatus={currentStatus}
-                            contractProp={contract} viewerStatus={viewerStatusProp}/>
+                            contractProp={contract} viewerStatus={viewerStatus}/>
                         <div className="modal-footer mt-4">
                             <button type="button" className="btn btn-danger" data-dismiss="modal">Fermer</button>
                         </div>
