@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import MonitorNavbar from '../MonitorNavbar'
+import ContractModalView from '../Contract/ContractModalView'
 
 const MonitorContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -52,7 +53,6 @@ const MonitorContracts = () => {
                                 // .filter(filterContracts)
                                 .map((contract) => (
                                     <tr key={contract.idContract} className="text-center">
-
                                         <td>{contract.internship.offer.jobTitle}</td>
                                         <td>{contract.internship.offer.startInternshipDate}</td>
                                         <td>{contract.internship.student.firstName + " " + contract.internship.student.lastName }</td>
@@ -72,9 +72,7 @@ const MonitorContracts = () => {
                                                     && contract.internship.adminSignature !==  "" ? "Signé" : "En attente de signature" }
                                         </td>
                                         <td className="w-25">
-                                            <button className="btn btn-primary mx-2" 
-                                            // onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}
-                                            >Consulter</button>
+                                            <ContractModalView contractProp={contract} />
                                         </td> 
                                         {/* 
                                         */}
