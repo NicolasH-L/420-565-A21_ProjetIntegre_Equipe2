@@ -22,8 +22,6 @@ public class Internship implements Serializable {
     @GeneratedValue
     private int idInternship;
 
-    private Boolean isSignedByStudent;
-    private Boolean isSignedByMonitor;
     private String status;
     private String session;
 
