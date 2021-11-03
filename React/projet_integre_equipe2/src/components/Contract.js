@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 
 const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
-    const [internship, setInternship] = useState(undefined)
+    const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState({
         internship: "", collegeResponsability: "", companyResponsability: "",
         studentResponsability: "", studentSignature: "", monitorSignature: "", adminSignature: "",
@@ -18,6 +18,7 @@ const Contract = ({ internshipProp, passwordUser, currentStatus }) => {
     let studentId
 
     useEffect(() => {
+        console.log(internshipProp)
         setInternship(internshipProp)
         contractState.userPassword = passwordUser
         studentId = internshipProp.student.id
