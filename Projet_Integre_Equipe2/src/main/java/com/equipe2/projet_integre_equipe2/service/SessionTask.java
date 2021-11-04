@@ -5,13 +5,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
 public class SessionTask{
     private final String[] SESSION_PREFIX = {"winter", "summer"};
-    private final int LAST_MONTH_OH_THE_YEAR = 12;
+    private final int LAST_MONTH_OF_THE_YEAR = 12;
     private final int WINTER_START = 9;
     private final int WINTER_DEADLINE = 2;
     private final int SUMMER_START = 3;
@@ -31,6 +30,9 @@ public class SessionTask{
     private List<Supervisor> supervisorList;
     private List<Sessions> sessionsList;
 
+    private SessionDateCalculator sessionDateCalculator;
+    private SessionVerification sessionVerification;
+
     public SessionTask(AdminService adminService, StudentService studentService,
                        MonitorService monitorService, SupervisorService supervisorService,
                        SessionsService sessionsService){
@@ -43,93 +45,49 @@ public class SessionTask{
 
     @Scheduled(cron = "0 0 0 1 * *")
     public void verifySession() {
+        sessionDateCalculator = new SessionDateCalculator(LocalDate.now(), MONTH_PATTERN, YEAR_PATTERN,
+                                                        SESSION_PREFIX, LAST_MONTH_OF_THE_YEAR, WINTER_START,
+                                                        WINTER_DEADLINE, SUMMER_START, SUMMER_DEADlINE);
+        sessionVerification = new SessionVerification();
+        adminList = adminService.getAllAdmin().get();
+        studentList = studentService.getAllStudents().get();
+        monitorList = monitorService.getAllMonitors().get();
+        supervisorList = supervisorService.getAllSupervisors().get();
         sessionsList = sessionsService.getAllSessions().get();
-        LocalDate date = LocalDate.now();
-        String month = formatDate(date, MONTH_PATTERN);
-        month = calculateMonth(Integer.parseInt(month));
-        String year = formatDate(date, YEAR_PATTERN);
-        year = calculateYear(Integer.parseInt(month), Integer.parseInt(year));
-        String calculatedSession = calculateSession(Integer.parseInt(month), year);
+        String calculatedSession = sessionDateCalculator.calculateSession();
 
-        verifySessionsList(calculatedSession);
-        verifySessionForAdmins(calculatedSession);
-        verifySessionForStudents(calculatedSession);
-        verifySessionForMonitors(calculatedSession);
-        verifySessionForSupervisors(calculatedSession);
-    }
-
-    private void verifySessionsList(String calculatedSession) {
-        sessionsList = sessionsService.getAllSessions().get();
-        if (!sessionsList.get(sessionsList.size() - 1).equals(calculatedSession)){
+        if (sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
             Sessions session = new Sessions();
             session.setSession(calculatedSession);
             sessionsService.saveSession(session);
         }
-    }
 
-    private void verifySessionForAdmins(String calculatedSession) {
-        adminList = adminService.getAllAdmin().get();
-        for (int i = 0; i < adminList.size(); i++){
-            Admin admin = adminList.get(i);
-            if (!admin.getActualSession().equals(calculatedSession)){
+        for (Admin admin : adminList) {
+            if (!sessionVerification.verifySessionForAdminsIsUpToDate(calculatedSession, admin)){
                 admin.setActualSession(calculatedSession);
                 adminService.saveAdmin(admin);
             }
         }
-    }
 
-    private void verifySessionForStudents(String calculatedSession) {
-        studentList = studentService.getAllStudents().get();
-        for (int i = 0; i < studentList.size(); i++){
-            Student student = studentList.get(i);
-            if (!student.getActualSession().equals(calculatedSession)){
+        for (Student student : studentList) {
+            if (sessionVerification.verifySessionForStudentsIsUpToDate(calculatedSession, student)){
                 student.setActualSession(calculatedSession);
                 studentService.registerStudent(student);
             }
         }
-    }
 
-    private void verifySessionForMonitors(String calculatedSession) {
-        monitorList = monitorService.getAllMonitors().get();
-        for (int i = 0; i < monitorList.size(); i++){
-            Monitor monitor = monitorList.get(i);
-            if (!monitor.getActualSession().equals(calculatedSession)){
+        for (Monitor monitor : monitorList) {
+            if (sessionVerification.verifySessionForMonitorsIsUpToDate(calculatedSession, monitor)){
                 monitor.setActualSession(calculatedSession);
                 monitorService.registerMonitor(monitor);
             }
         }
-    }
 
-    private void verifySessionForSupervisors(String calculatedSession) {
-        supervisorList = supervisorService.getAllSupervisors().get();
-        for (int i = 0; i < supervisorList.size(); i++){
-            Supervisor supervisor = supervisorList.get(i);
-            if (!supervisor.getActualSession().equals(calculatedSession)){
+        for (Supervisor supervisor : supervisorList) {
+            if (sessionVerification.verifySessionForSupervisorsIsUpToDate(calculatedSession, supervisor)){
                 supervisor.setActualSession(calculatedSession);
                 supervisorService.registerSupervisor(supervisor);
             }
         }
-    }
-
-    private String formatDate(LocalDate date, String pattern){
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern(pattern);
-        String formattedDate = date.format(myFormatObj);
-        return formattedDate;
-    }
-
-    private String calculateMonth(int month){
-        return month <= WINTER_DEADLINE ? String.valueOf(LAST_MONTH_OH_THE_YEAR) : String.valueOf(month);
-    }
-
-    private String calculateYear(int month, int year){
-        return month >= WINTER_START && month <= LAST_MONTH_OH_THE_YEAR
-                ? String.valueOf(year + 1) : String.valueOf(year);
-    }
-
-    private String calculateSession(int month, String year){
-        return month >= WINTER_START && month <= LAST_MONTH_OH_THE_YEAR
-                ? SESSION_PREFIX[0] + year
-                : month >= SUMMER_START && month <= SUMMER_DEADlINE
-                ? SESSION_PREFIX[1] + year : "Erreur";
     }
 }

@@ -25,8 +25,9 @@ public class Admin {
     private String actualSession;
 
     @Builder(builderMethodName = "adminBuilder")
-    public Admin(String username, String password) {
+    public Admin(String username, String password, String actualSession) {
         this.username = username;
         this.password = password;
+        this.actualSession = actualSession;
     }
 }

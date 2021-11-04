@@ -16,11 +16,13 @@ public class Monitor extends User implements Serializable {
     private String companyName;
 
     @Builder(builderMethodName = "monitorBuilder")
-    public Monitor(Integer id, String password, String lastName, String firstName, String companyName, String email) {
+    public Monitor(Integer id, String password, String lastName, String firstName,
+                   String companyName, String email, String actualSession) {
         super.setId(id);
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
+        super.setActualSession(actualSession);
         this.companyName = companyName;
         this.email = email;
     }
