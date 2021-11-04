@@ -13,7 +13,8 @@ const Monitor = () => {
     useEffect(() => {
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
-            setOffers({ ...offers, offerList: offersFromServer })
+            const tmpOffersFromServer = offersFromServer.filter((offer) => offer.session === monitor.actualSession)
+            setOffers({ ...offers, offerList: tmpOffersFromServer })
         }
         getOffersByMonitor()
     }, [monitor.actualSession])
@@ -26,7 +27,7 @@ const Monitor = () => {
             })
         }
         getStudentNumbersForAllOffers()
-    }, [offers.offerList.length, monitor.actualSession])
+    }, [offers.offerList.length])
 
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
@@ -46,10 +47,6 @@ const Monitor = () => {
         history.push(`/MonitorStudentList/${idOffer}`, { monitor })
     }
 
-    function filterOffers(offer){
-        return offer.session === monitor.actualSession
-    }
-
     return (
         < div className="grad">
             <MonitorNavbar />
@@ -60,7 +57,6 @@ const Monitor = () => {
                     <div className="container-fluid">
                         <ul className="list-group">
                             {offers.offerList
-                            .filter(filterOffers)
                             .map((offer) => (
                                 <div key={offer.idOffer} className="list-group-item list-group-item-action">
                                     <p className="font-weight-bold text-secondary">{offer.companyName} - {offer.jobTitle}</p>

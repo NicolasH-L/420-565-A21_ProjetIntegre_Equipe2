@@ -40,7 +40,7 @@ public class SessionTaskTest {
 
         sessionTask.verifySession();
         verify(sessionTask, times(1)).verifySession();
-        
+
     }
 
     private List<Sessions> getListOfSessions(){
