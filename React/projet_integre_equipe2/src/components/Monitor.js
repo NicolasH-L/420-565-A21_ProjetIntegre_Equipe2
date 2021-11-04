@@ -16,14 +16,14 @@ const Monitor = () => {
             setOffers({ ...offers, offerList: offersFromServer })
         }
         getOffersByMonitor()
-    }, [])
+    }, [monitor.actualSession])
 
     useEffect(() => {
         const getStudentNumbersForAllOffers = async () => {
-            offers.offerList.map(
-                (offer) => fetchStudentOffersByIdOffer(offer.idOffer).
-                then((data) => setOffers({ ...offers, studentNumbers: offers.studentNumbers.set(offer.idOffer, data.length) }))
-            )
+            offers.offerList.map((offer) => {
+                fetchStudentOffersByIdOffer(offer.idOffer)
+                    .then((data) => setOffers({ ...offers, studentNumbers: offers.studentNumbers.set(offer.idOffer, data.length) }))
+            })
         }
         getStudentNumbersForAllOffers()
     }, [offers.offerList.length, monitor.actualSession])

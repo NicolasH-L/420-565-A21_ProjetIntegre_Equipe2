@@ -11,16 +11,16 @@ const MonitorOfferList = () => {
     const monitor = historyState.monitor
 
     function goToMonitorStudentList(idOffer) {
-        history.push(`/MonitorStudentList/${idOffer}`, {monitor})
+        history.push(`/MonitorStudentList/${idOffer}`, historyState)
     }
 
     useEffect(() => {
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
-            setOffers(offersFromServer)
+            setOffers(offersFromServer.filter((offer) => offer.session === monitor.actualSession))
         }
         getOffersByMonitor()
-    }, [])
+    }, [monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
