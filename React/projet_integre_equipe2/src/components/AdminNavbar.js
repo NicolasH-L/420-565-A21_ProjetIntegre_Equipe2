@@ -33,8 +33,12 @@ const AdminNavbar = () => {
         history.push("/AdminInternshipList", historyState)
     }
 
-    const goTodminAssignSupervisorToStudent = () => {
+    const goToAdminAssignSupervisorToStudent = () => {
         history.push("/AdminAssignSupervisorToStudent", historyState)
+    }
+
+    const goToAdminContracts = () => {
+        history.push("/AdminContracts", historyState)
     }
 
     const changeSession = (selectedSession) => {
@@ -90,7 +94,10 @@ const AdminNavbar = () => {
                             <a className="nav-link btn btn-light" onClick={() => goToAdminInternshipList()}>Ententes de stage</a>
                         </li>
                         <li className="nav-item mx-2">
-                            <a className="nav-link btn btn-light" onClick={() => goTodminAssignSupervisorToStudent()}>Assigner un superviseur</a>
+                            <a className="nav-link btn btn-light" onClick={() => goToAdminAssignSupervisorToStudent()}>Assigner un superviseur</a>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <a className="nav-link btn btn-light" onClick={() => goToAdminContracts()}>Contracts</a>
                         </li>
                     </ul>
                     <div className="btn-group">

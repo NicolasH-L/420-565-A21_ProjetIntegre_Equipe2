@@ -37,4 +37,12 @@ public class ContractService {
             return Optional.empty();
         }
     }
+
+    public Optional<List<Contract>> getAllContracts(){
+        try {
+            return Optional.of(contractRepository.findAll());
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
 }
