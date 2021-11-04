@@ -1,40 +1,41 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Signature } from '../Constants/Signature'
 import MonitorNavbar from '../MonitorNavbar'
 import ContractModalView from '../Contract/ContractModalView'
 
 const MonitorContracts = () => {
     const [contracts, setContracts] = useState([])
-    const [filters, setfilters] = useState({ session: "", signatureStatus: "" })
+    const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
     // Todo convert to historyState.monitor
     const monitor = historyState
-    const monitorSignatureStatus = "MonitorSignature"
 
     useEffect(() => {
-        filters.session = monitor.actualSession
-        filters.signatureStatus = monitorSignatureStatus
+        console.log(filters)
+        if (filters.signatureStatus === "" && filters.session === "") {
+            setFilters({...filters, signatureStatus: "default", session:  monitor.actualSession})
+        }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
             setContracts(contractsFromServer)
         }
         getAllContracts()
-    }, [])
+    }, [filters.signatureStatus])
 
     const fetchContracts = async () => {
         const res = await fetch(`http://localhost:8888/contract/get-all-by-monitor/${monitor.id}`)
         return await res.json()
     }
 
-
     const filterContractsBySession = (contract) => {
         return filters.session === contract.session
     }
 
     const filterContractsByStatus = (contract) => {
-        return filters.signatureStatus !== "" ? filters.signatureStatus === contract.session : true 
+        return filters.signatureStatus !== "default" ? filters.signatureStatus === contract.internship.status : true
     }
 
     const getStatusValue = (userSignature, trueValue, falseValue) => {
@@ -47,8 +48,8 @@ const MonitorContracts = () => {
         return temp.length > 0
     }
 
-    const changeStatusFilter = () => {
-        
+    const changeStatusFilter = (e) => {
+        setFilters({ ...filters, signatureStatus: e.target.value })
     }
 
     const displayEmptyErrorMessage = () => {
@@ -61,18 +62,16 @@ const MonitorContracts = () => {
         )
     }
 
-    // TODO Bouton filtre pour sessions + Bouton filtre de status ex: signature Etudiant, signature Monitor, signature Admin, etc.
     return (
         <div className="grad">
             <MonitorNavbar />
             <div className="d-flex justify-content-end m-5">
-                <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={(e) => e.preventDefault(), changeStatusFilter} required>
+                <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={changeStatusFilter} required>
                     <option className="bg-light text-dark" value="default">Afficher tous les contrats</option>
-                    {/* TODO */}
-                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
-                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
-                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
-                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
+                    <option className="bg-light text-dark" value={Signature.getMonitorSignatureStatus()}>Afficher les contrats prêt à signer par le moniteur</option>
+                    <option className="bg-light text-dark" value={Signature.getStudentSignatureStatus()}>Afficher les contrats prêt à signer par l'étudiant</option>
+                    <option className="bg-light text-dark" value={Signature.getAdminSignatureStatus()}>Afficher les contrats prêt à signer par le gestionnaire</option>
+                    <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
                 </select>
             </div>
             <h2 className="text-center">Mes contrats</h2>
@@ -111,7 +110,7 @@ const MonitorContracts = () => {
                                             </td>
                                             <td className="w-25">
                                                 <ContractModalView userPasswordProp={monitor.password}
-                                                    currentStatusProp={monitorSignatureStatus} contractProp={contract} signature={contract.monitorSignature} />
+                                                    currentStatusProp={Signature.getMonitorSignatureStatus()} contractProp={contract} signature={contract.monitorSignature} />
                                             </td>
                                         </tr>
                                     ))}
