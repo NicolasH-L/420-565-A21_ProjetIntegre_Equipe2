@@ -12,17 +12,19 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
 
     useEffect(() => {
         if (contractState.signature === "" && contractState.userPassword === "") {
-            console.log(passwordUser)
             contractState.userPassword = passwordUser
             contractState.signature = signature
         }
         setInternship(contractProp.internship)
         setContract(contractProp)
-        setContractState({
-            ...contractState, isDisabled: currentStatus !== contractProp.internship.status
-        })
-
+        setContractState({ ...contractState, isDisabled: currentStatus !== contractProp.internship.status })
     }, [])
+
+    useEffect(() => {
+        if (contractState.password !== "" && contractState.signature !== ""){
+            window.location.reload(true)
+        }
+    }, [contractState.signature, contractState.adminSignature])
 
     const updateContract = async (contract) => {
         const result = await fetch(`${baseUrl}/contract/save-contract`,
@@ -62,26 +64,20 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                 contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
                 contractState.signature = contract.studentSignature
-                setContractState({ ...contractState, signature: contract.studentSignature })
-                
+
             } else if (internship.status === Signature.getMonitorSignatureStatus()) {
                 contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
                 contract.signatureDateMonitor = getToday()
                 contractState.signature = contract.monitorSignature
-                setContractState({ ...contractState, signature: contract.monitorSignature })
-                
+
             } else if (internship.status === Signature.getAdminSignatureStatus()) {
                 if (contractState.adminSignature === "" || contractState.adminSignature === null) {
                     alert("Veuillez inscrire votre nom au complet")
-                    console.log("exception")
-                    console.log(contract)
-                    console.log(contractState)
                     return isValid
                 }
-                console.log("wat")
                 contract.signatureDateAdmin = getToday()
                 contract.adminSignature = contractState.adminSignature
-                setContractState({ ...contractState, signature: contract.adminSignature })
+                contractState.signature = contract.adminSignature 
             }
             updateStatus()
             updateInternship()
@@ -126,7 +122,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="adminName" className="text-secondary">Le gestionnaire de stage : </label>
                             <input type="text" className="form-control text-center" id="adminName" name="adminName" onChange={setAdminSignature}
-                                disabled={isAdminSignStatus()} value={contract.adminSignature}/>
+                                disabled={isAdminSignStatus()} placeholder={contract.adminSignature !== "" && contract.adminSignature !== null ? contract.adminSignature : ""} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorName" className="text-secondary"> L'employeur : </label>

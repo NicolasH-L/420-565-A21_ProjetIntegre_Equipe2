@@ -10,11 +10,9 @@ const MonitorContracts = () => {
     const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
-    // Todo convert to historyState.monitor
     const monitor = historyState
 
     useEffect(() => {
-        console.log(filters)
         if (filters.signatureStatus === "" && filters.session === "") {
             setFilters({...filters, signatureStatus: "default", session:  monitor.actualSession})
         }
