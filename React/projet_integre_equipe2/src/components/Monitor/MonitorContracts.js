@@ -68,7 +68,11 @@ const MonitorContracts = () => {
             <div className="d-flex justify-content-end m-5">
                 <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={(e) => e.preventDefault(), changeStatusFilter} required>
                     <option className="bg-light text-dark" value="default">Afficher tous les contrats</option>
-                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher  </option>
+                    {/* TODO */}
+                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
+                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
+                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
+                    <option className="bg-light text-dark" value={monitorSignatureStatus}>Afficher les contrats prêt à signer</option>
                 </select>
             </div>
             <h2 className="text-center">Mes contrats</h2>
