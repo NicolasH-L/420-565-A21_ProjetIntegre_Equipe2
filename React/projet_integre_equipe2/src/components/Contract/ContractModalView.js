@@ -12,7 +12,7 @@ const ContractModalView = ({ userPasswordProp, currentStatusProp, contractProp, 
             <div className="modal fade" id={"contract" + contract.idContract} tabIndex="-1" role="dialog">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
-                        <Contract passwordUser={userPassword} currentStatus={currentStatus} contractProp={contract} signature={signature}/>
+                        <Contract passwordUser={userPassword} currentStatus={currentStatus} contractProp={contract} signature={signature} />
                         <div className="modal-footer mt-4">
                             <button type="button" className="btn btn-danger" data-dismiss="modal">Fermer</button>
                         </div>

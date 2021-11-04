@@ -1,6 +1,7 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Signature } from '../Constants/Signature'
 import StudentNavbar from '../StudentNavbar'
 import Contract from '../Contract/Contract'
 
@@ -10,7 +11,6 @@ const StudentSignContract = () => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const baseUrl = "http://localhost:8888"
-    const studentSignatureStatus = "StudentSignature"
     const student = historyState.student
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const StudentSignContract = () => {
                 <div className="d-flex justify-content-center my-5 py-2">
                     <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                         <Contract passwordUser={student.password}
-                            currentStatus={studentSignatureStatus} contractProp={contract} 
+                            currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract} 
                             signature={contract.studentSignature}/>
                     </div>
                 </div>

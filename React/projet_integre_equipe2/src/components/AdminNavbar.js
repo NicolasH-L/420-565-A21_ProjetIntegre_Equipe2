@@ -34,6 +34,10 @@ const AdminNavbar = () => {
         history.push("/AdminAssignSupervisorToStudent", historyState)
     }
 
+    const goToAdminContracts = () => {
+        history.push("/AdminContracts", historyState)
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -63,6 +67,9 @@ const AdminNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <a className="nav-link btn btn-light" onClick={() => goToAdminAssignSupervisorToStudent()}>Assigner un superviseur</a>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <a className="nav-link btn btn-light" onClick={() => goToAdminContracts()}>Contracts</a>
                         </li>
                     </ul>
                     <SessionsButton/>

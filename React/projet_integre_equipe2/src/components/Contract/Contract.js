@@ -1,16 +1,14 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { Signature} from '../Constants/Signature'
 
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
     const baseUrl = "http://localhost:8888"
-    const studentSignatureStatus = "StudentSignature"
-    const monitorSignatureStatus = "MonitorSignature"
-    const adminSignatureStatus = "AdminSignature"
-    const completeSignatureStatus = "Completed"
-    const signatureStatusList = [studentSignatureStatus, monitorSignatureStatus, adminSignatureStatus, completeSignatureStatus]
+    const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
+        Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
 
     useEffect(() => {
         setInternship(contractProp.internship)
@@ -62,10 +60,10 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         let isValid = false
         if (contractState.password === contractState.userPassword) {
             setContractState({ ...contractState, isDisabled: true })
-            if (internship.status === studentSignatureStatus) {
+            if (internship.status === Signature.getStudentSignatureStatus()) {
                 contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
-            } else if (internship.status === monitorSignatureStatus) {
+            } else if (internship.status === Signature.getMonitorSignatureStatus()) {
                 contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
                 contract.signatureDateMonitor = getToday()
             }
@@ -177,7 +175,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
                             <input type="text" className="form-control text-center" id="signatureDateStudent" name="signatureDateStudent"
-                                value={contract.signatureDateStudent !== "" ? contract.signatureDateStudent : (internship.status === studentSignatureStatus && contract.studentSignature !== "") ? getToday() : ""} readOnly />
+                                value={contract.signatureDateStudent !== "" ? contract.signatureDateStudent : (internship.status === Signature.getStudentSignatureStatus() && contract.studentSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
@@ -186,7 +184,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="signatureDateMonitor" className="text-secondary">Date de signature de l'employeur : </label>
                             <input type="text" className="form-control text-center" id="signatureDateMonitor" name="signatureDateMonitor"
-                                value={contract.signatureDateMonitor !== "" ? contract.signatureDateMonitor : (internship.status === monitorSignatureStatus && contract.monitorSignature !== "") ? getToday() : ""} readOnly />
+                                value={contract.signatureDateMonitor !== "" ? contract.signatureDateMonitor : (internship.status === Signature.getMonitorSignatureStatus() && contract.monitorSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureAdmin" className="text-secondary">Signature du gestionnaire : </label>

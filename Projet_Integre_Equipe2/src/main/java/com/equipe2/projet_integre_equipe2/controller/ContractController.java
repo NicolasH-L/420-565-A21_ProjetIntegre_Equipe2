@@ -37,4 +37,11 @@ public class ContractController {
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-all-contracts")
+    public ResponseEntity<List<Contract>> getAllContracts(){
+        return contractService.getAllContracts()
+                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }
