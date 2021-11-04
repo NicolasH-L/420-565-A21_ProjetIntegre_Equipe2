@@ -82,8 +82,6 @@ public class ContractControllerTest {
                 .build();
 
         internship = Internship.builder()
-                .isSignedByStudent(true)
-                .isSignedByMonitor(true)
                 .offer(offer)
                 .student(student)
                 .build();

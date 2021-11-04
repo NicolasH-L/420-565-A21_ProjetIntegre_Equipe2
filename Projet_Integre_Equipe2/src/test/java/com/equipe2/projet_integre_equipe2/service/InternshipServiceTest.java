@@ -41,8 +41,6 @@ public class InternshipServiceTest {
     @BeforeEach
     void setup() {
         internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .status(null)
@@ -77,8 +75,6 @@ public class InternshipServiceTest {
                 .build();
 
         internship2 = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(offer)
                 .student(student)
                 .status(null)
@@ -156,24 +152,18 @@ public class InternshipServiceTest {
         List<Internship> internshipList = new ArrayList<>();
         internshipList.add(internship = Internship.builder()
                 .idInternship(1)
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .status("StudentSignature")
                 .build());
         internshipList.add(internship = Internship.builder()
                 .idInternship(2)
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .status(null)
                 .build());
         internshipList.add(internship = Internship.builder()
                 .idInternship(3)
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .status(null)

@@ -50,8 +50,6 @@ public class InternshipControllerTest {
     @BeforeEach
     void setup() {
         internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .build();
@@ -85,8 +83,6 @@ public class InternshipControllerTest {
                 .build();
 
         internship2 = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(offer)
                 .student(student)
                 .status(null)
@@ -159,24 +155,18 @@ public class InternshipControllerTest {
     private List<Internship> getListOfInternships() {
         List<Internship> internshipList = new ArrayList<>();
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .supervisor(null)
                 .status("StudentSignature")
                 .build());
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .supervisor(null)
                 .status(null)
                 .build());
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .supervisor(null)
