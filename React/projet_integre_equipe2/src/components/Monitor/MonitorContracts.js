@@ -9,8 +9,7 @@ const MonitorContracts = () => {
     const [filters, setfilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
-    // Todo convert to historyState.monitor
-    const monitor = historyState
+    const monitor = historyState.monitor
     const monitorSignatureStatus = "MonitorSignature"
 
     useEffect(() => {
