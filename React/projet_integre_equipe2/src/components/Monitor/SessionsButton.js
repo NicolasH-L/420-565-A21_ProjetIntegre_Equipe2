@@ -49,7 +49,7 @@ const SessionsButton = () => {
                         type="button"
                         key={session.idSession}
                         className={`dropdown-item ${session.session === monitor.actualSession ? 'active' : ''}`}
-                        onClick={(e) => {e.preventDefault(); changeSession(session.session)}}>
+                        onClick={(e) => { e.preventDefault(); changeSession(session.session) }}>
                         {sessionValueToFrench(session.session)}
                     </button>
                 ))}

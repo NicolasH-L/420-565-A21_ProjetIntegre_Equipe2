@@ -33,7 +33,7 @@ const MonitorNavbar = () => {
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
                         </li>
                     </ul>
-                    <SessionsButton/>
+                    <SessionsButton />
                 </div>
             </nav>
         </div>

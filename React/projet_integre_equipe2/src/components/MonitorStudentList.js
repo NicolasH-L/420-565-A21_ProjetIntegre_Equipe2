@@ -6,6 +6,8 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])
     const history = useHistory()
+    const historyState = history.location.state
+    const monitor = historyState.monitor
     const idOffer = window.location.href.split('/')[4]
 
     const viewDocumentCv = async (document) => {
