@@ -10,10 +10,9 @@ const AdminContracts = () => {
     const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
-    const admin = historyState
+    const admin = historyState.admin
 
     useEffect(() => {
-        console.log(filters)
         if (filters.signatureStatus === "" && filters.session === "") {
             setFilters({ ...filters, signatureStatus: "default", session: admin.actualSession })
         }
@@ -110,7 +109,7 @@ const AdminContracts = () => {
                                                 </td>
                                                 <td className="w-25">
                                                     <ContractModalView userPasswordProp={admin.password}
-                                                        currentStatusProp={Signature.getMonitorSignatureStatus()} contractProp={contract} signature={contract.monitorSignature} />
+                                                        currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
                                                 </td>
                                                 {
                                                 }
