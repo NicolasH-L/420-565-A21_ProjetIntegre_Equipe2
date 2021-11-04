@@ -5,18 +5,23 @@ import { Signature } from '../Constants/Signature'
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
-    const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false })
+    const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
     const baseUrl = "http://localhost:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
 
     useEffect(() => {
+        if (contractState.signature === "" && contractState.userPassword === "") {
+            console.log(passwordUser)
+            contractState.userPassword = passwordUser
+            contractState.signature = signature
+        }
         setInternship(contractProp.internship)
         setContract(contractProp)
-        contractState.userPassword = passwordUser
         setContractState({
             ...contractState, isDisabled: currentStatus !== contractProp.internship.status
         })
+
     }, [])
 
     const updateContract = async (contract) => {
@@ -28,13 +33,9 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                 },
                 body: JSON.stringify(contract)
             })
-        const data = await result.json()
-        //setContract(data)
-        return data
+        return await result.json()
     }
 
-    // TODO il manque la mise a jours de isStudentSigned, etc.
-    // maybe?
     const updateInternship = async () => {
         const result = await fetch(`${baseUrl}/internship/save-internship`,
             {
@@ -44,9 +45,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                 },
                 body: JSON.stringify(internship)
             })
-        const data = await result.json()
-        //setInternship(data)
-        return data
+        return await result.json()
     }
 
     const onSubmit = (e) => {
@@ -59,18 +58,34 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const validateInput = () => {
         let isValid = false
         if (contractState.password === contractState.userPassword) {
-            setContractState({ ...contractState, isDisabled: true })
             if (internship.status === Signature.getStudentSignatureStatus()) {
                 contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
+                contractState.signature = contract.studentSignature
+                setContractState({ ...contractState, signature: contract.studentSignature })
+                
             } else if (internship.status === Signature.getMonitorSignatureStatus()) {
                 contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
                 contract.signatureDateMonitor = getToday()
+                contractState.signature = contract.monitorSignature
+                setContractState({ ...contractState, signature: contract.monitorSignature })
+                
             } else if (internship.status === Signature.getAdminSignatureStatus()) {
+                if (contractState.adminSignature === "" || contractState.adminSignature === null) {
+                    alert("Veuillez inscrire votre nom au complet")
+                    console.log("exception")
+                    console.log(contract)
+                    console.log(contractState)
+                    return isValid
+                }
+                console.log("wat")
                 contract.signatureDateAdmin = getToday()
+                contract.adminSignature = contractState.adminSignature
+                setContractState({ ...contractState, signature: contract.adminSignature })
             }
             updateStatus()
             updateInternship()
+            setContractState({ ...contractState, isDisabled: true })
             isValid = true
         } else {
             alert("Veuillez entrer votre mot de passe correctement")
@@ -89,12 +104,17 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         setContractState({ ...contractState, password: e.target.value })
     }
 
-    const setContractAdminSignature = (e) => {
-        setContract({ ...contract, adminSignature: e.target.value })
+    const setAdminSignature = (e) => {
+        setContractState({ ...contractState, adminSignature: e.target.value })
     }
 
     const getToday = () => {
         return new Date().toLocaleString("en-CA", { year: "numeric", month: "numeric", day: "numeric" })
+    }
+
+    const isAdminSignStatus = () => {
+        return (currentStatus !== Signature.getAdminSignatureStatus() || (contract.adminSignature !== "" && contract.adminSignature !== null)
+            || currentStatus === Signature.getAdminSignatureStatus() && currentStatus !== internship.status)
     }
 
     return (
@@ -105,11 +125,8 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                     <div>
                         <div className="form-group">
                             <label htmlFor="adminName" className="text-secondary">Le gestionnaire de stage : </label>
-                            {/* TODO: ajouter la condition pour enable le input de admin name 
-                                il va falloir aussi rajouter la methode qui permet de SET le nom de l'admin.
-                                */
-                            }
-                            <input type="text" className="form-control text-center" id="adminName" name="adminName" onChange={setContractAdminSignature} disabled={contractState.isDisabled && (contract.adminSignature === "" || contract.adminSignature === null)} />
+                            <input type="text" className="form-control text-center" id="adminName" name="adminName" onChange={setAdminSignature}
+                                disabled={isAdminSignStatus()} value={contract.adminSignature}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="monitorName" className="text-secondary"> L'employeur : </label>
@@ -182,7 +199,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="signatureDateStudent" className="text-secondary">Date de signature de l'étudiant : </label>
                             <input type="text" className="form-control text-center" id="signatureDateStudent" name="signatureDateStudent"
-                                value={contract.signatureDateStudent !== "" ? contract.signatureDateStudent : (internship.status === Signature.getStudentSignatureStatus() && contract.studentSignature !== "") ? getToday() : ""} readOnly />
+                                value={contract.signatureDateStudent !== "" ? contract.signatureDateStudent : (currentStatus === Signature.getStudentSignatureStatus() && contract.studentSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
@@ -191,7 +208,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="signatureDateMonitor" className="text-secondary">Date de signature de l'employeur : </label>
                             <input type="text" className="form-control text-center" id="signatureDateMonitor" name="signatureDateMonitor"
-                                value={contract.signatureDateMonitor !== "" ? contract.signatureDateMonitor : (internship.status === Signature.getMonitorSignatureStatus() && contract.monitorSignature !== "") ? getToday() : ""} readOnly />
+                                value={contract.signatureDateMonitor !== "" ? contract.signatureDateMonitor : (currentStatus === Signature.getMonitorSignatureStatus() && contract.monitorSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="signatureAdmin" className="text-secondary">Signature du gestionnaire : </label>
@@ -200,7 +217,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <div className="form-group">
                             <label htmlFor="signatureDateAdmin" className="text-secondary">Date de signature du gestionnaire : </label>
                             <input type="text" className="form-control text-center" id="signatureDateAdmin" name="signatureDateAdmin"
-                                value={contract.signatureDateAdmin !== "" ? contract.signatureDateAdmin : (internship.status === Signature.getAdminSignatureStatus() && contract.adminSignature !== "") ? getToday() : ""} readOnly />
+                                value={contract.signatureDateAdmin !== "" ? contract.signatureDateAdmin : (currentStatus === Signature.getAdminSignatureStatus() && contract.adminSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         {internship.status !== undefined && internship.status === currentStatus
                             ?
@@ -210,9 +227,9 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                             </div>
                             : ""}
                         <div className="d-flex justify-content-center mt-5">
-                            {internship.status !== undefined && !contractState.isDisabled && (signature === null || signature === "") ?
+                            {internship.status !== undefined && !contractState.isDisabled && (contractState.signature === null || contractState.signature === "") ?
                                 <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                                : internship.status !== undefined && contractState.isDisabled && signature !== null && signature !== "" ?
+                                : internship.status !== undefined && contractState.isDisabled && contractState.signature !== null && contractState.signature !== "" ?
                                     <strong className="text-success text-center">Contrat signé <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
                                     :
                                     <strong className="text-danger text-center">Ce n'est pas à votre tour de signer <i className="fas fa-exclamation-circle text-danger fa-sm"></i></strong>
