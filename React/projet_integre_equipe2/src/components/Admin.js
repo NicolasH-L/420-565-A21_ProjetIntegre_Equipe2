@@ -6,8 +6,8 @@ const Admin = () => {
 
     return (
         <div className="grad">
-            <AdminNavbar />
-            <AdminStats />
+            <AdminNavbar/>
+            <AdminStats/>
         </div>
     )
 }

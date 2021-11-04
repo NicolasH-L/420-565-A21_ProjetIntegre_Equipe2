@@ -14,6 +14,12 @@ const MonitorNavbar = () => {
     function goToMonitorDashboard() {
         history.push("/Monitor", historyState)
     }
+    
+    //TODO convert history state to {monitor:historyState}
+    const goToMonitorContracts = () => {
+        history.push("/MonitorContracts", historyState)
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -31,6 +37,9 @@ const MonitorNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToMonitorContracts}>Mes contrats</button>
                         </li>
                     </ul>
                     <SessionsButton />

@@ -31,6 +31,7 @@ class MonitorServiceTest {
     @BeforeEach
     void setup() {
         monitor = Monitor.monitorBuilder()
+                .id(1)
                 .password("toto")
                 .lastName("toto")
                 .firstName("toto")
@@ -49,6 +50,7 @@ class MonitorServiceTest {
     @Test
     public void testRegisterDuplicateMonitorEmailFails() {
         Monitor duplicateEmailMonitor = Monitor.monitorBuilder()
+                .id(5)
                 .password("tata")
                 .lastName("tata")
                 .firstName("tata")
@@ -101,6 +103,7 @@ class MonitorServiceTest {
     private List<Monitor> getListOfMonitors() {
         List<Monitor> monitorList = new ArrayList<>();
         monitorList.add(Monitor.monitorBuilder()
+                .id(2)
                 .password("didi1*")
                 .lastName("didi")
                 .firstName("didi")
@@ -108,6 +111,7 @@ class MonitorServiceTest {
                 .email("didi@kong.com")
                 .build());
         monitorList.add(Monitor.monitorBuilder()
+                .id(3)
                 .password("dodo1*")
                 .lastName("dodo")
                 .firstName("dodo")
@@ -115,6 +119,7 @@ class MonitorServiceTest {
                 .email("dodo@kong.com")
                 .build());
         monitorList.add(Monitor.monitorBuilder()
+                .id(4)
                 .password("donkey1*")
                 .lastName("donkey")
                 .firstName("donkey")
