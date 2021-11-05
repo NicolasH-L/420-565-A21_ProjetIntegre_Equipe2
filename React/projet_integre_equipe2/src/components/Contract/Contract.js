@@ -113,6 +113,14 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
             || currentStatus === Signature.getAdminSignatureStatus() && currentStatus !== internship.status)
     }
 
+    const sessionValueToFrench = (session) => {
+        let sessionSeason = session.slice(0, -4)
+        let sessionYear = session.slice(-4)
+        let sessionSeasonToFrench = sessionSeason === "winter" ? "Hiver"
+            : sessionSeason === "summer" ? "Été" : ""
+        return sessionSeasonToFrench + " " + sessionYear
+    }
+
     return (
         <>
             <form className="container-fluid" onSubmit={onSubmit} >
@@ -137,7 +145,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         <h2 className="text-center mt-5">Conditions de stage suivants :</h2>
                         <div className="form-group">
                             <label htmlFor="session" className="text-secondary">Session du stage : </label>
-                            <input type="text" className="form-control text-center" id="session" name="session" value={internship.session} readOnly />
+                            <input type="text" className="form-control text-center" id="session" name="session" value={sessionValueToFrench(internship.session)} readOnly />
                         </div>
                         <div className="form-group">
                             <label htmlFor="location" className="text-secondary">Endroit du stage : </label>
