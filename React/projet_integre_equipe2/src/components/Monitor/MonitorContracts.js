@@ -11,10 +11,8 @@ const MonitorContracts = () => {
     const history = useHistory()
     const historyState = history.location.state
     const monitor = historyState.monitor
-    const monitorSignatureStatus = "MonitorSignature"
 
     useEffect(() => {
-        console.log(filters)
         if (filters.signatureStatus === "" && filters.session === "") {
             setFilters({...filters, signatureStatus: "default", session:  monitor.actualSession})
         }

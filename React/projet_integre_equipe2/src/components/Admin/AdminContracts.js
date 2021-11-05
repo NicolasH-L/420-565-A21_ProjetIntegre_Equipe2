@@ -2,29 +2,38 @@ import React from 'react'
 import AdminNavbar from '../AdminNavbar'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Signature } from '../Constants/Signature'
+import ContractModalView from '../Contract/ContractModalView'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
     const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
-    const admin = historyState
-    const adminSignatureStatus = "AdminSignature"
+    const admin = historyState.admin
 
     useEffect(() => {
-        filters.session = admin.actualSession
-        filters.signatureStatus = adminSignatureStatus
-
+        if (filters.signatureStatus === "" && filters.session === "") {
+            setFilters({ ...filters, signatureStatus: "default", session: admin.actualSession })
+        }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
             setContracts(contractsFromServer)
         }
         getAllContracts()
-    }, [])
+    }, [filters.signatureStatus])
 
     const fetchContracts = async () => {
         const res = await fetch(`http://localhost:8888/contract/get-all-contracts/`)
         return await res.json()
+    }
+
+    const filterContractsBySession = (contract) => {
+        return filters.session === contract.session
+    }
+
+    const filterContractsByStatus = (contract) => {
+        return filters.signatureStatus !== "default" ? filters.signatureStatus === contract.internship.status : true
     }
 
     const getStatusValue = (userSignature, trueValue, falseValue) => {
@@ -37,13 +46,8 @@ const AdminContracts = () => {
         return temp.length > 0
     }
 
-    //TODO 
-    const filterContractsBySession = (contract) => {
-        return filters.session === contract.session
-    }
-
-    const filterContractsByStatus = (contract) => {
-        return filters.signatureStatus === contract.internship.status
+    const changeStatusFilter = (e) => {
+        setFilters({ ...filters, signatureStatus: e.target.value })
     }
 
     const displayEmptyErrorMessage = () => {
@@ -60,6 +64,15 @@ const AdminContracts = () => {
         <div>
             <div className="grad">
                 <AdminNavbar />
+                <div className="d-flex justify-content-end m-5">
+                    <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={changeStatusFilter} required>
+                        <option className="bg-light text-dark" value="default">Afficher tous les contrats</option>
+                        <option className="bg-light text-dark" value={Signature.getMonitorSignatureStatus()}>Afficher les contrats prêt à signer par le moniteur</option>
+                        <option className="bg-light text-dark" value={Signature.getStudentSignatureStatus()}>Afficher les contrats prêt à signer par l'étudiant</option>
+                        <option className="bg-light text-dark" value={Signature.getAdminSignatureStatus()}>Afficher les contrats prêt à signer par le gestionnaire</option>
+                        <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
+                    </select>
+                </div>
                 <h2 className="text-center">Mes contrats</h2>
                 <div className="container-fluid">
                     <div className="p-5 table-responsive">
@@ -95,12 +108,11 @@ const AdminContracts = () => {
                                                     {getStatusValue(contract.adminSignature, "Signé", "En attente de signature")}
                                                 </td>
                                                 <td className="w-25">
-                                                    <button className="btn btn-primary mx-2"
-                                                    // onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}
-                                                    >Consulter</button>
+                                                    <ContractModalView userPasswordProp={admin.password}
+                                                        currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
                                                 </td>
-                                                {/* 
-                                        */}
+                                                {
+                                                }
                                             </tr>
                                         ))}
                                 </tbody>
