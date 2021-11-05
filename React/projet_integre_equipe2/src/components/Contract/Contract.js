@@ -134,7 +134,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                             <input type="text" className="form-control text-center" id="studentName" name="studentName"
                                 value={internship.student.firstName + " " + internship.student.lastName} readOnly />
                         </div>
-                        <h2 className="text-center mt-5">Conditions de stage suivantes :</h2>
+                        <h2 className="text-center mt-5">Conditions de stage suivants :</h2>
                         <div className="form-group">
                             <label htmlFor="session" className="text-secondary">Session du stage : </label>
                             <input type="text" className="form-control text-center" id="session" name="session" value={internship.session} readOnly />
@@ -176,7 +176,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         </div>
                         <h4 className="text-center mt-5">Responsabilités</h4>
                         <div className="form-group">
-                            <label htmlFor="responsabilityCollege" className="text-secondary">Le Collège s’engage à : </label>
+                            <label htmlFor="responsabilityCollege" className="text-secondary">Le collège s’engage à : </label>
                             <textarea type="text" className="form-control" id="responsabilityCollege" name="responsabilityCollege" rows="5" value={contract.collegeResponsability} readOnly />
                         </div>
                         <div className="form-group">
@@ -198,7 +198,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                                 value={contract.signatureDateStudent !== "" ? contract.signatureDateStudent : (currentStatus === Signature.getStudentSignatureStatus() && contract.studentSignature !== "") ? getToday() : ""} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="signatureMonitor" className="text-secondary">Signature employeur : </label>
+                            <label htmlFor="signatureMonitor" className="text-secondary">Signature de l'employeur : </label>
                             <input type="text" className="form-control text-center" id="signatureMonitor" name="signatureMonitor" value={contract.monitorSignature !== "" ? contract.monitorSignature : ""} readOnly />
                         </div>
                         <div className="form-group">
