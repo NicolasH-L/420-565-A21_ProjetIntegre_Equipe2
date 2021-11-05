@@ -6,6 +6,8 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])
     const history = useHistory()
+    const historyState = history.location.state
+    const monitor = historyState.monitor
     const idOffer = window.location.href.split('/')[4]
 
     const viewDocumentCv = async (document) => {
@@ -23,6 +25,11 @@ const MonitorStudentList = () => {
     const fetchStudentOffersByIdOffer = async () => {
         const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
         return await res.json()
+    }
+
+    const filterStudents = (studentOffer) => {
+        console.log(studentOffer)
+        return studentOffer.student.actualSession == monitor.actualSession
     }
 
     return (
@@ -45,7 +52,9 @@ const MonitorStudentList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {studentOffers.map((studentOffer) => (
+                        {studentOffers
+                        .filter(filterStudents)
+                        .map((studentOffer) => (
                             <tr key={studentOffer.idStudentOffer}>
                                 <th>{studentOffer.student.firstName + " " + studentOffer.student.lastName}</th>
                                 <td>{studentOffer.student.matricule}</td>

@@ -7,20 +7,25 @@ import './Form.css'
 const Monitor = () => {
     const [offers, setOffers] = useState({ offerList: [], studentNumbers: new Map() })
     const history = useHistory()
-    const monitor = history.location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
 
     useEffect(() => {
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
-            setOffers({ ...offers, offerList: offersFromServer })
-        }
-        const getStudentNumbersForAllOffers = async () => {
-            for (const offer of offers.offerList) {
-                fetchStudentOffersByIdOffer(offer.idOffer).
-                    then((data) => setOffers({ ...offers, studentNumbers: offers.studentNumbers.set(offer.idOffer, data.length) }))
-            }
+            const tmpOffersFromServer = offersFromServer.filter((offer) => offer.session === monitor.actualSession)
+            setOffers({ ...offers, offerList: tmpOffersFromServer })
         }
         getOffersByMonitor()
+    }, [monitor.actualSession])
+
+    useEffect(() => {
+        const getStudentNumbersForAllOffers = async () => {
+            offers.offerList.map((offer) => {
+                fetchStudentOffersByIdOffer(offer.idOffer)
+                    .then((data) => setOffers({ ...offers, studentNumbers: offers.studentNumbers.set(offer.idOffer, data.length) }))
+            })
+        }
         getStudentNumbersForAllOffers()
     }, [offers.offerList.length])
 
@@ -35,11 +40,11 @@ const Monitor = () => {
     }
 
     function goToMonitorOfferList() {
-        history.push("/MonitorOfferList", monitor)
+        history.push("/MonitorOfferList", { monitor })
     }
 
     function goToMonitorStudentList(idOffer) {
-        history.push(`/MonitorStudentList/${idOffer}`, monitor)
+        history.push(`/MonitorStudentList/${idOffer}`, { monitor })
     }
 
     return (
@@ -51,7 +56,8 @@ const Monitor = () => {
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
                     <div className="container-fluid">
                         <ul className="list-group">
-                            {offers.offerList.map((offer) => (
+                            {offers.offerList
+                            .map((offer) => (
                                 <div key={offer.idOffer} className="list-group-item list-group-item-action">
                                     <p className="font-weight-bold text-secondary">{offer.companyName} - {offer.jobTitle}</p>
                                     <a href="#" className="text-decoration-none" onClick={(e) => { e.preventDefault(); goToMonitorStudentList(offer.idOffer) }}>Nombre d'étudiants intéressés: <span className="badge badge-secondary badge-pill">{offers.studentNumbers.get(offer.idOffer)}</span> </a>

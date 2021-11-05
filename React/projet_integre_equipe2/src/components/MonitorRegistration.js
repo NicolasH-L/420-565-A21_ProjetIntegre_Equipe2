@@ -5,9 +5,16 @@ import { useHistory } from 'react-router-dom'
 import { RegexPattern } from './RegexPattern'
 
 const MonitorRegistration = ({ onAdd }) => {
-    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "" })
+    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "", actualSession: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "" })
     const history = useHistory()
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -17,9 +24,19 @@ const MonitorRegistration = ({ onAdd }) => {
             return
         } else {
             monitor.email = monitor.email.toLowerCase()
+            setMonitorSession()
             onAdd(monitor)
                 .then((data) => data.email !== undefined ? history.push("/Login") : alert("Erreur! Email existant"))
                 .catch(() => alert("Erreur! Email existant"))
+        }
+
+        function setMonitorSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            monitor.actualSession = session
         }
     }
 

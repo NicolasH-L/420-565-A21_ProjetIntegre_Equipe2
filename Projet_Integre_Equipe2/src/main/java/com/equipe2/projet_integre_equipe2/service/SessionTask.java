@@ -1,18 +1,16 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Admin;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.equipe2.projet_integre_equipe2.model.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
 public class SessionTask{
     private final String[] SESSION_PREFIX = {"winter", "summer"};
-    private final int LAST_MONTH_OH_THE_YEAR = 12;
+    private final int LAST_MONTH_OF_THE_YEAR = 12;
     private final int WINTER_START = 9;
     private final int WINTER_DEADLINE = 2;
     private final int SUMMER_START = 3;
@@ -20,53 +18,76 @@ public class SessionTask{
     private final String MONTH_PATTERN = "MM";
     private final String YEAR_PATTERN = "yyyy";
 
-    private List<Admin> adminList;
-    private List<String> sessions;
-
-    @Autowired
     private AdminService adminService;
+    private StudentService studentService;
+    private MonitorService monitorService;
+    private SupervisorService supervisorService;
+    private SessionsService sessionsService;
+
+    private List<Admin> adminList;
+    private List<Student> studentList;
+    private List<Monitor> monitorList;
+    private List<Supervisor> supervisorList;
+    private List<Sessions> sessionsList;
+
+    private SessionDateCalculator sessionDateCalculator;
+    private SessionVerification sessionVerification;
+
+    public SessionTask(AdminService adminService, StudentService studentService,
+                       MonitorService monitorService, SupervisorService supervisorService,
+                       SessionsService sessionsService){
+        this.adminService = adminService;
+        this.studentService = studentService;
+        this.monitorService = monitorService;
+        this.supervisorService = supervisorService;
+        this.sessionsService = sessionsService;
+    }
 
     @Scheduled(cron = "0 0 0 1 * *")
     public void verifySession() {
+        sessionDateCalculator = new SessionDateCalculator(LocalDate.now(), MONTH_PATTERN, YEAR_PATTERN,
+                                                        SESSION_PREFIX, LAST_MONTH_OF_THE_YEAR, WINTER_START,
+                                                        WINTER_DEADLINE, SUMMER_START, SUMMER_DEADlINE);
+        sessionVerification = new SessionVerification();
         adminList = adminService.getAllAdmin().get();
-        LocalDate date = LocalDate.now();
-        String month = formatDate(date, MONTH_PATTERN);
-        month = calculateMonth(Integer.parseInt(month));
-        String year = formatDate(date, YEAR_PATTERN);
-        year = calculateYear(Integer.parseInt(month), Integer.parseInt(year));
-        String calculatedSession = calculateSession(Integer.parseInt(month), year);
+        studentList = studentService.getAllStudents().get();
+        monitorList = monitorService.getAllMonitors().get();
+        supervisorList = supervisorService.getAllSupervisors().get();
+        sessionsList = sessionsService.getAllSessions().get();
+        String calculatedSession = sessionDateCalculator.calculateSession();
 
-        for (int i = 0; i < adminList.size(); i++){
-            sessions = adminList.get(i).getSessions();
-            if (sessions.size() == 0 || !sessions.get(sessions.size() - 1).equals(calculatedSession)){
-                Admin admin = adminList.get(i);
-                List<String> tempSession = admin.getSessions();
-                tempSession.add(calculatedSession);
+        if (sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
+            Sessions session = new Sessions();
+            session.setSession(calculatedSession);
+            sessionsService.saveSession(session);
+        }
+
+        for (Admin admin : adminList) {
+            if (!sessionVerification.verifySessionForAdminsIsUpToDate(calculatedSession, admin)){
                 admin.setActualSession(calculatedSession);
                 adminService.saveAdmin(admin);
             }
         }
-    }
 
-    private String formatDate(LocalDate date, String pattern){
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern(pattern);
-        String formattedDate = date.format(myFormatObj);
-        return formattedDate;
-    }
+        for (Student student : studentList) {
+            if (sessionVerification.verifySessionForStudentsIsUpToDate(calculatedSession, student)){
+                student.setActualSession(calculatedSession);
+                studentService.registerStudent(student);
+            }
+        }
 
-    private String calculateMonth(int month){
-        return month <= WINTER_DEADLINE ? String.valueOf(LAST_MONTH_OH_THE_YEAR) : String.valueOf(month);
-    }
+        for (Monitor monitor : monitorList) {
+            if (sessionVerification.verifySessionForMonitorsIsUpToDate(calculatedSession, monitor)){
+                monitor.setActualSession(calculatedSession);
+                monitorService.registerMonitor(monitor);
+            }
+        }
 
-    private String calculateYear(int month, int year){
-        return month >= WINTER_START && month <= LAST_MONTH_OH_THE_YEAR
-                ? String.valueOf(year + 1) : String.valueOf(year);
-    }
-
-    private String calculateSession(int month, String year){
-        return month >= WINTER_START && month <= LAST_MONTH_OH_THE_YEAR
-                ? SESSION_PREFIX[0] + year
-                : month >= SUMMER_START && month <= SUMMER_DEADlINE
-                ? SESSION_PREFIX[1] + year : "Erreur";
+        for (Supervisor supervisor : supervisorList) {
+            if (sessionVerification.verifySessionForSupervisorsIsUpToDate(calculatedSession, supervisor)){
+                supervisor.setActualSession(calculatedSession);
+                supervisorService.registerSupervisor(supervisor);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ const MonitorContracts = () => {
     const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
-    const monitor = historyState
+    const monitor = historyState.monitor
 
     useEffect(() => {
         if (filters.signatureStatus === "" && filters.session === "") {

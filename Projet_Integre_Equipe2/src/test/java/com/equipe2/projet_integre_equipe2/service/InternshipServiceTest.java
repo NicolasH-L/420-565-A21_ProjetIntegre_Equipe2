@@ -170,5 +170,4 @@ public class InternshipServiceTest {
                 .build());
         return internshipList;
     }
-
 }

@@ -19,6 +19,13 @@ const Student = () => {
     const enRecherche = "En recherche"
     const defaultValue = "default"
 
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
+
     useEffect(() => {
         setStudent(studentFromHistoryState)
         verifyStatus(studentFromHistoryState.currentStatus)
@@ -42,6 +49,7 @@ const Student = () => {
     }
 
     const updateStudentOffer = async (studentOffer) => {
+        studentOffer.session = setOfferSession()
         const res = await fetch(`${baseUrl}/save-student-offer`,
             {
                 method: 'POST',
@@ -52,6 +60,15 @@ const Student = () => {
             })
         const data = await res.json()
         alert("Acceptation de l'offre de stage réussi")
+
+        function setOfferSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            return session
+        }
     }
 
     const saveChanges = () => {

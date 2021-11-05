@@ -7,23 +7,28 @@ import MonitorNavbar from './MonitorNavbar'
 const MonitorOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
-    const monitor = history.location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
 
     function goToMonitorStudentList(idOffer) {
-        history.push(`/MonitorStudentList/${idOffer}`, monitor)
+        history.push(`/MonitorStudentList/${idOffer}`, historyState)
     }
 
     useEffect(() => {
         const getOffersByMonitor = async () => {
             const offersFromServer = await fetchOffersByMonitor()
-            setOffers(offersFromServer)
+            setOffers(offersFromServer.filter((offer) => offer.session === monitor.actualSession))
         }
         getOffersByMonitor()
-    }, [])
+    }, [monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
         return await res.json()
+    }
+
+    const filterOffers = (offer) => {
+        return offer.session == monitor.actualSession
     }
 
     return (
@@ -42,7 +47,9 @@ const MonitorOfferList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
                             <tr key={offer.idOffer}>
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
