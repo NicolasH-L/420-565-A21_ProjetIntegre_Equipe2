@@ -55,7 +55,7 @@ const AdminStudentCvList = () => {
     }
 
     const filterDocuments = (document) => {
-        return document.session == admin.actualSession
+        return document.session === admin.actualSession
     }
 
     return (

@@ -7,14 +7,14 @@ import ContractModalView from '../Contract/ContractModalView'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
-    const [filters, setFilters] = useState({ session: "", signatureStatus: "" })
+    const [filters, setFilters] = useState({ signatureStatus: "" })
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
 
     useEffect(() => {
-        if (filters.signatureStatus === "" && filters.session === "") {
-            setFilters({ ...filters, signatureStatus: "default", session: admin.actualSession })
+        if (filters.signatureStatus === "") {
+            setFilters({ ...filters, signatureStatus: "default"})
         }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
@@ -29,7 +29,7 @@ const AdminContracts = () => {
     }
 
     const filterContractsBySession = (contract) => {
-        return filters.session === contract.session
+        return admin.actualSession === contract.session
     }
 
     const filterContractsByStatus = (contract) => {

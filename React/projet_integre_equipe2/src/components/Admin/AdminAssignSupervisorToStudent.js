@@ -80,7 +80,7 @@ const AdminAssignSupervisorToStudent = () => {
 
     const filterInterships = (internship) => {
         return (internship.supervisor === null 
-            && internship.status === "Valide" 
+            && internship.status === "Completed" 
             && admin.actualSession === internship.session)
     }
 

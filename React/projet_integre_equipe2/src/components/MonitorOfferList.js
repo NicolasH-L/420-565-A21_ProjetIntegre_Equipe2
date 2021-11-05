@@ -28,7 +28,7 @@ const MonitorOfferList = () => {
     }
 
     const filterOffers = (offer) => {
-        return offer.session == monitor.actualSession
+        return offer.session === monitor.actualSession
     }
 
     return (

@@ -56,7 +56,7 @@ public class SessionTask{
         sessionsList = sessionsService.getAllSessions().get();
         String calculatedSession = sessionDateCalculator.calculateSession();
 
-        if (sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
+        if (!sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
             Sessions session = new Sessions();
             session.setSession(calculatedSession);
             sessionsService.saveSession(session);

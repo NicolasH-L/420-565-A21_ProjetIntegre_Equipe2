@@ -45,7 +45,7 @@ const AdminStudentList = () => {
     }
 
     const filterStudents = (student) => {
-        return student.actualSession == admin.actualSession
+        return student.actualSession === admin.actualSession
     }
 
     return (
