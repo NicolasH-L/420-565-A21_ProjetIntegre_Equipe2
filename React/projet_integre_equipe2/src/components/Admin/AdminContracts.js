@@ -67,9 +67,9 @@ const AdminContracts = () => {
                 <div className="d-flex justify-content-end m-5">
                     <select defaultValue="default" className="btn btn-primary text-center text-light" id="status" name="status" onChange={changeStatusFilter} required>
                         <option className="bg-light text-dark" value="default">Afficher tous les contrats</option>
-                        <option className="bg-light text-dark" value={Signature.getMonitorSignatureStatus()}>Afficher les contrats prêt à signer par le moniteur</option>
-                        <option className="bg-light text-dark" value={Signature.getStudentSignatureStatus()}>Afficher les contrats prêt à signer par l'étudiant</option>
-                        <option className="bg-light text-dark" value={Signature.getAdminSignatureStatus()}>Afficher les contrats prêt à signer par le gestionnaire</option>
+                        <option className="bg-light text-dark" value={Signature.getMonitorSignatureStatus()}>Afficher les contrats prêts à être signé par un moniteur</option>
+                        <option className="bg-light text-dark" value={Signature.getStudentSignatureStatus()}>Afficher les contrats prêts à être signé par un étudiant</option>
+                        <option className="bg-light text-dark" value={Signature.getAdminSignatureStatus()}>Afficher les contrats prêts à être signé par le gestionnaire</option>
                         <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
                     </select>
                 </div>
@@ -83,9 +83,9 @@ const AdminContracts = () => {
                                         <th scope="col">Position</th>
                                         <th scope="col">Début du stage</th>
                                         <th scope="col">Nom de l'étudiant</th>
-                                        <th scope="col">Signer par l'étudiant</th>
-                                        <th scope="col">Signer par le moniteur</th>
-                                        <th scope="col">Signer par le gestionnaire</th>
+                                        <th scope="col">Signé par l'étudiant</th>
+                                        <th scope="col">Signé par le moniteur</th>
+                                        <th scope="col">Signé par le gestionnaire</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -111,8 +111,6 @@ const AdminContracts = () => {
                                                     <ContractModalView userPasswordProp={admin.password}
                                                         currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
                                                 </td>
-                                                {
-                                                }
                                             </tr>
                                         ))}
                                 </tbody>

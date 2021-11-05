@@ -110,7 +110,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
 
     const isAdminSignStatus = () => {
         return (currentStatus !== Signature.getAdminSignatureStatus() || (contract.adminSignature !== "" && contract.adminSignature !== null)
-            || currentStatus === Signature.getAdminSignatureStatus() && currentStatus !== internship.status)
+            || (currentStatus === Signature.getAdminSignatureStatus() && currentStatus !== internship.status))
     }
 
     const sessionValueToFrench = (session) => {

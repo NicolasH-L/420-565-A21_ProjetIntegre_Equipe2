@@ -69,7 +69,7 @@ const AdminNavbar = () => {
                             <a className="nav-link btn btn-light" onClick={() => goToAdminAssignSupervisorToStudent()}>Assigner un superviseur</a>
                         </li>
                         <li className="nav-item mx-2">
-                            <a className="nav-link btn btn-light" onClick={() => goToAdminContracts()}>Contrats</a>
+                            <a className="nav-link btn btn-light" onClick={() => goToAdminContracts()}>Mes contrats</a>
                         </li>
                     </ul>
                     <SessionsButton/>
