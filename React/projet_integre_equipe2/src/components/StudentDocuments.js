@@ -28,6 +28,10 @@ const StudentDocuments = () => {
         history.push("/ViewDocument", document)
     }
 
+    const filterDocuments = (document) => {
+        return document.session === student.actualSession
+    }
+
     return (
         <div className="grad">
             <StudentNavbar useStudent={student} />
@@ -41,7 +45,9 @@ const StudentDocuments = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {documents.map((document) => (
+                        {documents
+                        .filter(filterDocuments)
+                        .map((document) => (
                             <tr key={document.idDocument}>
                                 <th>{document.documentName}</th>
                                 <td className="w-25">
