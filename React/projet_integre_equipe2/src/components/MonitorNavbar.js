@@ -5,17 +5,19 @@ import SessionsButton from "./SessionsButton"
 const MonitorNavbar = () => {
     let history = useHistory()
     let historyState = history.location.state
-    function goToMonitorOffer() {
+
+    const goToMonitorOffer = () => {
         history.push("/MonitorOffer", historyState)
     }
-    function goToMonitorOfferList() {
+
+    const goToMonitorOfferList = () => {
         history.push("/MonitorOfferList", historyState)
     }
-    function goToMonitorDashboard() {
+
+    const goToMonitorDashboard = () => {
         history.push("/Monitor", historyState)
     }
-    
-    //TODO convert history state to {monitor:historyState}
+
     const goToMonitorContracts = () => {
         history.push("/MonitorContracts", historyState)
     }

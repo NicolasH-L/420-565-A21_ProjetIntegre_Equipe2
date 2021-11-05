@@ -14,14 +14,17 @@ const AdminStats = () => {
     const admin = historyState.admin
 
     useEffect(() => {
+
         const getAllStudents = async () => {
             const studentsFromServer = await fetchAllStudents()
             setStudents(studentsFromServer.filter((student) => student.actualSession === admin.actualSession))
         }
+
         const getAllOffers = async () => {
             const offersFromServer = await fetchAllOffers()
             setOffers(offersFromServer.filter((offer) => offer.session === admin.actualSession))
         }
+
         const getAllValidStudents = async () => {
             let validStudents = students.filter((student) => student.isCvValid === true && student.actualSession === admin.actualSession)
             setValidStudentsCount(validStudents.length)
@@ -41,12 +44,14 @@ const AdminStats = () => {
             let pendingDocuments = documents.filter((document) => document.isValid === false && document.isRefused === false)
             setPendingDocumentsCount(pendingDocuments.length)
         }
+
         getAllStudents()
         getAllOffers()
         getAllValidStudents()
         getAllDocuments()
         getAllInvalidDocuments()
         getAllPendingDocuments()
+
     }, [admin.actualSession, offers.length, documents.length])
 
     const fetchAllStudents = async () => {
@@ -74,7 +79,7 @@ const AdminStats = () => {
 
     return (
         <div>
-            <h2 className="text-center mb-3">Bonjour {admin.username}</h2>
+            <h2 className="text-center mb-5">Bonjour {admin.username}</h2>
             <div className="d-flex justify-content-center">
                 <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
