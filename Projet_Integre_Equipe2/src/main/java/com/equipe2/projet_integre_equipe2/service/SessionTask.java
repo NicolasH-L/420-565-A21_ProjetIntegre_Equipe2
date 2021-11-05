@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.*;
+import lombok.Data;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -49,45 +50,81 @@ public class SessionTask{
                                                         SESSION_PREFIX, LAST_MONTH_OF_THE_YEAR, WINTER_START,
                                                         WINTER_DEADLINE, SUMMER_START, SUMMER_DEADlINE);
         sessionVerification = new SessionVerification();
+        sessionsList = sessionsService.getAllSessions().get();
         adminList = adminService.getAllAdmin().get();
         studentList = studentService.getAllStudents().get();
         monitorList = monitorService.getAllMonitors().get();
         supervisorList = supervisorService.getAllSupervisors().get();
-        sessionsList = sessionsService.getAllSessions().get();
         String calculatedSession = sessionDateCalculator.calculateSession();
 
-        if (!sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
-            Sessions session = new Sessions();
-            session.setSession(calculatedSession);
-            sessionsService.saveSession(session);
-        }
 
-        for (Admin admin : adminList) {
-            if (!sessionVerification.verifySessionForAdminsIsUpToDate(calculatedSession, admin)){
-                admin.setActualSession(calculatedSession);
-                adminService.saveAdmin(admin);
+        setSessionList(calculatedSession, sessionsList, sessionVerification);
+
+        if (adminList.size() > 0){
+            for (Admin admin : adminList) {
+                setAdminSession(calculatedSession, admin, sessionVerification);
             }
         }
 
-        for (Student student : studentList) {
-            if (sessionVerification.verifySessionForStudentsIsUpToDate(calculatedSession, student)){
-                student.setActualSession(calculatedSession);
-                studentService.registerStudent(student);
+        if (studentList.size() > 0){
+            for (Student student : studentList) {
+                setStudentSession(calculatedSession, student, sessionVerification);
             }
         }
 
-        for (Monitor monitor : monitorList) {
-            if (sessionVerification.verifySessionForMonitorsIsUpToDate(calculatedSession, monitor)){
-                monitor.setActualSession(calculatedSession);
-                monitorService.registerMonitor(monitor);
+        if (monitorList.size() > 0){
+            for (Monitor monitor : monitorList) {
+                setMonitorSession(calculatedSession, monitor, sessionVerification);
             }
         }
 
-        for (Supervisor supervisor : supervisorList) {
-            if (sessionVerification.verifySessionForSupervisorsIsUpToDate(calculatedSession, supervisor)){
-                supervisor.setActualSession(calculatedSession);
-                supervisorService.registerSupervisor(supervisor);
+        if (supervisorList.size() > 0){
+            for (Supervisor supervisor : supervisorList) {
+                setSupervisorSession(calculatedSession, supervisor, sessionVerification);
             }
         }
+    }
+
+    public Sessions setSessionList(String calculatedSession, List<Sessions> sessionsList, SessionVerification sessionVerification) {
+        if (sessionsList.size() > 0){
+            if (sessionVerification.verifySessionsListIsUpToDate(calculatedSession, sessionsList)){
+                return null;
+            }
+        }
+        Sessions session = new Sessions();
+        session.setSession(calculatedSession);
+        return sessionsService.saveSession(session).get();
+    }
+
+    public Admin setAdminSession(String calculatedSession, Admin admin, SessionVerification sessionVerification) {
+        if (!sessionVerification.verifySessionForAdminsIsUpToDate(calculatedSession, admin)){
+            admin.setActualSession(calculatedSession);
+            return adminService.saveAdmin(admin).get();
+        }
+        return null;
+    }
+
+    public Student setStudentSession(String calculatedSession, Student student, SessionVerification sessionVerification) {
+        if (!sessionVerification.verifySessionForStudentsIsUpToDate(calculatedSession, student)){
+            student.setActualSession(calculatedSession);
+            return studentService.registerStudent(student).get();
+        }
+        return null;
+    }
+
+    public Monitor setMonitorSession(String calculatedSession, Monitor monitor, SessionVerification sessionVerification) {
+        if (!sessionVerification.verifySessionForMonitorsIsUpToDate(calculatedSession, monitor)){
+            monitor.setActualSession(calculatedSession);
+            return monitorService.registerMonitor(monitor).get();
+        }
+        return null;
+    }
+
+    public Supervisor setSupervisorSession(String calculatedSession, Supervisor supervisor, SessionVerification sessionVerification) {
+        if (!sessionVerification.verifySessionForSupervisorsIsUpToDate(calculatedSession, supervisor)){
+            supervisor.setActualSession(calculatedSession);
+            return supervisorService.registerSupervisor(supervisor).get();
+        }
+        return null;
     }
 }

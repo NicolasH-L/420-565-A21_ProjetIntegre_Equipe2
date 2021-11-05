@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

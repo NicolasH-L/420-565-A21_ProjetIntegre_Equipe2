@@ -1,8 +1,10 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.mockito.Mockito.*;
 
@@ -32,15 +36,124 @@ public class SessionTaskTest {
     @Mock
     private SupervisorService supervisorService;
 
-    @Mock
+    private SessionVerification sessionVerification = new SessionVerification();
+
+    private SessionTask sessionTask2 = new SessionTask(adminService, studentService, monitorService, supervisorService, sessionsService);
+
+    @InjectMocks
     private SessionTask sessionTask;
 
+    private Sessions session;
+    private Admin admin;
+    private Student student;
+    private Monitor monitor;
+    private Supervisor supervisor;
+
+    @BeforeEach
+    void setup(){
+        session = Sessions.builder()
+                .session("winter2022")
+                .build();
+
+        admin = Admin.adminBuilder()
+                .username("username")
+                .password("password")
+                .actualSession("winter2022")
+                .build();
+
+        student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .actualSession("winter2022")
+                .build();
+
+        monitor = Monitor.monitorBuilder()
+                .id(1)
+                .password("toto")
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
+                .actualSession("winter2022")
+                .build();
+
+        supervisor = Supervisor.supervisorBuilder()
+                .id(1)
+                .firstName("toto")
+                .lastName("toto")
+                .matricule("1234567")
+                .password("toto1!")
+                .actualSession("winter2022")
+                .build();
+    }
+
+//    @Test
+//    public void testSessionTaskConstructor(){
+//        SessionTask newSessionTask = new SessionTask(adminService, studentService, monitorService, supervisorService, sessionsService);
+//        assertThat(newSessionTask.getAdminService()).isEqualTo(sessionTask.getAdminService());
+//        assertThat(newSessionTask.getStudentService()).isEqualTo(sessionTask.getStudentService());
+//        assertThat(newSessionTask.getMonitorService()).isEqualTo(sessionTask.getMonitorService());
+//        assertThat(newSessionTask.getSupervisorService()).isEqualTo(sessionTask.getSupervisorService());
+//        assertThat(newSessionTask.getSessionsService()).isEqualTo(sessionTask.getSessionsService());
+//    }
+
     @Test
-    public void testVerifySession() {
+    public void testSetSessionList(){
+        when(sessionsService.saveSession(session)).thenReturn(Optional.of(session));
+        assertThat(sessionTask.setSessionList("winter2022", getListOfSessions(), sessionVerification)).isEqualTo(session);
+    }
 
-        sessionTask.verifySession();
-        verify(sessionTask, times(1)).verifySession();
+    @Test
+    public void testSetSessionListFails(){
+        assertThat(sessionTask.setSessionList("summer2022", getListOfSessions(), sessionVerification)).isNull();
+    }
 
+    @Test
+    public void testSetAdminSession(){
+        when(adminService.saveAdmin(admin)).thenReturn(Optional.of(admin));
+        assertThat(sessionTask.setAdminSession("summer2022", admin, sessionVerification)).isEqualTo(admin);
+    }
+
+    @Test
+    public void testSetAdminSessionFails(){
+        assertThat(sessionTask.setAdminSession("winter2022", admin, sessionVerification)).isNull();
+    }
+
+    @Test
+    public void testSetStudentSession(){
+        when(studentService.registerStudent(student)).thenReturn(Optional.of(student));
+        assertThat(sessionTask.setStudentSession("summer2022", student, sessionVerification)).isEqualTo(student);
+    }
+
+    @Test
+    public void testSetStudentSessionFails(){
+        assertThat(sessionTask.setStudentSession("winter2022", student, sessionVerification)).isNull();
+    }
+
+    @Test
+    public void testSetMonitorSession(){
+        when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
+        assertThat(sessionTask.setMonitorSession("summer2022", monitor, sessionVerification)).isEqualTo(monitor);
+    }
+
+    @Test
+    public void testSetMonitorSessionFails(){
+        assertThat(sessionTask.setMonitorSession("winter2022", monitor, sessionVerification)).isNull();
+    }
+
+    @Test
+    public void testSetSupervisorSession(){
+        when(supervisorService.registerSupervisor(supervisor)).thenReturn(Optional.of(supervisor));
+        assertThat(sessionTask.setSupervisorSession("summer2022", supervisor, sessionVerification)).isEqualTo(supervisor);
+    }
+
+    @Test
+    public void testSetSupervisorSessionFails(){
+        assertThat(sessionTask.setSupervisorSession("winter2022", supervisor, sessionVerification)).isNull();
     }
 
     private List<Sessions> getListOfSessions(){
@@ -55,79 +168,5 @@ public class SessionTaskTest {
                 .build());
 
         return sessionsList;
-    }
-
-    private List<Admin> getListOfAdmin(){
-        List<Admin> adminList = new ArrayList<>();
-        adminList.add(Admin.adminBuilder()
-                .username("admin")
-                .password("1234")
-                .build());
-        adminList.add(Admin.adminBuilder()
-                .username("admin2")
-                .password("12345")
-                .build());
-        return adminList;
-    }
-
-    private List<Student> getListOfStudents() {
-        List<Student> studentList = new ArrayList<>();
-        studentList.add(Student.studentBuilder()
-                .id(2)
-                .firstName("Toto")
-                .lastName("Tata")
-                .matricule("1234567")
-                .password("1234")
-                .isCvValid(true)
-                .build());
-        studentList.add(Student.studentBuilder()
-                .id(3)
-                .firstName("Lolo")
-                .lastName("Lala")
-                .matricule("1234568")
-                .password("1235")
-                .isCvValid(false)
-                .build());
-        return studentList;
-    }
-
-    private List<Monitor> getListOfMonitors() {
-        List<Monitor> monitorList = new ArrayList<>();
-        monitorList.add(Monitor.monitorBuilder()
-                .id(2)
-                .password("didi1*")
-                .lastName("didi")
-                .firstName("didi")
-                .companyName("kong")
-                .email("didi@kong.com")
-                .build());
-        monitorList.add(Monitor.monitorBuilder()
-                .id(3)
-                .password("dodo1*")
-                .lastName("dodo")
-                .firstName("dodo")
-                .companyName("kong")
-                .email("dodo@kong.com")
-                .build());
-        return monitorList;
-    }
-
-    private List<Supervisor> getListOfSupervisors(){
-        List<Supervisor> supervisorList = new ArrayList<>();
-        supervisorList.add(Supervisor.supervisorBuilder()
-                .id(1)
-                .firstName("John")
-                .lastName("Doe")
-                .matricule("1234567")
-                .password("password")
-                .build());
-        supervisorList.add(Supervisor.supervisorBuilder()
-                .id(2)
-                .firstName("Toto")
-                .lastName("Tata")
-                .matricule("7654321")
-                .password("password")
-                .build());
-        return supervisorList;
     }
 }

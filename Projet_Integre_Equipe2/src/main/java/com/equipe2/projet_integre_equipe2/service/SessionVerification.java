@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
