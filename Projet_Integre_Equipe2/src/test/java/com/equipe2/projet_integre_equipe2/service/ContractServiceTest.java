@@ -139,11 +139,18 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testGetAllStudent(){
+    public void testGetAllContract(){
         when(contractRepository.findAll()).thenReturn(getListOfContracts());
         final Optional<List<Contract>> allContracts = contractService.getAllContracts();
         assertThat(allContracts.get().size()).isEqualTo(3);
         assertThat(allContracts.get().get(0).getCompanyResponsability()).isEqualTo("Faire des evaluation1");
+    }
+
+    @Test
+    public void testGetAllContractFail(){
+        when(contractRepository.findAll()).thenReturn(null);
+        final Optional<List<Contract>> allContracts = contractService.getAllContracts();
+        assertThat(allContracts).isEqualTo(Optional.empty());
     }
 
     private List<Contract> getListOfContracts(){
