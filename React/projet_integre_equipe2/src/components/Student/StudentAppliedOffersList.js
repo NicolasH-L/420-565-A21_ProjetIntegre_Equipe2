@@ -9,6 +9,7 @@ const StudentAppliedOffersList = (newStudent) => {
     const [tmpStudentOffers, setTmpStudentOffers] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    const student = historyState.student
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     const baseUrl = 'http://localhost:8888/offers-list'
@@ -26,7 +27,7 @@ const StudentAppliedOffersList = (newStudent) => {
     }, [])
 
     const fetchStudentOffers = async () => {
-        const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
+        const res = await fetch(`${baseUrl}/student-offers/student/${student.id}`)
         return await res.json()
     }
 

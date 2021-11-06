@@ -1,8 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Document;
-import com.equipe2.projet_integre_equipe2.model.Offer;
-import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,9 +34,9 @@ public class DocumentController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @PutMapping("/document/decline-document/{idDocument}")
-    public ResponseEntity<Document> declineDocument(@PathVariable Integer idDocument){
-        return documentService.declineDocument(idDocument)
+    @PutMapping("/document/update-document/{idDocument}/status/{isValid}")
+    public ResponseEntity<Document> declineDocument(@PathVariable Integer idDocument, @PathVariable Boolean isValid){
+        return documentService.updateDocumentStatus(idDocument, isValid)
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
@@ -46,6 +44,13 @@ public class DocumentController {
     @GetMapping("/document/get-all-documents-valid/{idStudent}")
     public ResponseEntity<List<Document>> getAllDocumentsValidByStudent(@PathVariable Integer idStudent){
         return documentService.getAllDocumentsValidByStudentId(idStudent)
+                .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("document/get-all-documents")
+    public ResponseEntity<List<Document>> getAllDocuments() {
+        return documentService.getAllDocuments()
                 .map(document1 -> ResponseEntity.status(HttpStatus.OK).body(document1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

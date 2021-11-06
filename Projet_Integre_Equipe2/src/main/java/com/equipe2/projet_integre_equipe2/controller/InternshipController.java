@@ -25,9 +25,24 @@ public class InternshipController {
     }
 
     @GetMapping("/get-all-internships")
-    public ResponseEntity<List<Internship>> getAllInternships(){
+    public ResponseEntity<List<Internship>> getAllInternships() {
         return internshipService.getAllInternships()
                 .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-internship/{studentId}")
+    public ResponseEntity<Internship> getInternshipByStudentId(@PathVariable Integer studentId) {
+        return internshipService.getInternshipByStudentId(studentId)
+                .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-all-internships-by-supervisor/{idSupervisor}")
+    public ResponseEntity<List<Internship>> getAllInternshipsBySupervisorId(@PathVariable Integer idSupervisor) {
+        return internshipService.getAllInternshipBySupervisorId(idSupervisor)
+                .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
 }

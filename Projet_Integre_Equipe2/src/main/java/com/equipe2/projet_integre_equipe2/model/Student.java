@@ -18,11 +18,13 @@ public class Student extends User implements Serializable {
 
 
     @Builder(builderMethodName = "studentBuilder")
-    public Student(Integer id, String firstName, String lastName, String password, String matricule, Boolean isCvValid, String currentStatus) {
+    public Student(Integer id, String firstName, String lastName, String password, String matricule,
+                   Boolean isCvValid, String currentStatus, String actualSession) {
         super.setId(id);
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
+        super.setActualSession(actualSession);
         this.matricule = matricule;
         this.isCvValid = isCvValid;
         this.currentStatus = currentStatus;

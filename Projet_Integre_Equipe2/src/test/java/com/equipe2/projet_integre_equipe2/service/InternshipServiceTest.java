@@ -1,6 +1,9 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Internship;
+import com.equipe2.projet_integre_equipe2.model.Offer;
+import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.model.Supervisor;
 import com.equipe2.projet_integre_equipe2.repository.InternshipRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,15 +30,64 @@ public class InternshipServiceTest {
 
     private Internship internship;
 
+    private Internship internship2;
+
+    private Offer offer;
+
+    private Student student;
+
+    private Supervisor supervisor;
+
     @BeforeEach
     void setup() {
         internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
                 .offer(null)
                 .student(null)
                 .status(null)
                 .build();
+
+        offer = Offer.builder()
+                .idOffer(1)
+                .companyName("Cegep")
+                .address("Montral")
+                .salary("19")
+                .jobTitle("Developpeur")
+                .description("Java")
+                .skills("Debrouillard")
+                .jobSchedules("Temps plein")
+                .workingHours("37.5")
+                .monitorEmail("cegep@email.com")
+                .isValid(false)
+                .state("")
+                .displayDate("2021-10-15")
+                .deadlineDate("2021-10-30")
+                .startInternshipDate("2021-10-30")
+                .endInternshipDate("2021-12-30")
+                .build();
+
+        student = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password("1234")
+                .isCvValid(true)
+                .build();
+
+        internship2 = Internship.builder()
+                .offer(offer)
+                .student(student)
+                .status(null)
+                .build();
+
+        supervisor = Supervisor.supervisorBuilder()
+                .id(1)
+                .firstName("toto")
+                .lastName("tata")
+                .matricule("1234567")
+                .password("password")
+                .build();
+
     }
 
     @Test
@@ -53,6 +105,21 @@ public class InternshipServiceTest {
     }
 
     @Test
+    public void testGetListofIntershipsBySupervisorId(){
+        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternships());
+        final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
+        assertThat(allInternships.get().size()).isEqualTo(3);
+        assertThat(allInternships.get().get(0).getIdInternship()).isEqualTo(1);
+    }
+
+    @Test
+    public void testGetListofIntershipsBySupervisorIdFails(){
+        when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(null);
+        final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
+        assertThat(allInternships).isEqualTo(Optional.empty());
+    }
+
+    @Test
     public void testGetAllInternships() {
         when(internshipRepository.findAll()).thenReturn(getListOfInternships());
         Optional<List<Internship>> allInternships = internshipService.getAllInternships();
@@ -67,25 +134,36 @@ public class InternshipServiceTest {
         assertThat(allInternships).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetInternshipByStudentId() {
+        when(internshipRepository.findInternshipByStudent_Id(student.getId())).thenReturn(internship2);
+        Optional<Internship> actualInternship = internshipService.getInternshipByStudentId(student.getId());
+        assertThat(actualInternship.get()).isEqualTo(internship2);
+    }
+
+    @Test
+    public void testGetInternshipByStudentIdFails() {
+        when(internshipRepository.findInternshipByStudent_Id(student.getId())).thenReturn(null);
+        Optional<Internship> actualInternship = internshipService.getInternshipByStudentId(student.getId());
+        assertThat(actualInternship).isEmpty();
+    }
+
     private List<Internship> getListOfInternships() {
         List<Internship> internshipList = new ArrayList<>();
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
+                .idInternship(1)
                 .offer(null)
                 .student(null)
                 .status("StudentSignature")
                 .build());
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
+                .idInternship(2)
                 .offer(null)
                 .student(null)
                 .status(null)
                 .build());
         internshipList.add(internship = Internship.builder()
-                .isSignedByStudent(false)
-                .isSignedByMonitor(false)
+                .idInternship(3)
                 .offer(null)
                 .student(null)
                 .status(null)
