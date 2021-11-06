@@ -2,7 +2,6 @@ import React from 'react'
 import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import OfferModalView from '../OfferModalView'
 
 const SupervisorAssignedStudentList = () => {
     const [interships, setInterships] = useState([])
@@ -11,8 +10,7 @@ const SupervisorAssignedStudentList = () => {
     const supervisor = historyState.supervisor
 
     useEffect(() => {
-        if (historyState === undefined)
-            return
+        
         const getInternships = async () => {
             const internshipsFromServer = await fetchInternships(supervisor.id)
             setInterships(internshipsFromServer)
@@ -23,6 +21,14 @@ const SupervisorAssignedStudentList = () => {
     const fetchInternships = async (idSuperviseur) => {
         const res = await fetch(`http://localhost:8888/internship/get-all-internships-by-supervisor/${idSuperviseur}`)
         return await res.json()
+    }
+
+    const viewOffer = async (offer) => {
+        history.push("/OfferView", offer)
+    }
+
+    const filterInternships = (internship) => {
+        return internship.session === supervisor.actualSession
     }
 
     return (
@@ -42,14 +48,16 @@ const SupervisorAssignedStudentList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {interships.map((intership) => (
-                                <tr key={intership.idInternship}>
-                                    <th>{intership.student.lastName}</th>
-                                    <th>{intership.student.firstName}</th>
-                                    <th>{intership.offer.companyName}</th>
-                                    <th>{intership.offer.jobTitle}</th>
+                            {interships
+                            .filter(filterInternships)
+                            .map((internship) => (
+                                <tr key={internship.idInternship}>
+                                    <th>{internship.student.lastName}</th>
+                                    <th>{internship.student.firstName}</th>
+                                    <th>{internship.offer.companyName}</th>
+                                    <th>{internship.offer.jobTitle}</th>
                                     <td className="w-25">
-                                        <OfferModalView newOffer={intership.offer} displayMessageBoolean={null} />
+                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
                                     </td>
                                 </tr>
                             ))}

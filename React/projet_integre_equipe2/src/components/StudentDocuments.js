@@ -7,13 +7,13 @@ const StudentDocuments = () => {
     const [documents, setDocuments] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    const student = historyState.student
 
     useEffect(() => {
         if (historyState === undefined)
             return
-        const studentId = historyState.id
         const getDocuments = async () => {
-            const documentsFromServer = await fetchDocuments(studentId)
+            const documentsFromServer = await fetchDocuments(student.id)
             setDocuments(documentsFromServer)
         }
         getDocuments()
@@ -28,9 +28,13 @@ const StudentDocuments = () => {
         history.push("/ViewDocument", document)
     }
 
+    const filterDocuments = (document) => {
+        return document.session === student.actualSession
+    }
+
     return (
         <div className="grad">
-            <StudentNavbar useStudent={historyState} />
+            <StudentNavbar useStudent={student} />
             <h2 className="text-center">Portfolio</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg">
@@ -41,7 +45,9 @@ const StudentDocuments = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {documents.map((document) => (
+                        {documents
+                        .filter(filterDocuments)
+                        .map((document) => (
                             <tr key={document.idDocument}>
                                 <th>{document.documentName}</th>
                                 <td className="w-25">

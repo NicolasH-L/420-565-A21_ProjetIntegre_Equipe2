@@ -16,7 +16,7 @@ const MonitorLogin = ({ onLogin }) => {
         } else {
             monitor.email = monitor.email.toLowerCase()
             onLogin(monitor.email, monitor.password)
-                .then((data) => data.email != null ? history.push("/Monitor", data) : alert("Email ou mot de passe incorrect"))
+                .then((data) => data.email != null ? history.push("/Monitor", { monitor: data }) : alert("Email ou mot de passe incorrect"))
         }
     }
 

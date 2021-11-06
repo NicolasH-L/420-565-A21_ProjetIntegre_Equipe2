@@ -15,11 +15,13 @@ public class Supervisor extends User implements Serializable {
     private String matricule;
 
     @Builder(builderMethodName = "supervisorBuilder")
-    public Supervisor(Integer id, String password, String lastName, String firstName, String matricule) {
+    public Supervisor(Integer id, String password, String lastName,
+                      String firstName, String matricule, String actualSession) {
         super.setId(id);
         super.setLastName(lastName);
         super.setFirstName(firstName);
         super.setPassword(password);
+        super.setActualSession(actualSession);
         this.matricule = matricule;
     }
 }
