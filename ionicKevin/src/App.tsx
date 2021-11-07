@@ -21,24 +21,20 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Menu from './components/Menu';
-import AuthentificationPage from './pages/AuthentificationPage';
+import AuthentificationPage from './components/AuthentificationPage';
 import StudentAccount from './components/Student/StudentAuth';
 import StudentAuth from './components/Student/StudentAuth';
+import Admin from './components/Admin/Admin';
+import AdminMenu from './components/Admin/AdminMenu';
+import AccountRoutes from './components/Routes/AccountRoutes';
+import AdminRoutes from './components/Routes/AdminRoutes';
 
 const App: React.FC = () => (
+  
   <IonApp>
     <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu />
-        <IonRouterOutlet id="main">
-          <Route path="/" exact={true}>
-            <Redirect to="/authentificationPage/studentAuth" />
-          </Route>
-          <Route path="/authentificationPage/:userAuth" exact={true}>
-            <AuthentificationPage />
-          </Route>
-        </IonRouterOutlet>
-      </IonSplitPane>
+      <AccountRoutes/>
+      <AdminRoutes/>
     </IonReactRouter>
   </IonApp >
 );

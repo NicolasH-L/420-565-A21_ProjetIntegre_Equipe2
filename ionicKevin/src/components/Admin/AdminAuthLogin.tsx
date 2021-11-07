@@ -13,7 +13,7 @@ const AdminAuthLogin = () => {
     
     const onSubmit = (admin: any) => {
         adminLogin(admin.username, admin.password)
-        .then((data: any) => data.username != null ? history.push("/Admin", {admin: data}) : setShowToastAlert(true))
+        .then((data: any) => data.username != null ? history.push("/admin", {admin: data}) : setShowToastAlert(true))
     }
 
     const adminLogin = async (username: any, password: any) => {
