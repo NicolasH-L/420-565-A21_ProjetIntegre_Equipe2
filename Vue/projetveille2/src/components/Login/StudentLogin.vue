@@ -37,6 +37,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import router from "../../router";
 import LoginService from "./LoginService";
 import _ from "lodash";
@@ -69,7 +70,8 @@ export default {
           this.student.matricule,
           this.student.password
         ).then((response) => { 
-          response.matricule != null ? router.push("/Student", response): alert("Erreur de matricule ou mot de passe")
+          response.matricule != null ? router.push({name: "Student", params:{response}}): alert("Erreur de matricule ou mot de passe")
+          
         });
       }
     },
