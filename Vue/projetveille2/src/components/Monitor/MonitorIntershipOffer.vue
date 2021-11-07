@@ -238,11 +238,7 @@ import MonitorNavbar from "./MonitorNavbar.vue";
 import MonitorService from "./MonitorService"
 import _ from "lodash";
 
-let company;
-let emailMonitor;
 const timeElapsed = Date.now();
-const monitor = "historyState"
-
 
 export default {
   name: "MonitorIntershipOffer",
@@ -253,7 +249,7 @@ export default {
     return {
       today: new Date(timeElapsed).toISOString().split("T")[0],
       offer: {
-        companyName: company,
+        companyName: this.$route.params.monitor.companyName,
         address: "",
         salary: "5646656",
         jobTitle: "asdasd",
@@ -261,7 +257,7 @@ export default {
         skills: "asdasdasd",
         jobSchedules: "efdfs",
         workingHours: "54",
-        monitorEmail: emailMonitor,
+        monitorEmail: this.$route.params.monitor.email,
         displayDate: "2021-11-18",
         deadlineDate: "2021-12-18",
         startInternshipDate: "2021-12-19",
@@ -346,7 +342,7 @@ export default {
     submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
-        history.push("/MonitorOfferList", { monitor })
+        //history.push("/MonitorOfferList", { monitor })
     },
     submitOffer() {
             MonitorService.addOffer(this.offer)

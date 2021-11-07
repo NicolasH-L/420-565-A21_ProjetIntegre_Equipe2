@@ -47,8 +47,8 @@ export default {
   data() {
     return {
       student: {
-        matricule: "",
-        password: "",
+        matricule: "1234567",
+        password: "MotDePasse01*",
       },
       error: {
         error: "",
@@ -70,8 +70,7 @@ export default {
           this.student.matricule,
           this.student.password
         ).then((response) => { 
-          response.matricule != null ? router.push({name: "Student", params:{response}}): alert("Erreur de matricule ou mot de passe")
-          
+          response.matricule != null ? this.$router.push({name: "Student", params:response}): alert("Erreur de matricule ou mot de passe")
         });
       }
     },

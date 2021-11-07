@@ -1,5 +1,9 @@
 <template>
   <StudentNavbar></StudentNavbar>
+  
+  <form @submit.prevent="getStudent()">
+    <button >Test</button>
+  </form>
 </template>
 
 <script>
@@ -12,6 +16,14 @@ export default {
   components: {
     StudentNavbar,
   },
+  data(){
+    return{
+      student: this.$route.params
+    }
+  },
+  methods:{
+  
+  }
 };
 </script>
 
