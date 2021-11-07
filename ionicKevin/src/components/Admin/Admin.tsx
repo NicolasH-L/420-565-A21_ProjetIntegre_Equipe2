@@ -8,9 +8,6 @@ const Admin = () => {
     const urlPath = location.pathname;
     const urlPathArray = urlPath.split("/");
     const adminChoice = urlPathArray[2];
-    console.log(urlPathArray)
-    console.log(adminChoice)
-    console.log(urlPathArray.length)
 
     return (
         <IonPage>
@@ -19,7 +16,8 @@ const Admin = () => {
                     <IonButtons slot="start" className="ion-margin-top">
                         <IonMenuButton />
                     </IonButtons>
-                    <IonTitle className="ion-margin-top">{adminChoice === "adminOffer" ? "Déposer une offre" : ""}
+                    <IonTitle className="ion-margin-top">
+                        {adminChoice === "adminOffer" || urlPathArray.length === 2 ? "Déposer une offre" : ""}
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>

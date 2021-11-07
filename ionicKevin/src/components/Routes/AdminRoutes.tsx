@@ -6,7 +6,6 @@ import AdminMenu from '../Admin/AdminMenu'
 
 const AdminRoutes = () => {
     const location = useLocation();
-    const history = useHistory();
 
     let path = location.pathname.split("/")
 
@@ -16,9 +15,7 @@ const AdminRoutes = () => {
                 <IonSplitPane contentId="admin">
                     <AdminMenu />
                     <IonRouterOutlet id="admin">
-                    <Route path="/admin" exact={true}>
-                            
-                        </Route>
+                        <Route path="/admin" component={Admin} />
                         <Route path="/admin/:adminChoice" exact={true}>
                             <Admin />
                         </Route>
