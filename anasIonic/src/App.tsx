@@ -24,6 +24,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import StudentRegistration from './components/Student/StudentRegister';
 import MonitorRegister from './components/Monitor/MonitorRegister';
+import MonitorLogin from './components/Monitor/MonitorLogin';
 
 const App: React.FC = () => (
   <IonApp>
@@ -43,6 +44,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/monitorRegistration">
           <MonitorRegister />
+        </Route>
+        <Route path="/monitorLogin">
+          <MonitorLogin></MonitorLogin>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
