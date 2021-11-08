@@ -26,6 +26,7 @@ import StudentRegistration from './components/Student/StudentRegister';
 import MonitorRegister from './components/Monitor/MonitorRegister';
 import MonitorLogin from './components/Monitor/MonitorLogin';
 import SupervisorRegister from './components/Supervisor/SupervisorRegister';
+import SupervisorLogin from './components/Supervisor/SupervisorLogin';
 
 const App: React.FC = () => (
   <IonApp>
@@ -51,6 +52,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/supervisorRegistration">
           <SupervisorRegister/>
+        </Route>
+        <Route path="/supervisorLogin">
+          <SupervisorLogin/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
