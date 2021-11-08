@@ -19,7 +19,7 @@
             <button
               className="nav-link btn btn-light"
               type="button"
-              
+              @click="goToMonitorOffer()"
             >
               Déposer offre
             </button>
@@ -40,8 +40,16 @@
 </template>
 
 <script>
+import router from "../../router";
+
 export default {
-    name:"MonitorNavbar"
+    name:"MonitorNavbar",
+    methods:{
+      goToMonitorOffer(){
+        router.push({name: "MonitorOffer", params:this.$route.params})
+      }
+    },
+
 };
 </script>
 

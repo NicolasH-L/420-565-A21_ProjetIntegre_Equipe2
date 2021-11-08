@@ -20,7 +20,7 @@
               className="form-control text-center"
               id="companyName"
               name="companyName"
-              v-model="company"
+              v-model="offer.companyName"
               disabled
             />
           </div>
@@ -111,7 +111,7 @@
               className="form-control text-center"
               id="monitorEmail"
               name="monitorEmail"
-              v-model="emailMonitor"
+              v-model="offer.monitorEmail"
               disabled
             />
           </div>
@@ -237,6 +237,8 @@ import { RegexPattern } from "../RegexPattern";
 import MonitorNavbar from "./MonitorNavbar.vue";
 import MonitorService from "./MonitorService"
 import _ from "lodash";
+import router from "../../router";
+
 
 const timeElapsed = Date.now();
 
@@ -249,15 +251,15 @@ export default {
     return {
       today: new Date(timeElapsed).toISOString().split("T")[0],
       offer: {
-        companyName: this.$route.params.monitor.companyName,
-        address: "",
+        companyName:this.$route.params.companyName,
+        address: "121 rue fictive",
         salary: "5646656",
         jobTitle: "asdasd",
         description: "asdasda",
         skills: "asdasdasd",
         jobSchedules: "efdfs",
         workingHours: "54",
-        monitorEmail: this.$route.params.monitor.email,
+        monitorEmail:this.$route.params.email,
         displayDate: "2021-11-18",
         deadlineDate: "2021-12-18",
         startInternshipDate: "2021-12-19",
@@ -280,6 +282,10 @@ export default {
     };
   },
   methods: {
+    beforeMount() {
+      this.offer.companyName = this.$route.params.companyName,
+      this.offer.monitorEmail = this.$route.params.email
+    },
     findFutureDate() {
       let futureDate = new Date(timeElapsed);
       futureDate.setDate(futureDate.getDate() + 220);
@@ -334,15 +340,16 @@ export default {
             alert("Veuillez remplir tous les champs!")
             return
         } else {
-            this.setOfferSession()
-            this.verifyMonitorExists(this.offer.monitorEmail)
+            //this.setOfferSession()
+            MonitorService.verifyMonitorExists (this.offer.monitorEmail)
                 .then((data) => data ? this.submitOffer() : alert("Aucun moniteur existant avec cet email!"))
         }
     },
     submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
-        //history.push("/MonitorOfferList", { monitor })
+        router.push({name: "MonitorOffer", params:this.$route.params})
+
     },
     submitOffer() {
             MonitorService.addOffer(this.offer)

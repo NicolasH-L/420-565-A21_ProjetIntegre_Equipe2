@@ -46,8 +46,8 @@ export default {
   data() {
     return {
       monitor: {
-        email: "",
-        password: "",
+        email: "text@gmail.com",
+        password: "MotDePasse01*",
       },
       error: {
         error: "",
@@ -69,7 +69,7 @@ export default {
           this.monitor.email,
           this.monitor.password
         ).then((response) => { 
-          response.email != null ? router.push("/Monitor", response): alert("Erreur de matricule ou mot de passe")
+          response.email != null ? router.push({name: "Monitor", params:response}): alert("Erreur de matricule ou mot de passe")
         });
       }
     },
