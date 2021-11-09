@@ -27,6 +27,7 @@ import MonitorRegister from './components/Monitor/MonitorRegister';
 import MonitorLogin from './components/Monitor/MonitorLogin';
 import SupervisorRegister from './components/Supervisor/SupervisorRegister';
 import SupervisorLogin from './components/Supervisor/SupervisorLogin';
+import AdminLogin from './components/Admin/AdminLogin';
 
 const App: React.FC = () => (
   <IonApp>
@@ -55,6 +56,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/supervisorLogin">
           <SupervisorLogin/>
+        </Route>
+        <Route path="/adminLogin">
+          <AdminLogin/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
