@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '../components/Login/Login.vue'
 import Registration from '../components/Registration/Registration.vue'
 import Admin from '../components/Admin/Admin.vue';
@@ -75,8 +75,10 @@ const routes = [
     }
 ];
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 })
+
+
 
 export default router
