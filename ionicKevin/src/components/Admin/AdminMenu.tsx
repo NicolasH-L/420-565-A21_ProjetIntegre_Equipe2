@@ -2,21 +2,21 @@ import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import '../Menu.css'
+import { createOutline } from 'ionicons/icons';
 
 interface AdminMenuOptions {
     url: string;
-    //iosIcon: string;
-    //mdIcon: string;
     title: string;
+    iosIcon: string;
+    mdIcon: string;
 }
 
 const adminMenu: AdminMenuOptions[] = [
     {
       title: 'Déposer offre',
-      url: '/admin/adminOffer'
-      //iosIcon: school,
-      //mdIcon: school
-  
+      url: '/admin/adminOffer',
+      iosIcon: createOutline,
+      mdIcon: createOutline
     }
   ];
 
@@ -32,7 +32,7 @@ const AdminMenu = () => {
                 return (
                   <IonMenuToggle key={index} autoHide={false}>
                     <IonItem className={location.pathname === option.url ? 'selected' : ''} routerLink={option.url} routerDirection="none" lines="none" detail={false}>
-                      <IonIcon slot="start" /*ios={option.iosIcon} md={option.mdIcon}*//>
+                      <IonIcon slot="start" ios={option.iosIcon} md={option.mdIcon}/>
                       <IonLabel>{option.title}</IonLabel>
                     </IonItem>
                   </IonMenuToggle>

@@ -1,20 +1,22 @@
 import { IonMenu, IonContent, IonList, IonListHeader, IonMenuToggle, IonItem, IonIcon, IonLabel } from '@ionic/react';
 import React from 'react'
 import { useLocation } from 'react-router-dom';
+import { createOutline } from 'ionicons/icons';
+
 
 interface MonitorMenuOptions {
     url: string;
     title: string;
-    //iosIcon: string;
-    //mdIcon: string;
+    iosIcon: string;
+    mdIcon: string;
 }
 
 const monitorMenu: MonitorMenuOptions[] = [
     {
       title: 'Déposer offre',
-      url: '/monitor/monitorOffer'
-      //iosIcon: school,
-      //mdIcon: school
+      url: '/monitor/monitorOffer',
+      iosIcon: createOutline,
+      mdIcon: createOutline
   
     }
   ];
@@ -31,7 +33,7 @@ const MonitorMenu = () => {
                 return (
                   <IonMenuToggle key={index} autoHide={false}>
                     <IonItem className={location.pathname === option.url ? 'selected' : ''} routerLink={option.url} routerDirection="none" lines="none" detail={false}>
-                      <IonIcon slot="start" /*ios={option.iosIcon} md={option.mdIcon}*//>
+                      <IonIcon slot="start" ios={option.iosIcon} md={option.mdIcon}/>
                       <IonLabel>{option.title}</IonLabel>
                     </IonItem>
                   </IonMenuToggle>
