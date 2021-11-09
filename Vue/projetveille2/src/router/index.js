@@ -8,6 +8,7 @@ import Monitor from '../components/Monitor/Monitor.vue';
 import Supervisor from '../components/Supevisor/Supervisor.vue';
 import MonitorIntershipOffer from '../components/Monitor/MonitorIntershipOffer.vue';
 import AdminInternshipOffer from '../components/Admin/AdminInternshipOffer.vue';
+import StudentUploadCV from '../components/Student/StudentUploadCV.vue';
 
 const routes = [
     {
@@ -54,6 +55,11 @@ const routes = [
         name: 'AdminOffer',
         path: '/AdminOffer',
         component: AdminInternshipOffer
+    },
+    {
+        name: 'StudentUploadCV',
+        path: '/StudentUploadCV',
+        component: StudentUploadCV
     }
 ];
 const router = createRouter({

@@ -21,7 +21,7 @@
             </button>
           </li>
           <li className="nav-item mx-2">
-            <button className="nav-link btn btn-light" type="button">
+            <button className="nav-link btn btn-light" @click="goToStudentUploadCV()" type="button">
               Déposer CV
             </button>
           </li>
@@ -42,12 +42,21 @@
 </template>
 
 <script>
-export default {
-    name:"StudentNavbar"
+import router from "../../router";
 
-}
+export default {
+  name: "StudentNavbar",
+  data(){
+    return {
+      student:Object
+    }
+  },
+  methods: {
+    goToStudentUploadCV() {
+      router.push({ name: "StudentUploadCV", params: this.$route.params });
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
