@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import StudentNavbar from '../StudentNavbar';
+import StudentSearchingStatus from './StudentSearchingStatus';
 
 const StudentStatus = () => {
     const history = useHistory();
@@ -18,10 +19,8 @@ const StudentStatus = () => {
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Avez-vous une date d'entevue ou trouvé un stage?</h5>
-                        <p class="card-text">Cliquez sur l'option qui vous correspond</p>
-                        <a href="#" class="btn btn-primary mx-2">
-                            <i className="fas fa-hourglass-start mr-2"></i> En recherche
-                        </a>
+                        <p class="card-text">Cliquez sur l'option qui vous correspond!</p>
+                        <StudentSearchingStatus/>
                         <a href="#" class="btn btn-primary mx-2">
                             <i className="fas fa-calendar-alt mr-2"></i> Date d'entrevue
                         </a>
