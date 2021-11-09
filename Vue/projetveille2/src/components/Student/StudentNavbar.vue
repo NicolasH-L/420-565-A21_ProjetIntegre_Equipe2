@@ -31,7 +31,7 @@
             </button>
           </li>
           <li className="nav-item mx-2">
-            <button className="nav-link btn btn-light" type="button">
+            <button className="nav-link btn btn-light" @click="goToStudentDocuments()" type="button">
               Mes Documents
             </button>
           </li>
@@ -54,6 +54,9 @@ export default {
   methods: {
     goToStudentUploadCV() {
       router.push({ name: "StudentUploadCV", params: this.$route.params });
+    },
+    goToStudentDocuments() {
+      router.push({ name: "StudentDocuments", params: this.$route.params });
     },
   },
 };

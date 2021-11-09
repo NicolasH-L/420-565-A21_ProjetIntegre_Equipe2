@@ -9,6 +9,8 @@ import Supervisor from '../components/Supevisor/Supervisor.vue';
 import MonitorIntershipOffer from '../components/Monitor/MonitorIntershipOffer.vue';
 import AdminInternshipOffer from '../components/Admin/AdminInternshipOffer.vue';
 import StudentUploadCV from '../components/Student/StudentUploadCV.vue';
+import StudentDocuments from '../components/Student/StudentDocuments.vue';
+import ViewDocument from '../components/ViewDocument.vue';
 
 const routes = [
     {
@@ -60,6 +62,16 @@ const routes = [
         name: 'StudentUploadCV',
         path: '/StudentUploadCV',
         component: StudentUploadCV
+    },
+    {
+        name: 'StudentDocuments',
+        path: '/StudentDocuments',
+        component: StudentDocuments
+    },
+    {
+        name: 'ViewDocument',
+        path: '/ViewDocument',
+        component: ViewDocument
     }
 ];
 const router = createRouter({
