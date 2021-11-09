@@ -28,7 +28,10 @@
         />
       </div>
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-block btn-primary grad text-white">
+        <button
+          type="submit"
+          className="btn btn-block btn-primary grad text-white"
+        >
           Connexion
         </button>
       </div>
@@ -46,8 +49,8 @@ export default {
   data() {
     return {
       admin: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "admin",
       },
       error: {
         error: "",
@@ -61,16 +64,17 @@ export default {
         _.isEmpty(this.admin.password) ||
         _.isEmpty(this.admin.username)
       ) {
-        alert("Matricule ou mot de passe incorrect")
+        alert("Matricule ou mot de passe incorrect");
         this.error.error = "Matricule ou mot de passe incorrect";
         return;
       } else {
-        LoginService.loginAdmin(
-          this.admin.username,
-          this.admin.password
-        ).then((response) => { 
-          response.username != null ? router.push("/Admin", response): alert("Erreur de matricule ou mot de passe")
-        });
+        LoginService.loginAdmin(this.admin.username, this.admin.password).then(
+          (response) => {
+            response.username != null
+              ? router.push({ name: "Admin", params: response })
+              : alert("Erreur de matricule ou mot de passe");
+          }
+        );
       }
     },
   },

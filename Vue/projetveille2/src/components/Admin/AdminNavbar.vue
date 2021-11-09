@@ -1,8 +1,8 @@
 <template>
   <div>
     <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-      <Link className="navbar-brand text-secondary" to="/Login"
-        ><h3>Stage Équipe 2</h3></Link
+      <button className="navbar-brand text-secondary"
+        ><h3>Stage Équipe 2</h3></button
       >
       <button
         className="navbar-toggler"
@@ -18,43 +18,39 @@
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
           <li className="nav-item mx-2">
-            <router-link className="nav-link btn btn-light" to="/AdminOffer"
-              >Déposer offre</router-link
+            <button className="nav-link btn btn-light" 
+            @click="goToAdminOffer"
+              >Déposer offre</button
             >
           </li>
           <li className="nav-item mx-2">
-            <router-link
+            <button
               className="nav-link btn btn-light"
-              to="/AdminOffersList"
-              >Offres</router-link
+              >Offres</button
             >
           </li>
           <li className="nav-item mx-2">
-            <router-link
+            <button
               className="nav-link btn btn-light"
-              to="/AdminStudentList"
-              >Liste des étudiants</router-link
+              >Liste des étudiants</button
             >
           </li>
           <li className="nav-item mx-2">
-            <router-link
+            <button
               className="nav-link btn btn-light"
-              to="/AdminStudentAcceptedOffers"
-              >Offres acceptées</router-link
+              >Offres acceptées</button
             >
           </li>
           <li className="nav-item mx-2">
-            <router-link
+            <button
               className="nav-link btn btn-light"
-              to="/AdminInternshipList"
-              >Ententes de stage</router-link
+              >Ententes de stage</button
             >
           </li>
           <li className="nav-item mx-2">
-            <router-link
+            <button
               className="nav-link btn btn-light"
-              to="/AdminAssignSupervisorToStudent"
-              >Assigner un superviseur</router-link
+              >Assigner un superviseur</button
             >
           </li>
         </ul>
@@ -64,8 +60,15 @@
 </template>
 
 <script>
+import router from "../../router";
+
 export default {
   name: "AdminNavbar",
+  methods:{
+      goToAdminOffer(){
+        router.push({name: "AdminOffer", params:this.$route.params})
+      }
+    },
 };
 </script>
 

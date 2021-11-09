@@ -235,10 +235,9 @@
 <script>
 import { RegexPattern } from "../RegexPattern";
 import MonitorNavbar from "./MonitorNavbar.vue";
-import MonitorService from "./MonitorService"
+import MonitorService from "./MonitorService";
 import _ from "lodash";
 import router from "../../router";
-
 
 const timeElapsed = Date.now();
 
@@ -251,7 +250,7 @@ export default {
     return {
       today: new Date(timeElapsed).toISOString().split("T")[0],
       offer: {
-        companyName:this.$route.params.companyName,
+        companyName: this.$route.params.companyName,
         address: "121 rue fictive",
         salary: "5646656",
         jobTitle: "asdasd",
@@ -259,7 +258,7 @@ export default {
         skills: "asdasdasd",
         jobSchedules: "efdfs",
         workingHours: "54",
-        monitorEmail:this.$route.params.email,
+        monitorEmail: this.$route.params.email,
         displayDate: "2021-11-18",
         deadlineDate: "2021-12-18",
         startInternshipDate: "2021-12-19",
@@ -283,8 +282,8 @@ export default {
   },
   methods: {
     beforeMount() {
-      this.offer.companyName = this.$route.params.companyName,
-      this.offer.monitorEmail = this.$route.params.email
+      (this.offer.companyName = this.$route.params.companyName),
+        (this.offer.monitorEmail = this.$route.params.email);
     },
     findFutureDate() {
       let futureDate = new Date(timeElapsed);
@@ -294,7 +293,7 @@ export default {
     },
     validateInput(e) {
       let pattern;
-      let inputError
+      let inputError;
       let patternGeneral = RegexPattern.getPatternGeneral();
       let patternNumber = RegexPattern.getPatternNumber();
 
@@ -317,55 +316,84 @@ export default {
       ) {
         e.target.style.borderColor = "red";
         e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red";
-        inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
+        inputError = (
+          <strong className="text-danger">
+            {" "}
+            Erreur{" "}
+            <i className="fas fa-exclamation-circle text-danger fa-sm"></i>
+          </strong>
+        );
       } else {
         e.target.style.borderColor = "#ced4da";
         e.target.style.boxShadow = "none";
-        inputError = ""
-        this.error[e.target.name] = e.target.value
+        inputError = "";
+        this.error[e.target.name] = e.target.value;
       }
-      this.error[e.target.name] = inputError
+      this.error[e.target.name] = inputError;
     },
-    login(){
-        if (!_.isEmpty(this.error.address) || !_.isEmpty(this.error.salary) || !_.isEmpty(this.error.jobTitle) ||
-            !_.isEmpty(this.error.description) || !_.isEmpty(this.error.skills) || !_.isEmpty(this.error.jobSchedules) ||
-            !_.isEmpty(this.error.workingHours) || !_.isEmpty(this.error.displayDate) || !_.isEmpty(this.error.deadlineDate) ||
-            !_.isEmpty(this.error.startInternshipDate) || !_.isEmpty(this.error.endInternshipDate) ||
-            _.isEmpty(this.offer.companyName) || _.isEmpty(this.offer.address) || _.isEmpty(this.offer.salary) ||
-            _.isEmpty(this.offer.jobTitle) || _.isEmpty(this.offer.description) || _.isEmpty(this.offer.skills) ||
-            _.isEmpty(this.offer.jobSchedules) || _.isEmpty(this.offer.workingHours) || _.isEmpty(this.offer.monitorEmail) ||
-            _.isEmpty(this.offer.displayDate) || _.isEmpty(this.offer.deadlineDate) || _.isEmpty(this.offer.startInternshipDate) ||
-            _.isEmpty(this.offer.endInternshipDate)
-        ) {
-            alert("Veuillez remplir tous les champs!")
-            return
-        } else {
-            //this.setOfferSession()
-            MonitorService.verifyMonitorExists (this.offer.monitorEmail)
-                .then((data) => data ? this.submitOffer() : alert("Aucun moniteur existant avec cet email!"))
-        }
+    login() {
+      if (
+        !_.isEmpty(this.error.address) ||
+        !_.isEmpty(this.error.salary) ||
+        !_.isEmpty(this.error.jobTitle) ||
+        !_.isEmpty(this.error.description) ||
+        !_.isEmpty(this.error.skills) ||
+        !_.isEmpty(this.error.jobSchedules) ||
+        !_.isEmpty(this.error.workingHours) ||
+        !_.isEmpty(this.error.displayDate) ||
+        !_.isEmpty(this.error.deadlineDate) ||
+        !_.isEmpty(this.error.startInternshipDate) ||
+        !_.isEmpty(this.error.endInternshipDate) ||
+        _.isEmpty(this.offer.companyName) ||
+        _.isEmpty(this.offer.address) ||
+        _.isEmpty(this.offer.salary) ||
+        _.isEmpty(this.offer.jobTitle) ||
+        _.isEmpty(this.offer.description) ||
+        _.isEmpty(this.offer.skills) ||
+        _.isEmpty(this.offer.jobSchedules) ||
+        _.isEmpty(this.offer.workingHours) ||
+        _.isEmpty(this.offer.monitorEmail) ||
+        _.isEmpty(this.offer.displayDate) ||
+        _.isEmpty(this.offer.deadlineDate) ||
+        _.isEmpty(this.offer.startInternshipDate) ||
+        _.isEmpty(this.offer.endInternshipDate)
+      ) {
+        alert("Veuillez remplir tous les champs!");
+        return;
+      } else {
+        //this.setOfferSession()
+        MonitorService.verifyMonitorExists(
+          this.offer.monitorEmail
+        ).then((data) =>
+          data
+            ? this.submitOffer()
+            : alert("Aucun moniteur existant avec cet email!")
+        );
+      }
     },
     submitOfferSuccess() {
-        alert("Ajout de l'offre de stage avec succès")
-        document.getElementById("monitorInternshipForm").reset()
-        router.push({name: "MonitorOffer", params:this.$route.params})
-
+      alert("Ajout de l'offre de stage avec succès");
+      document.getElementById("monitorInternshipForm").reset();
+      router.push({ name: "MonitorOffer", params: this.$route.params });
     },
     submitOffer() {
-            MonitorService.addOffer(this.offer)
-                .then((data) => data.jobTitle !== null ? this.submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
-                .catch((err) => console.log(err))
+      MonitorService.addOffer(this.offer)
+        .then((data) =>
+          data.jobTitle !== null
+            ? this.submitOfferSuccess()
+            : alert("Impossible de créer l'offre, veuillez réessayer!")
+        )
+        .catch((err) => console.log(err));
     },
     setValue(target) {
-      for (const value in this.offer){
-        if(target === value){
-          console.log(value)
-          console.log(this.offer[value])
+      for (const value in this.offer) {
+        if (target === value) {
+          console.log(value);
+          console.log(this.offer[value]);
         }
       }
     },
   },
-  
 };
 </script>
 
