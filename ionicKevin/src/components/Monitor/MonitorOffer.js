@@ -1,36 +1,29 @@
-import { IonBadge, IonButton, IonDatetime, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToast } from '@ionic/react';
-import { result } from 'lodash';
+import { IonTitle, IonItem, IonLabel, IonInput, IonBadge, IonSelect, IonSelectOption, IonTextarea, IonDatetime, IonButton, IonToast } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { RegexPattern } from '../RegexPattern';
 
-const AdminOffer = () => {
+const MonitorOffer = () => {
+    const history = useHistory();
+    const historyState = history.location.state;
+    const monitor = historyState.monitor
+
     const [showToastAlert, setShowToastAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("")
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onChange",
+        defaultValues: {
+            companyName: monitor.companyName,
+            monitorEmail: monitor.email
+        }
     });
 
-    const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
 
-    useEffect(() => {
-        const getMonitors = async () => {
-            const monitorsFromServer = await fetchMonitors()
-            setMonitors(monitorsFromServer)
-        }
-        getMonitors()
-    }, [])
-
-    const fetchMonitors = async () => {
-        const res = await fetch('http://localhost:8888/monitors/get-all-monitors')
-        return await res.json()
-    }
-
-    const onSubmit = (offer: any) => {
+    const onSubmit = (offer) => {
         offer.displayDate = offer.displayDate.split('T')[0]
         offer.deadlineDate = offer.deadlineDate.split('T')[0]
         offer.startInternshipDate = offer.startInternshipDate.split('T')[0]
@@ -49,12 +42,12 @@ const AdminOffer = () => {
         }
     }
 
-    const showAlert = async (message: string) => {
+    const showAlert = async (message) => {
         setAlertMessage(message);
         setShowToastAlert(true)
     }
 
-    const addOffer = async (offer: any) => {
+    const addOffer = async (offer) => {
         const result = await fetch('http://localhost:8888/offer/saveOffer',
             {
                 method: 'POST',
@@ -66,7 +59,7 @@ const AdminOffer = () => {
         return await result.json()
     }
 
-    const verifyMonitorExists = async (email: any) => {
+    const verifyMonitorExists = async (email) => {
         const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
         return await res.json()
     }
@@ -84,7 +77,7 @@ const AdminOffer = () => {
             <form className="ion-padding" id="AdminOfferForm" onSubmit={handleSubmit(onSubmit)}>
                 <IonItem>
                     <IonLabel position="floating">Nom de l'entreprise: </IonLabel>
-                    <IonInput type="text"  {...register("companyName", { required: true, pattern: RegexPattern.getPatternCompany() })} />
+                    <IonInput type="text" value={monitor.companyName}  {...register("companyName", { required: true, pattern: RegexPattern.getPatternCompany() })} disabled={true}/>
                     {errors.companyName && <IonBadge color="danger">Nom invalide</IonBadge>}
                 </IonItem>
                 <IonItem>
@@ -93,12 +86,8 @@ const AdminOffer = () => {
                     {errors.jobTitle && <IonBadge color="danger">Poste invalide</IonBadge>}
                 </IonItem>
                 <IonItem>
-                    <IonLabel position="floating">Courriel du représentant de l'entreprise: </IonLabel>
-                    <IonSelect placeholder="Veuillez choisir un représentant" {...register("monitorEmail", { required: true, pattern: RegexPattern.getPatternEmail() })}>
-                        {monitors.map((monitor: any) => (
-                            <IonSelectOption key={monitor.id} value={monitor.email}>{monitor.email}</IonSelectOption>
-                        ))}
-                    </IonSelect>
+                    <IonLabel position="stacked">Courriel du représentant de l'entreprise: </IonLabel>
+                    <IonInput type="text" value={monitor.email} placeholder={monitor.email} {...register("monitorEmail", { required: true, pattern: RegexPattern.getPatternEmail() })} disabled={true} />
                     {errors.monitorEmail && <IonBadge color="danger">Email invalide</IonBadge>}
                 </IonItem>
                 <IonItem>
@@ -108,7 +97,10 @@ const AdminOffer = () => {
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Horaire de travail: </IonLabel>
-                    <IonInput type="text"  {...register("jobSchedules", { required: true, pattern: RegexPattern.getPatternGeneral() })} />
+                    <IonSelect {...register("jobSchedules", { required: true, pattern: RegexPattern.getPatternGeneral() })}>
+                        <IonSelectOption value="Temps plein">Temps plein</IonSelectOption>
+                        <IonSelectOption value="Temps partiel">Temps partiel</IonSelectOption>
+                    </IonSelect>
                     {errors.jobSchedules && <IonBadge color="danger">Hoaraire de travail invalide</IonBadge>}
                 </IonItem>
                 <IonItem>
@@ -179,4 +171,4 @@ const AdminOffer = () => {
     )
 }
 
-export default AdminOffer
+export default MonitorOffer

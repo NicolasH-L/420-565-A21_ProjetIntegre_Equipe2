@@ -13,7 +13,7 @@ const MonitorAuthLogin = () => {
 
     const onSubmit = (monitor: any) => {
         monitorLogin(monitor.email, monitor.password)
-        .then((data: any) => data.email != null ? history.push("/Monitor", {monitor: data}) : setShowToastAlert(true))
+        .then((data: any) => data.email != null ? history.push("/monitor", {monitor: data}) : setShowToastAlert(true))
     }
 
     const monitorLogin = async (email: any, password: any) => {

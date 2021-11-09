@@ -28,6 +28,7 @@ import Admin from './components/Admin/Admin';
 import AdminMenu from './components/Admin/AdminMenu';
 import AccountRoutes from './components/Routes/AccountRoutes';
 import AdminRoutes from './components/Routes/AdminRoutes';
+import MonitorRoutes from './components/Routes/MonitorRoutes';
 
 const App: React.FC = () => (
   
@@ -35,6 +36,7 @@ const App: React.FC = () => (
     <IonReactRouter>
       <AccountRoutes/>
       <AdminRoutes/>
+      <MonitorRoutes/>
     </IonReactRouter>
   </IonApp >
 );
