@@ -19,7 +19,8 @@ const StudentSearchingStatus = ({ onAddStudent }) => {
                 className="btn btn-primary mx-2"
                 data-toggle="modal"
                 data-target="#studentSearchStatus" 
-                disabled={student.currentStatus === "En recherche" ? true : false}>
+                disabled={student.currentStatus === "En recherche" ? true : false}
+                hidden={student.currentStatus === "Stage trouvé" ? true : false}>
                 <i className="fas fa-hourglass-start mr-2"></i> En recherche
             </button>
             <div className="modal fade" id="studentSearchStatus" tabIndex="-1" aria-labelledby="studentSearchStatusLabel" aria-hidden="true">

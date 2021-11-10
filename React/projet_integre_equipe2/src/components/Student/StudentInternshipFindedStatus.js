@@ -47,6 +47,7 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
             setIsInternshipFinded(true)
             student.currentStatus = "Stage trouvé"
             onAddStudent(student).then((data) => history.push(location.pathname, { student: data }))
+            return
         }
         alert("Veuillez sélectionner le stage trouvé")
     }

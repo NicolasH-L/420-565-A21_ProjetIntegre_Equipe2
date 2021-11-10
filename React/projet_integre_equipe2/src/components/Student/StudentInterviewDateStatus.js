@@ -21,9 +21,14 @@ const StudentInterviewDateStatus = () => {
 
     return (
         <div>
-            <a href="#" className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInterviewDateStatus">
+            <button
+                href="#"
+                className="btn btn-primary mx-2"
+                data-toggle="modal"
+                data-target="#studentInterviewDateStatus"
+                hidden={student.currentStatus === "Stage trouvé" ? true : false}>
                 <i className="fas fa-calendar-alt mr-2"></i> Date d'entrevue
-            </a>
+            </button>
             <div className="modal fade" id="studentInterviewDateStatus" tabIndex="-1" aria-labelledby="studentInterviewDateStatusLabel" aria-hidden="true">
                 <div className="modal-xl modal-dialog modal-dialog-centered">
                     <div className="modal-content">
