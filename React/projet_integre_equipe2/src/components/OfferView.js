@@ -32,6 +32,10 @@ const OfferView = () => {
                             <input type="text" className="form-control text-center" id="address" name="address" value={offer.address} readOnly />
                         </div>
                         <div className="form-group">
+                            <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro téléphone du représentant: </label>
+                            <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" value={offer.monitor.telephoneNumber} readOnly />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="jobSchedules" className="text-secondary"><i className="fas fa-calendar-alt"></i> Horaire de travail: </label>
                             <input type="text" className="form-control text-center" id="jobSchedules" name="jobSchedules" value={offer.jobSchedules} readOnly />
                         </div>
