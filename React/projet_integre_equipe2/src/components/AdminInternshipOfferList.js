@@ -94,7 +94,7 @@ const AdminInternshipOfferList = () => {
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>Consulter</button>
                                     <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Publier</button>
-                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Refuser</button>
+                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Retirer</button>
                                 </td>
                             </tr>
                         ))}
