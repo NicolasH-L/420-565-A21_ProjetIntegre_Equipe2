@@ -28,7 +28,7 @@ const StudentInterviewDateStatus = () => {
                 <div className="modal-xl modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="studentInterviewDateStatusLabel">Ajouter une date d'entrevue et mettre son statut "En attente"</h5>
+                            <h5 className="modal-title" id="studentInterviewDateStatusLabel">Ajouter une date d'entrevue et mettre mon statut "En attente"</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

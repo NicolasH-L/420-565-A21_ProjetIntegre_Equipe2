@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import StudentNavbar from '../StudentNavbar';
+import StudentInternshipFindedStatus from './StudentInternshipFindedStatus';
 import StudentInterviewDateStatus from './StudentInterviewDateStatus';
 import StudentSearchingStatus from './StudentSearchingStatus';
 
@@ -8,6 +9,18 @@ const StudentStatus = () => {
     const history = useHistory();
     const historyState = history.location.state
     const student = historyState.student
+
+    const addStudent = async (student) => {
+        const result = await fetch('http://localhost:8888/students/register',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        return await result.json()
+    }
 
     return (
         <div className="grad">
@@ -24,9 +37,7 @@ const StudentStatus = () => {
                         <div className="d-flex justify-content-center">
                             <StudentSearchingStatus />
                             <StudentInterviewDateStatus />
-                            <a href="#" className="btn btn-primary mx-2">
-                                <i className="fas fa-handshake mr-2"></i> Stage trouvé
-                            </a>
+                            <StudentInternshipFindedStatus onAddStudent={addStudent}/>
                         </div>
                     </div>
                 </div>
