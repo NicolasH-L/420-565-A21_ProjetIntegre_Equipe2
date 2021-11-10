@@ -22,16 +22,18 @@ const MonitorInternshipOffer = () => {
 
     let emailMonitor
     let company
+    let telephoneNumberMonitor
 
     if (historyState !== undefined) {
         emailMonitor = monitor.email
         company = monitor.companyName
+        telephoneNumberMonitor = monitor.telephoneNumber
     }
 
     const [offer, setOffer] = useState({
         companyName: company, address: "", salary: "",
         jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor,
+        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor, telephoneNumber: telephoneNumberMonitor,
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: "", session: ""
     })
 
@@ -172,6 +174,10 @@ const MonitorInternshipOffer = () => {
                         <div className="form-group">
                             <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Représentant de l'entreprise (email): </label>
                             <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="monitorTelephone" className="text-secondary"><i class="fas fa-phone"></i> Numéro de teléphone du représentant: </label>
+                            <input type="text" className="form-control text-center" id="monitorTelephone" name="monitorTelephone" value={telephoneNumberMonitor} disabled />
                         </div>
                         <div className="form-group">
                             <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
