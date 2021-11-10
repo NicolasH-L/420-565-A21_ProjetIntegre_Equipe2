@@ -35,7 +35,7 @@ const StudentStatus = () => {
                         <h5 className="card-title">Avez-vous une date d'entevue ou trouvé un stage?</h5>
                         <p className="card-text">Cliquez sur l'option qui vous correspond!</p>
                         <div className="d-flex justify-content-center">
-                            <StudentSearchingStatus />
+                            <StudentSearchingStatus onAddStudent={addStudent}/>
                             <StudentInterviewDateStatus />
                             <StudentInternshipFindedStatus onAddStudent={addStudent}/>
                         </div>
