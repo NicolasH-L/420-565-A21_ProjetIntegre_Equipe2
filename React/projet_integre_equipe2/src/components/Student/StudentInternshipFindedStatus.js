@@ -110,11 +110,16 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
                                 </select>
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={() => { setStudentInternship() }} hidden={isInternshipFinded}>
-                                Modifier le statut
-                            </button>
+                        <div className="modal-footer justify-content-between">
+                            <span className="text-danger">
+                            <i className="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
+                            </span>
+                            <div>
+                                <button type="button" className="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary mr-2" onClick={() => { setStudentInternship() }} hidden={isInternshipFinded}>
+                                    Modifier le statut
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
