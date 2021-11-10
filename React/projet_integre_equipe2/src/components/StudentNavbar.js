@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
+import SessionsButton from "./SessionsButton"
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -68,6 +69,7 @@ const StudentNavbar = ({ useStudent }) => {
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Signer mon contrat</button>
                         </li>
                     </ul>
+                    <SessionsButton />
                 </div>
             </nav>
         </div>

@@ -11,6 +11,7 @@ const SessionsButton = () => {
 
     useEffect(() => {
         setUser(historyState.monitor != undefined ? historyState.monitor
+            : historyState.student != undefined ? historyState.student
             : historyState.supervisor != undefined ? historyState.supervisor
                 : historyState.admin != undefined ? historyState.admin : "")
         getSessions()
@@ -18,7 +19,9 @@ const SessionsButton = () => {
 
     const changeSession = (selectedSession) => {
         user.actualSession = selectedSession
-        if (historyState.monitor != undefined) {
+        if (historyState.student != undefined){
+            historyState.student = user
+        } else if (historyState.monitor != undefined) {
             historyState.monitor = user
         } else if (historyState.supervisor != undefined) {
             historyState.supervisor = user
