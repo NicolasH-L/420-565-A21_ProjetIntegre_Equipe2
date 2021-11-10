@@ -76,6 +76,10 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
         }
     }
 
+    const filterStudentOffers = (studentOffer) => {
+        return studentOffer.session === student.actualSession
+    }
+
     return (
         <div>
             <a href="#" className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInternshipFindedStatus">
@@ -102,7 +106,9 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
                                     name="studentOffers"
                                     required>
                                     <option value="default" className="font-weight-bold">Veuillez sélectionner le Stage trouvé</option>
-                                    {studentOffers.map((studentOffer) => (
+                                    {studentOffers
+                                    .filter(filterStudentOffers)
+                                    .map((studentOffer) => (
                                         <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer} className="font-weight-bold">
                                             {studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}
                                         </option>
