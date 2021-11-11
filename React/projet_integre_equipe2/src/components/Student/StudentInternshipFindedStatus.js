@@ -25,6 +25,7 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
             setStudentOffers(studentOffersFromServer)
         }
         getStudentOffers()
+        student.currentStatus === "Stage trouvé" ? setIsInternshipFinded(true) : setIsInternshipFinded(false)
     }, [])
 
     const fetchStudentOffers = async () => {
