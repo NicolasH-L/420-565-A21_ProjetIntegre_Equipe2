@@ -176,10 +176,6 @@ const MonitorInternshipOffer = () => {
                             <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="monitorTelephone" className="text-secondary"><i class="fas fa-phone"></i> Numéro de teléphone du représentant: </label>
-                            <input type="text" className="form-control text-center" id="monitorTelephone" name="monitorTelephone" value={telephoneNumberMonitor} disabled />
-                        </div>
-                        <div className="form-group">
                             <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
                             {error.workingHours !== undefined ? error.workingHours : undefined}
                             <input type="text" className="form-control text-center" id="workingHours" name="workingHours" placeholder="Entrez le nombre d'heures de travail" onChange={validateInput} required />

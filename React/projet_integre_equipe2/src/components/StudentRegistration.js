@@ -91,9 +91,9 @@ const StudentRegistration = ({onAdd}) => {
                     <input type="text" className="form-control text-center" id="matriculeStudent" name="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de teléphone: </label>
+                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone: </label>
                     {error.telephoneNumber !== "" ? error.telephoneNumber : ""}
-                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de teléphone" onChange={validateInput} required />
+                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de téléphone (ex: 123-456-7890)" onChange={validateInput} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="passwordStudent" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>

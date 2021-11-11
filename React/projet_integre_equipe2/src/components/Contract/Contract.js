@@ -138,7 +138,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                                 value={internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="monitorTelephoneNumber" className="text-secondary"> Numéro téléphone de l'employeur : </label>
+                            <label htmlFor="monitorTelephoneNumber" className="text-secondary"> Numéro de téléphone de l'employeur : </label>
                             <input type="text" className="form-control text-center" id="monitorTelephoneNumber" name="monitorTelephoneNumber"
                                 value={internship.offer.monitor.telephoneNumber} readOnly />
                         </div>
@@ -148,9 +148,9 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                                 value={internship.student.firstName + " " + internship.student.lastName} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="studentTelephoneNumber" className="text-secondary"> Numéro téléphone de l'étudiant : </label>
+                            <label htmlFor="studentTelephoneNumber" className="text-secondary"> Numéro de téléphone de l'étudiant : </label>
                             <input type="text" className="form-control text-center" id="studentTelephoneNumber" name="studentTelephoneNumber"
-                                value={internship.offer.student.telephoneNumber} readOnly />
+                                value={internship.student.telephoneNumber} readOnly />
                         </div>
                         <h2 className="text-center mt-5">Conditions de stage suivants :</h2>
                         <div className="form-group">

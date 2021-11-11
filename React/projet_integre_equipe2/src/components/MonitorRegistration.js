@@ -102,9 +102,9 @@ const MonitorRegistration = ({ onAdd }) => {
                     <input type="text" className="form-control text-center" id="companyName" name="companyName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de teléphone: </label>
+                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone: </label>
                     {error.telephoneNumber !== "" ? error.telephoneNumber : ""}
-                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de teléphone" onChange={validateInput} required />
+                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de téléphone (ex: 123-456-7890)" onChange={validateInput} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="emailMonitor" className="text-secondary"><i className="fas fa-at"></i> Courriel: </label>

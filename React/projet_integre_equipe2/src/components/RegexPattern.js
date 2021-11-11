@@ -40,4 +40,4 @@ export class RegexPattern{
  const patternMatricule = /^[0-9]{7}$/
  const patternGeneral = /^[^ ]+([ ]{0,1}[^ ]+)+$/
  const patternNumber = /^([0-9]+\.?[0-9]*|\.[0-9]+)$/
- const patternTelephone = /^[(]?[0-9]{3}[)]?[ ,-]?[0-9]{3}[ ,-]?[0-9]{4}$/
+ const patternTelephone = /^[0-9]{3}[-][0-9]{3}[-][0-9]{4}$/
