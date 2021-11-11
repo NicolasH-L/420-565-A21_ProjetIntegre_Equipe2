@@ -26,7 +26,6 @@ import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSuperv
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import MonitorContracts from './components/Monitor/MonitorContracts'
 import AdminContracts from './components/Admin/AdminContracts'
-import StudentStatus from './components/Student/StudentStatus'
 
 function App() {
   return (
@@ -46,8 +45,7 @@ function App() {
         <Route path="/MonitorOffer" component={MonitorInternshipOffer} />
         <Route path="/MonitorOfferList" component={MonitorOfferList} />
         <Route path="/MonitorStudentList" component={MonitorStudentList} />
-        {/*<Route path="/Student" component={Student} />*/}
-        <Route path="/Student" component={StudentStatus} />
+        <Route path="/Student" component={Student} />
         <Route path="/StudentUploadCV" component={StudentUploadCV} />
         <Route path="/StudentDocuments" component={StudentDocuments} />
         <Route path="/OfferView" component={OfferView} />

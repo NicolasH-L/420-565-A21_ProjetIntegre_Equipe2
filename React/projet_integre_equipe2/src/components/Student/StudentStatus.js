@@ -10,6 +10,7 @@ const StudentStatus = () => {
     const historyState = history.location.state
     const student = historyState.student
     const badgeColor = student.currentStatus === "Stage trouvé" ? 'badge-success' : 'badge-primary'
+    const interviewStatus = student.currentStatus === "En attente" ? " d'une entrevue" : ""
 
     const addStudent = async (student) => {
         const result = await fetch('http://localhost:8888/students/register',
@@ -24,14 +25,13 @@ const StudentStatus = () => {
     }
 
     return (
-        <div className="grad">
-            <StudentNavbar useStudent={student} />
+        <div>
             <h2 className="text-center">Bienvenue {student.firstName + " " + student.lastName}</h2>
             <div className="d-flex justify-content-center">
                 <div className="card text-center shadow w-50 my-5">
                     <div className="card-header font-weight-bold">
                         <h5>
-                            Votre statut actuel: <span className={`badge ${badgeColor}`} >{student.currentStatus}</span>
+                            Votre statut actuel: <span className={`badge ${badgeColor}`} >{student.currentStatus + interviewStatus}</span>
                         </h5>
                     </div>
                     <div className="card-body">
