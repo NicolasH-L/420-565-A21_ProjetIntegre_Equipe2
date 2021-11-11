@@ -9,6 +9,7 @@ const StudentStatus = () => {
     const history = useHistory();
     const historyState = history.location.state
     const student = historyState.student
+    const badgeColor = student.currentStatus === "Stage trouvé" ? 'badge-success' : 'badge-primary'
 
     const addStudent = async (student) => {
         const result = await fetch('http://localhost:8888/students/register',
@@ -30,7 +31,7 @@ const StudentStatus = () => {
                 <div className="card text-center shadow w-50 my-5">
                     <div className="card-header font-weight-bold">
                         <h5>
-                            Votre statut actuel: <span className="badge badge-success">{student.currentStatus}</span>
+                            Votre statut actuel: <span className={`badge ${badgeColor}`} >{student.currentStatus}</span>
                         </h5>
                     </div>
                     <div className="card-body">
