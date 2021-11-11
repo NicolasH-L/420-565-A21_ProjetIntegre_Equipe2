@@ -1,6 +1,5 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import StudentNavbar from '../StudentNavbar';
 import StudentInternshipFindedStatus from './StudentInternshipFindedStatus';
 import StudentInterviewDateStatus from './StudentInterviewDateStatus';
 import StudentSearchingStatus from './StudentSearchingStatus';

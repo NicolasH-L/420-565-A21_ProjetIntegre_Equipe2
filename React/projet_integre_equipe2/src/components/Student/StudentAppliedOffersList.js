@@ -67,9 +67,6 @@ const StudentAppliedOffersList = ({onSetDate}) => {
         let interviewDate = tmpStudentOffers[index].interviewDate
         if (interviewDate === null)
             return alert("Erreur! veuillez choisir une date.")
-        /*else if (newStudent.student.currentStatus !== "En attente") {
-            return alert("Veuillez mettre à jours votre statut")
-        }*/
         updateStudentOfferDate(tmpStudentOffers[index])
     }
 
@@ -94,6 +91,10 @@ const StudentAppliedOffersList = ({onSetDate}) => {
         onSetDate(student).then((data) => history.push(location.pathname, {student: data}))
     }
 
+    const filterStudentOffers = (studentOffer) => {
+        return studentOffer.session === student.actualSession
+    }
+
     return (
         <div className="">
             <h2 className="text-center">Mes offres de stages</h2>
@@ -110,7 +111,9 @@ const StudentAppliedOffersList = ({onSetDate}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {studentOffers.map((studentOffer) => (
+                        {studentOffers
+                        .filter(filterStudentOffers)
+                        .map((studentOffer) => (
                             <tr key={studentOffer.idStudentOffer}>
                                 <th className="text-center">{studentOffer.offer.companyName}</th>
                                 <td className="text-center">{studentOffer.offer.jobTitle}</td>
