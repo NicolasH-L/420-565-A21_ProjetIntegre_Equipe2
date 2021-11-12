@@ -24,7 +24,7 @@ const OfferView = () => {
                             <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" value={offer.jobTitle} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Répresentant de l'entreprise (email): </label>
+                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Représentant de l'entreprise (email): </label>
                             <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={offer.monitorEmail} readOnly />
                         </div>
                         <div className="form-group">
@@ -32,7 +32,7 @@ const OfferView = () => {
                             <input type="text" className="form-control text-center" id="address" name="address" value={offer.address} readOnly />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro téléphone du représentant: </label>
+                            <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone de l'employeur: </label>
                             <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" value={offer.monitor.telephoneNumber} readOnly />
                         </div>
                         <div className="form-group">
