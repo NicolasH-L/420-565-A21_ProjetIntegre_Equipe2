@@ -143,10 +143,6 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
                                     <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={offer.monitorEmail} readOnly />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone de l'employeur: </label>
-                                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" value={offer.monitor.telephoneNumber} readOnly />
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
                                     <input type="text" className="form-control text-center" id="address" name="address" value={offer.address} readOnly />
                                 </div>
