@@ -54,7 +54,6 @@ const StudentNavbar = ({ useStudent }) => {
                 </button>
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                        <StudentNotification />
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profil</button>
                         </li>
@@ -73,6 +72,7 @@ const StudentNavbar = ({ useStudent }) => {
                     </ul>
                     <SessionsButton />
                 </div>
+                <StudentNotification />
             </nav>
         </div>
     )
