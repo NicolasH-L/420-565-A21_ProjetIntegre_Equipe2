@@ -44,4 +44,11 @@ public class ContractController {
                 .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-all-by-monitor/{id}/status/{status}")
+    public ResponseEntity<List<Contract>> getAllContractsByMonitorIdAndStatus(@PathVariable Integer id, @PathVariable String status){
+        return contractService.getAllContractsByMonitorIdAndStatus(id, status)
+                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }
