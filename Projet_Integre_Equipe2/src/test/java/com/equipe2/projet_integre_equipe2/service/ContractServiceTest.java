@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +31,12 @@ public class ContractServiceTest {
     private Monitor monitor;
     private Student student;
     private List<Contract> contractListByMonitorId = new ArrayList<>();
+    private String status;
 
     @BeforeEach
     void setup() {
+        status = "Completed";
+
         monitor = Monitor.monitorBuilder()
                 .id(1)
                 .password("toto")
@@ -153,6 +155,23 @@ public class ContractServiceTest {
         assertThat(allContracts).isEqualTo(Optional.empty());
     }
 
+    @Test
+    public void testGetAllContractsByMonitorIdAndStatus(){
+        when(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(monitor.getId(), status))
+                .thenReturn(getListOfCompletedContractByMonitor());
+        final Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(monitor.getId(), status);
+        assertThat(allContracts.get().size()).isEqualTo(getListOfCompletedContractByMonitor().size());
+        assertThat(allContracts.get()).isEqualTo(getListOfCompletedContractByMonitor());
+    }
+
+    @Test
+    public void testGetAllContractsByMonitorIdAndStatusFails(){
+        when(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(null, null))
+                .thenReturn(null);
+        final Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(null, null);
+        assertThat(allContracts).isEmpty();
+    }
+
     private List<Contract> getListOfContracts(){
         List<Contract> contractList = new ArrayList<>();
         contractList.add(Contract.builder()
@@ -195,5 +214,30 @@ public class ContractServiceTest {
                 .signatureDateAdmin("2021-10-25")
                 .build());
         return contractList;
+    }
+
+    private List<Contract> getListOfCompletedContractByMonitor(){
+        Internship internship = Internship.builder()
+                .offer(offer)
+                .status(status)
+                .build();
+
+        Contract contract = Contract.builder()
+                .idContract(1)
+                .internship(internship)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build();
+
+        List<Contract> listContracts = new ArrayList<>();
+        listContracts.add(contract);
+        return listContracts;
     }
 }
