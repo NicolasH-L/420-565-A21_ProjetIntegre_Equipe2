@@ -45,4 +45,13 @@ public class ContractService {
             return Optional.empty();
         }
     }
+
+    public Optional<List<Contract>> getAllContractsByMonitorIdAndStatus(Integer id, String status) {
+        try{
+            return Optional.of(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(id, status));
+        }catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
 }
