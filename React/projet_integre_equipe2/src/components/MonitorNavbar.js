@@ -22,6 +22,9 @@ const MonitorNavbar = () => {
         history.push("/MonitorContracts", historyState)
     }
 
+    const goToEvaluateStudent = () =>{
+        history.push("/MonitorEvaluateStudent", historyState)
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -42,6 +45,9 @@ const MonitorNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorContracts}>Mes contrats</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToEvaluateStudent}>Évaluation de stagiaire</button>
                         </li>
                     </ul>
                     <SessionsButton />
