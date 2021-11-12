@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
+import SessionsButton from "./SessionsButton"
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -50,7 +51,7 @@ const StudentNavbar = ({ useStudent }) => {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                     <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profil</button>
@@ -68,6 +69,7 @@ const StudentNavbar = ({ useStudent }) => {
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Signer mon contrat</button>
                         </li>
                     </ul>
+                    <SessionsButton />
                 </div>
             </nav>
         </div>

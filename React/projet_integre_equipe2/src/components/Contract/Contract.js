@@ -138,9 +138,19 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                                 value={internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName} readOnly />
                         </div>
                         <div className="form-group">
+                            <label htmlFor="monitorTelephoneNumber" className="text-secondary"> Numéro de téléphone de l'employeur : </label>
+                            <input type="text" className="form-control text-center" id="monitorTelephoneNumber" name="monitorTelephoneNumber"
+                                value={internship.offer.monitor.telephoneNumber} readOnly />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="studentName" className="text-secondary"> L'étudiant : </label>
                             <input type="text" className="form-control text-center" id="studentName" name="studentName"
                                 value={internship.student.firstName + " " + internship.student.lastName} readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="studentTelephoneNumber" className="text-secondary"> Numéro de téléphone de l'étudiant : </label>
+                            <input type="text" className="form-control text-center" id="studentTelephoneNumber" name="studentTelephoneNumber"
+                                value={internship.student.telephoneNumber} readOnly />
                         </div>
                         <h2 className="text-center mt-5">Conditions de stage suivants :</h2>
                         <div className="form-group">
@@ -226,7 +236,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                         {internship.status !== undefined && internship.status === currentStatus
                             ?
                             <div className="form-group">
-                                <label htmlFor="password" className="text-secondary">Entrez votre mot de passe : </label>
+                                <label htmlFor="password" className="text-secondary">Entrez votre mot de passe pour signer : </label>
                                 <input type="password" className="form-control text-center" id="password" name="password" disabled={contractState.isDisabled} onChange={setContractStatePassword} />
                             </div>
                             : ""}
