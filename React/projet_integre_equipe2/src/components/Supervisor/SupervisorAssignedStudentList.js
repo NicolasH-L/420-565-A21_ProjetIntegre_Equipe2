@@ -44,6 +44,7 @@ const SupervisorAssignedStudentList = () => {
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Entreprise</th>
                                 <th scope="col">Nom du poste</th>
+                                <th scope="col">Numéro de teléphone de l'étudiant</th>
                                 <th scope="col">Offre</th>
                             </tr>
                         </thead>
@@ -56,6 +57,7 @@ const SupervisorAssignedStudentList = () => {
                                     <th>{internship.student.firstName}</th>
                                     <th>{internship.offer.companyName}</th>
                                     <th>{internship.offer.jobTitle}</th>
+                                    <th>{internship.student.telephoneNumber}</th>
                                     <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
                                     </td>

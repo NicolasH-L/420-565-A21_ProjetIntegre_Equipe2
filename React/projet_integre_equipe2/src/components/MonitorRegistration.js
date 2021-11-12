@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom'
 import { RegexPattern } from './RegexPattern'
 
 const MonitorRegistration = ({ onAdd }) => {
-    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "", actualSession: "" })
-    const [error, setError] = useState({ lastName: "", firstName: "", password: "", companyName: "", email: "" })
+    const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", telephoneNumber: "", email: "", actualSession: "" })
+    const [error, setError] = useState({ lastName: "", firstName: "", password: "", companyName: "", telephoneNumber: "", email: "" })
     const history = useHistory()
 
     const sessionPrefix = ["winter", "summer"]
@@ -18,8 +18,10 @@ const MonitorRegistration = ({ onAdd }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.companyName) || !_.isEmpty(error.email) ||
-            _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || _.isEmpty(monitor.companyName) || _.isEmpty(monitor.email)) {
+        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || 
+            !_.isEmpty(error.companyName) || !_.isEmpty(error.telephoneNumber) || !_.isEmpty(error.email) ||
+            _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || 
+            _.isEmpty(monitor.companyName) || _.isEmpty(monitor.telephoneNumber) || _.isEmpty(monitor.email)) {
             alert("Veuillez remplir tous les champs correctement!")
             return
         } else {
@@ -46,6 +48,7 @@ const MonitorRegistration = ({ onAdd }) => {
         let patternEmail = RegexPattern.getPatternEmail()
         let patternName = RegexPattern.getPatternName()
         let patternCompany = RegexPattern.getPatternCompany()
+        let patternTelephone = RegexPattern.getPatternTelephone()
         let patternPassword = RegexPattern.getPatternPassword()
 
         if (e.target.name === "email")
@@ -54,6 +57,8 @@ const MonitorRegistration = ({ onAdd }) => {
             pattern = new RegExp(patternName)
         else if (e.target.name === "companyName")
             pattern = new RegExp(patternCompany)
+        else if (e.target.name === "telephoneNumber")
+            pattern = new RegExp(patternTelephone)
         else if (e.target.name === "password")
             pattern = new RegExp(patternPassword)
 
@@ -95,6 +100,11 @@ const MonitorRegistration = ({ onAdd }) => {
                     <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
                     {error.companyName !== "" ? error.companyName : ""}
                     <input type="text" className="form-control text-center" id="companyName" name="companyName" placeholder="Entrez le nom de l'entreprise" onChange={validateInput} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone: </label>
+                    {error.telephoneNumber !== "" ? error.telephoneNumber : ""}
+                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de téléphone (ex: 123-456-7890)" onChange={validateInput} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="emailMonitor" className="text-secondary"><i className="fas fa-at"></i> Courriel: </label>

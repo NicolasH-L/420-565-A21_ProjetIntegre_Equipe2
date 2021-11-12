@@ -10,7 +10,7 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
     const [studentOfferApplication, setStudentOfferApplication] = useState({
-        offer: "", document: "", student: ""
+        offer: "", document: "", student: "", session: ""
     })
     const [documents, setDocuments] = useState([])
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
@@ -19,6 +19,14 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
     const baseUrl = "http://localhost:8888/offers-list"
     const appliedMessage = <strong className="text-success ml-5">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
     const student = historyState.student
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
+
     let offerId
 
     useEffect(() => {
@@ -52,6 +60,7 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
     }
 
     const addStudentOffer = async () => {
+        setStudentOfferSession()
         const result = await fetch(baseUrl + '/save-student-offer',
             {
                 method: 'POST',
@@ -61,6 +70,15 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
                 body: JSON.stringify(studentOfferApplication)
             })
         return await result.json()
+
+        function setStudentOfferSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            studentOfferApplication.session = session
+        }
     }
 
     const applyToOffer = () => {
