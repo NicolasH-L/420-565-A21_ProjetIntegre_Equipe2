@@ -38,6 +38,16 @@ public class ContractService {
         }
     }
 
+    public Optional<Contract> getContractByIdContract(Integer id){
+        try{
+            return Optional.of(contractRepository.findContractByIdContract(id));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
+    
+
+
     public Optional<List<Contract>> getAllContracts(){
         try {
             return Optional.of(contractRepository.findAll());
