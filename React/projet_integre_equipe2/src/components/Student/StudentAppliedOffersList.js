@@ -96,7 +96,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
     }
 
     return (
-        <div className="">
+        <div>
             <h2 className="text-center">Mes offres de stages</h2>
             <div className="p-5 table-responsive">
                 <table className="table table-hover bg-light shadow">

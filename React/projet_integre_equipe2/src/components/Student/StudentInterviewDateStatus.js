@@ -1,23 +1,11 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import StudentAppliedOffersList from '../Student/StudentAppliedOffersList'
 
-const StudentInterviewDateStatus = () => {
+const StudentInterviewDateStatus = ({onAddStudent}) => {
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
-
-    const addStudent = async (student) => {
-        const result = await fetch('http://localhost:8888/students/register',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(student)
-            })
-        return await result.json()
-    }
 
     return (
         <div>
@@ -33,16 +21,16 @@ const StudentInterviewDateStatus = () => {
                 <div className="modal-xl modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="studentInterviewDateStatusLabel">Ajouter une date d'entrevue et mettre mon statut "En attente"</h5>
+                            <h5 className="modal-title" id="studentInterviewDateStatusLabel">Ajouter une date d'entrevue et mettre mon statut à "En attente"</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <StudentAppliedOffersList onSetDate={addStudent} />
+                            <StudentAppliedOffersList onSetDate={onAddStudent} />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         </div>
                     </div>
                 </div>

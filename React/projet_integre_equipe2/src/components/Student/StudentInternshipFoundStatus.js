@@ -2,22 +2,15 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-const StudentInternshipFindedStatus = ({ onAddStudent }) => {
+const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     const [studentOffers, setStudentOffers] = useState([])
     const [studentOffer, setStudentOffer] = useState(undefined)
-    const [isInternshipFinded, setIsInternshipFinded] = useState(false)
+    const [isInternshipFound, setIsInternshipFound] = useState(false)
 
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
     const location = useLocation()
-
-    const sessionPrefix = ["winter", "summer"]
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
 
     useEffect(() => {
         const getStudentOffers = async () => {
@@ -25,7 +18,7 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
             setStudentOffers(studentOffersFromServer)
         }
         getStudentOffers()
-        student.currentStatus === "Stage trouvé" ? setIsInternshipFinded(true) : setIsInternshipFinded(false)
+        student.currentStatus === "Stage trouvé" ? setIsInternshipFound(true) : setIsInternshipFound(false)
     }, [])
 
     const fetchStudentOffers = async () => {
@@ -43,9 +36,9 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
     }
 
     const setStudentInternship = () => {
-        if (studentOffer != undefined && !isInternshipFinded) {
+        if (studentOffer != undefined && !isInternshipFound) {
             updateStudentOffer(studentOffer)
-            setIsInternshipFinded(true)
+            setIsInternshipFound(true)
             student.currentStatus = "Stage trouvé"
             onAddStudent(student).then((data) => history.push(location.pathname, { student: data }))
             return
@@ -55,7 +48,6 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
 
     const updateStudentOffer = async (studentOffer) => {
         studentOffer.isAccepted = true;
-        studentOffer.session = setOfferSession()
         const res = await fetch(`http://localhost:8888/offers-list/save-student-offer`,
             {
                 method: 'POST',
@@ -65,16 +57,7 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
                 body: JSON.stringify(studentOffer)
             })
         const data = await res.json()
-        alert("Acceptation de l'offre de stage réussi")
-
-        function setOfferSession() {
-            let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
-                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
-            return session
-        }
+        alert("Offre de stage acceptée avec succès")
     }
 
     const filterStudentOffers = (studentOffer) => {
@@ -83,10 +66,10 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
 
     return (
         <div>
-            <a href="#" className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInternshipFindedStatus">
+            <a href="#" className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInternshipFoundStatus">
                 <i className="fas fa-handshake mr-2"></i> Stage trouvé
             </a>
-            <div className="modal fade" id="studentInternshipFindedStatus" tabIndex="-1" aria-labelledby="studentInternshipFindedStatusLabel" aria-hidden="true">
+            <div className="modal fade" id="studentInternshipFoundStatus" tabIndex="-1" aria-labelledby="studentInternshipFindedStatusLabel" aria-hidden="true">
                 <div className="modal-lg modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -99,14 +82,14 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
                             <div className="form-group">
                                 <label htmlFor="studentOffers" className="text-secondary"> </label>
                                 <select
-                                    disabled={isInternshipFinded}
+                                    disabled={isInternshipFound}
                                     defaultValue="default"
                                     onChange={selectStudentOfferValue}
                                     className="form-control text-center shadow font-weight-bold"
                                     id="studentOffers"
                                     name="studentOffers"
                                     required>
-                                    <option value="default" className="font-weight-bold">Veuillez sélectionner le Stage trouvé</option>
+                                    <option value="default" className="font-weight-bold">Veuillez sélectionner le stage trouvé</option>
                                     {studentOffers
                                     .filter(filterStudentOffers)
                                     .map((studentOffer) => (
@@ -123,7 +106,7 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
                             </span>
                             <div>
                                 <button type="button" className="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary mr-2" onClick={() => { setStudentInternship() }} hidden={isInternshipFinded}>
+                                <button type="button" className="btn btn-primary mr-2" onClick={() => { setStudentInternship() }} hidden={isInternshipFound}>
                                     Modifier le statut
                                 </button>
                             </div>
@@ -135,4 +118,4 @@ const StudentInternshipFindedStatus = ({ onAddStudent }) => {
     )
 }
 
-export default StudentInternshipFindedStatus
+export default StudentInternshipFoundStatus

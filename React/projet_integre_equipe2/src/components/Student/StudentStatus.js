@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import StudentInternshipFindedStatus from './StudentInternshipFindedStatus';
+import StudentInternshipFoundStatus from './StudentInternshipFoundStatus';
 import StudentInterviewDateStatus from './StudentInterviewDateStatus';
 import StudentSearchingStatus from './StudentSearchingStatus';
 
@@ -34,12 +34,12 @@ const StudentStatus = () => {
                         </h5>
                     </div>
                     <div className="card-body">
-                        <h5 className="card-title">Avez-vous une date d'entevue ou trouvé un stage?</h5>
+                        <h5 className="card-title">Avez-vous une date d'entrevue ou trouvé un stage?</h5>
                         <p className="card-text">Cliquez sur l'option qui vous correspond!</p>
                         <div className="d-flex justify-content-center">
                             <StudentSearchingStatus onAddStudent={addStudent} />
-                            <StudentInterviewDateStatus />
-                            <StudentInternshipFindedStatus onAddStudent={addStudent} />
+                            <StudentInterviewDateStatus onAddStudent={addStudent}/>
+                            <StudentInternshipFoundStatus onAddStudent={addStudent} />
                         </div>
                     </div>
                 </div>
