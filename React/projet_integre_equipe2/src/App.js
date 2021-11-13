@@ -31,9 +31,8 @@ import MonitorContracts from './components/Monitor/MonitorContracts'
 import AdminContracts from './components/Admin/AdminContracts'
 
 window.onload = function () {
-  if (window.history.state === null && sessionStorage.getItem("userType") === "admin") {
+  if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
       sessionStorage.setItem("userType", "")
-      console.log("vide")
       window.location.pathname = "/"
   }
 }
@@ -59,11 +58,6 @@ function App() {
       sessionStorage.setItem("userType", "admin")
       setIsAdminAuthenticated(true)
     }
-  }
-
-  function logout(){
-    setisAutheticated(false);
-    console.log("loggedInUser:" + isAutheticated)
   }
 
   return (
