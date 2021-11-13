@@ -32,4 +32,7 @@ public class Contract implements Serializable {
 
     @OneToOne
     private Internship internship;
+
+    @OneToOne
+    private Document document;
 }

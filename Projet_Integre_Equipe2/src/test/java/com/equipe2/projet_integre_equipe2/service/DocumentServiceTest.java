@@ -9,8 +9,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.aspectj.lang.annotation.After;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,8 +48,6 @@ public class DocumentServiceTest {
     private Contract contract;
 
     private Internship internship;
-
-    private Monitor monitor;
 
     private Offer offer;
 

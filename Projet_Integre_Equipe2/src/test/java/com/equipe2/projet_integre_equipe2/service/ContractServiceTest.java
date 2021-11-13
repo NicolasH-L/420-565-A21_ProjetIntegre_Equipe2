@@ -31,6 +31,7 @@ public class ContractServiceTest {
     private Internship internship;
     private Monitor monitor;
     private Student student;
+    private Document document;
     private List<Contract> contractListByMonitorId = new ArrayList<>();
 
     @BeforeEach
@@ -78,6 +79,11 @@ public class ContractServiceTest {
                 .student(student)
                 .build();
 
+        document = Document.builder()
+                .idDocument(1)
+                .documentName("DocumentTest")
+                .build();
+
         contract = Contract.builder()
                 .idContract(1)
                 .internship(internship)
@@ -90,6 +96,7 @@ public class ContractServiceTest {
                 .signatureDateStudent("2021-10-25")
                 .signatureDateMonitor("2021-10-25")
                 .signatureDateAdmin("2021-10-25")
+                .document(document)
                 .build();
 
         contractListByMonitorId.add(contract);
@@ -124,16 +131,16 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testGetContractByIdContract() {
+    public void testGetContractDocumentByIdContract() {
         when(contractRepository.findContractByIdContract(contract.getIdContract())).thenReturn(contract);
-        Optional<Contract> expectedContract = contractService.getContractByIdContract(contract.getIdContract());
-        assertThat(expectedContract.get()).isEqualTo(contract);
+        Optional<Document> expectedContract = contractService.getContractDocumentByIdContract(contract.getIdContract());
+        assertThat(expectedContract.get().getDocumentName()).isEqualTo(document.getDocumentName());
     }
 
     @Test
     public void testGetContractByIdContractFails() {
         when(contractRepository.findContractByIdContract(contract.getIdContract())).thenReturn(null);
-        Optional<Contract> expectedContract = contractService.getContractByIdContract(contract.getIdContract());
+        Optional<Document> expectedContract = contractService.getContractDocumentByIdContract(contract.getIdContract());
         assertThat(expectedContract).isEqualTo(Optional.empty());
     }
 

@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Contract;
+import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.repository.ContractRepository;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +50,9 @@ public class ContractService {
         }
     }
 
-    public Optional<Contract> getContractByIdContract(Integer id){
+    public Optional<Document> getContractDocumentByIdContract(Integer id){
         try{
-            return Optional.of(contractRepository.findContractByIdContract(id));
+            return Optional.of(contractRepository.findContractByIdContract(id).getDocument());
         } catch (Exception e){
             return Optional.empty();
         }
