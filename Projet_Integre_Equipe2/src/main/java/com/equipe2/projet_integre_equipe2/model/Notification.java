@@ -1,13 +1,18 @@
 package com.equipe2.projet_integre_equipe2.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Notification implements Serializable {
 
@@ -18,13 +23,16 @@ public class Notification implements Serializable {
     private String typeNotification;
     private String message;
 
-    @OneToOne
-    private Student student;
+    @ManyToMany
+    private List<Student> student;
 
     @OneToOne
     private Monitor monitor;
 
     @OneToOne
     private Supervisor supervisor;
+
+    @OneToOne
+    private Admin admin;
 
 }
