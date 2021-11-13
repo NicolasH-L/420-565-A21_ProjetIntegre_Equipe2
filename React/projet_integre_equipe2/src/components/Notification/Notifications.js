@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
-export const Notifications = ({notificationList}) => {
+
+export const Notifications = ({ notificationList }) => {
 
     const [list, setList] = useState()
 
@@ -29,29 +28,29 @@ export const Notifications = ({notificationList}) => {
 
     return (
         <div className="btn-group mr-5">
-            <button type="button" className="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter" >
+            <button type="button" className="btn btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
                 {list !== undefined ?
                     <i className="fas fa-bell" aria-hidden="true"> {list.length} </i>
-                : ""}
+                    : ""}
             </button>
-            <div className="modal fade" id="exampleModalCenter"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog" style={{position: "absolute", top: "10px", right: "20px"}} role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Notifications</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="notificationsModal" tabIndex="-1" role="dialog" aria-labelledby="notificationModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog" style={{ position: "absolute", top: "10px", right: "20px" }} role="document">
+                    <div className="modal-content" style={{ backgroundColor: "#f2f2f2" }}>
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="notificationModalLongTitle">Notifications <i className="far fa-bell"></i></h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body list-group">
-                        {list !== undefined ? list.map((elementList) => (
-                            <li className="list-group-item list-group-item-action" key={elementList.idNotification}>
-                                {elementList.message}
-                            </li>
-                        )): ""}
+                        <div className="modal-body list-group">
+                            {list !== undefined ? list.map((notification) => (
+                                <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.idNotification}>
+                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }}><i className="fas fa-trash-alt fa-lg"></i></button>
+                                </li>
+                            )) : ""}
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         </div>
                     </div>
                 </div>
