@@ -6,6 +6,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
+
 
 @Service
 public class ContractService {
@@ -45,8 +56,6 @@ public class ContractService {
             return Optional.empty();
         }
     }
-
-
 
     public Optional<List<Contract>> getAllContracts(){
         try {
