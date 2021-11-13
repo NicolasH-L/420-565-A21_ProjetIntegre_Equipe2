@@ -22,6 +22,7 @@ public class Notification implements Serializable {
 
     private String typeNotification;
     private String message;
+    private String session;
 
     @ManyToMany
     private List<Student> student;
