@@ -32,15 +32,15 @@ import AdminContracts from './components/Admin/AdminContracts'
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
-      sessionStorage.setItem("userType", "")
-      window.location.pathname = "/"
+    sessionStorage.setItem("userType", "")
+    window.location.pathname = "/"
   }
 }
 
 function App() {
-  const[isAutheticated, setisAutheticated] = useState(false);
+  const [isAutheticated, setisAutheticated] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(sessionStorage.getItem("userType") === "admin")
-  const [isStudentAuthenticated, setIsStudentAuthenticated] = useState(false)
+  const [isStudentAuthenticated, setIsStudentAuthenticated] = useState(sessionStorage.getItem("userType") === "student")
   const [isMonitorAuthenticated, setIsMonitorAuthenticated] = useState(false)
   const [isSupervisorAuthenticated, setIsSupervisorAuthenticated] = useState(false)
 
@@ -53,10 +53,12 @@ function App() {
     }
   }, [])
 
-  function login(user){
-    if (user === "admin"){
-      sessionStorage.setItem("userType", "admin")
+  function login(user) {
+    sessionStorage.setItem("userType", user)
+    if (user === "admin") {
       setIsAdminAuthenticated(true)
+    } else if (user === "student") {
+      setIsStudentAuthenticated(true)
     }
   }
 
@@ -65,7 +67,7 @@ function App() {
       <Switch>
         <Route path="/" exact render={(props) => (
           <>
-            <Login authGuardLogin={login}/>
+            <Login authGuardLogin={login} />
           </>
         )} />
         <Route path="/Login">
@@ -82,7 +84,9 @@ function App() {
         <Route path="/MonitorOffer" component={MonitorInternshipOffer} />
         <Route path="/MonitorOfferList" component={MonitorOfferList} />
         <Route path="/MonitorStudentList" component={MonitorStudentList} />
-        <Route path="/Student" component={Student} />
+        {/*<Route path="/Student" component={Student} />*/}
+        <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
+
         <Route path="/StudentUploadCV" component={StudentUploadCV} />
         <Route path="/StudentDocuments" component={StudentDocuments} />
         <Route path="/OfferView" component={OfferView} />
