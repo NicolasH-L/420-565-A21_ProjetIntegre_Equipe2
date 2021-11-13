@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
 import SessionsButton from "./SessionsButton"
-import { StudentNotification } from './Notification/StudentNotification'
+import NotificationStudent from './Notification/NotificationStudent'
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -72,7 +72,9 @@ const StudentNavbar = ({ useStudent }) => {
                     </ul>
                     <SessionsButton />
                 </div>
-                <StudentNotification />
+                { student.id !== undefined ?
+                    <NotificationStudent idStudent={student.id} />
+                : ""}
             </nav>
         </div>
     )
