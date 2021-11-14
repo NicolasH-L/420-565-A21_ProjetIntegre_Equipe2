@@ -14,7 +14,7 @@
           <tr v-for="document in documents" :key="document.idDocument">
             <th>{{ document.documentName }}</th>
             <td className="w-25">
-              <button className="btn btn-primary mx-2" @click="viewDocument(document, studentId)" >Consulter</button>
+              <button className="btn btn-primary mx-2" @click="viewDocument(document)" >Consulter</button>
             </td>
           </tr>
         </tbody>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       documents: this.getDocuments(),
-      studentId: this.$route.params.id
     };
   },
   methods: {
@@ -48,8 +47,8 @@ export default {
         this.documents = response;
       });
     },
-    viewDocument(document, studentId){
-      router.push({ name: "ViewDocument", params: document, query: studentId })
+    viewDocument(document){
+      router.push({ name: "ViewDocument", params: {document: JSON.stringify({...document}), student: JSON.stringify({...this.$route.params})} })
     },  
   },
 };

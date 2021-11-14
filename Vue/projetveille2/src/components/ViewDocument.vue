@@ -25,6 +25,7 @@
         </div>
       </div>
     </div>
+    <button @click="test()"></button>
 </template>
 
 <script>
@@ -41,12 +42,14 @@ export default {
       page:1,
       pageCount: 1,
       content: this.base64ToArrayBuffer(),
-      id:{id:this.$route.query[0]}
+      id:{id:this.$route.query[0]},
     };
   },
   methods: {
     base64ToArrayBuffer() {
-      let binary_string = window.atob(this.$route.params.data);
+      var document = JSON.parse(this.$route.params.document)
+      var data = document.data
+      let binary_string = window.atob(data);
       let len = binary_string.length;
       let bytes = new Uint8Array(len);
       for (let i = 0; i < len; i++) {
@@ -58,7 +61,12 @@ export default {
       this.pageCount = this.$refs.pdfRef.pageCount
     },
     goBack(){
-       router.push({ name: "StudentDocuments", params: this.id})
+      var student = JSON.parse(this.$route.params.student)
+      router.push({ name: "StudentDocuments", params: {id:student.id} })
+    },
+    test(){
+      var student = JSON.parse(this.$route.params.student)
+      console.log(student)
     }
   },
 };
