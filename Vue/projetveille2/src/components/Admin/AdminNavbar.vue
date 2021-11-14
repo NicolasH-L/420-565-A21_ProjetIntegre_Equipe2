@@ -33,6 +33,7 @@
           <li className="nav-item mx-2">
             <button
               className="nav-link btn btn-light"
+              @click="goToAdminStudentList"
               >Liste des étudiants</button
             >
           </li>
@@ -71,6 +72,9 @@ export default {
       },
       goToAdminInternshipOfferList(){
         router.push({name: "AdminInternshipOfferList", params:this.$route.params})
+      },
+      goToAdminStudentList(){
+        router.push({name: "AdminStudentList", params:this.$route.params})
       }
     },
 };

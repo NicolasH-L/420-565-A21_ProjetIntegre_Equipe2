@@ -12,6 +12,8 @@ import StudentUploadCV from '../components/Student/StudentUploadCV.vue';
 import StudentDocuments from '../components/Student/StudentDocuments.vue';
 import ViewDocument from '../components/ViewDocument.vue';
 import AdminIntershipOfferList from '../components/Admin/AdminIntershipOfferList.vue';
+import AdminStudentCvList from '../components/Admin/AdminStudentCvList.vue';
+import AdminStudentList from '../components/Admin/AdminStudentList.vue';
 
 const routes = [
     {
@@ -78,7 +80,17 @@ const routes = [
         name: 'AdminInternshipOfferList',
         path: '/AdminInternshipOfferList',
         component: AdminIntershipOfferList
-    }
+    },
+    {
+        name: 'AdminStudentCvList',
+        path: '/AdminStudentCvList',
+        component: AdminStudentCvList
+    },
+    {
+        name: 'AdminStudentList',
+        path: '/AdminStudentList',
+        component: AdminStudentList
+    },
 ];
 const router = createRouter({
     history: createWebHashHistory(),

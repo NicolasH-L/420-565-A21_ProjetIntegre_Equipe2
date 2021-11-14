@@ -32,5 +32,27 @@ class AdminService {
             })
         return await res.json()
     }
+
+    async getAllStudents () {
+        const res = await fetch('http://localhost:8888/students/get-all-students')
+        return await res.json()
+    }
+
+    async updateCvStatus (document, isValid) {
+        const res = await fetch(`http://localhost:8888/document/update-document/${document.idDocument}/status/${isValid}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(document)
+            })
+        return await res.json()
+    }
+
+    async getAllDocumentsByStudentId (student) {
+        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
+        return await res.json()
+    }
 }
 export default new AdminService
