@@ -59,10 +59,10 @@ const StudentLogin: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle className="ion-text-center">Student Login</IonTitle>
+                    <IonTitle className="ion-text-center">Étudiant Login</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
+            <IonContent fullscreen>
                 <form className="ion-padding" onSubmit={handleSubmit(onSubmit)}>
                     <IonRow>
                         <IonCol>

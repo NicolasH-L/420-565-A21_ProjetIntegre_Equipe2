@@ -28,20 +28,22 @@ import MonitorLogin from './components/Monitor/MonitorLogin';
 import SupervisorRegister from './components/Supervisor/SupervisorRegister';
 import SupervisorLogin from './components/Supervisor/SupervisorLogin';
 import AdminLogin from './components/Admin/AdminLogin';
+import Menu from './components/Menu';
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} />
-        <Route exact path="/" render={() => <Redirect to="/home"/>} />
-        <Route path="/studentLogin" component={StudentLogin} />
-        <Route path="/studentRegistration" component={StudentRegistration} />
-        <Route path="/monitorRegistration"component={MonitorRegister} />
-        <Route path="/monitorLogin"component={MonitorLogin}/>
-        <Route path="/supervisorRegistration" component={SupervisorRegister}/>
-        <Route path="/supervisorLogin"component={SupervisorLogin} />
-        <Route path="/adminLogin" component={AdminLogin}/>
+      <Menu />
+      <IonRouterOutlet id="main">
+        <Route path="/home" component={Home} exact={true} />
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
+        <Route path="/studentLogin" component={StudentLogin} exact={true} />
+        <Route path="/studentRegistration" component={StudentRegistration} exact={true} />
+        <Route path="/monitorRegistration" component={MonitorRegister} exact={true} />
+        <Route path="/monitorLogin" component={MonitorLogin} exact={true} />
+        <Route path="/supervisorRegistration" component={SupervisorRegister} exact={true} />
+        <Route path="/supervisorLogin" component={SupervisorLogin} exact={true} />
+        <Route path="/adminLogin" component={AdminLogin} exact={true} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

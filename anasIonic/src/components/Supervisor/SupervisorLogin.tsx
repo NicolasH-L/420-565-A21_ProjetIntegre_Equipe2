@@ -16,7 +16,7 @@ import {
     IonToast
 } from '@ionic/react';
 import React, { useState } from 'react'
-import { alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
+import { accessibility, alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
@@ -63,7 +63,7 @@ const SupervisorLogin: React.FC = () => {
                         <IonCol>
                             <IonIcon
                                 style={{ fontSize: "70px", color: "#0040ff", }}
-                                icon={personCircle}
+                                icon={accessibility}
                                 className="ion-margin"
                             />
                         </IonCol>

@@ -1,4 +1,5 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonMenu, IonItem, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonMenu, IonItem, IonList, IonButtons } from '@ionic/react';
+import NavButtons from '../components/NavButtons';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -7,6 +8,9 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
+          <IonButtons slot="end">
+            <NavButtons></NavButtons>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -15,7 +19,7 @@ const Home: React.FC = () => {
             <p style={{ fontSize: "40px" }}> &#9728;</p>
           </div>
           <div className="middle">
-            <h1>Welcome</h1>
+            <h1>Bienvenue</h1>
             <hr />
             <p>Stage Finder &#9733;</p>
           </div>
