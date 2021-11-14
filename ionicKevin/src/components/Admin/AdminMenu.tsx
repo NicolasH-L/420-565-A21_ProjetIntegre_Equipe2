@@ -2,7 +2,7 @@ import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import '../Menu.css'
-import { createOutline } from 'ionicons/icons';
+import { clipboardOutline, addCircleOutline } from 'ionicons/icons';
 
 interface AdminMenuOptions {
     url: string;
@@ -15,8 +15,14 @@ const adminMenu: AdminMenuOptions[] = [
     {
       title: 'Déposer offre',
       url: '/admin/adminOffer',
-      iosIcon: createOutline,
-      mdIcon: createOutline
+      iosIcon: addCircleOutline,
+      mdIcon: addCircleOutline
+    },
+    {
+      title: 'Offres',
+      url: '/admin/adminOfferList',
+      iosIcon: clipboardOutline,
+      mdIcon: clipboardOutline
     }
   ];
 

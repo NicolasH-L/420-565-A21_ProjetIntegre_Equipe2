@@ -13,7 +13,12 @@ const AdminAuthLogin = () => {
     
     const onSubmit = (admin: any) => {
         adminLogin(admin.username, admin.password)
-        .then((data: any) => data.username != null ? history.push("/admin", {admin: data}) : setShowToastAlert(true))
+        .then((data: any) => data.username != null ? onSignIn(data) : setShowToastAlert(true))
+    }
+
+    const onSignIn = (admin: any) => {
+        sessionStorage.setItem("admin", JSON.stringify(admin))
+        history.push("/admin", {admin})
     }
 
     const adminLogin = async (username: any, password: any) => {
