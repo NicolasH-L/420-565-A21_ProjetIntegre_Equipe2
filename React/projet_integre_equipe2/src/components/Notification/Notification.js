@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-
-export const Notifications = ({ notificationList }) => {
-
+export const Notification = ({ notificationList }) => {
     const [list, setList] = useState()
 
     useEffect(() => {
         setList(notificationList)
     }, [notificationList.length])
-
-    // const MySwal = withReactContent(Swal)
-    // const message = "hello"
-    // const popUp = () => {
-    //     const Toast = Swal.mixin({
-    //         toast: true,
-    //         position: 'top-right',
-    //         showConfirmButton: true,
-    //     })
-    //     console.log(list)
-    //     Toast.fire({
-    //         title: 'Notifications : ',
-    //         html: `${list.map((elementList) => {
-    //             elementList.idNotification
-    //         })}`,
-    //     })
-    // }
 
     return (
         <div className="btn-group mr-5">
@@ -45,7 +26,7 @@ export const Notifications = ({ notificationList }) => {
                         <div className="modal-body list-group">
                             {list !== undefined ? list.map((notification) => (
                                 <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.idNotification}>
-                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }}><i className="fas fa-trash-alt fa-lg"></i></button>
+                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }}><i className="fas fa-times fa-lg align-middle"></i></button>
                                 </li>
                             )) : ""}
                         </div>
