@@ -26,6 +26,7 @@
           <li className="nav-item mx-2">
             <button
               className="nav-link btn btn-light"
+              @click="goToAdminInternshipOfferList"
               >Offres</button
             >
           </li>
@@ -67,6 +68,9 @@ export default {
   methods:{
       goToAdminOffer(){
         router.push({name: "AdminOffer", params:this.$route.params})
+      },
+      goToAdminInternshipOfferList(){
+        router.push({name: "AdminInternshipOfferList", params:this.$route.params})
       }
     },
 };

@@ -11,6 +11,7 @@ import AdminInternshipOffer from '../components/Admin/AdminInternshipOffer.vue';
 import StudentUploadCV from '../components/Student/StudentUploadCV.vue';
 import StudentDocuments from '../components/Student/StudentDocuments.vue';
 import ViewDocument from '../components/ViewDocument.vue';
+import AdminIntershipOfferList from '../components/Admin/AdminIntershipOfferList.vue';
 
 const routes = [
     {
@@ -72,6 +73,11 @@ const routes = [
         name: 'ViewDocument',
         path: '/ViewDocument',
         component: ViewDocument
+    },
+    {
+        name: 'AdminInternshipOfferList',
+        path: '/AdminInternshipOfferList',
+        component: AdminIntershipOfferList
     }
 ];
 const router = createRouter({
