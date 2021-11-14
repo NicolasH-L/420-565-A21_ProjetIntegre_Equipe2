@@ -33,33 +33,15 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/studentLogin">
-          <StudentLogin />
-        </Route>
-        <Route path="/studentRegistration">
-          <StudentRegistration />
-        </Route>
-        <Route path="/monitorRegistration">
-          <MonitorRegister />
-        </Route>
-        <Route path="/monitorLogin">
-          <MonitorLogin/>
-        </Route>
-        <Route path="/supervisorRegistration">
-          <SupervisorRegister/>
-        </Route>
-        <Route path="/supervisorLogin">
-          <SupervisorLogin/>
-        </Route>
-        <Route path="/adminLogin">
-          <AdminLogin/>
-        </Route>
+        <Route path="/home" component={Home} />
+        <Route exact path="/" render={() => <Redirect to="/home"/>} />
+        <Route path="/studentLogin" component={StudentLogin} />
+        <Route path="/studentRegistration" component={StudentRegistration} />
+        <Route path="/monitorRegistration"component={MonitorRegister} />
+        <Route path="/monitorLogin"component={MonitorLogin}/>
+        <Route path="/supervisorRegistration" component={SupervisorRegister}/>
+        <Route path="/supervisorLogin"component={SupervisorLogin} />
+        <Route path="/adminLogin" component={AdminLogin}/>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

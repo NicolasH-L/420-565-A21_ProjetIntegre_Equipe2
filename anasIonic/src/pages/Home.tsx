@@ -1,5 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonMenu, IonItem, IonList } from '@ionic/react';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -11,12 +10,6 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {/* <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer /> */}
         <div className="bgimg">
           <div className="topleft">
             <p style={{ fontSize: "40px" }}> &#9728;</p>
