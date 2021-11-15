@@ -58,7 +58,7 @@ const AdminOfferList = () => {
     }
 
     const viewOffer = async (offer) => {
-        history.push("/OfferView", offer)
+        history.push("/admin/offerView", offer)
     }
 
     return (
@@ -78,7 +78,7 @@ const AdminOfferList = () => {
                         <IonCardContent>
                             <IonList>
                                 <IonItem>
-                                    <IonLabel>Salaire: {offer.salary}</IonLabel>
+                                    <IonLabel>Salaire: {offer.salary + "$"}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Date d'affichage: {offer.displayDate}</IonLabel>
@@ -91,19 +91,33 @@ const AdminOfferList = () => {
                             </IonList>
                         </IonCardContent>
                         <IonItem>
-                            <IonButton size="default" fill="outline" color="primary" className="ion-margin-end">Consulter</IonButton>
+                            <IonButton
+                                size="default"
+                                fill="outline"
+                                color="primary"
+                                className="ion-margin-end"
+                                onClick={e => { e.preventDefault(); viewOffer(offer) }}
+                            >
+                                Consulter
+                            </IonButton>
                             <IonButton
                                 size="default"
                                 fill="outline"
                                 color="success"
                                 className="ion-margin-end"
-                                onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Publier</IonButton>
+                                onClick={e => { e.preventDefault(); acceptOffer(offer) }}
+                            >
+                                Publier
+                            </IonButton>
                             <IonButton
                                 size="default"
                                 fill="outline"
                                 color="danger"
                                 className="ion-margin-end"
-                                onClick={e => { e.preventDefault(); declineOffer(offer) }}>Retirer</IonButton>
+                                onClick={e => { e.preventDefault(); declineOffer(offer) }}
+                            >
+                                Retirer
+                            </IonButton>
                         </IonItem>
                     </IonCard>
                 ))}

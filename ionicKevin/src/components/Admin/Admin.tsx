@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import AdminOffer from './AdminOffer';
 import AdminOfferList from './AdminOfferList';
+import OfferView from './OfferView';
 
 const Admin = () => {
     const location = useLocation();
@@ -19,7 +20,8 @@ const Admin = () => {
                     </IonButtons>
                     <IonTitle className="ion-margin-top">
                         {adminChoice === "adminOffer" || urlPathArray.length === 2 ? "Déposer une offre" 
-                        : adminChoice === "adminOfferList" ? "Offres" : "" }
+                        : adminChoice === "adminOfferList" ? "Offres" 
+                        : adminChoice === "offerView" ? "Offre de stage": "" }
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -29,8 +31,9 @@ const Admin = () => {
                     <IonToolbar>
                     </IonToolbar>
                 </IonHeader>
-                {adminChoice === "adminOffer" || urlPathArray.length === 2 ? <><AdminOffer /></> 
-                : adminChoice === "adminOfferList" ? <><AdminOfferList/></> : ""}
+                {adminChoice === "adminOffer" || urlPathArray.length === 2 ? <AdminOffer/> 
+                : adminChoice === "adminOfferList" ? <AdminOfferList/> 
+                : adminChoice === "offerView" ? <OfferView/> : ""}
             </IonContent>
         </IonPage>
     )
