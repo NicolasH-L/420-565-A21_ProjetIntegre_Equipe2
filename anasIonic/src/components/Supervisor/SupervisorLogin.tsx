@@ -16,7 +16,7 @@ import {
     IonToast
 } from '@ionic/react';
 import React, { useState } from 'react'
-import { accessibility, alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
+import { accessibility, alertCircleOutline, home, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
@@ -54,7 +54,10 @@ const SupervisorLogin: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle className="ion-text-center">Superviseur Login</IonTitle>
+                    <IonButtons>
+                        <IonTitle className="ion-text-center">Superviseur Login</IonTitle>
+                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

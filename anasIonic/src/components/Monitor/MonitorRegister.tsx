@@ -1,5 +1,5 @@
 import { IonContent, IonPage, IonText, IonItem, IonLabel, IonAlert, IonInput, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonCard, IonCardHeader, IonCardContent, IonTextarea, IonBadge, IonIcon, IonToast } from "@ionic/react";
-import { alertCircleOutline, business, businessOutline, businessSharp, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, mailOutline, mailSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
+import { alertCircleOutline, business, businessOutline, businessSharp, home, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, mailOutline, mailSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
@@ -52,7 +52,10 @@ const MonitorRegister: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle size="large" className="ion-text-center">Inscription Moniteur</IonTitle>
+                    <IonButtons>
+                        <IonTitle size="large" className="ion-text-center">Inscription Moniteur</IonTitle>
+                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

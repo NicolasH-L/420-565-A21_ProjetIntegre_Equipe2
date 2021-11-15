@@ -16,9 +16,9 @@ import {
     IonToast
 } from '@ionic/react';
 import React, { useState } from 'react'
-import { alertCircleOutline, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
+import { alertCircleOutline, home, idCardSharp, lockClosedSharp, personCircle } from 'ionicons/icons'
 import { useForm, Controller } from "react-hook-form";
-import { useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const StudentLogin: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
@@ -59,7 +59,10 @@ const StudentLogin: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle className="ion-text-center">Étudiant Login</IonTitle>
+                    <IonButtons>
+                        <IonTitle className="ion-text-center">Étudiant Login</IonTitle>
+                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

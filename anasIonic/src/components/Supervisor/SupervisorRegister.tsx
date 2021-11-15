@@ -1,5 +1,5 @@
 import { IonContent, IonPage, IonText, IonItem, IonLabel, IonAlert, IonInput, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonCard, IonCardHeader, IonCardContent, IonTextarea, IonBadge, IonIcon, IonToast } from "@ionic/react";
-import { alertCircleOutline, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
+import { alertCircleOutline, home, idCardOutline, idCardSharp, lockClosedOutline, lockClosedSharp, personCircleSharp, personOutline, personSharp, refresh, refreshCircleSharp, refreshSharp, sendSharp } from "ionicons/icons";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
@@ -51,7 +51,10 @@ const SupervisorRegister: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle size="large" className="ion-text-center">Inscription Superviseur</IonTitle>
+                    <IonButtons>
+                        <IonTitle size="large" className="ion-text-center">Inscription Superviseur</IonTitle>
+                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
