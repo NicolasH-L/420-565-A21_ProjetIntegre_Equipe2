@@ -58,13 +58,13 @@ export default {
                         params:{ document: JSON.stringify({...document}), 
                         student:JSON.stringify({...student}) }})
         },
-        /*validateStudent(student){
+        validateStudent(student){
             AdminService.validateStudent(student).then((response) =>{
                 this.students = this.students.map(
                     (student1) => student1.matricule === student.matricule ? {...student1, isCvValid: response.isCvValid} : student1
                 )
             })
-        }*/
+        }
     }
 
 }

@@ -54,5 +54,17 @@ class AdminService {
         const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
         return await res.json()
     }
+
+    async validateStudent (student) {
+        const res = await fetch(`http://localhost:8888/students/validate-student/${student.matricule}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        return await res.json()
+    }
 }
 export default new AdminService
