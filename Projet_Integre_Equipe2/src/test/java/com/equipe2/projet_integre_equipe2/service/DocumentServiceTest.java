@@ -71,52 +71,6 @@ public class DocumentServiceTest {
                 .matricule("1234567")
                 .password("1234")
                 .build();
-
-        offer = Offer.builder()
-                .idOffer(1)
-                .address("123 rue lasalle")
-                .companyName("Cegep AL")
-                .deadlineDate("2021-11-11")
-                .description("description")
-                .displayDate("2021-10-29")
-                .endInternshipDate("2022-04-22")
-                .isValid(true)
-                .jobSchedules("Temps plein")
-                .jobTitle("Etudiant")
-                .monitorEmail("test@gmail.com")
-                .salary("20")
-                .skills("HTML")
-                .startInternshipDate("2022-01-05")
-                .state("Valid")
-                .workingHours("40")
-                .monitor(null)
-                .session("winter2022")
-                .weeksBetweenDates(0)
-                .build();
-
-        internship = Internship.builder()
-                .idInternship(1)
-                .status("completed")
-                .student(student)
-                .supervisor(null)
-                .offer(offer)
-                .session("winter2022")
-                .build();
-
-        contract = Contract.builder()
-                .idContract(1)
-                .adminSignature("Admin Signature")
-                .signatureDateAdmin("2021-11-12")
-                .monitorSignature("Monitor Signature")
-                .signatureDateMonitor("2021-11-12")
-                .studentSignature("Student Signature")
-                .signatureDateStudent("2021-11-12")
-                .studentResponsability("Student respo")
-                .companyResponsability("Company respo")
-                .collegeResponsability("College respo")
-                .internship(internship)
-                .session("winter2022")
-                .build();
     }
 
     @Test
@@ -216,72 +170,6 @@ public class DocumentServiceTest {
         when(documentRepository.findAll()).thenReturn(null);
         final Optional<List<Document>> allDocuments = documentService.getAllDocuments();
         assertThat(allDocuments).isEqualTo(Optional.empty());
-    }
-
-    @Test
-    public void testCreateFile() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
-        documentService.CreateFile(newFilePath,"Contract",contract);
-        File file = new File(newFilePath);
-        assertThat(file.exists()).isEqualTo(true);
-        file.delete();
-    }
-
-    @Test
-    public void testWriteFile() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
-        PDDocument document = new PDDocument();
-        document.save(newFilePath);
-        File file1 = new File(newFilePath);
-
-        String actualNewFilePath = "files/test/Test2.pdf";
-        PDDocument document2 = new PDDocument();
-        document2.save(actualNewFilePath);
-        File file2 = new File(actualNewFilePath);
-
-        documentService.WriteFile(newFilePath,"Contract",contract);
-
-        PdfDocument actualPdfDocument = new PdfDocument(new PdfReader(newFilePath), new PdfWriter(actualNewFilePath));
-
-        PdfAcroForm form = PdfAcroForm.getAcroForm(actualPdfDocument, false);
-        Map<String, PdfFormField> fields = form.getFormFields();
-
-        assertThat(fields.get("adminName").getValue().toString()).isEqualTo(contract.getAdminSignature());
-        file1.delete();
-        file2.delete();
-    }
-
-    @Test
-    public void testEditContract() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
-        String originalFile = "files/originalFiles/contratTemplate.pdf";
-        PDDocument document = new PDDocument();
-        document.save(newFilePath);
-        File file1 = new File(newFilePath);
-
-        PdfDocument actualPdfDocument = new PdfDocument(new PdfReader(originalFile), new PdfWriter(newFilePath));
-        PdfAcroForm form = PdfAcroForm.getAcroForm(actualPdfDocument, false);
-        Map<String, PdfFormField> fields = form.getFormFields();
-
-
-        documentService.EditContract(fields, contract);
-
-        assertThat(fields.get("adminName").getValue().toString()).isEqualTo(contract.getAdminSignature());
-    }
-
-    @Test // a revoir
-    public void testGenerateDocument() throws IOException {
-        byte[] actualBytes = documentService.GenerateDocument("Contract",contract, "1234567");
-        assertThat(actualBytes).isNotNull();
-    }
-
-    @Test
-    public void testDeleteFile() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
-        documentService.CreateFile(newFilePath,"Contrat",contract);
-        File file = new File(newFilePath);
-        file.delete();
-        assertThat(file.exists()).isEqualTo(false);
     }
 
     private List<Document> getListOfDocumentsByStudent() {

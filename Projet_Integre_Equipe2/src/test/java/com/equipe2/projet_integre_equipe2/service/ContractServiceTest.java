@@ -2,6 +2,12 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.repository.ContractRepository;
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +16,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.swing.text.html.Option;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,6 +72,7 @@ public class ContractServiceTest {
                 .startInternshipDate("2021-10-30")
                 .endInternshipDate("2021-12-30")
                 .monitor(monitor)
+                .weeksBetweenDates(0)
                 .build();
 
         student = Student.studentBuilder()
@@ -75,6 +85,8 @@ public class ContractServiceTest {
                 .build();
 
         internship = Internship.builder()
+                .idInternship(1)
+                .status("completed")
                 .offer(offer)
                 .student(student)
                 .build();
@@ -96,7 +108,6 @@ public class ContractServiceTest {
                 .signatureDateStudent("2021-10-25")
                 .signatureDateMonitor("2021-10-25")
                 .signatureDateAdmin("2021-10-25")
-                .document(document)
                 .build();
 
         contractListByMonitorId.add(contract);
@@ -131,20 +142,6 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testGetContractDocumentByIdContract() {
-        when(contractRepository.findContractByIdContract(contract.getIdContract())).thenReturn(contract);
-        Optional<Document> expectedContract = contractService.getContractDocumentByIdContract(contract.getIdContract());
-        assertThat(expectedContract.get().getDocumentName()).isEqualTo(document.getDocumentName());
-    }
-
-    @Test
-    public void testGetContractByIdContractFails() {
-        when(contractRepository.findContractByIdContract(contract.getIdContract())).thenReturn(null);
-        Optional<Document> expectedContract = contractService.getContractDocumentByIdContract(contract.getIdContract());
-        assertThat(expectedContract).isEqualTo(Optional.empty());
-    }
-
-    @Test
     public void testGetContractsByMonitorId() {
         when(contractRepository.findContractsByInternship_Offer_Monitor_Id(monitor.getId())).thenReturn(contractListByMonitorId);
         Optional<List<Contract>> actualContractList = contractService.getContractsByMonitorId(monitor.getId());
@@ -172,6 +169,68 @@ public class ContractServiceTest {
         when(contractRepository.findAll()).thenReturn(null);
         final Optional<List<Contract>> allContracts = contractService.getAllContracts();
         assertThat(allContracts).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testCreateFile() throws IOException {
+        String newFilePath = "files/test/Test.pdf";
+        contractService.CreateFile(newFilePath,"Contract",contract);
+        File file = new File(newFilePath);
+        assertThat(file.exists()).isEqualTo(true);
+        file.delete();
+    }
+
+    @Test
+    public void testWriteFile() throws IOException {
+        String newFilePath = "files/test/Test.pdf";
+        PDDocument document = new PDDocument();
+        document.save(newFilePath);
+
+        String actualNewFilePath = "files/test/Test2.pdf";
+        PDDocument document2 = new PDDocument();
+        document2.save(actualNewFilePath);
+
+        contractService.WriteFile(newFilePath,"Contract",contract);
+
+        PdfDocument actualPdfDocument = new PdfDocument(new PdfReader(newFilePath), new PdfWriter(actualNewFilePath));
+
+        PdfAcroForm form = PdfAcroForm.getAcroForm(actualPdfDocument, true);
+        Map<String, PdfFormField> fields = form.getFormFields();
+
+        assertThat(fields.get("adminName").getValue().toString()).isEqualTo(contract.getAdminSignature());
+    }
+
+    @Test
+    public void testEditContract() throws IOException {
+        String newFilePath = "files/test/Test.pdf";
+        String originalFile = "files/originalFiles/contratTemplate.pdf";
+        PDDocument document = new PDDocument();
+        document.save(newFilePath);
+        File file1 = new File(newFilePath);
+
+        PdfDocument actualPdfDocument = new PdfDocument(new PdfReader(originalFile), new PdfWriter(newFilePath));
+        PdfAcroForm form = PdfAcroForm.getAcroForm(actualPdfDocument, false);
+        Map<String, PdfFormField> fields = form.getFormFields();
+
+
+        contractService.EditContract(fields, contract);
+
+        assertThat(fields.get("adminName").getValue().toString()).isEqualTo(contract.getAdminSignature());
+    }
+
+    @Test // a revoir
+    public void testGenerateDocument() throws IOException {
+        byte[] actualBytes = contractService.GenerateDocument("Contract",contract, "1234567");
+        assertThat(actualBytes).isNotNull();
+    }
+
+    @Test
+    public void testDeleteFile() throws IOException {
+        String newFilePath = "files/test/Test.pdf";
+        contractService.CreateFile(newFilePath,"Contrat",contract);
+        File file = new File(newFilePath);
+        file.delete();
+        assertThat(file.exists()).isEqualTo(false);
     }
 
     private List<Contract> getListOfContracts(){

@@ -30,9 +30,9 @@ public class Contract implements Serializable {
     private String signatureDateAdmin;
     private String session;
 
-    @OneToOne
-    private Internship internship;
+    @Lob
+    private byte[] pdf;
 
     @OneToOne
-    private Document document;
+    private Internship internship;
 }
