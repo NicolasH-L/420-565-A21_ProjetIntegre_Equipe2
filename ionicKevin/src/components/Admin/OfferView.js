@@ -8,8 +8,7 @@ const OfferView = () => {
 
     return (
         <div>
-            <IonTitle className="ion-text-center ion-margin-vertical">Offre de stage</IonTitle>
-            <form className="ion-padding" id="AdminOfferForm">
+            <form className="ion-padding" id="AdminOffers">
                 <IonItem>
                     <IonLabel position="floating">Nom de l'entreprise: </IonLabel>
                     <IonInput type="text" value={offer.companyName} readonly />

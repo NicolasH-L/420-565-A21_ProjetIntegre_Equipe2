@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonList } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
+import { book, checkmark, close } from 'ionicons/icons';
+
 
 const AdminOfferList = () => {
     const [offers, setOffers] = useState([])
@@ -73,7 +75,7 @@ const AdminOfferList = () => {
                     <IonCard className="ion-margin-vertical">
                         <IonCardHeader>
                             {/*<IonCardSubtitle>Card Subtitle</IonCardSubtitle>*/}
-                            <IonCardTitle>{offer.companyName + " - " + offer.jobTitle}</IonCardTitle>
+                            <IonCardTitle className="ion-text-center">{offer.companyName + " - " + offer.jobTitle}</IonCardTitle>
                         </IonCardHeader>
                         <IonCardContent>
                             <IonList>
@@ -90,7 +92,7 @@ const AdminOfferList = () => {
                                 </IonItem>
                             </IonList>
                         </IonCardContent>
-                        <IonItem>
+                        <IonItem className="ion-justify-content-center">
                             <IonButton
                                 size="default"
                                 fill="outline"
@@ -98,7 +100,7 @@ const AdminOfferList = () => {
                                 className="ion-margin-end"
                                 onClick={e => { e.preventDefault(); viewOffer(offer) }}
                             >
-                                Consulter
+                                <IonIcon ios={book} md={book}/>
                             </IonButton>
                             <IonButton
                                 size="default"
@@ -107,7 +109,7 @@ const AdminOfferList = () => {
                                 className="ion-margin-end"
                                 onClick={e => { e.preventDefault(); acceptOffer(offer) }}
                             >
-                                Publier
+                                <IonIcon ios={checkmark} md={checkmark}/>
                             </IonButton>
                             <IonButton
                                 size="default"
@@ -116,7 +118,7 @@ const AdminOfferList = () => {
                                 className="ion-margin-end"
                                 onClick={e => { e.preventDefault(); declineOffer(offer) }}
                             >
-                                Retirer
+                                <IonIcon ios={close} md={close}/>
                             </IonButton>
                         </IonItem>
                     </IonCard>

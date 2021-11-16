@@ -73,7 +73,6 @@ const MonitorOffer = () => {
 
     return (
         <div>
-            <IonTitle className="ion-text-center ion-margin-vertical">Déposer une offre de stage</IonTitle>
             <form className="ion-padding" id="AdminOfferForm" onSubmit={handleSubmit(onSubmit)}>
                 <IonItem>
                     <IonLabel position="floating">Nom de l'entreprise: </IonLabel>
