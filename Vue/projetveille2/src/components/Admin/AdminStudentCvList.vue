@@ -23,7 +23,7 @@
           >
             <th>{{ document.documentName }}</th>
             <td className="w-25">
-              <button className="btn btn-primary mx-2">Consulter</button>
+              <button className="btn btn-primary mx-2" @click="viewDocument(document)">Consulter</button>
               <div v-if="!document.isValid && !document.isRefused">
                 <button className="btn btn-success mx-2" @click="updateCvStatus(document,true)">Valider</button>
                 <button className="btn btn-danger mx-2" @click="updateCvStatus(document,false)">Refuser</button>
@@ -40,6 +40,7 @@
 <script>
 import AdminNavbar from "./AdminNavbar.vue";
 import AdminService from "./AdminService";
+import router from "../../router";
 
 export default {
   name: "AdminStudentCvList",
@@ -53,6 +54,7 @@ export default {
       documents: this.getDocuments(),
       student: JSON.parse(this.$route.params.student),
       studentId: "",
+      admin: JSON.parse(this.$route.params.admin)
     };
   },
   methods: {
@@ -61,6 +63,11 @@ export default {
       AdminService.getAllDocumentsByStudentId(student).then((response) => {
         this.documents = response;
       });
+    },
+    viewDocument(document){
+      router.push({name: "ViewDocument", params:{document: JSON.stringify({...document}), 
+                                                  admin: JSON.stringify({...this.admin}),
+                                                   student: JSON.stringify({...this.student}) }})
     },
     test() {
       console.log(this.$route.params);
