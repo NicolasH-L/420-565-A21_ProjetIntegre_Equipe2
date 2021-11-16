@@ -42,7 +42,7 @@ const AdminLogin: React.FC = () => {
     }
 
     const loginAdmin = async (username: any, password: any) => {
-        const res = await fetch(`http://localhost:8888/admin/${username}/${password}`)
+        const res = await fetch(`http://192.168.50.154:8888/admin/${username}/${password}`)
         return await res.json()
     }
 
