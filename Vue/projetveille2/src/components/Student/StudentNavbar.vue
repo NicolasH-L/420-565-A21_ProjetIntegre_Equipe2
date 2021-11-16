@@ -26,7 +26,7 @@
             </button>
           </li>
           <li className="nav-item mx-2">
-            <button className="nav-link btn btn-light" type="button">
+            <button className="nav-link btn btn-light" @click="goToStudentInternshipListOffers()" type="button">
               Offres de stages
             </button>
           </li>
@@ -57,6 +57,9 @@ export default {
     },
     goToStudentDocuments() {
       router.push({ name: "StudentDocuments", params: this.$route.params });
+    },
+    goToStudentInternshipListOffers() {
+      router.push({ name: "StudentInternshipListOffers", params: this.$route.params });
     },
   },
 };
