@@ -42,7 +42,7 @@ const StudentLogin: React.FC = () => {
     }
 
     const loginStudent = async (matricule: any, password: any) => {
-        const res = await fetch(`http://localhost:8888/students/${matricule}/${password}`)
+        const res = await fetch(`http://192.168.50.154:8888/students/${matricule}/${password}`)
         return await res.json()
     }
 

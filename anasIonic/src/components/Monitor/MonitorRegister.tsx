@@ -33,7 +33,7 @@ const MonitorRegister: React.FC = () => {
     }
 
     const postMonitor = async (monitor: any) => {
-        const result = await fetch('http://localhost:8888/monitors/register',
+        const result = await fetch('http://192.168.50.154:8888/monitors/register',
             {
                 method: 'POST',
                 headers: {

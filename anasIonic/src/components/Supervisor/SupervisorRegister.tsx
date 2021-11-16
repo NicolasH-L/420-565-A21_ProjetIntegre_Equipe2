@@ -32,7 +32,7 @@ const SupervisorRegister: React.FC = () => {
     }
 
     const postSupervisor = async (supervisor: any) => {
-        const result = await fetch('http://localhost:8888/supervisors/register',
+        const result = await fetch('http://192.168.50.154:8888/supervisors/register',
             {
                 method: 'POST',
                 headers: {

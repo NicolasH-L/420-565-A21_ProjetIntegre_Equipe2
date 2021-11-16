@@ -42,7 +42,7 @@ const SupervisorLogin: React.FC = () => {
     }
 
     const loginSupervisor = async (matricule: any, password: any) => {
-        const res = await fetch(`http://localhost:8888/supervisors/${matricule}/${password}`)
+        const res = await fetch(`http://192.168.50.154:8888/supervisors/${matricule}/${password}`)
         return await res.json()
     }
 

@@ -30,7 +30,7 @@ const StudentRegistration: React.FC = () => {
     }
 
     const postStudent = async (student: any) => {
-        const result = await fetch('http://localhost:8888/students/register',
+        const result = await fetch('http://192.168.50.154:8888/students/register',
             {
                 method: 'POST',
                 headers: {

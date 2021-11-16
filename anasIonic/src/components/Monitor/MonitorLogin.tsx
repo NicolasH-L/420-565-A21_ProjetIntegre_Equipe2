@@ -44,7 +44,7 @@ const MonitorLogin: React.FC = () => {
     }
 
     const loginMonitor = async (email: any, password: any) => {
-        const res = await fetch(`http://localhost:8888/monitors/${email}/${password}`)
+        const res = await fetch(`http://192.168.50.154:8888/monitors/${email}/${password}`)
         return await res.json()
     }
 
