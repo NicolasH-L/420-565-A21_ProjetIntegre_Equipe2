@@ -50,7 +50,7 @@ const Login = ({ authGuardLogin }) => {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin} authLogin={authGuardLogin}/></div>
-                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onLogin={monitorLogin} /></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onLogin={monitorLogin} authLogin={authGuardLogin}/></div>
                         <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin onLogin={supervisorLogin} /></div>
                         <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin onLogin={adminLogin} authLogin={authGuardLogin}/></div>
                     </div>

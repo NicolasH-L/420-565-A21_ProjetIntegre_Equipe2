@@ -41,7 +41,7 @@ function App() {
   const [isAutheticated, setisAutheticated] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(sessionStorage.getItem("userType") === "admin")
   const [isStudentAuthenticated, setIsStudentAuthenticated] = useState(sessionStorage.getItem("userType") === "student")
-  const [isMonitorAuthenticated, setIsMonitorAuthenticated] = useState(false)
+  const [isMonitorAuthenticated, setIsMonitorAuthenticated] = useState(sessionStorage.getItem("userType") === "monitor")
   const [isSupervisorAuthenticated, setIsSupervisorAuthenticated] = useState(false)
 
   let userType
@@ -59,6 +59,8 @@ function App() {
       setIsAdminAuthenticated(true)
     } else if (user === "student") {
       setIsStudentAuthenticated(true)
+    } else if (user === "monitor") {
+      setIsMonitorAuthenticated(true)
     }
   }
 
@@ -80,7 +82,9 @@ function App() {
         {/*<Route path="/Admin" component={Admin} />*/}
         <Route path="/AdminOffer" component={AdminInternshipOffer} />
         <Route path="/AdminOffersList" component={AdminInternshipOfferList} />
-        <Route path="/Monitor" component={Monitor} />
+        {/*<Route path="/Monitor" component={Monitor} />*/}
+        {<GuardedRoute path='/Monitor' component={Monitor} auth={isMonitorAuthenticated} />}
+
         <Route path="/MonitorOffer" component={MonitorInternshipOffer} />
         <Route path="/MonitorOfferList" component={MonitorOfferList} />
         <Route path="/MonitorStudentList" component={MonitorStudentList} />
