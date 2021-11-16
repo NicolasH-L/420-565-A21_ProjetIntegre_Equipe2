@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router';
 
-const SupervisorLogin = ({ onLogin }) => {
+const SupervisorLogin = ({ onLogin, authLogin }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ credentials: "" })
     const history = useHistory()
@@ -15,8 +15,13 @@ const SupervisorLogin = ({ onLogin }) => {
             return
         } else {
             onLogin(supervisor.matricule, supervisor.password)
-                .then((data) => data.matricule != null ? history.push("/Supervisor", {supervisor: data}) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? signIn(data) : alert("Erreur de matricule ou mot de passe"))
                 .catch((err) => console.log(err))
+        }
+
+        function signIn(supervisor){
+            authLogin("supervisor")
+            history.push("/Supervisor", {supervisor})
         }
     }
 
