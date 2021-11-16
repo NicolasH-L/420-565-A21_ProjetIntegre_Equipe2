@@ -6,7 +6,7 @@ import StudentLogin from '../StudentLogin'
 import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin'
 
-const Login = () => {
+const Login = ({ authGuardLogin }) => {
 
     const studentLogin = async (matricule, password) => {
         const res = await fetch(`http://localhost:8888/students/${matricule}/${password}`)
@@ -49,10 +49,10 @@ const Login = () => {
                         </li>
                     </ul>
                     <div className="tab-content" id="myTabContent">
-                        <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin} /></div>
-                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onLogin={monitorLogin} /></div>
-                        <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin onLogin={supervisorLogin} /></div>
-                        <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin onLogin={adminLogin} /></div>
+                        <div className="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab"><StudentLogin onLogin={studentLogin} authLogin={authGuardLogin}/></div>
+                        <div className="tab-pane fade" id="monitor" role="tabpanel" aria-labelledby="monitor-tab"><MonitorLogin onLogin={monitorLogin} authLogin={authGuardLogin}/></div>
+                        <div className="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor-tab"><SupervisorLogin onLogin={supervisorLogin} authLogin={authGuardLogin}/></div>
+                        <div className="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><AdminLogin onLogin={adminLogin} authLogin={authGuardLogin}/></div>
                     </div>
                 </div>
             </div>

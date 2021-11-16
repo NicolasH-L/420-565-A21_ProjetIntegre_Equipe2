@@ -50,7 +50,7 @@ const SessionsButton = () => {
     }
 
     return (
-        <div className="btn-group mr-5">
+        <div className="btn-group">
             <button type="button" className="btn btn-primary dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                 Sessions
             </button>

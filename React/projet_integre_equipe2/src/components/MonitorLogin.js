@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router'
 
-const MonitorLogin = ({ onLogin }) => {
+const MonitorLogin = ({ onLogin, authLogin }) => {
     const [monitor, setMonitor] = useState({ password: "", email: "" })
     const [error, setError] = useState({ credentials: "" })
     const history = useHistory()
@@ -16,7 +16,12 @@ const MonitorLogin = ({ onLogin }) => {
         } else {
             monitor.email = monitor.email.toLowerCase()
             onLogin(monitor.email, monitor.password)
-                .then((data) => data.email != null ? history.push("/Monitor", { monitor: data }) : alert("Email ou mot de passe incorrect"))
+                .then((data) => data.email != null ? signIn(data) : alert("Email ou mot de passe incorrect"))
+        }
+
+        function signIn(monitor){
+            authLogin("monitor")
+            history.push("/Monitor", {monitor})
         }
     }
 

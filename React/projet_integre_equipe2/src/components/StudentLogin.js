@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const StudentLogin = ({onLogin}) => {
+const StudentLogin = ({onLogin, authLogin}) => {
     const [student, setStudent] = useState({matricule: "", password: "" })
     const [error, setError] = useState({credentials:"" })
     const history = useHistory()
@@ -15,7 +15,12 @@ const StudentLogin = ({onLogin}) => {
             return
         } else {
             onLogin(student.matricule, student.password)
-                .then((data) => data.matricule != null ? history.push("/Student", {student: data}) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? signIn(data) : alert("Erreur de matricule ou mot de passe"))
+        }
+
+        function signIn(student){
+            authLogin("student")
+            history.push("/Student", {student})
         }
     }
 
