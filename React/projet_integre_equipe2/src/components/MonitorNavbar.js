@@ -22,6 +22,11 @@ const MonitorNavbar = () => {
         history.push("/MonitorContracts", historyState)
     }
 
+    const logout = () => {
+        sessionStorage.setItem("userType", "")
+        history.push("/")
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -43,8 +48,9 @@ const MonitorNavbar = () => {
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorContracts}>Mes contrats</button>
                         </li>
+                        <SessionsButton />
                     </ul>
-                    <SessionsButton />
+                    <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>
             </nav>
         </div>
