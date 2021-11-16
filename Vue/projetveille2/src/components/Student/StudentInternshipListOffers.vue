@@ -1,5 +1,6 @@
 <template>
   <div className="grad">
+    <StudentNavbar></StudentNavbar>
     <h2 className="text-center">Offres de stage</h2>
     <div className="p-5 table-responsive">
       <table className="table table-hover bg-light shadow-lg">
@@ -23,30 +24,41 @@
             <button className="btn btn-primary" @click="goToOfferView(offer)">
               Consulter
             </button>
-            <div v-if="this.applyOfferButton.message === empty">
+            <div v-if="test(offer.idOffer, this.studentId)"></div>
+            <div v-if="this.show === false && this.applyOfferButton.message === empty">
               <select
-              defaultValue="DEFAULT"
-              className="mx-5"
-              @click="setOffer(offer)"
-              v-on:input="checkDocumentChosen"
-            >
-              <option value="DEFAULT" selected disabled>Choisissez un document</option>
-              <option
-                v-for="document in documents"
-                :value="document.documentName"
-                :key="document.idDocument"
-                >{{ document.documentName }}</option
+                defaultValue="DEFAULT"
+                className="mx-5"
+                @click="setOffer(offer)"
+                v-on:input="checkDocumentChosen"
               >
-            </select>
+                <option value="DEFAULT" selected disabled
+                  >Choisissez un document</option
+                >
+                <option
+                  v-for="document in documents"
+                  :value="document.documentName"
+                  :key="document.idDocument"
+                  >{{ document.documentName }}</option
+                >
+              </select>
+              <div>
+                <button
+                  className="btn btn-success mx-3"
+                  id="applicationButton"
+                  name="button"
+                  @click="applyToOffer()"
+                  :disabled="applyOfferButton.buttonDisable"
+                >
+                  Postuler <i className="fas fa-external-link-alt fa-sm"></i>
+                </button>
+              </div>
             </div>
-            <div v-else>
-              <strong className="text-success ml-5">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
-            </div>
-            <div v-if="displayMessageBoolean === true || displayMessageBoolean === undefined">
-                <strong className="text-success ml-5">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
-            </div>
-            <div v-else>
-                <button className="btn btn-success mx-3" id="applicationButton" name="button" @click="applyToOffer()" :disabled="applyOfferButton.buttonDisable">Postuler <i className="fas fa-external-link-alt fa-sm"></i></button>
+            <div v-if="this.applyOfferButton.message !== empty">
+              <strong className="text-success ml-5"
+                >Votre demande a été envoyée
+                <i className="fas fa-exclamation-circle text-success fa-sm"></i
+              ></strong>
             </div>
           </tr>
         </tbody>
@@ -58,14 +70,18 @@
 <script>
 import StudentService from "./StudentService";
 import router from "../../router";
-import OfferService from '../Offer/OfferService';
+import OfferService from "../Offer/OfferService";
+import StudentNavbar from "./StudentNavbar.vue";
 
 export default {
   name: "StudentInternshipListOffers",
-  components: {},
+  components: {
+    StudentNavbar,
+  },
   data() {
     return {
-      empty:"",
+      studentId: this.getStudentIdFromRoute(),
+      empty: "",
       offers: this.getAllValidOffers(),
       documents: this.getDocuments(),
       applyOfferButton: {
@@ -77,8 +93,14 @@ export default {
         document: "",
         student: this.getStudentFromRoute(),
       },
-      displayMessageBoolean:"",
-      appliedMessage: <strong className="text-success ml-5">Votre demande a été envoyée <i className="fas fa-exclamation-circle text-success fa-sm"></i></strong>
+      displayMessageBoolean: "",
+      appliedMessage: (
+        <strong className="text-success ml-5">
+          Votre demande a été envoyée{" "}
+          <i className="fas fa-exclamation-circle text-success fa-sm"></i>
+        </strong>
+      ),
+      show:"",
     };
   },
   methods: {
@@ -107,6 +129,14 @@ export default {
         return this.$route.params;
       }
     },
+    getStudentIdFromRoute() {
+      if (this.$route.params.student !== undefined) {
+        var student = JSON.parse(this.$route.params.student);
+        return student.id;
+      } else {
+        return this.$route.params.id;
+      }
+    },
     goToOfferView(offer) {
       var student = this.$route.params;
       router.push({
@@ -123,22 +153,31 @@ export default {
         for (let index = 0; index < this.documents.length; index++) {
           const element = this.documents[index];
           if (element.documentName === e.target.value) {
-            this.studentOfferApplication.document = element
-            break
+            this.studentOfferApplication.document = element;
+            break;
           }
         }
       }
     },
-    applyToOffer(){
-      OfferService.addStudentOffer(this.studentOfferApplication)
-      var studentId = this.studentOfferApplication.student.id
-      var offerId = this.studentOfferApplication.offer.idOffer
-      OfferService.verifyAppliedToOfferStatus(offerId,studentId)
-      .then((data) => data !== undefined ? this.applyOfferButton.message = this.appliedMessage  : "")
-      this.applyOfferButton.buttonDisable = true
+    applyToOffer() {
+      OfferService.addStudentOffer(this.studentOfferApplication);
+      var studentId = this.studentOfferApplication.student.id;
+      var offerId = this.studentOfferApplication.offer.idOffer;
+      OfferService.verifyAppliedToOfferStatus(offerId, studentId).then((data) =>
+        data !== undefined
+          ? (this.applyOfferButton.message = this.appliedMessage)
+          : ""
+      );
+      this.show = true
     },
-    setOffer(offer){
-      this.studentOfferApplication.offer = offer
+    setOffer(offer) {
+      this.studentOfferApplication.offer = offer;
+    },
+    test(offerId, studentId) {
+      OfferService.verifyAppliedToOfferStatusOnLoad(offerId, studentId).then((data) =>{
+        console.log(data)
+        this.show = data
+      })
     },
   },
 };
