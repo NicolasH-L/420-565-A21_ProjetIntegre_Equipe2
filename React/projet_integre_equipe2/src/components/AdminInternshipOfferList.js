@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 const AdminInternshipOfferList = () => {
     const [offers, setOffers] = useState([])
     const history = useHistory()
+    const admin = history.location.state.admin
 
     useEffect(() => {
         const getOffers = async () => {
@@ -60,6 +61,10 @@ const AdminInternshipOfferList = () => {
         history.push("/OfferView", offer)
     }
 
+    const filterOffers = (offer) => {
+        return offer.session === admin.actualSession
+    }
+
     return (
         <div className="grad">
             <AdminNavbar />
@@ -77,17 +82,19 @@ const AdminInternshipOfferList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {offers.map((offer) => (
-                            <tr className={`${offer.valid ? 'table-success' : offer.state == null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
+                        {offers
+                        .filter(filterOffers)
+                        .map((offer) => (
+                            <tr className={`${offer.valid ? 'table-success' : offer.state === null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
                                 <th>{offer.companyName}</th>
                                 <td>{offer.jobTitle}</td>
                                 <td>{offer.salary}$</td>
                                 <td>{offer.displayDate}</td>
-                                <td>{offer.state == null ? "En attente" : offer.state}</td>
+                                <td>{offer.state === null ? "En attente" : offer.state}</td>
                                 <td className="w-25">
                                     <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>Consulter</button>
                                     <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Publier</button>
-                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Refuser</button>
+                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Retirer</button>
                                 </td>
                             </tr>
                         ))}

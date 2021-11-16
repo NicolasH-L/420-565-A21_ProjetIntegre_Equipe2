@@ -8,22 +8,33 @@ import MonitorNavbar from './MonitorNavbar'
 
 const MonitorInternshipOffer = () => {
     const history = useHistory()
-    const historyState = useHistory().location.state
+    const historyState = history.location.state
+    const monitor = historyState.monitor
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
+
     let emailMonitor
     let company
+    let telephoneNumberMonitor
 
     if (historyState !== undefined) {
-        emailMonitor = historyState.email
-        company = historyState.companyName
+        emailMonitor = monitor.email
+        company = monitor.companyName
+        telephoneNumberMonitor = monitor.telephoneNumber
     }
 
     const [offer, setOffer] = useState({
         companyName: company, address: "", salary: "",
         jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor,
-        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
+        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor, telephoneNumber: telephoneNumberMonitor,
+        displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: "", session: ""
     })
 
     const [error, setError] = useState({
@@ -54,6 +65,7 @@ const MonitorInternshipOffer = () => {
             alert("Veuillez remplir tous les champs!")
             return
         } else {
+            setOfferSession()
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun moniteur existant avec cet email!"))
         }
@@ -63,12 +75,21 @@ const MonitorInternshipOffer = () => {
                 .then((data) => data.jobTitle !== null ? submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
                 .catch((err) => console.log(err))
         }
+
+        function setOfferSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            offer.session = session
+        }
     }
 
     function submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
-        history.push("/MonitorOfferList", historyState)
+        history.push("/MonitorOfferList", { monitor })
     }
 
     const verifyMonitorExists = async (email) => {

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8100", "http://localhost"})
 @RequestMapping("/admin")
@@ -20,5 +22,12 @@ public class AdminController {
         return adminService.login(username,password)
                 .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Admin()));
+    }
+
+    @GetMapping("/get-all-admins")
+    public ResponseEntity<List<Admin>> getAllAdmin(){
+        return adminService.getAllAdmin()
+                .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }

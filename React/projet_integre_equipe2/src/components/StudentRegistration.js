@@ -5,20 +5,37 @@ import { useHistory } from 'react-router-dom'
 import { RegexPattern } from './RegexPattern'
 
 const StudentRegistration = ({onAdd}) => {
-    const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:""})
-    const [error, setError] = useState({lastName: "", firstName: "", password: "", matricule: ""})
+    const [student, setStudent] = useState({lastName:"", firstName:"", password:"", matricule:"", telephoneNumber: "", actualSession: ""})
+    const [error, setError] = useState({lastName: "", firstName: "", password: "", matricule: "", telephoneNumber: ""})
     const history = useHistory()
+
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password)|| !_.isEmpty(error.matricule) ||
-            _.isEmpty(student.lastName) || _.isEmpty(student.firstName) || _.isEmpty(student.password )|| _.isEmpty(student.matricule)){
+        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password)|| !_.isEmpty(error.matricule) || !_.isEmpty(error.telephoneNumber) ||
+            _.isEmpty(student.lastName) || _.isEmpty(student.firstName) || _.isEmpty(student.password )|| _.isEmpty(student.matricule) || _.isEmpty(student.telephoneNumber)){
             alert("Veuillez remplir tous les champs correctement!")
             return
         } else {
+            setStudentSession()
             onAdd(student)
                 .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur matricule existant"))
                 .catch(() => alert("Erreur matricule existant"))
+        }
+
+        function setStudentSession() {
+            let sessionDate = new Date()
+            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
+            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
+            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
+                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
+            student.actualSession = session
         }
     }
 
@@ -28,11 +45,14 @@ const StudentRegistration = ({onAdd}) => {
         let patternName = RegexPattern.getPatternName()
         let patternMatricule = RegexPattern.getPatternMatricule()
         let patternPassword = RegexPattern.getPatternPassword()
+        let patternTelephone = RegexPattern.getPatternTelephone()
 
         if (e.target.name === "lastName" || e.target.name === "firstName")
             pattern = new RegExp(patternName)
         else  if (e.target.name === "password")
             pattern = new RegExp(patternPassword)
+        else if (e.target.name === "telephoneNumber")
+            pattern = new RegExp(patternTelephone)
         else  if (e.target.name === "matricule")
             pattern = new RegExp(patternMatricule)
         
@@ -69,6 +89,11 @@ const StudentRegistration = ({onAdd}) => {
                     <label htmlFor="matriculeStudent" className="text-secondary"><i className="fas fa-id-badge"></i> Matricule: </label>
                     {error.matricule !== "" ? error.matricule : ""}
                     <input type="text" className="form-control text-center" id="matriculeStudent" name="matricule" placeholder="Entrez votre matricule" onChange={validateInput} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="telephoneNumber" className="text-secondary"><i class="fas fa-phone"></i> Numéro de téléphone: </label>
+                    {error.telephoneNumber !== "" ? error.telephoneNumber : ""}
+                    <input type="text" className="form-control text-center" id="telephoneNumber" name="telephoneNumber" placeholder="Entrez votre numéro de téléphone (ex: 123-456-7890)" onChange={validateInput} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="passwordStudent" className="text-secondary"><i className="fas fa-lock"></i> Mot de passe: </label>

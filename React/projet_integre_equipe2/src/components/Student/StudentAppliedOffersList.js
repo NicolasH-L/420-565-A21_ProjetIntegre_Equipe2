@@ -1,14 +1,17 @@
 import React from 'react'
 import _ from 'lodash'
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router-dom'
 import OfferModalView from '../OfferModalView'
 
-const StudentAppliedOffersList = (newStudent) => {
+const StudentAppliedOffersList = ({onSetDate}) => {
     const [studentOffers, setStudentOffers] = useState([])
     const [tmpStudentOffers, setTmpStudentOffers] = useState([])
     const history = useHistory()
     const historyState = history.location.state
+    const student = historyState.student
+    const location = useLocation()
+
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     const baseUrl = 'http://localhost:8888/offers-list'
@@ -26,7 +29,7 @@ const StudentAppliedOffersList = (newStudent) => {
     }, [])
 
     const fetchStudentOffers = async () => {
-        const res = await fetch(`${baseUrl}/student-offers/student/${historyState.id}`)
+        const res = await fetch(`${baseUrl}/student-offers/student/${student.id}`)
         return await res.json()
     }
 
@@ -64,9 +67,6 @@ const StudentAppliedOffersList = (newStudent) => {
         let interviewDate = tmpStudentOffers[index].interviewDate
         if (interviewDate === null)
             return alert("Erreur! veuillez choisir une date.")
-        else if (newStudent.student.currentStatus !== "En attente") {
-            return alert("Veuillez mettre à jours votre statut")
-        }
         updateStudentOfferDate(tmpStudentOffers[index])
     }
 
@@ -87,13 +87,19 @@ const StudentAppliedOffersList = (newStudent) => {
             )
         )
         alert("Ajout de la date d'entrevue avec succès!")
+        student.currentStatus = "En attente"
+        onSetDate(student).then((data) => history.push(location.pathname, {student: data}))
+    }
+
+    const filterStudentOffers = (studentOffer) => {
+        return studentOffer.session === student.actualSession
     }
 
     return (
-        <div className="">
+        <div>
             <h2 className="text-center">Mes offres de stages</h2>
             <div className="p-5 table-responsive">
-                <table className="table table-hover bg-light shadow-lg">
+                <table className="table table-hover bg-light shadow">
                     <thead>
                         <tr>
                             <th scope="col" className="text-center">Entreprise</th>
@@ -105,7 +111,9 @@ const StudentAppliedOffersList = (newStudent) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {studentOffers.map((studentOffer) => (
+                        {studentOffers
+                        .filter(filterStudentOffers)
+                        .map((studentOffer) => (
                             <tr key={studentOffer.idStudentOffer}>
                                 <th className="text-center">{studentOffer.offer.companyName}</th>
                                 <td className="text-center">{studentOffer.offer.jobTitle}</td>

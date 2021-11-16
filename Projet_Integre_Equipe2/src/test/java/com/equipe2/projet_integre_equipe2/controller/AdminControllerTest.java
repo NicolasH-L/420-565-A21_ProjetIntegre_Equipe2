@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,5 +50,32 @@ public class AdminControllerTest {
         var actualAdmin = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Admin.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualAdmin).isEqualTo(admin);
+    }
+
+    @Test
+    public void getAllAdminTest() throws Exception {
+        List<Admin> adminList = getListOfAdmin();
+        when(adminService.getAllAdmin()).thenReturn(Optional.of(adminList));
+
+        MvcResult result = mockMvc.perform(get("/admin/get-all-admins")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(2);
+    }
+
+    private List<Admin> getListOfAdmin(){
+        List<Admin> adminList = new ArrayList<>();
+        adminList.add(Admin.adminBuilder()
+                .username("admin")
+                .password("1234")
+                .build());
+        adminList.add(Admin.adminBuilder()
+                .username("admin2")
+                .password("12345")
+                .build());
+        return adminList;
     }
 }
