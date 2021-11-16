@@ -80,36 +80,37 @@ function App() {
         {/*<Route path="/Login" component={Login} />*/}
         <Route path="/Registration" component={Registration} />
 
-        {<GuardedRoute path='/Admin' component={Admin} auth={isAdminAuthenticated} />}
         {/*<Route path="/Admin" component={Admin} />*/}
-        <Route path="/AdminOffer" component={AdminInternshipOffer} />
-        <Route path="/AdminOffersList" component={AdminInternshipOfferList} />
-        {/*<Route path="/Monitor" component={Monitor} />*/}
-        {<GuardedRoute path='/Monitor' component={Monitor} auth={isMonitorAuthenticated} />}
+        <GuardedRoute path='/Admin' component={Admin} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminOffer" component={AdminInternshipOffer} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminOffersList" component={AdminInternshipOfferList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentList" component={AdminStudentList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentCvList" component={AdminStudentCvList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminInternshipList" component={AdminInternshipList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminContracts" component={AdminContracts} auth={isAdminAuthenticated} />
 
-        <Route path="/MonitorOffer" component={MonitorInternshipOffer} />
-        <Route path="/MonitorOfferList" component={MonitorOfferList} />
-        <Route path="/MonitorStudentList" component={MonitorStudentList} />
+        {/*<Route path="/Monitor" component={Monitor} />*/}
+        <GuardedRoute path='/Monitor' component={Monitor} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorOffer" component={MonitorInternshipOffer} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorOfferList" component={MonitorOfferList} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorStudentList" component={MonitorStudentList} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorContracts" component={MonitorContracts} auth={isMonitorAuthenticated} />
+
         {/*<Route path="/Student" component={Student} />*/}
         <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentUploadCV" component={StudentUploadCV} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentDocuments" component={StudentDocuments} auth={isStudentAuthenticated}/>
+        <GuardedRoute path="/StudentInternshipListOffers" component={StudentInternshipListOffers} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentSignContract" component={StudentSignContract} auth={isStudentAuthenticated} />
 
-        <Route path="/StudentUploadCV" component={StudentUploadCV} />
-        <Route path="/StudentDocuments" component={StudentDocuments} />
-        <Route path="/OfferView" component={OfferView} />
         {/*<Route path="/Supervisor" component={Supervisor} />*/}
         <GuardedRoute path='/Supervisor' component={Supervisor} auth={isSupervisorAuthenticated} />
+        <GuardedRoute path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList} auth={isSupervisorAuthenticated} />
 
-        <Route path="/StudentInternshipListOffers" component={StudentInternshipListOffers} />
-        <Route path="/AdminStudentList" component={AdminStudentList} />
-        <Route path="/AdminStudentCvList" component={AdminStudentCvList} />
+        <Route path="/OfferView" component={OfferView} />
         <Route path="/ViewDocument" component={ViewDocument} />
-        <Route path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} />
-        <Route path="/AdminInternshipList" component={AdminInternshipList} />
-        <Route path="/StudentSignContract" component={StudentSignContract} />
-        <Route path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent}></Route>
-        <Route path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList}></Route>
-        <Route path="/MonitorContracts" component={MonitorContracts} />
-        <Route path="/AdminContracts" component={AdminContracts} />
         <Footer />
       </Switch>
     </Router>
