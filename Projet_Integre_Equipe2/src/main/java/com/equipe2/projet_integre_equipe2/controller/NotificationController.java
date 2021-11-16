@@ -38,4 +38,9 @@ public class NotificationController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @DeleteMapping("/delete-notification/{idNotification}/{idStudent}")
+    public Boolean deleteNotificationForStudent(@PathVariable int idNotification, @PathVariable int idStudent) {
+        return notificationService.deleteNotificationForStudent(idNotification, idStudent);
+    }
+
 }

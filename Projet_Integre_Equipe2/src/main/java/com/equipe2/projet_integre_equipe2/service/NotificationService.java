@@ -48,4 +48,12 @@ public class NotificationService {
             return Optional.empty();
         }
     }
+
+    public boolean deleteNotificationForStudent(int idNotification, int idStudent){
+        try {
+            return notificationRepository.deleteNotificationByIdNotificationAndStudent_Id(idNotification, idStudent);
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

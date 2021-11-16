@@ -10,4 +10,7 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
     List<Notification> findAllByStudent_id(int id);
+
+    boolean deleteNotificationByIdNotificationAndStudent_Id(int idNotification, int idStudent);
+
 }
