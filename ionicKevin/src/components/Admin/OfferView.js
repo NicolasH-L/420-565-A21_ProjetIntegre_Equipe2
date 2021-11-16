@@ -27,7 +27,7 @@ const OfferView = () => {
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Horaire de travail: </IonLabel>
-                    <IonInput type="text" value={offer.jobSchedule} readonly />
+                    <IonInput type="text" value={offer.jobSchedules} readonly />
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Heures de travail: </IonLabel>
