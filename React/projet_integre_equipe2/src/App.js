@@ -29,6 +29,7 @@ import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSuperv
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import MonitorContracts from './components/Monitor/MonitorContracts'
 import AdminContracts from './components/Admin/AdminContracts'
+import ErrorRoute from './components/ErrorRoute';
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
@@ -111,6 +112,8 @@ function App() {
 
         <Route path="/OfferView" component={OfferView} />
         <Route path="/ViewDocument" component={ViewDocument} />
+
+        <Route path="*" component={ErrorRoute} />
         <Footer />
       </Switch>
     </Router>
