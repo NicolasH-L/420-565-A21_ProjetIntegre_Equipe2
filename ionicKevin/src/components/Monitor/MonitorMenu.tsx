@@ -1,7 +1,6 @@
 import { IonMenu, IonContent, IonList, IonListHeader, IonMenuToggle, IonItem, IonIcon, IonLabel } from '@ionic/react';
-import React from 'react'
 import { useLocation } from 'react-router-dom';
-import { createOutline } from 'ionicons/icons';
+import { addCircleOutline } from 'ionicons/icons';
 
 
 interface MonitorMenuOptions {
@@ -15,8 +14,8 @@ const monitorMenu: MonitorMenuOptions[] = [
     {
       title: 'Déposer offre',
       url: '/monitor/monitorOffer',
-      iosIcon: createOutline,
-      mdIcon: createOutline
+      iosIcon: addCircleOutline,
+      mdIcon: addCircleOutline
   
     }
   ];

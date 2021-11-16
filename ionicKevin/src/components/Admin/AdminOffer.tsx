@@ -1,8 +1,6 @@
-import { IonBadge, IonButton, IonDatetime, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToast } from '@ionic/react';
-import { result } from 'lodash';
-import React, { useEffect, useState } from 'react'
+import { IonBadge, IonButton, IonDatetime, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToast } from '@ionic/react';
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import { RegexPattern } from '../RegexPattern';
 
 const AdminOffer = () => {
