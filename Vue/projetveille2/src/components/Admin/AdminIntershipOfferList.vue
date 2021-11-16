@@ -36,6 +36,7 @@
 <script>
 import AdminNavbar from "./AdminNavbar.vue";
 import AdminService from "./AdminService";
+import router from "../../router"
 
 export default {
   name: "AdminInternshipOfferList",
@@ -54,7 +55,7 @@ export default {
       });
     },
     viewOffer(offer) {
-      history.push("/OfferView", offer)
+      router.push({name:"OfferView", params: {offer: JSON.stringify({...offer})}  })
     },
     acceptOffer(offer){
         AdminService.acceptOffer(offer).then((response) =>{

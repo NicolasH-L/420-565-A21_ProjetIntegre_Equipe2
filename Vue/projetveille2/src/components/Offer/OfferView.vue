@@ -215,13 +215,19 @@ export default {
   data() {
     return {
       offer: JSON.parse(this.$route.params.offer),
-      student: JSON.parse(this.$route.params.student),
     };
   },
   methods: {
     goBack() {
-      var student = JSON.parse(this.$route.params.student);
-      router.push({ name: "StudentInternshipListOffers", params: { student: JSON.stringify({...student}) } });
+      if (this.$route.params.student !== undefined) {
+        var student = JSON.parse(this.$route.params.student);
+        router.push({
+          name: "StudentInternshipListOffers",
+          params: { student: JSON.stringify({ ...student }) },
+        });
+      } else {
+        router.push({name:"AdminInternshipOfferList"})
+      }
     },
   },
 };

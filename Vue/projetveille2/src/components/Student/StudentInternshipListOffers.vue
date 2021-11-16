@@ -24,7 +24,7 @@
             <button className="btn btn-primary" @click="goToOfferView(offer)">
               Consulter
             </button>
-            <div v-if="test(offer.idOffer, this.studentId)"></div>
+            <div v-if="verifyAppliedToOfferStatusOnLoad(offer.idOffer, this.studentId)"></div>
             <div v-if="this.show === false && this.applyOfferButton.message === empty">
               <select
                 defaultValue="DEFAULT"
@@ -112,7 +112,7 @@ export default {
       } else {
         studentId = this.$route.params.id;
       }
-      StudentService.getDocuments(studentId).then((response) => {
+      StudentService.getValidDocumentsbyStudent(studentId).then((response) => {
         this.documents = response;
       });
     },
@@ -173,7 +173,7 @@ export default {
     setOffer(offer) {
       this.studentOfferApplication.offer = offer;
     },
-    test(offerId, studentId) {
+    verifyAppliedToOfferStatusOnLoad(offerId, studentId) {
       OfferService.verifyAppliedToOfferStatusOnLoad(offerId, studentId).then((data) =>{
         console.log(data)
         this.show = data

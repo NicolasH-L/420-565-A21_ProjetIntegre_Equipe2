@@ -40,7 +40,6 @@
       </table>
     </div>
   </div>
-  <button @click="test()">Tesst</button>
 </template>
 
 <script>
@@ -65,9 +64,6 @@ export default {
       AdminService.getAllStudents().then((response) => {
         this.students = response;
       });
-    },
-    test() {
-      console.log(this.$route.params);
     },
     viewStudentCvList(student) {
       router.push({

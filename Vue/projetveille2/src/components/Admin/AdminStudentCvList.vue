@@ -33,7 +33,6 @@
         </tbody>
       </table>
     </div>
-    <button @click="test()">Test</button>
   </div>
 </template>
 
@@ -68,10 +67,6 @@ export default {
       router.push({name: "ViewDocument", params:{document: JSON.stringify({...document}), 
                                                   admin: JSON.stringify({...this.admin}),
                                                    student: JSON.stringify({...this.student}) }})
-    },
-    test() {
-      console.log(this.$route.params);
-      console.log(this.student);
     },
     updateCvStatus(document, isValid) {
       AdminService.updateCvStatus(document, isValid).then((response) => {
