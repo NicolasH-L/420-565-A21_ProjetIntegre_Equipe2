@@ -8,12 +8,13 @@ const StudentNotifications = ({idStudent}) => {
     const [studentID, setStudentID] = useState(idStudent)
     
     useEffect(() => {
-        const getNotification = async () => {
-            const notificationFromServer = await fetchNotificationStudent(studentID)
-            setNotificationList(notificationFromServer)
-        }
-        getNotification()
+        getNotifications()
     }, [notificationList.length])
+    
+    const getNotifications = async () => {
+        const notificationFromServer = await fetchNotificationStudent(studentID)
+        setNotificationList(notificationFromServer)
+    }
 
     const fetchNotificationStudent = async (idStudent) => {
         const res = await fetch(`${baseUrl}/notification/get-notification-student/${idStudent}`)
@@ -23,7 +24,7 @@ const StudentNotifications = ({idStudent}) => {
     return (
         <div>
             {notificationList !== undefined ?
-                <Notification notificationList={notificationList} studentId={studentID}/>
+                <Notification notificationList={notificationList} studentId={studentID} getNotificationsMethod={getNotifications}/>
             : ""}
         </div>
     )
