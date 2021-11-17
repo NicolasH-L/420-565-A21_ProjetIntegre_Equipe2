@@ -11,6 +11,7 @@ const AdminContracts = () => {
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
+    const internshipCompletedStatus = "Completed"
 
     useEffect(() => {
         if (filters.signatureStatus === "") {
@@ -62,7 +63,7 @@ const AdminContracts = () => {
 
     const displayDownloadButton = (contract) => {
         return (
-            <button onClick={e => { e.preventDefault(); getContractPdf(contract) }}>Télécharger</button>
+            <button type="button" className="btn btn-success" onClick={e => { e.preventDefault(); getContractPdf(contract) }}>Télécharger</button>
         )
     }
 
@@ -140,7 +141,9 @@ const AdminContracts = () => {
                                                 <td className="w-25">
                                                     <ContractModalView userPasswordProp={admin.password}
                                                         currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
-                                                    {(contract.studentSignature !== null && contract.monitorSignature !== null && contract.adminSignature !== null) ? displayDownloadButton(contract) : ""}
+                                                </td>
+                                                <td>
+                                                {(contract.internship.status === internshipCompletedStatus) ? displayDownloadButton(contract) : ""}
                                                 </td>
                                             </tr>
                                         ))}

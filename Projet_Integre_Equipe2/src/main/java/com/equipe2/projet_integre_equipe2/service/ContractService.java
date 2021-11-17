@@ -65,6 +65,8 @@ public class ContractService {
             CreateFile(newFilePath,fileType,contract); // Je cree le document avec les donnes entrer dedans
             byte[] contractBytes = Files.readAllBytes(Paths.get(newFilePath)); // Je recupere les donnes du pdf
             DeleteFile(newFilePath); // Je supprime le document
+            contract.setPdf(contractBytes);
+            contractRepository.save(contract);
             return Optional.of(contractBytes);
         } catch (Exception exception) {
             return Optional.empty();

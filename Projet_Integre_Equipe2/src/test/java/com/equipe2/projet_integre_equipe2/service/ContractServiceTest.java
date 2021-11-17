@@ -219,6 +219,7 @@ public class ContractServiceTest {
     public void testGenerateDocument() {
         Optional<byte []> actualBytes = contractService.GenerateDocument("Contract",contract);
         assertThat(actualBytes.get()).isNotNull();
+        assertThat(contract.getPdf()).isNotNull();
     }
 
     @Test
