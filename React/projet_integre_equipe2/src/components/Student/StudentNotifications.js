@@ -3,11 +3,9 @@ import { useEffect, useState } from 'react'
 import { Notification } from '../Notification/Notification'
 
 const StudentNotifications = ({idStudent}) => {
-    const [notificationList, setNotificationList] = useState([])
-    const [studentID, setStudentID] = useState(
-        idStudent
-    )
     const baseUrl = "http://localhost:8888"
+    const [notificationList, setNotificationList] = useState([])
+    const [studentID, setStudentID] = useState(idStudent)
     
     useEffect(() => {
         const getNotification = async () => {
@@ -25,7 +23,7 @@ const StudentNotifications = ({idStudent}) => {
     return (
         <div>
             {notificationList !== undefined ?
-                <Notification notificationList={notificationList}/>
+                <Notification notificationList={notificationList} studentId={studentID}/>
             : ""}
         </div>
     )

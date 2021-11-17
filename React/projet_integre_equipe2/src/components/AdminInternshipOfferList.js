@@ -4,7 +4,13 @@ import AdminNavbar from './AdminNavbar'
 import { useHistory } from 'react-router-dom'
 
 const AdminInternshipOfferList = () => {
+    const typeNotification = "Offre"
+    const message = "Nouvelle offre de stage disponible"
+
     const [offers, setOffers] = useState([])
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: message
+    })
     const history = useHistory()
     const admin = history.location.state.admin
 
@@ -37,6 +43,19 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? {...offer1, valid: data.valid, state: data.state} : offer1
             )
         )
+        createNotificationStudent(notification)
+    }
+
+    const createNotificationStudent = async (notification) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification/`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const declineOffer = async (offer) => {

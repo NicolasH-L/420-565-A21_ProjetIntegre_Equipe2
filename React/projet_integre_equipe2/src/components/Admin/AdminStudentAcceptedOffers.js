@@ -7,7 +7,9 @@ const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
     const monitorTerms = "Suivre le progrès du stagiaire et documenter ce qu'il/elle fait lors de son stage afin de préparer une évaluation lorsque ce dernier ou cette dernière fini son stage."
     const studentTerms = "Accomplir ou réaliser les tâches demandées par le moniteur. Améliorer ou continuer à développer les besoins auprès de l'équipe et s'assurer que tout est conforme."
-    
+    const typeNotification = "Signature"
+    const message = "Veuillez signer le contrat disponible"
+
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({
         isSignedByStudent: false, isSignedByMonitor: false, status: "",
@@ -18,6 +20,10 @@ const AdminStudentAcceptedOffers = () => {
         collegeResponsability: collegeTerms, companyResponsability: monitorTerms,
         studentResponsability: studentTerms, studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
+    })
+
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: message
     })
 
     const history = useHistory()
@@ -79,6 +85,20 @@ const AdminStudentAcceptedOffers = () => {
             })
         const data = await res.json()
         alert("Processus de signature commencé")
+        createNotificationStudent(internship, notification)
+    }
+
+    const createNotificationStudent = async (internship, notification) => {
+        let idStudent = internship.student.id
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-student/${idStudent}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const setInternshipSession = () => {
