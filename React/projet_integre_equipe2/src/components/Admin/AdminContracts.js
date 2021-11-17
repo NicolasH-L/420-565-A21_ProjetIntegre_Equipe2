@@ -14,7 +14,7 @@ const AdminContracts = () => {
 
     useEffect(() => {
         if (filters.signatureStatus === "") {
-            setFilters({ ...filters, signatureStatus: "default"})
+            setFilters({ ...filters, signatureStatus: "default" })
         }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
@@ -59,6 +59,36 @@ const AdminContracts = () => {
             </div>
         )
     }
+
+    const displayDownloadButton = (contract) => {
+        return (
+            <button onClick={e => { e.preventDefault(); getContractPdf(contract) }}>Télécharger</button>
+        )
+    }
+
+    const getContractPdf = async (contract) => {
+        console.log(contract)
+        const result = await fetch('http://localhost:8888/contract/get-contract-pdf',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+
+        const data = await result.arrayBuffer()
+        saveByteArray("Contract",data)
+    }
+
+    function saveByteArray(reportName, byte) {
+    var blob = new Blob([byte], {type: "application/pdf"});
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    var fileName = reportName;
+    link.download = fileName;
+    link.click();
+    };  
 
     return (
         <div>
@@ -110,6 +140,7 @@ const AdminContracts = () => {
                                                 <td className="w-25">
                                                     <ContractModalView userPasswordProp={admin.password}
                                                         currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
+                                                    {(contract.studentSignature !== null && contract.monitorSignature !== null && contract.adminSignature !== null) ? displayDownloadButton(contract) : ""}
                                                 </td>
                                             </tr>
                                         ))}

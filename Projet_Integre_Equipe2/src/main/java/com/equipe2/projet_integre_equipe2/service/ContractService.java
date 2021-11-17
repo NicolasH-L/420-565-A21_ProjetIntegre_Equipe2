@@ -59,12 +59,16 @@ public class ContractService {
             return Optional.empty();
         }
     }
-    public byte[] GenerateDocument(String fileType, Contract contract, String matricule) throws IOException { // + params Evaluation
-        String newFilePath = "files/userFiles/" + matricule + ".pdf"; // Je definis le lieu de creation du pdf *a mettre dans le app properties*
-        CreateFile(newFilePath,fileType,contract); // Je cree le document avec les donnes entrer dedans
-        byte[] contractBytes = Files.readAllBytes(Paths.get(newFilePath)); // Je recupere les donnes du pdf
-        DeleteFile(newFilePath); // Je supprime le document
-        return contractBytes;
+    public Optional<byte[]> GenerateDocument(String fileType, Contract contract) { // + params Evaluation
+        try {
+            String newFilePath = "files/userFiles/" + contract.getIdContract() + ".pdf";
+            CreateFile(newFilePath,fileType,contract); // Je cree le document avec les donnes entrer dedans
+            byte[] contractBytes = Files.readAllBytes(Paths.get(newFilePath)); // Je recupere les donnes du pdf
+            DeleteFile(newFilePath); // Je supprime le document
+            return Optional.of(contractBytes);
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
     }
 
     public void CreateFile(String newFilePath ,String fileType, Contract contract) throws IOException {
@@ -85,7 +89,7 @@ public class ContractService {
 
             EditContract(fields, contract);
 
-            //form.flattenFields();
+            form.flattenFields();
             pdf.close();
         }
     }
@@ -125,5 +129,4 @@ public class ContractService {
         File deleteFile = new File (newFilePath);
         deleteFile.delete();
     }
-
 }
