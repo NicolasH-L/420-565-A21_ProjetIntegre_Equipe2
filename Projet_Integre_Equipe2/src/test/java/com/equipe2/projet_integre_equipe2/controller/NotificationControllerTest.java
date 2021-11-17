@@ -23,8 +23,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(NotificationController.class)
 public class NotificationControllerTest {
@@ -50,6 +50,7 @@ public class NotificationControllerTest {
                 .build();
 
         notification = Notification.builder()
+                .idNotification(1)
                 .typeNotification("CV")
                 .message("CV refuser")
                 .student(Arrays.asList(student))
@@ -96,6 +97,19 @@ public class NotificationControllerTest {
         });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualNotificationList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void deleteNotification() throws Exception {
+        when(notificationService.deleteNotificationForStudent(notification.getIdNotification(), student.getId())).thenReturn(true);
+        MvcResult result = mockMvc.perform(delete("/notification/delete-notification/" + notification.getIdNotification() + "/" + student.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualDeletedNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Boolean>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDeletedNotification).isEqualTo(true);
     }
 
     private List<Notification> getNotificationsList() {

@@ -44,6 +44,7 @@ public class NotificationServiceTest {
                 .build();
 
         notification = Notification.builder()
+                .idNotification(1)
                 .typeNotification("test")
                 .message("Voici un message")
                 .student(Arrays.asList(student))
@@ -95,6 +96,30 @@ public class NotificationServiceTest {
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(null);
         Optional<List<Notification>> actualNotificationList = notificationService.getNotification(student.getId());
         assertThat(actualNotificationList).isEmpty();
+    }
+    
+    @Test
+    public void testDeleteNotificationByIdAndStudentId(){
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        when(notificationRepository.save(notification)).thenReturn(notification);
+        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification, student.getId());
+        assertThat(actualNotification.get()).isEqualTo(notification);
+
+        when(notificationRepository.deleteNotificationByIdNotificationAndStudent_Id(student.getId(), notification.getIdNotification())).thenReturn(true);
+        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getIdNotification(), student.getId());
+        assertThat(deleteNotification).isTrue();
+    }
+
+    @Test
+    public void testDeleteNotificationByIdAndStudentIdFails(){
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        when(notificationRepository.save(notification)).thenReturn(notification);
+        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification, student.getId());
+        assertThat(actualNotification.get()).isEqualTo(notification);
+
+        when(notificationRepository.deleteNotificationByIdNotificationAndStudent_Id(1, 2)).thenReturn(false);
+        boolean deleteNotification = notificationService.deleteNotificationForStudent(10, 20);
+        assertThat(deleteNotification).isFalse();
     }
 
     private List<Notification> getNotificationsList(){
