@@ -49,11 +49,24 @@ public class NotificationService {
         }
     }
 
+    /*
     public boolean deleteNotificationForStudent(int idNotification, int idStudent){
         try {
-            return notificationRepository.deleteNotificationByIdNotificationAndStudent_Id(idNotification, idStudent);
+            notificationRepository.deleteNotificationStudentByIdNotificationAndStudentId(idNotification, idStudent);
+            return notificationRepository.existsByIdNotificationAndStudent_id(idNotification, idStudent);
         } catch (Exception e){
             return false;
         }
     }
+
+    public boolean deleteAllByStudentId(int idStudent){
+        try{
+            notificationRepository.deleteAllByStudent_id(idStudent);
+            return notificationRepository.findAll().size() == 0;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    */
+
 }
