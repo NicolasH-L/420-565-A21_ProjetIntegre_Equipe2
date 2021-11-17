@@ -1,4 +1,4 @@
-package com.equipe2.projet_integre_equipe2.model;
+package com.equipe2.projet_integre_equipe2.model.evaluation;
 
 import lombok.Data;
 
