@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react'
 
-export const Notification = ({ notificationList }) => {
+export const Notification = ({ notificationList, studentId }) => {
+    const baseUrl = "http://localhost:8888/notification"
     const [list, setList] = useState()
 
     useEffect(() => {
         setList(notificationList)
     }, [notificationList.length])
+
+    function deleteNotification(idNotification){
+        console.log(idNotification)
+        console.log(studentId)
+        fetch(`${baseUrl}/delete-notification/${idNotification}/${studentId}`,
+        {
+            method: 'DELETE',
+            headers: {'Content-type': 'application/json; charset=UTF-8'}
+        }).then(console.log("J'ai delete"))
+    }
 
     return (
         <div className="btn-group mr-5">
@@ -26,7 +37,7 @@ export const Notification = ({ notificationList }) => {
                         <div className="modal-body list-group">
                             {list !== undefined ? list.map((notification) => (
                                 <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.idNotification}>
-                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }}><i className="fas fa-times fa-lg align-middle"></i></button>
+                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }} onClick={() => deleteNotification(notification.idNotification)}><i className="fas fa-times fa-lg align-middle"></i></button>
                                 </li>
                             )) : ""}
                         </div>
