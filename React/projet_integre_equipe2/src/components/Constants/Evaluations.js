@@ -7,18 +7,6 @@ export default class Evaluations{
         ]
         return behaviors
     }
-    
-    
-    static appreciatiation(){
-        const appreciationsGlobale = [
-            "Les habiletés démontrées dépassent de beaucoup les attentes",
-            "Les habiletés démontrées dépassent les attentes",
-            "Les habiletés démontrées répondent pleinement aux attentes",
-            "Les habiletés démontrées répondent partiellement aux attentes",
-            "Les habiletés démontrées ne répondent pas aux attentes"
-        ]
-        return appreciationsGlobale
-    }
 
 }
 
@@ -26,48 +14,52 @@ const productivity = {
     header: "PRODUCTIVITÉ",
     subHeader: "Capacité d’optimiser son rendement au travail",
     capabilities: [
-        "planifier et organiser son travail de façon efficace",
-        "comprendre rapidement les directives relatives à son travail",
-        "maintenir un rythme de travail soutenu",
-        "établir ses priorités",
-        "respecter ses échéanciers"
-    ]
+        {capability:"Planifier et organiser son travail de façon efficace", value: ""},
+        {capability:"Comprendre rapidement les directives relatives à son travail", value: ""},
+        {capability:"Maintenir un rythme de travail soutenu", value: ""},
+        {capability:"Établir ses priorités", value: ""},
+        {capability:"Respecter ses échéanciers", value: ""}
+    ],
+    comments: ""
 }
 
 const workQuality = {
     header: "QUALITÉ DU TRAVAIL",
     subHeader: "Capacité de s’acquitter des tâches sous sa responsabilité en s’imposant personnellement des normes de qualité",
     capabilities: [
-        "respecter les mandats qui lui ont été confiés",
-        "porter attention aux détails dans la réalisation de ses tâches",
-        "vérifier son travail, s’assurer que rien n’a été oublié",
-        "rechercher des occasions de se perfectionner",
-        "faire une bonne analyse des problèmes rencontrés"
-    ]
+        {capability:"Respecter les mandats qui lui ont été confiés", value: ""},
+        {capability:"Porter attention aux détails dans la réalisation de ses tâches", value: ""},
+        {capability:"Vérifier son travail, s’assurer que rien n’a été oublié", value: ""},
+        {capability:"Rechercher des occasions de se perfectionner", value: ""},
+        {capability:"Faire une bonne analyse des problèmes rencontrés", value: ""}
+    ],
+    comments: ""
 }
 
 const relationsQuality = {
     header: "QUALITÉS DES RELATIONS INTERPERSONNELLES",
     subHeader: "Capacité d’établir des interrelations harmonieuses dans son milieu de travail",
     capabilities: [
-        "établir facilement des contacts avec les gens",
-        "contribuer activement au travail d’équipe",
-        "s’adapter facilement à la culture de l’entreprise",
-        "accepter les critiques constructives",
-        "être respectueux envers les gens",
-        "faire preuve d’écoute active en essayant de comprendre le point de vue de l’autre"
-    ]
+        {capability:"Établir facilement des contacts avec les gens", value: ""},
+        {capability:"Contribuer activement au travail d’équipe", value: ""},
+        {capability:"S’adapter facilement à la culture de l’entreprise", value: ""},
+        {capability:"Accepter les critiques constructives", value: ""},
+        {capability:"Être respectueux envers les gens", value: ""},
+        {capability:"Faire preuve d’écoute active en essayant de comprendre le point de vue de l’autre", value: ""}
+    ],
+    comments: ""
 }
 
 const personalAbilities = {
     header: "HABILETÉS PERSONNELLES",
     subHeader: "Capacité de faire preuve d’attitudes ou de comportements matures et responsables",
     capabilities: [
-        "démontrer de l’intérêt et de la motivation au travail",
-        "exprimer clairement ses idées",
-        "faire preuve d’initiative",
-        "travailler de façon sécuritaire",
-        "démontrer un bon sens des responsabilités nerequérant qu’un minimum de supervision",
-        "être ponctuel et assidu à son travail"
-    ]
+        {capability:"Démontrer de l’intérêt et de la motivation au travail", value: ""},
+        {capability:"Exprimer clairement ses idées", value: ""},
+        {capability:"Faire preuve d’initiative", value: ""},
+        {capability:"Travailler de façon sécuritaire", value: ""},
+        {capability:"Démontrer un bon sens des responsabilités ne requérant qu’un minimum de supervision", value: ""},
+        {capability:"Être ponctuel et assidu à son travail", value: ""}
+    ],
+    comments: ""
 }
