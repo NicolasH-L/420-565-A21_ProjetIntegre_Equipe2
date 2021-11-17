@@ -98,7 +98,7 @@ public class NotificationControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualNotificationList.size()).isEqualTo(1);
     }
-
+    /*
     @Test
     public void deleteNotification() throws Exception {
         when(notificationService.deleteNotificationForStudent(notification.getIdNotification(), student.getId())).thenReturn(true);
@@ -111,6 +111,7 @@ public class NotificationControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualDeletedNotification).isEqualTo(true);
     }
+    */
 
     private List<Notification> getNotificationsList() {
         List<Notification> notificationList = new ArrayList<>();
