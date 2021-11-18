@@ -76,6 +76,7 @@ public class ContractService {
         PDDocument document = new PDDocument();
         document.save(newFilePath);
         WriteFile(newFilePath,fileType, contract);
+        document.close();
     }
 
     public void WriteFile(String newFilePath, String fileType, Contract contract) throws IOException {
