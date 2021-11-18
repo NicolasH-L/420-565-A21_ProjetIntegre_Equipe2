@@ -12,4 +12,5 @@ public class InternEvaluation {
     private List<Behavior> behaviors;
     private Integer actualWeeklyHours;
     private Appreciation appreciation;
+    private ReHireIntern reHireIntern;
 }
