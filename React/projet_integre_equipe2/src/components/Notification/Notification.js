@@ -8,7 +8,6 @@ export const Notification = ({ notificationList, studentId }) => {
         setList(notificationList)
     }, [notificationList.length])
 
-    /*
     const deleteNotification = async (idNotification) =>{
         const result = await fetch(`${baseUrl}/delete-notification/${idNotification}/${studentId}`,
         {
@@ -18,8 +17,11 @@ export const Notification = ({ notificationList, studentId }) => {
         return await result
     }
 
+    const modificationlistNotification = async (idNotification) => {
+        setList(list.filter((notification1) => notification1.id !== idNotification))
+    }
+
     const deleteAllNotifications = async () => {
-        console.log("sdfsdf")
         const result = await fetch(`${baseUrl}/delete-notification/${studentId}`, 
         {   
             method: 'DELETE', 
@@ -27,7 +29,6 @@ export const Notification = ({ notificationList, studentId }) => {
         })
         return await result
     }
-    */
 
     return (
         <div className="btn-group mr-5">
@@ -47,13 +48,13 @@ export const Notification = ({ notificationList, studentId }) => {
                         </div>
                         <div className="modal-body list-group">
                             {list !== undefined ? list.map((notification) => (
-                                <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.idNotification}>
-                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }} /*onClick={() => deleteNotification(notification.idNotification)})*/><i className="fas fa-times fa-lg align-middle"></i></button>
+                                <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.id}>
+                                    {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }} onClick={() => deleteNotification(notification.id).then((data) => data ? modificationlistNotification(notification.id) : "")}><i className="fas fa-times fa-lg align-middle"></i></button>
                                 </li>
                             )) : ""}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-info" /*onClick={deleteAllNotifications}*/>Tout supprimer</button>
+                            <button type="button" className="btn btn-info" onClick={() => deleteAllNotifications().then((data) => data ? setList([]) : "")}>Tout supprimer</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         </div>
                     </div>
