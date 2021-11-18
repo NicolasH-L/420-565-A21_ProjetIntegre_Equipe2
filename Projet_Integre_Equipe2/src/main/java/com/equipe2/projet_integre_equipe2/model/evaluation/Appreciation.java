@@ -7,7 +7,7 @@ import lombok.Data;
 public class Appreciation {
 
     private String expectationResult;
-    private String appreciation;
+    private String appreciations;
     private boolean isDiscussed;
 
 }
