@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,18 +32,33 @@ public class StudentControllerTest {
     private StudentService studentService;
 
     private Student student;
+    private Student studentRegistered;
     private Student invalidCvStudent;
+    private PasswordService passwordService;
+    private String rawPassword = "pass1234";
 
     @BeforeEach
     void setup(){
+        passwordService = new PasswordService();
+        String encodedPassword = passwordService.encodePassword(rawPassword);
         student = Student.studentBuilder()
                 .id(1)
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("1234567")
-                .password("1234")
+                .password(rawPassword)
                 .isCvValid(true)
                 .build();
+
+        studentRegistered = Student.studentBuilder()
+                .id(1)
+                .firstName("Toto")
+                .lastName("Tata")
+                .matricule("1234567")
+                .password(encodedPassword)
+                .isCvValid(true)
+                .build();
+
         invalidCvStudent = Student.studentBuilder()
                 .id(5)
                 .firstName("Toto")
@@ -55,22 +71,22 @@ public class StudentControllerTest {
 
     @Test
     public void registerStudentTest() throws Exception {
-        when(studentService.registerStudent(student)).thenReturn(Optional.of(student));
+        when(studentService.registerStudent(student)).thenReturn(Optional.of(studentRegistered));
 
         MvcResult result = mockMvc.perform(post("/students/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(student))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(studentRegistered))).andReturn();
 
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(student).isEqualTo(actualStudent);
+        assertThat(studentRegistered).isEqualTo(actualStudent);
     }
 
     @Test
     public void loginStudentTest() throws Exception{
-        when(studentService.loginStudent(student.getMatricule(), student.getPassword())).thenReturn(Optional.of(student));
+        when(studentService.loginStudent(student.getMatricule(), rawPassword)).thenReturn(Optional.of(student));
 
-        MvcResult result = mockMvc.perform(get("/students/1234567/1234")
+        MvcResult result = mockMvc.perform(get("/students/{matricule}/{password}", student.getMatricule(), rawPassword)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
