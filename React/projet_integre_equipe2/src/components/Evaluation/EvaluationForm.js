@@ -109,9 +109,8 @@ const EvaluationForm = ({ contractProp }) => {
 
     const onValueChanged = (e) => {
         e.preventDefault()
-        console.log(e.target.value)
         let hasError = false
-        if (e.target.value >= 0 && e.target.value <= 168) {
+        if (e.target.value >= 0 && e.target.value <= 168 && e.target.value !== "") {
             hasError = false
         }else{
             hasError = true

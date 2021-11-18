@@ -7,5 +7,8 @@ import java.util.List;
 @Data
 public class Behavior {
 
-    List<Capability> capabilities;
+    private String header;
+    private String subHeader;
+    private List<Capability> capabilities;
+    private String comments;
 }

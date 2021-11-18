@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import MonitorNavbar from '../MonitorNavbar'
 import ContractModalView from '../Contract/ContractModalView'
+import DownloadButton from '../DownloadButton'
+import DownloadContract from '../DownloadContract'
 
 const MonitorContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -11,10 +13,11 @@ const MonitorContracts = () => {
     const history = useHistory()
     const historyState = history.location.state
     const monitor = historyState.monitor
+    const contractCompletedStatus = "Completed"
 
     useEffect(() => {
         if (filters.signatureStatus === "") {
-            setFilters({...filters, signatureStatus: "default"})
+            setFilters({ ...filters, signatureStatus: "default" })
         }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
@@ -109,6 +112,13 @@ const MonitorContracts = () => {
                                             <td className="w-25">
                                                 <ContractModalView userPasswordProp={monitor.password}
                                                     currentStatusProp={Signature.getMonitorSignatureStatus()} contractProp={contract} signature={contract.monitorSignature} />
+                                            </td>
+                                            <td>
+                                                {(contract.internship.status === contractCompletedStatus) ?
+                                                    <div className="d-flex justify-content-center mb-4">
+                                                        <DownloadContract contract={contract}></DownloadContract>
+                                                    </div>
+                                                    : ""}
                                             </td>
                                         </tr>
                                     ))}
