@@ -44,7 +44,7 @@ public class NotificationServiceTest {
                 .build();
 
         notification = Notification.builder()
-                .idNotification(1)
+                .id(1)
                 .typeNotification("test")
                 .message("Voici un message")
                 .student(Arrays.asList(student))
@@ -87,41 +87,47 @@ public class NotificationServiceTest {
     @Test
     public void testGetNotification(){
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(getNotificationsList());
-        Optional<List<Notification>> actualNotificationList = notificationService.getNotification(student.getId());
+        Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
         assertThat(actualNotificationList.get().size()).isEqualTo(1);
     }
 
     @Test
     public void testGetNotificationFail(){
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(null);
-        Optional<List<Notification>> actualNotificationList = notificationService.getNotification(student.getId());
+        Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
         assertThat(actualNotificationList).isEmpty();
     }
 
-    /*
     @Test
-    public void testDeleteNotificationByIdAndStudentId(){
+    public void testGetMaNotification(){
+        when(notificationRepository.findNotificationById(notification.getId())).thenReturn(notification);
+        Optional<Notification> actualNotification = notificationService.getMaNotification(notification.getId());
+        assertThat(actualNotification.get()).isEqualTo(notification);
+    }
+
+    @Test
+    public void testGetMaNotificationFails(){
+        when(notificationRepository.findNotificationById(notification.getId())).thenReturn(null);
+        Optional<Notification> actualNotification = notificationService.getMaNotification(3);
+        assertThat(actualNotification).isEqualTo(Optional.empty());
+    }
+
+    //TODO A revoir les tests
+    @Test
+    public void testDeleteNotificationForStudent(){
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(notificationRepository.save(notification)).thenReturn(notification);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification, student.getId());
-        assertThat(actualNotification.get()).isEqualTo(notification);
 
-//        when(notificationRepository.deleteNotificationByIdNotificationAndStudent_id(student.getId(), notification.getIdNotification())).thenReturn(true);
-        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getIdNotification(), student.getId());
+//        when(notificationRepository.deleteNotificationByIdAndStudent_id(notification.getId(), student.getId())).thenReturn(true);
+        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getId(), student.getId());
         assertThat(deleteNotification).isTrue();
     }
 
     @Test
-    public void testDeleteNotificationByIdAndStudentIdFails(){
-        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
-        when(notificationRepository.save(notification)).thenReturn(notification);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification, student.getId());
-        assertThat(actualNotification.get()).isEqualTo(notification);
-
-//        when(notificationRepository.deleteNotificationByIdNotificationAndStudent_id(1, 2)).thenReturn(false);
-        boolean deleteNotification = notificationService.deleteNotificationForStudent(10, 20);
+    public void testDeleteNotificationForStudentFails(){
+        boolean deleteNotification = notificationService.deleteNotificationForStudent(1, 2);
         assertThat(deleteNotification).isFalse();
-    }*/
+    }
 
     private List<Notification> getNotificationsList(){
         List<Notification> notificationList = new ArrayList<>();

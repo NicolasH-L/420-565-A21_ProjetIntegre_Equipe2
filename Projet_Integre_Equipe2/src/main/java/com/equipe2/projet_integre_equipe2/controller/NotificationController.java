@@ -33,12 +33,11 @@ public class NotificationController {
 
     @GetMapping("/get-notification-student/{id}")
     public ResponseEntity<List<Notification>> getNotification(@PathVariable int id){
-        return notificationService.getNotification(id)
+        return notificationService.getNotifications(id)
                 .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    /*
     @DeleteMapping("/delete-notification/{idNotification}/{idStudent}")
     public Boolean deleteNotificationForStudent(@PathVariable int idNotification, @PathVariable int idStudent) {
         return notificationService.deleteNotificationForStudent(idNotification, idStudent);
@@ -47,6 +46,6 @@ public class NotificationController {
     @DeleteMapping("/delete-notification/{idStudent}")
     public Boolean deleteAllNotificationForStudent(@PathVariable int idStudent) {
         return notificationService.deleteAllByStudentId(idStudent);
-    }*/
+    }
 
 }

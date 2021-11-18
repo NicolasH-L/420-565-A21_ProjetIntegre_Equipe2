@@ -41,7 +41,7 @@ public class NotificationService {
         }
     }
 
-    public Optional<List<Notification>> getNotification(int id){
+    public Optional<List<Notification>> getNotifications(int id){
         try {
             return Optional.of(notificationRepository.findAllByStudent_id(id));
         } catch (Exception e){
@@ -49,24 +49,39 @@ public class NotificationService {
         }
     }
 
-    /*
+    public Optional<Notification> getMaNotification(int id){
+        try {
+            return Optional.of(notificationRepository.findNotificationById(id));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
+    //TODO Faire le test de suppresion par l'id de la notification et l'id du student
     public boolean deleteNotificationForStudent(int idNotification, int idStudent){
         try {
-            notificationRepository.deleteNotificationStudentByIdNotificationAndStudentId(idNotification, idStudent);
-            return notificationRepository.existsByIdNotificationAndStudent_id(idNotification, idStudent);
+            Notification notification = getMaNotification(idNotification).get();
+            Student student = studentRepository.findById(idStudent).get();
+            notification.getStudent().remove(student);
+            notificationRepository.save(notification);
+//            notificationRepository.deleteNotificationByIdAndStudent_id(notification.getId(), idStudent);
+            return notificationRepository.existsByIdAndStudent_id(idNotification, idStudent);
         } catch (Exception e){
             return false;
         }
     }
 
+    //TODO Faire le test de suppression par l'id du student
     public boolean deleteAllByStudentId(int idStudent){
         try{
-            notificationRepository.deleteAllByStudent_id(idStudent);
+            Student student = studentRepository.findById(idStudent).get();
+            for (Notification notification: notificationRepository.findAllByStudent_id(idStudent)) {
+                notification.getStudent().remove(student);
+                notificationRepository.save(notification);
+            }
             return notificationRepository.findAll().size() == 0;
         }catch (Exception e){
             return false;
         }
     }
-    */
-
 }
