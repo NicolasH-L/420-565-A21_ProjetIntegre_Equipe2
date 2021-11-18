@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const AdminLogin = ({ onLogin }) => {
+const AdminLogin = ({ onLogin, authLogin }) => {
     const [admin, setAdmin] = useState({username: "", password: ""})
     const [error, setError] = useState({credentials:""})
     const history = useHistory()
@@ -19,6 +19,7 @@ const AdminLogin = ({ onLogin }) => {
         }
 
         function signIn(admin){
+            authLogin("admin")
             history.push("/Admin", {admin})
         }
     }  
