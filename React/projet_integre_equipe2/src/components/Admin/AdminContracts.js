@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import ContractModalView from '../Contract/ContractModalView'
+import DownloadButton from '../DownloadButton'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -61,36 +62,6 @@ const AdminContracts = () => {
         )
     }
 
-    const displayDownloadButton = (contract) => {
-        return (
-            <button type="button" className="btn btn-success" onClick={e => { e.preventDefault(); getContractPdf(contract) }}>Télécharger</button>
-        )
-    }
-
-    const getContractPdf = async (contract) => {
-        console.log(contract)
-        const result = await fetch('http://localhost:8888/contract/get-contract-pdf',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(contract)
-            })
-
-        const data = await result.arrayBuffer()
-        saveByteArray("Contract",data)
-    }
-
-    function saveByteArray(reportName, byte) {
-    var blob = new Blob([byte], {type: "application/pdf"});
-    var link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    var fileName = reportName;
-    link.download = fileName;
-    link.click();
-    };  
-
     return (
         <div>
             <div className="grad">
@@ -143,7 +114,7 @@ const AdminContracts = () => {
                                                         currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
                                                 </td>
                                                 <td>
-                                                {(contract.internship.status === internshipCompletedStatus) ? displayDownloadButton(contract) : ""}
+                                                    <DownloadButton contract={contract}></DownloadButton>
                                                 </td>
                                             </tr>
                                         ))}

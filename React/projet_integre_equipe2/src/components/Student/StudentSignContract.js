@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import StudentNavbar from '../StudentNavbar'
 import Contract from '../Contract/Contract'
+import DownloadButton from '../DownloadButton'
 
 const StudentSignContract = () => {
     const history = useHistory()
@@ -44,9 +45,12 @@ const StudentSignContract = () => {
             {internship && contract && (
                 <div className="d-flex justify-content-center my-5 py-2">
                     <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                        <div className="d-flex justify-content-center mb-4">
+                            <DownloadButton contract={contract}></DownloadButton>
+                        </div>
                         <Contract passwordUser={student.password}
-                            currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract} 
-                            signature={contract.studentSignature}/>
+                            currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
+                            signature={contract.studentSignature} />
                     </div>
                 </div>
             )}
