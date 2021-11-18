@@ -2,6 +2,7 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.repository.MonitorRepository;
+import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,12 +28,27 @@ class MonitorServiceTest {
     private MonitorService monitorService;
 
     private Monitor monitor;
+    private Monitor monitorRegistered;
+    private PasswordService passwordService;
+    private String rawPassword = "toto1*";
 
     @BeforeEach
     void setup() {
+        passwordService = new PasswordService();
+        String encodedPassword = passwordService.encodePassword(rawPassword);
+
         monitor = Monitor.monitorBuilder()
                 .id(1)
-                .password("toto")
+                .password(rawPassword)
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto.toto")
+                .build();
+
+        monitorRegistered = Monitor.monitorBuilder()
+                .id(1)
+                .password(encodedPassword)
                 .lastName("toto")
                 .firstName("toto")
                 .companyName("toto")
@@ -42,9 +58,9 @@ class MonitorServiceTest {
 
     @Test
     public void testRegisterMonitor() {
-        when(monitorRepository.save(monitor)).thenReturn(monitor);
+        when(monitorRepository.save(monitor)).thenReturn(monitorRegistered);
         Optional<Monitor> actualMonitor = monitorService.registerMonitor(monitor);
-        assertThat(actualMonitor.get()).isEqualTo(monitor);
+        assertThat(actualMonitor.get()).isEqualTo(monitorRegistered);
     }
 
     @Test
@@ -73,15 +89,15 @@ class MonitorServiceTest {
 
     @Test
     public void testLoginMonitor() {
-        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword(monitor.getEmail(), monitor.getPassword())).thenReturn(monitor);
+        when(monitorRepository.findMonitorByEmailIgnoreCase(monitor.getEmail())).thenReturn(monitorRegistered);
         Optional<Monitor> actualMonitor = monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword());
-        assertThat(actualMonitor.get()).isEqualTo(monitor);
+        assertThat(actualMonitor.get()).isEqualTo(monitorRegistered);
     }
 
     @Test
     public void testLoginMonitorFails() {
-        when(monitorRepository.findMonitorByEmailIgnoreCaseAndPassword("", "")).thenReturn(null);
-        Optional<Monitor> actualMonitor = monitorService.loginMonitor("", "");
+        when(monitorRepository.findMonitorByEmailIgnoreCase(null)).thenReturn(null);
+        Optional<Monitor> actualMonitor = monitorService.loginMonitor(null, null);
         assertThat(actualMonitor).isEqualTo(Optional.empty());
     }
 

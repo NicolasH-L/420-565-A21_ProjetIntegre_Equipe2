@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Monitor;
+import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.MonitorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,12 +33,18 @@ class MonitorControllerTest {
     private MonitorService monitorService;
     private Monitor monitor;
     private Monitor monitorDuplicateEmail;
+    private Monitor monitorRegistered;
+    private PasswordService passwordService;
+    private String rawPassword = "toto1*";
 
     @BeforeEach
     void setup() {
+        passwordService = new PasswordService();
+        String encodedPassword = passwordService.encodePassword(rawPassword);
+
         monitor = Monitor.monitorBuilder()
                 .id(1)
-                .password("1234")
+                .password(rawPassword)
                 .lastName("toto")
                 .firstName("toto")
                 .companyName("toto")
@@ -50,17 +57,30 @@ class MonitorControllerTest {
                 .lastName("toto")
                 .email("toto@toto")
                 .companyName("toto")
-                .password("1234")
+                .password(rawPassword)
+                .build();
+
+        monitorRegistered = Monitor.monitorBuilder()
+                .id(1)
+                .password(encodedPassword)
+                .lastName("toto")
+                .firstName("toto")
+                .companyName("toto")
+                .email("toto@toto")
                 .build();
     }
 
     @Test
     public void registerMonitorTest() throws Exception {
-        when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitor));
-        MvcResult result = getResult(monitor);
+        when(monitorService.registerMonitor(monitor)).thenReturn(Optional.of(monitorRegistered));
+
+        MvcResult result = mockMvc.perform(post("/monitors/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(monitorRegistered))).andReturn();
+
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(monitor).isEqualTo(actualMonitor);
+        assertThat(actualMonitor).isEqualTo(monitorRegistered);
     }
 
     @Test
@@ -106,14 +126,14 @@ class MonitorControllerTest {
 
     @Test
     public void testLoginMonitor() throws Exception {
-        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(Optional.of(monitor));
+        when(monitorService.loginMonitor(monitor.getEmail(), monitor.getPassword())).thenReturn(Optional.of(monitorRegistered));
 
-        MvcResult result = mockMvc.perform(get("/monitors/toto@toto/1234")
+        MvcResult result = mockMvc.perform(get("/monitors/{email}/{password}", monitor.getEmail(), monitor.getPassword())
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualMonitor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Monitor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualMonitor).isEqualTo(monitor);
+        assertThat(actualMonitor).isEqualTo(monitorRegistered);
     }
 
     @Test
