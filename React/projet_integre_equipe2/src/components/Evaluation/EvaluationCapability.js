@@ -1,46 +1,56 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import RatingChoices from './RatingChoices'
+import EvaluationCapabilityRatingChoices from './EvaluationCapabilityRatingChoices'
 
 const EvaluationCapability = ({ newCapability, submitState }) => {
-    const [error, setError] = useState({ isEmpty: "" })
+    const [error, setError] = useState({ hasError: false })
     const [capability, setCapability] = useState(null)
+    const defaultValue = "default"
 
     useEffect(() => {
         setCapability(newCapability)
-        setError({ ...error, isEmpty: false })
-    }, [])
+        if (error.hasError === "") {
+            setError({ ...error, hasError: false })
+        }
 
-    //TODO error messages
-    //TODO scan for missing fields onSubmit
+        if (submitState.isSubmit) {
+            verifyInputValueOnSubmit()
+        }
+    }, [submitState.isSubmit, error.hasError])
+
+    const verifyInputValueOnSubmit = () => {
+        if (capability.value === "" || capability.value === defaultValue){
+            error.hasError = true
+            setError({...error, hasError : true})
+        }
+    }
 
     const setCapabilityValue = (e) => {
         e.preventDefault()
         if (e.target.value === "default") {
-            e.target.style.borderColor = "red"
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
-            submitState.isSubmitValid = false
-            error.isEmpty = true
+            capability[e.target.name] = ""
+            setCapability({...capability, [e.target.name]: ""})
+            error.hasError = true
+            setError({...error, hasError: true})
             return
         }
-        
-        if(error.isEmpty){
+
+        if (error.hasError) {
             e.target.style.borderColor = "#ced4da"
             e.target.style.boxShadow = "none"
-            error.isEmpty = false
+            error.hasError = false
         }
-        
-        console.log(capability.capability)
-        console.log(e.target.value)
+
         capability.value = e.target.value
+        setCapability({ ...capability, [e.target.name]: e.target.value })
     }
 
     return (
         <>
             {capability !== null ?
                 <>
-                    <label htmlFor="" className="mt-5" name="">{capability.capability} <span className="text-danger font-weight-bold">*</span></label>
-                    <RatingChoices newName="value" onChangeMethod={setCapabilityValue} />
+                    <label htmlFor="value" className="mt-5">{capability.capability} <span className="text-danger font-weight-bold">*</span></label>
+                    <EvaluationCapabilityRatingChoices newName="value" onChangeMethod={setCapabilityValue} errorState={error}/>
                 </>
                 : ""}
         </>

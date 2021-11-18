@@ -14,8 +14,8 @@ const EvaluationBehavior = ({ newBehavior, submitState }) => {
         e.preventDefault()
         if (e.target.value === "default")
             return
-        behavior.comments = e.target.value
-        console.log(behavior.header)
+        behavior[e.target.name] = e.target.value
+        setBehavior({...behavior, [e.target.name]: e.target.value})
     }
 
     return (
@@ -41,8 +41,6 @@ const EvaluationBehavior = ({ newBehavior, submitState }) => {
                     <div className="mt-3 text-left">
                         <span className="font-weight-bold">* N/A = non applicable</span>
                     </div>
-
-
                 </>
                 : ""}
         </div>

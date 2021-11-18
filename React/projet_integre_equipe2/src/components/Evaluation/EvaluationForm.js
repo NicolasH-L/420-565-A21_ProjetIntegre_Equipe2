@@ -1,95 +1,128 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Behaviors from './Behaviors'
+import EvaluationBehaviorList from './EvaluationBehaviorList'
 import EvaluationRecipient from './EvaluationRecipient'
 import EvaluationAppreciations from './EvaluationAppreciations'
 import EvaluationReHireIntern from './EvaluationReHireIntern'
 
+// TODO fetch all Evaluations if the evaluation has the same id as contract, do not show the contract
+// show the evaluation pdf instead
+// add Evaluation Prop
 const EvaluationForm = ({ contractProp }) => {
     const [contract, setContract] = useState(null)
     const [behaviors, setBehaviors] = useState(null)
-    const [appreciation, setAppreciation] = useState({ expectationResult: "", appreciations: "", isDiscussed: "" })
-    const [reHireIntern, setReHireIntern] = useState({ hireAgain: "", description: "", name: "", signature: "", jobTitle: "", date: "" })
+    const [appreciation, setAppreciation] = useState({})
+    const [reHireIntern, setReHireIntern] = useState({})
     const [internEvaluation, setInternEvaluation] = useState({ contract: "", behaviors: [], actualWeeklyHours: "", appreciation: "", reHireIntern: "" })
     const [submit, setSubmit] = useState({ isSubmit: "", isSubmitValid: "" })
+    const [error, setError] = useState({ hasError: false })
+
     const baseUrl = "http://localhost:8888"
 
     useEffect(() => {
         setContract(contractProp)
         setSubmit({ ...submit, isSubmit: false, isSubmitValid: false })
-    }, [behaviors])
+    }, [behaviors, error.hasError])
 
     const onSubmit = (e) => {
         e.preventDefault()
         submit.isSubmit = true
-        // submit.isSubmitValid =
+        setSubmit({ ...submit, isSubmit: true })
         validateSubmit()
-        if (submit.isSubmit === false || submit.isSubmitValid === false || validateSubmit() === false) {
+        if (submit.isSubmit === false || submit.isSubmitValid === false) {
             alert("Veuillez remplir les champs obligatoires")
             return
         }
-        console.log("success")
+
+        alert("Évaluation envoyée avec succès")
         contract.isEvaluatedByMonitor = true
         internEvaluation.contract = contract
         internEvaluation.appreciation = appreciation
         internEvaluation.reHireIntern = reHireIntern
         internEvaluation.behaviors = behaviors
-        updateContract()
-        // TODO error message to fill in everything
+        setInternEvaluation({ ...internEvaluation, contract: contract, appreciation: appreciation, reHireIntern: reHireIntern, behaviors: behaviors })
         submit.isSubmit = false
-        console.log(internEvaluation)
+        setSubmit({ ...submit, isSubmit: false })
+        saveEvaluation(internEvaluation)
+    }
+
+    const saveEvaluation = async (contract) => {
+        const result = await fetch(`${baseUrl}/evaluation/save-evaluation`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(contract)
+            })
+        return await result.json()
     }
 
     const validateSubmit = () => {
-        console.log(behaviors)
+        submit.isSubmitValid = true
 
+        if (internEvaluation.actualWeeklyHours === "") {
+            submit.isSubmitValid = false
+            error.hasError = true
+            setError({ ...error, hasError: true })
+            setSubmit({ ...submit, isSubmitValid: false })
+            return
+        }
+        validateBehaviors()
+
+        if (submit.isSubmitValid === false) {
+            setSubmit({ ...submit, isSubmitValid: false })
+            return
+        }
+
+        const isValid = validateAppreciations() && validateReHireIntern()
+        submit.isSubmitValid = isValid
+        setSubmit({ ...submit, isSubmitValid: isValid })
+    }
+
+    const validateBehaviors = () => {
         for (let i = 0; i < behaviors.length; i++) {
-            if (behaviors[i] === null || behaviors[i] === undefined) {
-                console.log("behavior is null")
+            if (behaviors[i] === null || behaviors[i] === undefined || behaviors[i] === "") {
                 submit.isSubmitValid = false
                 break
             }
             let capabitilies = behaviors[i].capabilities
             for (let j = 0; j < capabitilies.length; j++) {
-                if(capabitilies[j].capability === "" || capabitilies[j].capability === undefined || 
-                    capabitilies[j].value === "" || capabitilies[j].value === undefined){
-                        console.log("empty capability")
-                        submit.isSubmitValid = false
-                        break
-                    }
+                if (capabitilies[j].capability === "" || capabitilies[j].capability === undefined ||
+                    capabitilies[j].value === "" || capabitilies[j].value === undefined || capabitilies[j].value === null) {
+                    submit.isSubmitValid = false
+                    break
+                }
             }
         }
-
-        console.log(reHireIntern)
-        console.log(internEvaluation.actualWeeklyHours)
-        console.log(appreciation)
-        submit.isSubmitValid = (appreciation.expectationResult !== "" && appreciation.appreciations !== "" && appreciation.isDiscussed !== ""
-            && reHireIntern.hireAgain !== "" && reHireIntern.description !== "" && reHireIntern.name !== "" && reHireIntern.jobTitle !== ""
-            && internEvaluation.actualWeeklyHours !== "")
-        console.log("after all loops")
-        console.log(submit.isSubmitValid)
     }
 
-    const updateContract = async () => {
-        
-        // TODO save the contract basically update it 
-        // TODO the contract controller will receive the internEvaluation object and will extract it in two separate phases
-        // first it will take the contract then validate the isEvaluated or maybe we dont need it anymore :thinking:
+    const validateAppreciations = () => {
+        return (appreciation.expectationResult !== "" && appreciation.appreciations !== "" && appreciation.isDiscussed !== ""
+            && reHireIntern.hireAgain !== "")
+    }
 
-        // const result = await fetch(`${baseUrl}/contract/save-contract`,
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-type': 'application/json'
-        //         },
-        //         body: JSON.stringify(contract)
-        //     })
-        // return await result.json()
+    const validateReHireIntern = () => {
+        return (reHireIntern.description !== "" && reHireIntern.name !== "" && reHireIntern.jobTitle !== ""
+            && internEvaluation.actualWeeklyHours !== "")
     }
 
     const onValueChanged = (e) => {
         e.preventDefault()
+        console.log(e.target.value)
+        let hasError = false
+        if (e.target.value >= 0 && e.target.value <= 168) {
+            hasError = false
+        }else{
+            hasError = true
+        }
+        error.hasError = hasError
+        setError({ ...error, hasError: hasError})
         setInternEvaluation({ ...internEvaluation, [e.target.name]: e.target.value })
+    }
+
+    const getInputStyles = (errorValue) => {
+        return errorValue === true ? { borderColor: 'red', boxShadow: '0 1px 1px red inset, 0 0 8px red' } : { borderColor: '#ced4da', boxShadow: 'none' }
     }
 
     return (
@@ -118,17 +151,13 @@ const EvaluationForm = ({ contractProp }) => {
                             <label htmlFor="phoneNumber">Téléphone du stagiaire: </label>
                             <input className="form-control text-center" type="text" name="phoneNumber" value={contract.internship.student.telephoneNumber} readOnly />
                         </div>
-                        <Behaviors behaviors={behaviors} setBehaviors={setBehaviors} submitState={submit}/>
-
-                        <EvaluationAppreciations setState={setAppreciation} submitState={submit}/>
-                        
+                        <EvaluationBehaviorList behaviors={behaviors} setBehaviors={setBehaviors} submitState={submit} />
+                        <EvaluationAppreciations setState={setAppreciation} submitState={submit} />
                         <div className="formGroup mt-5 text-left">
                             <label htmlFor="weeklyHours">Veuillez indiquer le nombre d'heures réel par semaine d'encadrement accordé au stagiaire <span className="text-danger font-weight-bold">*</span></label>
-                            <input className="form-control text-center" type="number" name="actualWeeklyHours" min="0" max="168" placeholder="Entrez le nombre d'heures par semaine entre 0 et 168" onChange={onValueChanged} />
+                            <input className="form-control text-center" type="number" name="actualWeeklyHours" min="0" max="168" placeholder="Entrez le nombre d'heures par semaine entre 0 et 168" onChange={onValueChanged} style={getInputStyles(error.hasError)} />
                         </div>
-                        
-                        <EvaluationReHireIntern monitor={contract.internship.offer.monitor} setState={setReHireIntern} submitState={submit}/>
-                        
+                        <EvaluationReHireIntern monitor={contract.internship.offer.monitor} setState={setReHireIntern} submitState={submit} />
                         <EvaluationRecipient contract={contract} />
                         <div className="mt-2">
                             <h5>Nous vous remercions de votre appui!</h5>
