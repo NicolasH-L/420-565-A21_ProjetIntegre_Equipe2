@@ -117,6 +117,7 @@ public class NotificationServiceTest {
     public void testDeleteNotificationForStudent(){
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(notificationRepository.save(notification)).thenReturn(notification);
+        when(notificationRepository.findAllByStudent_id(student.getId()));
 
 //        when(notificationRepository.deleteNotificationByIdAndStudent_id(notification.getId(), student.getId())).thenReturn(true);
         boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getId(), student.getId());
@@ -126,6 +127,21 @@ public class NotificationServiceTest {
     @Test
     public void testDeleteNotificationForStudentFails(){
         boolean deleteNotification = notificationService.deleteNotificationForStudent(1, 2);
+        assertThat(deleteNotification).isFalse();
+    }
+
+    @Test
+    public void testDeleteAllByStudentId(){
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        when(notificationRepository.findAllByStudent_id(student.getId()));
+
+        boolean deleteNotification = notificationService.deleteAllByStudentId(student.getId());
+        assertThat(deleteNotification).isTrue();
+    }
+
+    @Test
+    public void testDeleteAllByStudentIdFails(){
+        boolean deleteNotification = notificationService.deleteAllByStudentId(student.getId());
         assertThat(deleteNotification).isFalse();
     }
 
