@@ -9,6 +9,7 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.StampingProperties;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +46,7 @@ public class ContractServiceTest {
     private List<Contract> contractListByMonitorId = new ArrayList<>();
 
     @BeforeEach
-    void setup() {
+    void setup() throws IOException {
         monitor = Monitor.monitorBuilder()
                 .id(1)
                 .password("toto")
@@ -112,6 +113,30 @@ public class ContractServiceTest {
                 .build();
 
         contractListByMonitorId.add(contract);
+
+        String newFilePath = "files/test/Test.pdf";
+        String actualNewFilePath = "files/test/Test2.pdf";
+        PDDocument document1 = new PDDocument();
+        document1.save(newFilePath);
+        document1.close();
+
+
+
+        PDDocument document2 = new PDDocument();
+        document2.save(actualNewFilePath);
+        document2.close();
+    }
+
+    @AfterEach
+    void destroySetup(){
+        String newFilePath = "files/test/Test.pdf";
+        String actualNewFilePath = "files/test/Test2.pdf";
+
+        File file1 = new File(newFilePath);
+        file1.delete();
+
+        File file2 = new File(actualNewFilePath);
+        file2.delete();
     }
 
     @Test
@@ -174,7 +199,7 @@ public class ContractServiceTest {
 
     @Test
     public void testCreateFile() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
+        String newFilePath = "files/test/Test4.pdf";
         contractService.CreateFile(newFilePath,"Contract",contract);
         File file = new File(newFilePath);
         assertThat(file.exists()).isEqualTo(true);
@@ -184,13 +209,7 @@ public class ContractServiceTest {
     @Test
     public void testWriteFile() throws IOException {
         String newFilePath = "files/test/Test.pdf";
-        PDDocument document = new PDDocument();
-        document.save(newFilePath);
         File file = new File(newFilePath);
-
-        String actualNewFilePath = "files/test/Test2.pdf";
-        PDDocument document2 = new PDDocument();
-        document2.save(actualNewFilePath);
 
         contractService.WriteFile(newFilePath,"Contract",contract);
 
@@ -201,21 +220,17 @@ public class ContractServiceTest {
     public void testEditContract() throws IOException {
         String newFilePath = "files/test/Test.pdf";
         String originalFile = "files/originalFiles/contratTemplate.pdf";
-        PDDocument document = new PDDocument();
-        document.save(newFilePath);
-        File file1 = new File(newFilePath);
 
         PdfDocument actualPdfDocument = new PdfDocument(new PdfReader(originalFile), new PdfWriter(newFilePath));
         PdfAcroForm form = PdfAcroForm.getAcroForm(actualPdfDocument, false);
         Map<String, PdfFormField> fields = form.getFormFields();
-
 
         contractService.EditContract(fields, contract);
 
         assertThat(fields.get("adminName").getValue().toString()).isEqualTo(contract.getAdminSignature());
     }
 
-    @Test // a revoir
+    @Test
     public void testGenerateDocument() {
         Optional<byte []> actualBytes = contractService.GenerateDocument("Contract",contract);
         assertThat(actualBytes.get()).isNotNull();
@@ -223,8 +238,15 @@ public class ContractServiceTest {
     }
 
     @Test
+    public void testGenerateDocumentFail() {
+        Optional<byte []> actualBytes = contractService.GenerateDocument("Contract",null);
+        assertThat(actualBytes).isEmpty();
+        assertThat(contract.getPdf()).isNull();
+    }
+
+    @Test
     public void testDeleteFile() throws IOException {
-        String newFilePath = "files/test/Test.pdf";
+        String newFilePath = "files/test/Test3.pdf";
         contractService.CreateFile(newFilePath,"Contrat",contract);
         File file = new File(newFilePath);
         file.delete();

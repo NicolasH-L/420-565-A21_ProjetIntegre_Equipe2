@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Contract;
-import com.equipe2.projet_integre_equipe2.model.Document;
 import com.equipe2.projet_integre_equipe2.model.Internship;
 import com.equipe2.projet_integre_equipe2.model.Offer;
 import com.equipe2.projet_integre_equipe2.repository.ContractRepository;
@@ -59,12 +58,12 @@ public class ContractService {
             return Optional.empty();
         }
     }
-    public Optional<byte[]> GenerateDocument(String fileType, Contract contract) { // + params Evaluation
+    public Optional<byte[]> GenerateDocument(String fileType, Contract contract) {
         try {
             String newFilePath = "files/userFiles/" + contract.getIdContract() + ".pdf";
-            CreateFile(newFilePath,fileType,contract); // Je cree le document avec les donnes entrer dedans
-            byte[] contractBytes = Files.readAllBytes(Paths.get(newFilePath)); // Je recupere les donnes du pdf
-            DeleteFile(newFilePath); // Je supprime le document
+            CreateFile(newFilePath,fileType,contract);
+            byte[] contractBytes = Files.readAllBytes(Paths.get(newFilePath));
+            DeleteFile(newFilePath);
             contract.setPdf(contractBytes);
             contractRepository.save(contract);
             return Optional.of(contractBytes);
