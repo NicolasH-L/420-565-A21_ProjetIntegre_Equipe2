@@ -207,6 +207,17 @@ public class ContractServiceTest {
     }
 
     @Test
+    public void testCreateFileFail() throws IOException {
+        File directory = new File("files/userFiles/");
+        directory.delete();
+        String newFilePath = "files/test/Test4.pdf";
+        contractService.CreateFile(newFilePath,"Contract",contract);
+        File file = new File(newFilePath);
+        assertThat(file.exists()).isEqualTo(true);
+        file.delete();
+    }
+
+    @Test
     public void testWriteFile() throws IOException {
         String newFilePath = "files/test/Test.pdf";
         File file = new File(newFilePath);
