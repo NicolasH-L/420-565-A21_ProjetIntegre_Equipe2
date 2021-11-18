@@ -14,10 +14,10 @@ const MonitorEvaluateStudent = () => {
     useEffect(() => {
         const getAllInternships = async () => {
             const contractsFromServer = await fetchContracts()
-            setContracts(contractsFromServer.filter(hasSupervisor))
+            setContracts(contractsFromServer.filter(hasSupervisor).filter(bySession))
         }
         getAllInternships()
-    }, [])
+    }, [monitor.actualSession])
 
     const fetchContracts = async () => {
         const res = await fetch(`http://localhost:8888/contract/get-all-by-monitor/${monitor.id}/status/${status}`)
@@ -25,8 +25,8 @@ const MonitorEvaluateStudent = () => {
         return data
     }
 
-    // TODO update the isEvaluatedByMonitor with POST method
-    
+    // TODO fetch all Evaluations if the evaluation has the same id as contract, do not show the contract
+    // show the evaluation pdf instead
 
     const hasSupervisor = (contract) => {
         return contract.internship.supervisor !== null && contract.internship.supervisor !== undefined
@@ -77,7 +77,9 @@ const MonitorEvaluateStudent = () => {
                                             <td>{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
                                             <td>{contract.isEvaluatedByMonitor === true ? "Evaluation complété" : "En attente d'évaluation"}</td>
                                             <td>
-                                                <EvaluationModalView contractProp={contract} isModeEdit={true} />
+                                                {/* TODO fetch all Evaluations if the evaluation has the same id as contract, do not show the contract */}
+                                                {/*  show the evaluation pdf instead */}
+                                                <EvaluationModalView contractProp={contract} />
                                             </td>
                                         </tr>
                                     ))}
