@@ -1,4 +1,4 @@
-import React, { useEffect, useState, getNotificationsMethod } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const Notification = ({ notificationList, studentId }) => {
     const baseUrl = "http://localhost:8888/notification"
