@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,29 +25,36 @@ public class ContractController {
     }
 
     @GetMapping("/get-contract/{id}")
-    public ResponseEntity<Contract> getContractByStudentId(@PathVariable Integer id){
+    public ResponseEntity<Contract> getContractByStudentId(@PathVariable Integer id) {
         return contractService.getContractByStudentId(id)
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @GetMapping("/get-all-by-monitor/{id}")
-    public ResponseEntity<List<Contract>> getContractsByMonitorId(@PathVariable Integer id){
+    public ResponseEntity<List<Contract>> getContractsByMonitorId(@PathVariable Integer id) {
         return contractService.getContractsByMonitorId(id)
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @GetMapping("/get-all-contracts")
-    public ResponseEntity<List<Contract>> getAllContracts(){
+    public ResponseEntity<List<Contract>> getAllContracts() {
         return contractService.getAllContracts()
                 .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @GetMapping("/get-all-by-monitor/{id}/status/{status}")
+    public ResponseEntity<List<Contract>> getAllContractsByMonitorIdAndStatus(@PathVariable Integer id, @PathVariable String status) {
+        return contractService.getAllContractsByMonitorIdAndStatus(id, status)
+                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @PostMapping("/get-contract-pdf")
-    public ResponseEntity<byte[]> getContractPdf(@RequestBody Contract contract){
-        return contractService.GenerateDocument("Contract", contract)
+    public ResponseEntity<byte[]> getContractPdf(@RequestBody Contract contract) {
+        return contractService.generateDocument("Contract", contract)
                 .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
