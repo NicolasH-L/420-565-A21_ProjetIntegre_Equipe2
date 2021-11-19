@@ -13,7 +13,4 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     List<Notification> findAllByStudent_id(int id);
 
-    boolean existsByIdAndStudent_id(int idNotification, int idStudent);
-
-    boolean deleteNotificationByIdAndStudent_id(int idNotification, int idStudent);
 }

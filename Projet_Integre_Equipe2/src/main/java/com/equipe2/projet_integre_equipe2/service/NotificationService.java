@@ -15,10 +15,13 @@ public class NotificationService {
 
     private NotificationRepository notificationRepository;
     private StudentRepository studentRepository;
+    private StudentService studentService;
 
-    public NotificationService(NotificationRepository notificationRepository, StudentRepository studentRepository){
+    public NotificationService(NotificationRepository notificationRepository, StudentRepository studentRepository,
+                               StudentService studentService){
         this.notificationRepository = notificationRepository;
         this.studentRepository = studentRepository;
+        this.studentService = studentService;
     }
 
     public Optional<Notification> saveNotificationForOfferForAllStudent(Notification notification){
@@ -57,27 +60,31 @@ public class NotificationService {
         }
     }
 
-    //TODO Faire le test de suppresion par l'id de la notification et l'id du student
     public boolean deleteNotificationForStudent(int idNotification, int idStudent){
         try {
-            Notification notification = getMaNotification(idNotification).get();
+            Notification notification = notificationRepository.findNotificationById(idNotification);
             Student student = studentRepository.findById(idStudent).get();
             notification.getStudent().remove(student);
             notificationRepository.save(notification);
-//            notificationRepository.deleteNotificationByIdAndStudent_id(notification.getId(), idStudent);
-            return notificationRepository.existsByIdAndStudent_id(idNotification, idStudent);
+            isStudentListIsEmpty(idNotification, notification);
+            return true;
         } catch (Exception e){
             return false;
         }
     }
 
-    //TODO Faire le test de suppression par l'id du student
+    public void isStudentListIsEmpty(int idNotification, Notification notification) {
+        if(notification.getStudent().isEmpty())
+            notificationRepository.deleteById(idNotification);
+    }
+
     public boolean deleteAllByStudentId(int idStudent){
         try{
             Student student = studentRepository.findById(idStudent).get();
             for (Notification notification: notificationRepository.findAllByStudent_id(idStudent)) {
                 notification.getStudent().remove(student);
                 notificationRepository.save(notification);
+                isStudentListIsEmpty(notification.getId(), notification);
             }
             return notificationRepository.findAll().size() == 0;
         }catch (Exception e){
