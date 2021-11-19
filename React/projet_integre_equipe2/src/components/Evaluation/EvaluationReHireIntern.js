@@ -2,17 +2,18 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { RegexPattern } from '../RegexPattern'
 
-const EvaluationReHireIntern = ({ monitor, setState, submitState }) => {
+const EvaluationReHireIntern = ({ monitor, setState, submitState, offer }) => {
 
     const [reHireIntern, setReHireIntern] = useState({ hireAgain: "", description: "", name: "", signature: "", jobTitle: "", date: "" })
     const [error, setError] = useState({ hireAgain: false, description: false, name: false, signature: false, jobTitle: false })
     const defaultValue = "default"
 
     useEffect(() => {
-        if (reHireIntern.date === "" && reHireIntern.name === "" && reHireIntern.signature === "") {
+        if (reHireIntern.date === "" && reHireIntern.name === "" && reHireIntern.signature === "" && reHireIntern.jobTitle == "") {
             reHireIntern.date = getToday()
             reHireIntern.name = monitor.firstName + " " + monitor.lastName
             reHireIntern.signature = monitor.firstName + " " + monitor.lastName
+            reHireIntern.jobTitle = offer.jobTitle
         }
         setState(reHireIntern)
         if (submitState.isSubmit) {
@@ -62,7 +63,7 @@ const EvaluationReHireIntern = ({ monitor, setState, submitState }) => {
         let isValid = true
         if (e.target.name === "hireAgain" && e.target.value === "default") {
             isValid = false
-        } else if ((e.target.name === "description" || e.target.name === "jobTitle")) {
+        } else if ((e.target.name === "description")) {
             let pattern = new RegExp(RegexPattern.getPatternGeneral())
             if (!pattern.test(e.target.value) || e.target.value === "") {
                 isValid = false
@@ -119,15 +120,15 @@ const EvaluationReHireIntern = ({ monitor, setState, submitState }) => {
                 <input className="form-control text-center" type="text" name="name" value={reHireIntern.name} readOnly />
             </div>
             <div className="text-left mt-3">
-                <label htmlFor="jobTitle">Fonction: <span className="text-danger font-weight-bold">*</span></label>
-                <input className="form-control text-center" type="text" name="jobTitle" placeholder="Entrez la fonction" onChange={onReHireInternChanged} style={getInputStyles(error.jobTitle)} />
+                <label htmlFor="jobTitle">Fonction:</label>
+                <input className="form-control text-center" type="text" name="jobTitle"  value={reHireIntern.jobTitle} readOnly/>
             </div>
             <div className="text-left mt-3">
                 <label htmlFor="signature">Signature: </label>
                 <input className="form-control text-center" type="text" name="signature" value={reHireIntern.signature} readOnly />
             </div>
             <div className="text-left mt-3">
-                <label htmlFor="date">Téléphone du stagiaire: </label>
+                <label htmlFor="date">Date: </label>
                 <input className="form-control text-center" type="text" name="date" value={reHireIntern.date} readOnly />
             </div>
         </div>
