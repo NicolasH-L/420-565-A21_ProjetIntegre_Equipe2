@@ -66,5 +66,5 @@ public class EvaluationServiceTest {
                 .build());
         return evaluationList;
     }
-    
+
 }
