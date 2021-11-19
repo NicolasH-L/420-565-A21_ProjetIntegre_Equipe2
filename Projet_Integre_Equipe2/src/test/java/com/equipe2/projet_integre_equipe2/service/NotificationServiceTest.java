@@ -124,20 +124,6 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void testGetMaNotification(){
-        when(notificationRepository.findNotificationById(notification.getId())).thenReturn(notification);
-        Optional<Notification> actualNotification = notificationService.getMaNotification(notification.getId());
-        assertThat(actualNotification.get()).isEqualTo(notification);
-    }
-
-    @Test
-    public void testGetMaNotificationFails(){
-        when(notificationRepository.findNotificationById(notification.getId())).thenReturn(null);
-        Optional<Notification> actualNotification = notificationService.getMaNotification(3);
-        assertThat(actualNotification).isEqualTo(Optional.empty());
-    }
-
-    @Test
     public void testDeleteNotificationForStudent(){
         when(notificationRepository.findNotificationById(notification.getId())).thenReturn(notification);
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
