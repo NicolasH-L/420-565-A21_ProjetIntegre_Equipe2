@@ -17,7 +17,9 @@ public class Evaluation implements Serializable {
     @GeneratedValue
     private Integer idEvaluation;
 
+    @Column(unique = true, length = 50)
     private String evaluationName;
+
     private String session;
 
     @Lob
