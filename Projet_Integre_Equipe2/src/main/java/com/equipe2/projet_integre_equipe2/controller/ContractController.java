@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -41,6 +42,13 @@ public class ContractController {
     @GetMapping("/get-all-contracts")
     public ResponseEntity<List<Contract>> getAllContracts(){
         return contractService.getAllContracts()
+                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/get-contract-pdf")
+    public ResponseEntity<byte[]> getContractPdf(@RequestBody Contract contract){
+        return contractService.GenerateDocument("Contract", contract)
                 .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

@@ -5,6 +5,7 @@ import com.equipe2.projet_integre_equipe2.service.ContractService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javassist.bytecode.ByteArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -171,6 +174,19 @@ public class ContractControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void getContractPdfTest() throws Exception {
+        byte[] bytes = {116,101,115,116};
+        when(contractService.GenerateDocument("Contract",contract)).thenReturn(Optional.of(bytes));
+
+        MvcResult result = mockMvc.perform(post("/contract/get-contract-pdf")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(contract))).andReturn();
+
+        var actuals = result.getResponse().getContentAsString();
+        assertThat(actuals.getBytes(StandardCharsets.UTF_8)).isEqualTo(bytes);
     }
 
     private List<Contract> getListOfContracts(){

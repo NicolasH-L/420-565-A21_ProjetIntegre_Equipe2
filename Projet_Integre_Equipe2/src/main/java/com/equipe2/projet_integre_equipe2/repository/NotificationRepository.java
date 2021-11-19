@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
+    Notification findNotificationById(int id);
+
     List<Notification> findAllByStudent_id(int id);
+
 }

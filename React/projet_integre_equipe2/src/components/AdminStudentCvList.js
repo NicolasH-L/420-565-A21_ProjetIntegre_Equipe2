@@ -4,12 +4,19 @@ import AdminNavbar from './AdminNavbar'
 import { useState, useEffect } from 'react'
 
 const AdminStudentCvList = () => {
-    const [documents, setDocuments] = useState([])
+    const typeNotification = "CV"
+    const messageValidCV = "Votre CV a été accepté"
+    const messageInvalidCV = "Votre CV a été refusé"
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
     const admin = historyState.admin
-
+    
+    const [documents, setDocuments] = useState([])
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: "", session: admin.actualSession
+    })
+    
     useEffect(() => {
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments(student)
@@ -43,6 +50,24 @@ const AdminStudentCvList = () => {
                 (document1) => document1.idDocument === document.idDocument ? { ...document1, isValid: data.isValid, isRefused: data.isRefused } : document1
             )
         )
+
+        if (!isValid)
+            notification.message = messageInvalidCV
+        else
+            notification.message = messageValidCV
+        createNotificationStudent(notification)
+    }
+
+    const createNotificationStudent = async (notification) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-student/${student.id}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const displayButtons = (document) => {

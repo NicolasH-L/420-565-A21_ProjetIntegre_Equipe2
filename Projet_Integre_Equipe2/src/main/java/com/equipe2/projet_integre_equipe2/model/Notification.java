@@ -18,7 +18,7 @@ public class Notification implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idNotification;
+    private int id;
 
     private String typeNotification;
     private String message;
@@ -26,14 +26,5 @@ public class Notification implements Serializable {
 
     @ManyToMany
     private List<Student> student;
-
-    @OneToOne
-    private Monitor monitor;
-
-    @OneToOne
-    private Supervisor supervisor;
-
-    @OneToOne
-    private Admin admin;
 
 }

@@ -1,9 +1,14 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import com.equipe2.projet_integre_equipe2.model.Document;
-import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.repository.DocumentRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +18,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +44,12 @@ public class DocumentServiceTest {
     private Document document;
 
     private Student student;
+
+    private Contract contract;
+
+    private Internship internship;
+
+    private Offer offer;
 
     private MultipartFile multipartFile;
 

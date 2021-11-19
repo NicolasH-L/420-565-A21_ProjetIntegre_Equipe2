@@ -21,7 +21,7 @@ public class NotificationService {
         this.studentRepository = studentRepository;
     }
 
-    public Optional<Notification> saveNotificationForOfferForAllStudent(Notification notification){
+    public Optional<Notification> saveNotificationsOffersForAllStudent(Notification notification){
         try {
             List<Student> validStudentList = studentRepository.findAllByIsCvValidTrue();
             notification.setStudent(validStudentList);
@@ -31,7 +31,7 @@ public class NotificationService {
         }
     }
 
-    public Optional<Notification> saveNotificationForStudent(Notification notification, int idStudent){
+    public Optional<Notification> saveNotificationsForStudent(Notification notification, int idStudent){
         try {
             Student student = studentRepository.findById(idStudent).get();
             notification.setStudent(Arrays.asList(student));
@@ -41,11 +41,44 @@ public class NotificationService {
         }
     }
 
-    public Optional<List<Notification>> getNotification(int id){
+    public Optional<List<Notification>> getNotifications(int id){
         try {
             return Optional.of(notificationRepository.findAllByStudent_id(id));
         } catch (Exception e){
             return Optional.empty();
         }
     }
+
+    public boolean deleteNotificationsForStudent(int idNotification, int idStudent){
+        try {
+            Notification notification = notificationRepository.findNotificationById(idNotification);
+            Student student = studentRepository.findById(idStudent).get();
+            notification.getStudent().remove(student);
+            notificationRepository.save(notification);
+            studentListEmptyValidation(idNotification, notification);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    public void studentListEmptyValidation(int idNotification, Notification notification) {
+        if(notification.getStudent().isEmpty())
+            notificationRepository.deleteById(idNotification);
+    }
+
+    public boolean deleteAllByStudentId(int idStudent){
+        try{
+            Student student = studentRepository.findById(idStudent).get();
+            for (Notification notification: notificationRepository.findAllByStudent_id(idStudent)) {
+                notification.getStudent().remove(student);
+                notificationRepository.save(notification);
+                studentListEmptyValidation(notification.getId(), notification);
+            }
+            return notificationRepository.findAll().size() == 0;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }

@@ -5,7 +5,6 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.NotificationService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.spi.ObjectThreadContextMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(NotificationController.class)
 public class NotificationControllerTest {
@@ -50,6 +48,7 @@ public class NotificationControllerTest {
                 .build();
 
         notification = Notification.builder()
+                .id(1)
                 .typeNotification("CV")
                 .message("CV refuser")
                 .student(Arrays.asList(student))
@@ -58,7 +57,7 @@ public class NotificationControllerTest {
 
     @Test
     public void saveNotificationForAllStudentTest() throws Exception {
-        when(notificationService.saveNotificationForOfferForAllStudent(notification)).thenReturn(Optional.of(notification));
+        when(notificationService.saveNotificationsOffersForAllStudent(notification)).thenReturn(Optional.of(notification));
 
         MvcResult result = mockMvc.perform(post("/notification/save-notification")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +71,7 @@ public class NotificationControllerTest {
 
     @Test
     public void saveNotificationForStudent() throws Exception {
-        when(notificationService.saveNotificationForStudent(notification, student.getId())).thenReturn(Optional.of(notification));
+        when(notificationService.saveNotificationsForStudent(notification, student.getId())).thenReturn(Optional.of(notification));
 
         MvcResult result = mockMvc.perform(post("/notification/save-notification-for-student/" + student.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +85,7 @@ public class NotificationControllerTest {
 
     @Test
     public void getNotification() throws Exception {
-        when(notificationService.getNotification(student.getId())).thenReturn(Optional.of(getNotificationsList()));
+        when(notificationService.getNotifications(student.getId())).thenReturn(Optional.of(getNotificationsList()));
 
         MvcResult result = mockMvc.perform(get("/notification/get-notification-student/" + student.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -98,6 +97,32 @@ public class NotificationControllerTest {
         assertThat(actualNotificationList.size()).isEqualTo(1);
     }
 
+    @Test
+    public void deleteANotificationStudent() throws Exception {
+        when(notificationService.deleteNotificationsForStudent(notification.getId(), student.getId())).thenReturn(true);
+        MvcResult result = mockMvc.perform(delete("/notification/delete-notification/" + notification.getId() + "/" + student.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualDeletedNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Boolean>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDeletedNotification).isEqualTo(true);
+    }
+
+    @Test
+    public void deleteAllNotificationsStudent() throws Exception {
+        when(notificationService.deleteAllByStudentId(student.getId())).thenReturn(true);
+        MvcResult result = mockMvc.perform(delete("/notification/delete-notification/" + student.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualDeletedNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Boolean>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDeletedNotification).isEqualTo(true);
+    }
+
     private List<Notification> getNotificationsList() {
         List<Notification> notificationList = new ArrayList<>();
         notificationList.add(Notification.builder()
@@ -107,4 +132,5 @@ public class NotificationControllerTest {
                 .build());
         return notificationList;
     }
+
 }
