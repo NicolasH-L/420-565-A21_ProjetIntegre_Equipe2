@@ -15,13 +15,10 @@ public class NotificationService {
 
     private NotificationRepository notificationRepository;
     private StudentRepository studentRepository;
-    private StudentService studentService;
 
-    public NotificationService(NotificationRepository notificationRepository, StudentRepository studentRepository,
-                               StudentService studentService){
+    public NotificationService(NotificationRepository notificationRepository, StudentRepository studentRepository){
         this.notificationRepository = notificationRepository;
         this.studentRepository = studentRepository;
-        this.studentService = studentService;
     }
 
     public Optional<Notification> saveNotificationForOfferForAllStudent(Notification notification){
@@ -83,4 +80,5 @@ public class NotificationService {
             return false;
         }
     }
+
 }

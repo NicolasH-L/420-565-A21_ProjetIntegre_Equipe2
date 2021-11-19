@@ -30,15 +30,6 @@ public class NotificationServiceTest {
     @InjectMocks
     private NotificationService notificationService;
 
-    @Mock
-    private NotificationService notificationService2;
-
-    @Mock
-    private StudentService studentService;
-
-    @Mock
-    private List<Student> studentList = getListOfStudents();
-
     private Student student;
 
     private Notification notification;
@@ -238,4 +229,5 @@ public class NotificationServiceTest {
         List<Student> studentList = new ArrayList<>();
         return studentList;
     }
+
 }
