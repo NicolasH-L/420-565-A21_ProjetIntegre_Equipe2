@@ -44,7 +44,7 @@ public class StudentService {
         }
     }
 
-    public Optional<Student> validateStudent(String matricule){
+    public Optional<Student> validateStudent(String matricule) {
         try {
             Student student = studentRepository.findByMatricule(matricule);
             student.setIsCvValid(true);
