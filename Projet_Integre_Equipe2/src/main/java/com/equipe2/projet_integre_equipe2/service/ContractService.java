@@ -73,10 +73,16 @@ public class ContractService {
     }
 
     public void CreateFile(String newFilePath ,String fileType, Contract contract) throws IOException {
-        PDDocument document = new PDDocument();
-        document.save(newFilePath);
-        WriteFile(newFilePath,fileType, contract);
-        document.close();
+        File file = new File("files/userFiles/");
+        if (file.exists()){
+            PDDocument document = new PDDocument();
+            document.save(newFilePath);
+            WriteFile(newFilePath,fileType, contract);
+            document.close();
+        } else {
+            new File("files/userFiles/").mkdirs();
+            CreateFile(newFilePath,fileType,contract);
+        }
     }
 
     public void WriteFile(String newFilePath, String fileType, Contract contract) throws IOException {
