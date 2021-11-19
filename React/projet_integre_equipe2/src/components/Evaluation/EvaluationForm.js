@@ -5,9 +5,6 @@ import EvaluationRecipient from './EvaluationRecipient'
 import EvaluationAppreciations from './EvaluationAppreciations'
 import EvaluationReHireIntern from './EvaluationReHireIntern'
 
-// TODO fetch all Evaluations if the evaluation has the same id as contract, do not show the contract
-// show the evaluation pdf instead
-// add Evaluation Prop
 const EvaluationForm = ({ contractProp }) => {
     const [contract, setContract] = useState(null)
     const [behaviors, setBehaviors] = useState(null)
@@ -16,6 +13,7 @@ const EvaluationForm = ({ contractProp }) => {
     const [internEvaluation, setInternEvaluation] = useState({ contract: "", behaviors: [], actualWeeklyHours: "", appreciation: "", reHireIntern: "" })
     const [submit, setSubmit] = useState({ isSubmit: "", isSubmitValid: "" })
     const [error, setError] = useState({ hasError: false })
+
 
     const baseUrl = "http://localhost:8888"
 
@@ -34,7 +32,6 @@ const EvaluationForm = ({ contractProp }) => {
             return
         }
 
-        alert("Évaluation envoyée avec succès")
         contract.isEvaluatedByMonitor = true
         internEvaluation.contract = contract
         internEvaluation.appreciation = appreciation
@@ -44,6 +41,12 @@ const EvaluationForm = ({ contractProp }) => {
         submit.isSubmit = false
         setSubmit({ ...submit, isSubmit: false })
         saveEvaluation(internEvaluation)
+            .then((data) => data.contract !== null ? reloadPage() : alert("Erreur, l'évaluation ne c'est pas créer!"))
+    }
+
+    const reloadPage = () =>{
+        window.confirm("Évaluation envoyée avec succès")
+        window.location.reload(true)
     }
 
     const saveEvaluation = async (contract) => {
@@ -112,11 +115,11 @@ const EvaluationForm = ({ contractProp }) => {
         let hasError = false
         if (e.target.value >= 0 && e.target.value <= 168 && e.target.value !== "") {
             hasError = false
-        }else{
+        } else {
             hasError = true
         }
         error.hasError = hasError
-        setError({ ...error, hasError: hasError})
+        setError({ ...error, hasError: hasError })
         setInternEvaluation({ ...internEvaluation, [e.target.name]: e.target.value })
     }
 
@@ -156,7 +159,7 @@ const EvaluationForm = ({ contractProp }) => {
                             <label htmlFor="weeklyHours">Veuillez indiquer le nombre d'heures réel par semaine d'encadrement accordé au stagiaire <span className="text-danger font-weight-bold">*</span></label>
                             <input className="form-control text-center" type="number" name="actualWeeklyHours" min="0" max="168" placeholder="Entrez le nombre d'heures par semaine entre 0 et 168" onChange={onValueChanged} style={getInputStyles(error.hasError)} />
                         </div>
-                        <EvaluationReHireIntern monitor={contract.internship.offer.monitor} setState={setReHireIntern} submitState={submit} />
+                        <EvaluationReHireIntern monitor={contract.internship.offer.monitor} setState={setReHireIntern} submitState={submit} offer={contract.internship.offer} />
                         <EvaluationRecipient contract={contract} />
                         <div className="mt-2">
                             <h5>Nous vous remercions de votre appui!</h5>
