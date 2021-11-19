@@ -76,14 +76,11 @@ const StudentNavbar = ({ useStudent }) => {
                         </li>
                         <SessionsButton />
                         <div className="mx-3 mt-1"> 
-                            { student.id !== undefined ?
-                                <StudentNotifications idStudent={student.id} />
-                            : ""}
+                            <StudentNotifications studentState={historyState} />
                         </div>
                     </ul>
                     <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>
-                    
             </nav>
         </div>
     )
