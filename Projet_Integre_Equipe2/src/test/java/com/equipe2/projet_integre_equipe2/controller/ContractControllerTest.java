@@ -4,7 +4,6 @@ import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.service.ContractService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javassist.bytecode.ByteArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,7 +196,7 @@ public class ContractControllerTest {
     @Test
     public void getContractPdfTest() throws Exception {
         byte[] bytes = {116, 101, 115, 116};
-        when(contractService.GenerateDocument("Contract", contract)).thenReturn(Optional.of(bytes));
+        when(contractService.generateDocument("Contract", contract)).thenReturn(Optional.of(bytes));
 
         MvcResult result = mockMvc.perform(post("/contract/get-contract-pdf")
                 .contentType(MediaType.APPLICATION_JSON)
