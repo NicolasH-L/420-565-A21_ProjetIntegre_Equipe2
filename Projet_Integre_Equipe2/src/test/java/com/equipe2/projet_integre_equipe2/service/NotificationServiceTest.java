@@ -69,65 +69,65 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void testCreateNotificationForStudent(){
+    public void testCreateNotificationsForStudent(){
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(notificationRepository.save(notification)).thenReturn(notification);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification, student.getId());
+        Optional<Notification> actualNotification = notificationService.saveNotificationsForStudent(notification, student.getId());
         assertThat(actualNotification.get()).isEqualTo(notification);
     }
 
     @Test
-    public void testCreateNotificationForStudentFails(){
+    public void testCreateNotificationsForStudentFails(){
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(notificationRepository.save(notification)).thenReturn(null);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForStudent(notification,student.getId());
+        Optional<Notification> actualNotification = notificationService.saveNotificationsForStudent(notification,student.getId());
         assertThat(actualNotification).isEqualTo(Optional.empty());
     }
 
     @Test
-    public void testCreateNotificationForAllStudent(){
+    public void testCreateNotificationsForAllStudent(){
         when(studentRepository.findAllByIsCvValidTrue()).thenReturn(getListOfStudents());
         when(notificationRepository.save(notification)).thenReturn(notification);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForOfferForAllStudent(notification);
+        Optional<Notification> actualNotification = notificationService.saveNotificationsOffersForAllStudent(notification);
         assertThat(actualNotification.get().getStudent().size()).isEqualTo(4);
     }
 
     @Test
-    public void testCreateNotificationForAllStudenFail(){
+    public void testCreateNotificationsForAllStudentFails(){
         when(studentRepository.findAllByIsCvValidTrue()).thenReturn(getListOfStudents());
         when(notificationRepository.save(notification)).thenReturn(null);
-        Optional<Notification> actualNotification = notificationService.saveNotificationForOfferForAllStudent(notification);
+        Optional<Notification> actualNotification = notificationService.saveNotificationsOffersForAllStudent(notification);
         assertThat(actualNotification).isEmpty();
     }
 
     @Test
-    public void testGetNotification(){
+    public void testGetNotifications(){
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(getNotificationsList());
         Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
         assertThat(actualNotificationList.get().size()).isEqualTo(1);
     }
 
     @Test
-    public void testGetNotificationFail(){
+    public void testGetNotificationsFails(){
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(null);
         Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
         assertThat(actualNotificationList).isEmpty();
     }
 
     @Test
-    public void testDeleteNotificationForStudent(){
+    public void testDeleteNotificationsForStudent(){
         when(notificationRepository.findNotificationById(notification.getId())).thenReturn(notification);
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(notificationRepository.save(notification)).thenReturn(notification);
-        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getId(),student.getId());
+        boolean deleteNotification = notificationService.deleteNotificationsForStudent(notification.getId(),student.getId());
         assertThat(deleteNotification).isTrue();
     }
 
     @Test
-    public void testDeleteNotificationForStudentFails(){
+    public void testDeleteNotificationsForStudentFails(){
         when(notificationRepository.findNotificationById(notification.getId())).thenReturn(null);
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
-        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification.getId(),student.getId());
+        boolean deleteNotification = notificationService.deleteNotificationsForStudent(notification.getId(),student.getId());
         assertThat(deleteNotification).isFalse();
     }
 
@@ -155,10 +155,10 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void testDeleteNotificationByStudentListIsEmpty(){
+    public void testDeleteNotificationsByStudentListIsEmpty(){
         when(notificationRepository.findNotificationById(notification3.getId())).thenReturn(notification3);
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
-        boolean deleteNotification = notificationService.deleteNotificationForStudent(notification3.getId(),student.getId());
+        boolean deleteNotification = notificationService.deleteNotificationsForStudent(notification3.getId(),student.getId());
         assertThat(deleteNotification).isTrue();
     }
 

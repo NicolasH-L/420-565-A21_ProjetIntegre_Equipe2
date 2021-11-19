@@ -18,33 +18,33 @@ public class NotificationController {
     public NotificationController(NotificationService notificationService){this.notificationService = notificationService;}
 
     @PostMapping("/save-notification")
-    public ResponseEntity<Notification> saveNotificationForOfferForAllStudent(@RequestBody Notification notification) {
-        return notificationService.saveNotificationForOfferForAllStudent(notification)
+    public ResponseEntity<Notification> saveNotificationsOffersForAllStudent(@RequestBody Notification notification) {
+        return notificationService.saveNotificationsOffersForAllStudent(notification)
                 .map(notification1 -> ResponseEntity.status(HttpStatus.CREATED).body(notification1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
     }
 
     @PostMapping("/save-notification-for-student/{idStudent}")
-    public ResponseEntity<Notification> saveNotificationForStudent(@RequestBody Notification notification, @PathVariable int idStudent) {
-        return notificationService.saveNotificationForStudent(notification, idStudent)
+    public ResponseEntity<Notification> saveNotificationsForStudent(@RequestBody Notification notification, @PathVariable int idStudent) {
+        return notificationService.saveNotificationsForStudent(notification, idStudent)
                 .map(notification1 -> ResponseEntity.status(HttpStatus.CREATED).body(notification1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
     }
 
     @GetMapping("/get-notification-student/{id}")
-    public ResponseEntity<List<Notification>> getNotification(@PathVariable int id){
+    public ResponseEntity<List<Notification>> getNotifications(@PathVariable int id){
         return notificationService.getNotifications(id)
                 .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @DeleteMapping("/delete-notification/{idNotification}/{idStudent}")
-    public Boolean deleteNotificationForStudent(@PathVariable int idNotification, @PathVariable int idStudent) {
-        return notificationService.deleteNotificationForStudent(idNotification, idStudent);
+    public Boolean deleteNotificationsForStudent(@PathVariable int idNotification, @PathVariable int idStudent) {
+        return notificationService.deleteNotificationsForStudent(idNotification, idStudent);
     }
 
     @DeleteMapping("/delete-notification/{idStudent}")
-    public Boolean deleteAllNotificationForStudent(@PathVariable int idStudent) {
+    public Boolean deleteAllNotificationsForStudent(@PathVariable int idStudent) {
         return notificationService.deleteAllByStudentId(idStudent);
     }
 

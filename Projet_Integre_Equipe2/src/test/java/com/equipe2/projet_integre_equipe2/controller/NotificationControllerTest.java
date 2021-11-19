@@ -5,7 +5,6 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.NotificationService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.spi.ObjectThreadContextMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class NotificationControllerTest {
 
     @Test
     public void saveNotificationForAllStudentTest() throws Exception {
-        when(notificationService.saveNotificationForOfferForAllStudent(notification)).thenReturn(Optional.of(notification));
+        when(notificationService.saveNotificationsOffersForAllStudent(notification)).thenReturn(Optional.of(notification));
 
         MvcResult result = mockMvc.perform(post("/notification/save-notification")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +71,7 @@ public class NotificationControllerTest {
 
     @Test
     public void saveNotificationForStudent() throws Exception {
-        when(notificationService.saveNotificationForStudent(notification, student.getId())).thenReturn(Optional.of(notification));
+        when(notificationService.saveNotificationsForStudent(notification, student.getId())).thenReturn(Optional.of(notification));
 
         MvcResult result = mockMvc.perform(post("/notification/save-notification-for-student/" + student.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -100,7 +99,7 @@ public class NotificationControllerTest {
 
     @Test
     public void deleteANotificationStudent() throws Exception {
-        when(notificationService.deleteNotificationForStudent(notification.getId(), student.getId())).thenReturn(true);
+        when(notificationService.deleteNotificationsForStudent(notification.getId(), student.getId())).thenReturn(true);
         MvcResult result = mockMvc.perform(delete("/notification/delete-notification/" + notification.getId() + "/" + student.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();

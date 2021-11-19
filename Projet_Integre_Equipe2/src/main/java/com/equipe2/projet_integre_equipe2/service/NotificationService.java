@@ -21,7 +21,7 @@ public class NotificationService {
         this.studentRepository = studentRepository;
     }
 
-    public Optional<Notification> saveNotificationForOfferForAllStudent(Notification notification){
+    public Optional<Notification> saveNotificationsOffersForAllStudent(Notification notification){
         try {
             List<Student> validStudentList = studentRepository.findAllByIsCvValidTrue();
             notification.setStudent(validStudentList);
@@ -31,7 +31,7 @@ public class NotificationService {
         }
     }
 
-    public Optional<Notification> saveNotificationForStudent(Notification notification, int idStudent){
+    public Optional<Notification> saveNotificationsForStudent(Notification notification, int idStudent){
         try {
             Student student = studentRepository.findById(idStudent).get();
             notification.setStudent(Arrays.asList(student));
@@ -49,7 +49,7 @@ public class NotificationService {
         }
     }
 
-    public boolean deleteNotificationForStudent(int idNotification, int idStudent){
+    public boolean deleteNotificationsForStudent(int idNotification, int idStudent){
         try {
             Notification notification = notificationRepository.findNotificationById(idNotification);
             Student student = studentRepository.findById(idStudent).get();
