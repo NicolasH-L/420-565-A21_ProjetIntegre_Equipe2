@@ -10,10 +10,11 @@ const EvaluationCapabilityRatingChoices = ({ onChangeMethod, newName, errorState
         return (
             <select defaultValue="default" className="form-control" name={newName} onChange={onChangeMethod} style={getInputStyles(errorState.hasError)}>
                 <option className="text-center" value="default">Veuillez choisir une valeur</option>
-                <option className="text-center" value="Totalement en accord">Totalement en accord</option>
-                <option className="text-center" value="Plutôt en accord">Plutôt en accord</option>
-                <option className="text-center" value="Plutôt en désaccord">Plutôt en désaccord</option>
-                <option className="text-center" value="N/A*">N/A*</option>
+                <option className="text-center" value="1">Totalement en accord</option>
+                <option className="text-center" value="2">Plutôt en accord</option>
+                <option className="text-center" value="3">Plutôt en désaccord</option>
+                <option className="text-center" value="4">Totalement en désaccord</option>
+                <option className="text-center" value="5">N/A*</option>
             </select>
         )
     }
