@@ -30,6 +30,10 @@ export const Notification = ({ notificationList, studentId }) => {
         return await result
     }
 
+    // const filterNotification = (notification) => {
+    //     return notification.session === user.actualSession
+    // }
+
     return (
         <div className="btn-group mr-5">
             <button type="button" className="btn btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
