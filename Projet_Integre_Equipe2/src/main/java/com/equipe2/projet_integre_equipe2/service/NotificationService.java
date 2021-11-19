@@ -55,14 +55,14 @@ public class NotificationService {
             Student student = studentRepository.findById(idStudent).get();
             notification.getStudent().remove(student);
             notificationRepository.save(notification);
-            isStudentListIsEmpty(idNotification, notification);
+            studentListEmptyValidation(idNotification, notification);
             return true;
         } catch (Exception e){
             return false;
         }
     }
 
-    public void isStudentListIsEmpty(int idNotification, Notification notification) {
+    public void studentListEmptyValidation(int idNotification, Notification notification) {
         if(notification.getStudent().isEmpty())
             notificationRepository.deleteById(idNotification);
     }
@@ -73,7 +73,7 @@ public class NotificationService {
             for (Notification notification: notificationRepository.findAllByStudent_id(idStudent)) {
                 notification.getStudent().remove(student);
                 notificationRepository.save(notification);
-                isStudentListIsEmpty(notification.getId(), notification);
+                studentListEmptyValidation(notification.getId(), notification);
             }
             return notificationRepository.findAll().size() == 0;
         }catch (Exception e){

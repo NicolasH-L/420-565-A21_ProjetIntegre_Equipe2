@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Monitor extends User implements Serializable {
 

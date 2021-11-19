@@ -164,13 +164,13 @@ public class NotificationServiceTest {
 
     @Test
     public void testIsStudentListIsEmpty(){
-        notificationService.isStudentListIsEmpty(notification2.getId(), notification2);
+        notificationService.studentListEmptyValidation(notification2.getId(), notification2);
         verify(notificationRepository, times(1)).deleteById(notification2.getId());
     }
 
     @Test
     public void testIsStudentListIsEmptyFails(){
-        notificationService.isStudentListIsEmpty(notification.getId(), notification);
+        notificationService.studentListEmptyValidation(notification.getId(), notification);
         verify(notificationRepository, times(0)).deleteById(notification.getId());
     }
 
