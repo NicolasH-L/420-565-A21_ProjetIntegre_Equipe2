@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/evaluation")
@@ -19,17 +21,23 @@ public class EvaluationController {
 
     @PostMapping("/save-evaluation")
     public ResponseEntity<Evaluation> saveEvaluation(@RequestBody InternEvaluation internEvaluation) {
-        System.out.println("contract" + internEvaluation.getContract());
-        System.out.println("behavior" + internEvaluation.getBehaviors().get(0));
-        System.out.println("behavior" + internEvaluation.getBehaviors().get(1));
-        System.out.println("behavior" + internEvaluation.getBehaviors().get(2));
-        System.out.println("behavior" + internEvaluation.getBehaviors().get(3));
-        System.out.println("appreciation" + internEvaluation.getAppreciation());
-        System.out.println("actual weeks"+ internEvaluation.getActualWeeklyHours());
-        System.out.println("rehire" + internEvaluation.getReHireIntern());
-        return evaluationService.save(internEvaluation)
+        return evaluationService.registerEvaluation(internEvaluation)
                 .map(evaluation1 -> ResponseEntity.status(HttpStatus.OK).body(evaluation1))
-                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Evaluation()));
-
+                .orElse(ResponseEntity.status(HttpStatus.OK).body(new Evaluation()));
     }
+
+    @GetMapping("/get-all-by-monitor/{idMonitor}")
+    public ResponseEntity<List<Evaluation>> getEvaluationsByMonitorId(@PathVariable Integer idMonitor){
+        return evaluationService.getEvaluationsByMonitorId(idMonitor)
+                .map(evaluations -> ResponseEntity.status(HttpStatus.OK).body(evaluations))
+                .orElse(ResponseEntity.status(HttpStatus.OK).build());
+    }
+
+    @GetMapping("/get-by-supervisor-and-student/{idSupervisor}/{idStudent}")
+    public ResponseEntity<Evaluation> getEvaluationsBySupervisorId(@PathVariable Integer idSupervisor, @PathVariable Integer idStudent){
+        return evaluationService.getEvaluationBySupervisorIdAndStudentId(idSupervisor, idStudent)
+                .map(evaluation1 -> ResponseEntity.status(HttpStatus.OK).body(evaluation1))
+                .orElse(ResponseEntity.status(HttpStatus.OK).body(new Evaluation()));
+    }
+
 }
