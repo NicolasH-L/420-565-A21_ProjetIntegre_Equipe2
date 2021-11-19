@@ -28,6 +28,7 @@ import StudentSignContract from './components/Student/StudentSignContract'
 import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSupervisorToStudent'
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import MonitorContracts from './components/Monitor/MonitorContracts'
+import MonitorEvaluateStudent from './components/Monitor/MonitorEvaluateStudent'
 import AdminContracts from './components/Admin/AdminContracts'
 import ErrorRoute from './components/ErrorRoute';
 
@@ -94,6 +95,7 @@ function App() {
         <GuardedRoute path="/MonitorOfferList" component={MonitorOfferList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorStudentList" component={MonitorStudentList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorContracts" component={MonitorContracts} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorEvaluateStudent" component={MonitorEvaluateStudent} auth={isMonitorAuthenticated}/>
 
         <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentUploadCV" component={StudentUploadCV} auth={isStudentAuthenticated} />
