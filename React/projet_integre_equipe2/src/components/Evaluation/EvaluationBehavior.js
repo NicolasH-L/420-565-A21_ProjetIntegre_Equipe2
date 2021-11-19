@@ -8,14 +8,13 @@ const EvaluationBehavior = ({ newBehavior, submitState }) => {
     useEffect(() => {
         if (behavior === null)
             setBehavior(newBehavior)
-    }, [behavior])
+    }, [behavior, submitState.isSubmitValid])
 
     const onChangeMethod = (e) => {
         e.preventDefault()
         if (e.target.value === "default")
             return
         behavior[e.target.name] = e.target.value
-        setBehavior({...behavior, [e.target.name]: e.target.value})
     }
 
     return (
