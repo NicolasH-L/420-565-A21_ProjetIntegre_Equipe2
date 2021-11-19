@@ -16,7 +16,7 @@ const EvaluationPdfModalView = ({ evaluation }) => {
 
     return (
         <div>
-            <button className="btn btn-primary mr-5" data-toggle="modal" data-target={"#evaluation" + evaluation.idEvaluation}>Consulter l'évaluation</button>
+            <button className="btn btn-dark mr-5" data-toggle="modal" data-target={"#evaluation" + evaluation.idEvaluation}>Consulter l'évaluation <i className="fas fa-clipboard-list"></i> </button>
             <div className="modal fade" id={"evaluation" + evaluation.idEvaluation} tabIndex="-1" role="dialog">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">

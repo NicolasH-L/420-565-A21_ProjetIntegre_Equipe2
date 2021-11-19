@@ -46,6 +46,14 @@ public class EvaluationService {
         }
     }
 
+    public Optional<List<Evaluation>> getAllEvaluations() {
+        try {
+            return Optional.of(evaluationRepository.findAll());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Evaluation> getEvaluationBySupervisorIdAndStudentId(Integer idSupervisor, Integer idStudent) {
         try {
             return Optional.of(evaluationRepository.findEvaluationByContract_Internship_Supervisor_IdAndContract_Internship_Student_Id(idSupervisor, idStudent));

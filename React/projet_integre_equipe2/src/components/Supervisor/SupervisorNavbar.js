@@ -10,6 +10,10 @@ const SupervisorNavbar = () => {
         history.push("/SupervisorAssignedStudentList", historyState)
     }
 
+    const goToSupervisorEvaluations = () => {
+        history.push("/SupervisorEvaluations", historyState)
+    }
+    
     const logout = () => {
         sessionStorage.setItem("userType", "")
         history.push("/")
@@ -26,6 +30,9 @@ const SupervisorNavbar = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToSupervisorAssignedStudentList()}>Mes étudiants</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToSupervisorEvaluations()}>Évaluations étudiants</button>
                         </li>
                         <SessionsButton/>
                     </ul>

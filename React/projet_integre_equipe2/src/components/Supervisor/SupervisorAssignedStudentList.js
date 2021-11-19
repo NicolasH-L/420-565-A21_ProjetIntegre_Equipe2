@@ -2,6 +2,7 @@ import React from 'react'
 import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 
 const SupervisorAssignedStudentList = () => {
     const [interships, setInterships] = useState([])
@@ -9,10 +10,6 @@ const SupervisorAssignedStudentList = () => {
     const historyState = history.location.state
     const supervisor = historyState.supervisor
 
-    const buttonReport = (internshipOffer) => {
-        console.log(internshipOffer)
-        return <button className="btn btn-dark mx-2" onClick={e => { e.preventDefault(); console.log(internshipOffer) }}>Voir Évaluation <i className="fas fa-clipboard-list"></i></button>
-    }
 
     useEffect(() => {
 
@@ -39,12 +36,7 @@ const SupervisorAssignedStudentList = () => {
     const viewDocumentCv = async (document) => {
         history.push("/ViewDocument", document)
     }
-
-    const fetchEvaluation = async (idSupervisor, idStudent) => {
-        const res = await fetch(`http://localhost:8888/evaluation/evaluation/get-by-supervisor-and-student/${idSupervisor}/${idStudent}`)
-        return await res.json()
-    }
-
+    
     return (
         <div>
             <div className="grad">
@@ -73,8 +65,7 @@ const SupervisorAssignedStudentList = () => {
                                         <th>{internship.offer.jobTitle}</th>
                                         <th>{internship.student.telephoneNumber}</th>
                                         <td className="w-25">
-                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
-                                            {internship.offer != undefined ? buttonReport(internship.offer) : ''}
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>                                            
                                         </td>
                                     </tr>
                                 ))}
