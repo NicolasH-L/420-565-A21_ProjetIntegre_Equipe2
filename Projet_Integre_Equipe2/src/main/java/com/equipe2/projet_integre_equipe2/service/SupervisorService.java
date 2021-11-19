@@ -21,7 +21,8 @@ public class SupervisorService {
 
     public Optional<Supervisor> registerSupervisor(Supervisor supervisor){
         try {
-            supervisor.setPassword(passwordService.encodePassword(supervisor.getPassword()));
+            if (supervisor.getPassword().length() <= 16)
+                supervisor.setPassword(passwordService.encodePassword(supervisor.getPassword()));
         return Optional.of(supervisorRepository.save(supervisor));
         } catch (Exception exception) {
             return Optional.empty();

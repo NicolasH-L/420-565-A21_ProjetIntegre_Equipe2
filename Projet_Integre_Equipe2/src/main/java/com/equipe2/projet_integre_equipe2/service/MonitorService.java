@@ -21,7 +21,8 @@ public class MonitorService {
 
     public Optional<Monitor> registerMonitor(Monitor monitor) {
         try {
-            monitor.setPassword(passwordService.encodePassword(monitor.getPassword()));
+            if (monitor.getPassword().length() <= 16)
+                    monitor.setPassword(passwordService.encodePassword(monitor.getPassword()));
             return Optional.of(monitorRepository.save(monitor));
         } catch (Exception exception) {
             return Optional.empty();
