@@ -6,13 +6,13 @@ import { useHistory } from 'react-router-dom'
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
     const message = "Nouvelle offre de stage disponible"
+    const history = useHistory()
+    const admin = history.location.state.admin
 
     const [offers, setOffers] = useState([])
     const [notification, setNotification] = useState({
-        typeNotification: typeNotification, message: message
+        typeNotification: typeNotification, message: message, session: admin.actualSession
     })
-    const history = useHistory()
-    const admin = history.location.state.admin
 
     useEffect(() => {
         const getOffers = async () => {

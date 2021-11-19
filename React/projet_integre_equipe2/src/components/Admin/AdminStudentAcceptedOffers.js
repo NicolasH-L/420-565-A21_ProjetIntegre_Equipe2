@@ -9,6 +9,9 @@ const AdminStudentAcceptedOffers = () => {
     const studentTerms = "Accomplir ou réaliser les tâches demandées par le moniteur. Améliorer ou continuer à développer les besoins auprès de l'équipe et s'assurer que tout est conforme."
     const typeNotification = "Signature"
     const message = "Veuillez signer le contrat disponible"
+    const history = useHistory()
+    const historyState = history.location.state
+    const admin = historyState.admin
 
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({
@@ -23,12 +26,8 @@ const AdminStudentAcceptedOffers = () => {
     })
 
     const [notification, setNotification] = useState({
-        typeNotification: typeNotification, message: message
+        typeNotification: typeNotification, message: message, session: admin.actualSession
     })
-
-    const history = useHistory()
-    const historyState = history.location.state
-    const admin = historyState.admin
 
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11

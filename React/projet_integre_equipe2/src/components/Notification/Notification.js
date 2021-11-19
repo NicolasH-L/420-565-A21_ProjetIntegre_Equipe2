@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const Notification = ({ notificationList, studentId }) => {
+export const Notification = ({ notificationList, studentId, userSession }) => {
     const baseUrl = "http://localhost:8888/notification"
     const [list, setList] = useState()
 
@@ -8,12 +8,12 @@ export const Notification = ({ notificationList, studentId }) => {
         setList(notificationList)
     }, [notificationList.length])
 
-    const deleteNotification = async (idNotification) =>{
+    const deleteNotification = async (idNotification) => {
         const result = await fetch(`${baseUrl}/delete-notification/${idNotification}/${studentId}`,
-        {
-            method: 'DELETE',
-            headers: {'Content-type': 'application/json'}
-        })
+            {
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json' }
+            })
         return await result
     }
 
@@ -22,23 +22,23 @@ export const Notification = ({ notificationList, studentId }) => {
     }
 
     const deleteAllNotifications = async () => {
-        const result = await fetch(`${baseUrl}/delete-notification/${studentId}`, 
-        {   
-            method: 'DELETE', 
-            headers: {'Content-type': 'application/json'}
-        })
+        const result = await fetch(`${baseUrl}/delete-notification/${studentId}`,
+            {
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json' }
+            })
         return await result
     }
 
-    // const filterNotification = (notification) => {
-    //     return notification.session === user.actualSession
-    // }
+    const filterNotification = (notification) => {
+        return notification.session === userSession
+    }
 
     return (
         <div className="btn-group mr-5">
             <button type="button" className="btn btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
                 {list !== undefined ?
-                    <i className="fas fa-bell" aria-hidden="true"> {list.length} </i>
+                    <i className="fas fa-bell" aria-hidden="true"> {list.filter(filterNotification).length} </i>
                     : ""}
             </button>
             <div className="modal fade" id="notificationsModal" tabIndex="-1" role="dialog" aria-labelledby="notificationModalCenterTitle" aria-hidden="true">
@@ -51,15 +51,17 @@ export const Notification = ({ notificationList, studentId }) => {
                             </button>
                         </div>
                         <div className="modal-body list-group">
-                            {list !== undefined ? list.map((notification) => (
+                            {list !== undefined ? list.filter(filterNotification).map((notification) => (
                                 <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.id}>
                                     {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }} onClick={() => deleteNotification(notification.id).then((data) => data ? modificationlistNotification(notification.id) : "")}><i className="fas fa-times fa-lg align-middle"></i></button>
                                 </li>
                             )) : ""}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-info" onClick={() => deleteAllNotifications().then((data) => data ? setList([]) : "")}>Tout supprimer</button>
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            {list !== undefined ? list.filter(filterNotification).length !== 0 ? <>
+                                <button type="button" className="btn btn-info" onClick={() => deleteAllNotifications().then((data) => data ? setList([]) : "")}>Tout supprimer</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </> : "" : "" }
                         </div>
                     </div>
                 </div>
