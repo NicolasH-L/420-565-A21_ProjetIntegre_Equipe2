@@ -25,7 +25,8 @@ public class StudentService {
 
     public Optional<Student> registerStudent(Student student) {
         try {
-            student.setPassword(passwordService.encodePassword(student.getPassword()));
+            if(student.getPassword().length() <= 16 )
+                student.setPassword(passwordService.encodePassword(student.getPassword()));
             return Optional.of(studentRepository.save(student));
         } catch (Exception exception) {
             return Optional.empty();

@@ -73,7 +73,7 @@ public class StudentServiceTest {
     public void testRegisterStudent() {
         when(studentRepository.save(student)).thenReturn(studentRegistered);
         Optional<Student> actualStudent = studentService.registerStudent(student);
-        assertThat(actualStudent.get()).isEqualTo(student);
+        assertThat(actualStudent.get()).isEqualTo(studentRegistered);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class StudentServiceTest {
     public void testLoginStudent() {
         when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(studentRegistered);
         Optional<Student> actualStudent = studentService.loginStudent(student.getMatricule(), rawPassword);
-        assertThat(actualStudent.get()).isEqualTo(student);
+        assertThat(actualStudent.get()).isEqualTo(studentRegistered);
     }
 
     @Test

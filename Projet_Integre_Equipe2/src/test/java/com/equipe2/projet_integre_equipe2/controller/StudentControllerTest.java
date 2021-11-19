@@ -84,7 +84,7 @@ public class StudentControllerTest {
 
     @Test
     public void loginStudentTest() throws Exception{
-        when(studentService.loginStudent(student.getMatricule(), rawPassword)).thenReturn(Optional.of(student));
+        when(studentService.loginStudent(student.getMatricule(), rawPassword)).thenReturn(Optional.of(studentRegistered));
 
         MvcResult result = mockMvc.perform(get("/students/{matricule}/{password}", student.getMatricule(), rawPassword)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -92,7 +92,7 @@ public class StudentControllerTest {
 
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualStudent).isEqualTo(student);
+        assertThat(actualStudent).isEqualTo(studentRegistered);
     }
 
     @Test

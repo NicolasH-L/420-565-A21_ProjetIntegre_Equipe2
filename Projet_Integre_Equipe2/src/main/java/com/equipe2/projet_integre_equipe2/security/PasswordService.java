@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordService {
 
-    private PasswordEncoder passwordEncoder;
+   private PasswordEncoder passwordEncoder;
 
    public PasswordService(){
        this.passwordEncoder = new BCryptPasswordEncoder();
