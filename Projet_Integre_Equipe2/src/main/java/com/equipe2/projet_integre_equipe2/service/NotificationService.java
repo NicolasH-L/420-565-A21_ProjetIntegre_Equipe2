@@ -52,14 +52,6 @@ public class NotificationService {
         }
     }
 
-    public Optional<Notification> getMaNotification(int id){
-        try {
-            return Optional.of(notificationRepository.findNotificationById(id));
-        } catch (Exception e){
-            return Optional.empty();
-        }
-    }
-
     public boolean deleteNotificationForStudent(int idNotification, int idStudent){
         try {
             Notification notification = notificationRepository.findNotificationById(idNotification);
