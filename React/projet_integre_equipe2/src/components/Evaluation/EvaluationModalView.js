@@ -14,11 +14,10 @@ const EvaluationModalView = ({ contractProp }) => {
             {contract !== null
                 ?
                 <>
-                    <button className="btn btn-primary mr-5" data-toggle="modal" data-target={"#internship" + contract.internship.idInternship}>Consulter</button>
+                    <button className="btn btn-primary mr-5" data-toggle="modal" data-target={"#internship" + contract.internship.idInternship}>Evaluer stagiaire</button>
                     <div className="modal fade" id={"internship" + contract.internship.idInternship} tabIndex="-1" role="dialog">
                         <div className="modal-dialog modal-lg" role="document">
                             <div className="modal-content">
-                                {/* TODO add evaluation prop and ternary condition */}
                                 <EvaluationForm contractProp={contract} />
                                 <div className="modal-footer mt-4">
                                     <button type="button" className="btn btn-danger" data-dismiss="modal">Fermer</button>
