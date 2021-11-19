@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
 import SessionsButton from "./SessionsButton"
+import StudentNotifications from './Student/StudentNotifications'
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -59,7 +60,7 @@ const StudentNavbar = ({ useStudent }) => {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToMyProfile()}>Mon profil</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profil</button>
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentUploadCV()}>Déposer CV</button>
@@ -74,6 +75,9 @@ const StudentNavbar = ({ useStudent }) => {
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToContract()}>Signer mon contrat</button>
                         </li>
                         <SessionsButton />
+                        <div className="mx-3 mt-1"> 
+                            <StudentNotifications studentState={historyState} />
+                        </div>
                     </ul>
                     <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>

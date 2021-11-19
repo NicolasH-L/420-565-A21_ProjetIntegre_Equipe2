@@ -6,7 +6,6 @@ export const Notification = ({ notificationList, userProp, userSession }) => {
 
     useEffect(() => {
         setList(notificationList)
-        console.log
     }, [notificationList.length])
 
     const deleteNotification = async (idNotification) => {
@@ -38,7 +37,11 @@ export const Notification = ({ notificationList, userProp, userSession }) => {
     return (
         <div className="btn-group mr-5">
             <button type="button" className="btn btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
+<<<<<<< HEAD
                 {list !== undefined && list !== null && list.length !== 0 && list !== "" ?
+=======
+                {list !== undefined && list !== null && list !== "" ?
+>>>>>>> Nicolas
                     <i className="fas fa-bell" aria-hidden="true"> {list.filter(filterNotification).length} </i>
                     : ""}
             </button>

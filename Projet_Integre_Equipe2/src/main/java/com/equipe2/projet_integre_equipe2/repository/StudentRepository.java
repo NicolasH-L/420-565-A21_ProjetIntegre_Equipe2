@@ -4,6 +4,8 @@ import com.equipe2.projet_integre_equipe2.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
@@ -12,5 +14,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     boolean existsByMatriculeAndIsCvValidTrue(String matricule);
 
     Student findByMatricule(String matricule);
+
+    List<Student> findAllByIsCvValidTrue();
 
 }

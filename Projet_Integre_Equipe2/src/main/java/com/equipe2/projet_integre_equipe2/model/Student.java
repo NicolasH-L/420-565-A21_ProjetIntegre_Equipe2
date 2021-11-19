@@ -17,7 +17,6 @@ public class Student extends User implements Serializable {
     private Boolean isCvValid = false;
     private String currentStatus = "En recherche";
 
-
     @Builder(builderMethodName = "studentBuilder")
     public Student(Integer id, String firstName, String lastName, String password, String matricule,
                    String telephoneNumber, Boolean isCvValid, String currentStatus, String actualSession) {
