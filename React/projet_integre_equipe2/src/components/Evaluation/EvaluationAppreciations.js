@@ -76,10 +76,6 @@ const EvaluationAppreciations = ({ setState, submitState }) => {
     }
 
     const displayInputError = (e) => {
-        // TODO remove this later
-        console.log("input error")
-        console.log(e.target.name)
-        // TODO end of remove
         appreciation[e.target.name] = ""
         setAppreciation({...appreciation, [e.target.name]: ""})
         setError({ ...error, [e.target.name]: true })
@@ -104,14 +100,13 @@ const EvaluationAppreciations = ({ setState, submitState }) => {
             <div className="text-left mt-3">
                 <label htmlFor="expectationResult" className="mb-0 mt-3">Les habiletés du stagiaire et vos attentes: <span className="text-danger font-weight-bold">*</span></label>
             </div>
-            {/* TODO might have to modify the value names for the document mapping ex: expectionResult-1, expectionResult-2, expectionResult-3, etc.  */}
             <select defaultValue={defaultValue} className="form-control text-center" name="expectationResult" onChange={onAppreciationChanged} style={getInputStyles(error.expectationResult)}>
                 <option value={defaultValue}>Veuillez choisir une valeur</option>
-                <option value="Les habiletés démontrées dépassent de beaucoup les attentes">Les habiletés démontrées dépassent de beaucoup les attentes</option>
-                <option value="Les habiletés démontrées dépassent les attentes">Les habiletés démontrées dépassent les attentes</option>
-                <option value="Les habiletés démontrées répondent pleinement aux attentes">Les habiletés démontrées répondent pleinement aux attentes</option>
-                <option value="Les habiletés démontrées répondent partiellement aux attentes">Les habiletés démontrées répondent partiellement aux attentes</option>
-                <option value="Les habiletés démontrées ne répondent pas aux attentes">Les habiletés démontrées ne répondent pas aux attentes</option>
+                <option value="5">Les habiletés démontrées dépassent de beaucoup les attentes</option>
+                <option value="4">Les habiletés démontrées dépassent les attentes</option>
+                <option value="3">Les habiletés démontrées répondent pleinement aux attentes</option>
+                <option value="2">Les habiletés démontrées répondent partiellement aux attentes</option>
+                <option value="1">Les habiletés démontrées ne répondent pas aux attentes</option>
             </select>
             <div className="text-left mt-3">
                 <label htmlFor="appreciations" className="mb-0 mt-3 ml-1">Précisez votre appréciation: <span className="text-danger font-weight-bold">*</span></label>
