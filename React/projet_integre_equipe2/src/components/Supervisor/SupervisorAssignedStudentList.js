@@ -40,6 +40,11 @@ const SupervisorAssignedStudentList = () => {
         history.push("/ViewDocument", document)
     }
 
+    const fetchEvaluation = async (idSupervisor, idStudent) => {
+        const res = await fetch(`http://localhost:8888/evaluation/evaluation/get-by-supervisor-and-student/${idSupervisor}/${idStudent}`)
+        return await res.json()
+    }
+
     return (
         <div>
             <div className="grad">
