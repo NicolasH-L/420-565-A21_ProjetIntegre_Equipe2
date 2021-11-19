@@ -7,7 +7,7 @@ const EvaluationBehaviorList = ({ behaviors, setBehaviors, submitState }) => {
 
     useEffect(() => {
         setBehaviors(Evaluations.behaviors())
-    }, [])
+    }, [submitState.isSubmitValid])
 
     const displayBehaviors = () => {
         return (
