@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import StudentNavbar from '../StudentNavbar'
 import Contract from '../Contract/Contract'
+import DownloadContract from '../DownloadContract'
 
 const StudentSignContract = () => {
     const history = useHistory()
@@ -12,6 +13,7 @@ const StudentSignContract = () => {
     const [contract, setContract] = useState(null)
     const baseUrl = "http://localhost:8888"
     const student = historyState.student
+    const contractCompletedStatus = "Completed"
 
     useEffect(() => {
         if (historyState === undefined)
@@ -44,9 +46,14 @@ const StudentSignContract = () => {
             {internship && contract && (
                 <div className="d-flex justify-content-center my-5 py-2">
                     <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                        {(contract.internship.status === contractCompletedStatus) ? 
+                        <div className="d-flex justify-content-center mb-4">
+                            <DownloadContract contract={contract}></DownloadContract>
+                        </div>
+                        : ""}
                         <Contract passwordUser={student.password}
-                            currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract} 
-                            signature={contract.studentSignature}/>
+                            currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
+                            signature={contract.studentSignature} />
                     </div>
                 </div>
             )}

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import ContractModalView from '../Contract/ContractModalView'
+import DownloadContract from '../DownloadContract'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -11,10 +12,11 @@ const AdminContracts = () => {
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
+    const contractCompletedStatus = "Completed"
 
     useEffect(() => {
         if (filters.signatureStatus === "") {
-            setFilters({ ...filters, signatureStatus: "default"})
+            setFilters({ ...filters, signatureStatus: "default" })
         }
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
@@ -87,6 +89,7 @@ const AdminContracts = () => {
                                         <th scope="col">Signé par le moniteur</th>
                                         <th scope="col">Signé par le gestionnaire</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,6 +113,13 @@ const AdminContracts = () => {
                                                 <td className="w-25">
                                                     <ContractModalView userPasswordProp={admin.password}
                                                         currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature} />
+                                                </td>
+                                                <td>
+                                                    {(contract.internship.status === contractCompletedStatus) ?
+                                                        <div className="d-flex justify-content-center mb-4">
+                                                            <DownloadContract contract={contract}></DownloadContract>
+                                                        </div>
+                                                        : ""}
                                                 </td>
                                             </tr>
                                         ))}

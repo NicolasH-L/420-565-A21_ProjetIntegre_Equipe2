@@ -1,19 +1,14 @@
 package com.equipe2.projet_integre_equipe2.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class Admin {
 
     @Id

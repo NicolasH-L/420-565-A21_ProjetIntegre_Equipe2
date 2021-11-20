@@ -22,16 +22,18 @@ const MonitorInternshipOffer = () => {
 
     let emailMonitor
     let company
+    let telephoneNumberMonitor
 
     if (historyState !== undefined) {
         emailMonitor = monitor.email
         company = monitor.companyName
+        telephoneNumberMonitor = monitor.telephoneNumber
     }
 
     const [offer, setOffer] = useState({
         companyName: company, address: "", salary: "",
         jobTitle: "", description: "", skills: "",
-        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor,
+        jobSchedules: "", workingHours: "", monitorEmail: emailMonitor, telephoneNumber: telephoneNumberMonitor,
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: "", session: ""
     })
 

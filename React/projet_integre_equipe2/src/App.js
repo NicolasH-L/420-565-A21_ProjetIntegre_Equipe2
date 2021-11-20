@@ -1,5 +1,8 @@
 import './App.css'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import GuardedRoute from './components/GuardedRoute';
+import { useState, useEffect } from 'react'
+
 import Footer from './components/Footer'
 import Registration from './components/Registration/Registration'
 import Login from './components/Login/Login'
@@ -25,44 +28,92 @@ import StudentSignContract from './components/Student/StudentSignContract'
 import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSupervisorToStudent'
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import MonitorContracts from './components/Monitor/MonitorContracts'
+import MonitorEvaluateStudent from './components/Monitor/MonitorEvaluateStudent'
 import AdminContracts from './components/Admin/AdminContracts'
+import ErrorRoute from './components/ErrorRoute';
+import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
+
+window.onload = function () {
+  if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
+    sessionStorage.setItem("userType", "")
+    window.location.pathname = "/"
+  }
+}
 
 function App() {
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(sessionStorage.getItem("userType") === "admin")
+  const [isStudentAuthenticated, setIsStudentAuthenticated] = useState(sessionStorage.getItem("userType") === "student")
+  const [isMonitorAuthenticated, setIsMonitorAuthenticated] = useState(sessionStorage.getItem("userType") === "monitor")
+  const [isSupervisorAuthenticated, setIsSupervisorAuthenticated] = useState(sessionStorage.getItem("userType") === "supervisor")
+
+  let userType
+
+  useEffect(() => {
+    userType = sessionStorage.getItem("userType")
+    if (userType === null) {
+      sessionStorage.setItem("userType", "")
+    }
+  }, [])
+
+  function login(user) {
+    sessionStorage.setItem("userType", user)
+    if (user === "admin") {
+      setIsAdminAuthenticated(true)
+    } else if (user === "student") {
+      setIsStudentAuthenticated(true)
+    } else if (user === "monitor") {
+      setIsMonitorAuthenticated(true)
+    } else if (user === "supervisor") {
+      setIsSupervisorAuthenticated(true)
+    }
+  }
+
   return (
     <Router>
-      <div>
-        <Route path="/" exact render={(props) => (
+      <Switch>
+        <Route path="/" exact render={() => (
           <>
-            <Login />
+            <Login authGuardLogin={login} />
           </>
         )} />
-        <Route path="/Login" component={Login} />
+        <Route path="/Login">
+          <Redirect to="/" />
+        </Route>
         <Route path="/Registration" component={Registration} />
-        <Route path="/Admin" component={Admin} />
-        <Route path="/AdminOffer" component={AdminInternshipOffer} />
-        <Route path="/AdminOffersList" component={AdminInternshipOfferList} />
-        <Route path="/Monitor" component={Monitor} />
-        <Route path="/MonitorOffer" component={MonitorInternshipOffer} />
-        <Route path="/MonitorOfferList" component={MonitorOfferList} />
-        <Route path="/MonitorStudentList" component={MonitorStudentList} />
-        <Route path="/Student" component={Student} />
-        <Route path="/StudentUploadCV" component={StudentUploadCV} />
-        <Route path="/StudentDocuments" component={StudentDocuments} />
+
+        <GuardedRoute path='/Admin' component={Admin} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminOffer" component={AdminInternshipOffer} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminOffersList" component={AdminInternshipOfferList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentList" component={AdminStudentList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentCvList" component={AdminStudentCvList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminInternshipList" component={AdminInternshipList} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent} auth={isAdminAuthenticated} />
+        <GuardedRoute path="/AdminContracts" component={AdminContracts} auth={isAdminAuthenticated} />
+
+        <GuardedRoute path='/Monitor' component={Monitor} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorOffer" component={MonitorInternshipOffer} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorOfferList" component={MonitorOfferList} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorStudentList" component={MonitorStudentList} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorContracts" component={MonitorContracts} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorEvaluateStudent" component={MonitorEvaluateStudent} auth={isMonitorAuthenticated}/>
+
+        <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentUploadCV" component={StudentUploadCV} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentDocuments" component={StudentDocuments} auth={isStudentAuthenticated}/>
+        <GuardedRoute path="/StudentInternshipListOffers" component={StudentInternshipListOffers} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentSignContract" component={StudentSignContract} auth={isStudentAuthenticated} />
+
+        <GuardedRoute path='/Supervisor' component={Supervisor} auth={isSupervisorAuthenticated} />
+        <GuardedRoute path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList} auth={isSupervisorAuthenticated} />
+        <GuardedRoute path="/SupervisorEvaluations" component={SupervisorEvaluations} auth={isSupervisorAuthenticated} />
+
         <Route path="/OfferView" component={OfferView} />
-        <Route path="/Supervisor" component={Supervisor} />
-        <Route path="/StudentInternshipListOffers" component={StudentInternshipListOffers} />
-        <Route path="/AdminStudentList" component={AdminStudentList} />
-        <Route path="/AdminStudentCvList" component={AdminStudentCvList} />
         <Route path="/ViewDocument" component={ViewDocument} />
-        <Route path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} />
-        <Route path="/AdminInternshipList" component={AdminInternshipList} />
-        <Route path="/StudentSignContract" component={StudentSignContract} />
-        <Route path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent}></Route>
-        <Route path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList}></Route>
-        <Route path="/MonitorContracts" component={MonitorContracts}/>
-        <Route path="/AdminContracts" component={AdminContracts}/>
+
+        <Route path="*" component={ErrorRoute} />
         <Footer />
-      </div>
+      </Switch>
     </Router>
   )
 }

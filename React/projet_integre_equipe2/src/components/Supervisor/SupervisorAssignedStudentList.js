@@ -9,8 +9,13 @@ const SupervisorAssignedStudentList = () => {
     const historyState = history.location.state
     const supervisor = historyState.supervisor
 
+    const buttonReport = (internshipOffer) => {
+        console.log(internshipOffer)
+        return <button className="btn btn-dark mx-2" onClick={e => { e.preventDefault(); console.log(internshipOffer) }}>Voir Évaluation <i className="fas fa-clipboard-list"></i></button>
+    }
+
     useEffect(() => {
-        
+
         const getInternships = async () => {
             const internshipsFromServer = await fetchInternships(supervisor.id)
             setInterships(internshipsFromServer)
@@ -31,6 +36,10 @@ const SupervisorAssignedStudentList = () => {
         return internship.session === supervisor.actualSession
     }
 
+    const viewDocumentCv = async (document) => {
+        history.push("/ViewDocument", document)
+    }
+
     return (
         <div>
             <div className="grad">
@@ -44,23 +53,26 @@ const SupervisorAssignedStudentList = () => {
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Entreprise</th>
                                 <th scope="col">Nom du poste</th>
+                                <th scope="col">Numéro de teléphone de l'étudiant</th>
                                 <th scope="col">Offre</th>
                             </tr>
                         </thead>
                         <tbody>
                             {interships
-                            .filter(filterInternships)
-                            .map((internship) => (
-                                <tr key={internship.idInternship}>
-                                    <th>{internship.student.lastName}</th>
-                                    <th>{internship.student.firstName}</th>
-                                    <th>{internship.offer.companyName}</th>
-                                    <th>{internship.offer.jobTitle}</th>
-                                    <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
-                                    </td>
-                                </tr>
-                            ))}
+                                .filter(filterInternships)
+                                .map((internship) => (
+                                    <tr key={internship.idInternship}>
+                                        <th>{internship.student.lastName}</th>
+                                        <th>{internship.student.firstName}</th>
+                                        <th>{internship.offer.companyName}</th>
+                                        <th>{internship.offer.jobTitle}</th>
+                                        <th>{internship.student.telephoneNumber}</th>
+                                        <td className="w-25">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
+                                            {internship.offer != undefined ? buttonReport(internship.offer) : ''}
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>

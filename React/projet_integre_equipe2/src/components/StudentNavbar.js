@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
+import SessionsButton from "./SessionsButton"
+import StudentNotifications from './Student/StudentNotifications'
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -15,22 +17,22 @@ const StudentNavbar = ({ useStudent }) => {
         setStudent(useStudent)
     }, [])
 
-    const goToStudentUploadCV = () =>{
+    const goToStudentUploadCV = () => {
         history.push("/StudentUploadCV", historyState)
     }
 
-    const goToStudentInternshipOffers = () =>{
+    const goToStudentInternshipOffers = () => {
         if (historyState === undefined)
             return
         verifyCvValidity(student.matricule)
             .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
     }
 
-    const goToMyDocuments = () =>{
+    const goToMyDocuments = () => {
         history.push("/StudentDocuments", historyState)
     }
 
-    const goToMyProfile = () =>{
+    const goToMyProfile = () => {
         history.push("/Student", historyState)
     }
 
@@ -43,16 +45,21 @@ const StudentNavbar = ({ useStudent }) => {
         return await res.json()
     }
 
+    const logout = () => {
+        sessionStorage.setItem("userType", "")
+        history.push("/")
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-            <Link className="navbar-brand text-secondary" to="/Login"><h3>Stage Équipe 2</h3></Link>
+                <a className="navbar-brand text-secondary"><h3>Stage Équipe 2</h3></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                    <li className="nav-item mx-2">
+                        <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profil</button>
                         </li>
                         <li className="nav-item mx-2">
@@ -62,12 +69,17 @@ const StudentNavbar = ({ useStudent }) => {
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentInternshipOffers()}>Offres de stages</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyDocuments()}>Mes Documents</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToMyDocuments()}>Mes Documents</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToContract()}>Signer mon contrat</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToContract()}>Signer mon contrat</button>
                         </li>
+                        <SessionsButton />
+                        <div className="mx-3 mt-1"> 
+                            <StudentNotifications studentState={historyState} />
+                        </div>
                     </ul>
+                    <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>
             </nav>
         </div>
