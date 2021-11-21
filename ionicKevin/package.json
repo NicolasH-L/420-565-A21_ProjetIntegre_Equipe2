@@ -24,6 +24,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.3.2",
+    "axios": "^0.24.0",
     "com-badrit-base64": "^0.2.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-filechooser": "^1.2.0",

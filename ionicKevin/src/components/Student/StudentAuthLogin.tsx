@@ -13,7 +13,12 @@ const StudentAuthLogin = () => {
     
     const onSubmit = (student: any) => {
         studentLogin(student.matricule, student.password)
-        .then((data: any) => data.matricule != null ? history.push("/student", {student: data}) : setShowToastAlert(true))
+        .then((data: any) => data.matricule != null ? onSignIn(data) : setShowToastAlert(true))
+    }
+
+    const onSignIn = (student: any) => {
+        sessionStorage.setItem("student", JSON.stringify(student))
+        history.push("/student", {student})
     }
 
     const studentLogin = async (matricule: any, password: any) => {
