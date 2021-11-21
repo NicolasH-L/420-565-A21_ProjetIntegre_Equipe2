@@ -19,6 +19,7 @@ import OfferView from '../components/Offer/OfferView.vue';
 import AdminAssignSupervisorToStudent from '../components/Admin/AdminAssignSupervisorToStudent.vue';
 import SupervisorAssignedStudentList from '../components/Supevisor/SupervisorAssignedStudentList.vue';
 import MonitorOfferList from '../components/Monitor/MonitorOfferList.vue';
+import MonitorStudentList from '../components/Monitor/MonitorStudentList.vue';
 
 const routes = [
     {
@@ -120,8 +121,12 @@ const routes = [
         name:'MonitorOfferList',
         path:'/MonitorOfferList',
         component:MonitorOfferList
-    }
-    
+    },
+    {
+        name:'MonitorStudentList',
+        path:'/MonitorStudentList',
+        component:MonitorStudentList
+    },
 ];
 const router = createRouter({
     history: createWebHashHistory(),

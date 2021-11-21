@@ -20,7 +20,7 @@
             <td>{{ offer.salary }}$</td>
             <td>{{ offer.displayDate }}</td>
             <td className="w-25">
-              <button className="btn btn-primary mx-2">Voir étudiants</button>
+              <button className="btn btn-primary mx-2" @click="goToMonitorStudentList(offer.idOffer)">Voir étudiants</button>
             </td>
           </tr>
         </tbody>
@@ -32,6 +32,7 @@
 <script>
 import MonitorNavbar from "./MonitorNavbar.vue";
 import MonitorService from "./MonitorService";
+import router from "../../router";
 
 export default {
   name: "MonitorOfferList",
@@ -59,6 +60,10 @@ export default {
       } else {
         return this.$route.params.id;
       }
+    },
+    goToMonitorStudentList(idOffer){
+        console.log(idOffer)
+        router.push({name:"MonitorStudentList", params: {idOffer: idOffer, } })
     },
   },
 };

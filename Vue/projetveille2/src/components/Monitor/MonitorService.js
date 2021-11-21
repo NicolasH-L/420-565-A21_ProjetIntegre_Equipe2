@@ -20,5 +20,10 @@ class MonitorService {
         const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitorId}`)
         return await res.json()
     }
+
+    async getStudentOffersByIdOffer (idOffer) {
+        const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
+        return await res.json()
+    }
 }
 export default new MonitorService
