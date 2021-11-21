@@ -28,7 +28,7 @@
             <button
               className="nav-link btn btn-light"
               type="button"
-            
+              @click="goToMonitorOfferList()"
             >
               Mes offres
             </button>
@@ -47,6 +47,9 @@ export default {
     methods:{
       goToMonitorOffer(){
         router.push({name: "MonitorOffer", params:this.$route.params})
+      },
+      goToMonitorOfferList(){
+        router.push({name:"MonitorOfferList", params: this.$route.params})
       }
     },
 

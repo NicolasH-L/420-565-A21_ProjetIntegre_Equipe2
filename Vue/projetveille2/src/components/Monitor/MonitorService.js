@@ -15,5 +15,10 @@ class MonitorService {
         const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
         return await res.json()
     }
+
+    async getOffersByMonitor (monitorId) {
+        const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitorId}`)
+        return await res.json()
+    }
 }
 export default new MonitorService

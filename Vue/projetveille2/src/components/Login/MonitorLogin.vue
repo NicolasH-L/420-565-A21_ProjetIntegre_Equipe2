@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       monitor: {
-        email: "text@gmail.com",
+        email: "jonathan.11911@gmail.com",
         password: "MotDePasse01*",
       },
       error: {
