@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { IonButton, IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonLabel } from '@ionic/react'
+import { IonButton, IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonModal } from '@ionic/react'
+import { add } from 'ionicons/icons';
 import axios from "axios"
 import _, { lastIndexOf } from 'lodash'
 import { useHistory } from 'react-router-dom'
@@ -8,6 +9,7 @@ import StudentDocumentList from './StudentDocumentList'
 const StudentDocuments = () => {
     const [uploadFile, setUploadFile] = useState()
     const [uploadFileName, setUploadFileName] = useState("")
+    const [reloadDocumentList, setReloadDocumentList] = useState(false)
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState === undefined ? JSON.parse(sessionStorage.getItem("student")) : historyState.student
@@ -32,6 +34,7 @@ const StudentDocuments = () => {
                 })
                 .then((response) => {
                     alert("Cv téléverser avec succès")
+                    setReloadDocumentList(true)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -42,6 +45,8 @@ const StudentDocuments = () => {
         }
     }
 
+    const [showModal, setShowModal] = useState(false);
+
     return (
         <IonPage>
             <IonHeader>
@@ -50,25 +55,22 @@ const StudentDocuments = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonItem>
+                <IonItem className="ion-margin-vertical">
                     <input
+                        className="ion-margin-vertical"
                         type="file"
                         accept="application/pdf"
+                        placeholder="Déposer CV"
                         onChange={(e) => {
                             setUploadFile(e.target.files[0]);
                             setUploadFileName(e.target.files[0].name)
                         }}
                     />
+                    <IonButton onClick={e => { e.preventDefault(); uploadDocument() }}>
+                        <IonIcon icon={add}></IonIcon>Déposer
+                    </IonButton>
                 </IonItem>
-                <IonButton
-                    size="block"
-                    color="primary"
-                    className="ion-margin-vertical"
-                    onClick={e => { e.preventDefault(); uploadDocument() }}
-                >
-                    Envoyer
-                </IonButton>
-                <StudentDocumentList uploadFileName={uploadFileName}/>
+                <StudentDocumentList reloadDocumentList={reloadDocumentList} />
             </IonContent>
         </IonPage>
     )

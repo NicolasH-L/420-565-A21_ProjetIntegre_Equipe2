@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { IonItem, IonList, IonLabel } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 
-const StudentDocumentList = ({uploadFileName}) => {
+const StudentDocumentList = (reloadDocumentList) => {
     const [documents, setDocuments] = useState([])
     const history = useHistory()
     const historyState = history.location.state
@@ -22,7 +22,7 @@ const StudentDocumentList = ({uploadFileName}) => {
             setDocuments(documentsFromServer)
         }
         getDocuments()
-    }, [uploadFileName.length])
+    }, [reloadDocumentList])
 
     const fetchDocuments = async (studentId) => {
         const res = await fetch(`http://localhost:8888/document/get-all-documents/${studentId}`)
