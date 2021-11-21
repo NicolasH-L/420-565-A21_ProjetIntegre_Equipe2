@@ -20,15 +20,10 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Menu from './components/Menu';
-import AuthentificationPage from './components/AuthentificationPage';
-import StudentAccount from './components/Student/StudentAuth';
-import StudentAuth from './components/Student/StudentAuth';
-import Admin from './components/Admin/Admin';
-import AdminMenu from './components/Admin/AdminMenu';
 import AccountRoutes from './components/Routes/AccountRoutes';
 import AdminRoutes from './components/Routes/AdminRoutes';
 import MonitorRoutes from './components/Routes/MonitorRoutes';
+import StudentRoutes from './components/Routes/StudentRoutes';
 
 const App: React.FC = () => (
   
@@ -37,6 +32,7 @@ const App: React.FC = () => (
       <AccountRoutes/>
       <AdminRoutes/>
       <MonitorRoutes/>
+      <StudentRoutes/>
     </IonReactRouter>
   </IonApp >
 );
