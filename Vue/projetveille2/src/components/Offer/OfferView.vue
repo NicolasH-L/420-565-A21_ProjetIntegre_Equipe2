@@ -225,6 +225,13 @@ export default {
           name: "StudentInternshipListOffers",
           params: { student: JSON.stringify({ ...student }) },
         });
+      } else if(this.$route.params.supervisor !== undefined){
+        console.log(this.$route.params)
+        var supervisor = JSON.parse(this.$route.params.supervisor);
+        router.push({
+          name:"SupervisorAssignedStudent",
+          params:{ supervisor: JSON.stringify({ ...supervisor }) }
+        })
       } else {
         router.push({name:"AdminInternshipOfferList"})
       }

@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       supervisor: {
-        matricule: "",
-        password: "",
+        matricule: "1234569",
+        password: "MotDepasse01*",
       },
       error: {
         error: "",
@@ -73,7 +73,7 @@ export default {
           this.supervisor.password
         ).then((response) => {
           response.matricule != null
-            ? router.push("/Supervisor", response)
+            ? router.push({name:"Supervisor", params:response})
             : alert("Erreur de matricule ou mot de passe");
         });
       }

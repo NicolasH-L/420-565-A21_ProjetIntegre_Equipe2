@@ -66,5 +66,27 @@ class AdminService {
             })
         return await res.json()
     }
+
+    async addSupervisorToIntership (internship) {
+        const result = await fetch('http://localhost:8888/internship/save-internship',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(internship)
+            })
+        return await result.json()
+    }
+
+    async getInternships () {
+        const res = await fetch('http://localhost:8888/internship/get-all-internships')
+        return await res.json()
+    }
+
+    async getSupervisors () {
+        const res = await fetch('http://localhost:8888/supervisors/get-all-supervisors')
+        return await res.json()
+    }
 }
 export default new AdminService

@@ -52,6 +52,7 @@
           <li className="nav-item mx-2">
             <button
               className="nav-link btn btn-light"
+              @click="goToAdminAssinSupervisorToStudent"
               >Assigner un superviseur</button
             >
           </li>
@@ -75,6 +76,9 @@ export default {
       },
       goToAdminStudentList(){
         router.push({name: "AdminStudentList", params:this.$route.params})
+      },
+      goToAdminAssinSupervisorToStudent(){
+        router.push({name: "AdminAssinSupervisorToStudent", params:this.$route.params})
       }
     },
 };

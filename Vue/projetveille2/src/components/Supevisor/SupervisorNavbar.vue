@@ -16,7 +16,7 @@
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
           <li className="nav-item mx-2">
-            <button className="nav-link btn btn-light" type="button">
+            <button className="nav-link btn btn-light" type="button" @click="goToSupervisorAssignedStudent()" >
               Mes étudiants
             </button>
           </li>
@@ -27,8 +27,15 @@
 </template>
 
 <script>
+import router from "../../router";
+
 export default {
     name:"SupervisorNavbar",
+    methods:{
+      goToSupervisorAssignedStudent(){
+        router.push({ name: "SupervisorAssignedStudent", params: this.$route.params });
+      }
+    }
 };
 </script>
 

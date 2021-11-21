@@ -16,6 +16,8 @@ import AdminStudentCvList from '../components/Admin/AdminStudentCvList.vue';
 import AdminStudentList from '../components/Admin/AdminStudentList.vue';
 import StudentInternshipListOffers from '../components/Student/StudentInternshipListOffers.vue';
 import OfferView from '../components/Offer/OfferView.vue';
+import AdminAssignSupervisorToStudent from '../components/Admin/AdminAssignSupervisorToStudent.vue';
+import SupervisorAssignedStudentList from '../components/Supevisor/SupervisorAssignedStudentList.vue';
 
 const routes = [
     {
@@ -103,6 +105,16 @@ const routes = [
         path: '/OfferView',
         component: OfferView
     },
+    {
+        name:'AdminAssinSupervisorToStudent',
+        path:'/AdminAssinSupervisorToStudent',
+        component:AdminAssignSupervisorToStudent
+    },
+    {
+        name:'SupervisorAssignedStudent',
+        path:'/SupervisorAssignedStudent',
+        component:SupervisorAssignedStudentList
+    }
     
 ];
 const router = createRouter({
