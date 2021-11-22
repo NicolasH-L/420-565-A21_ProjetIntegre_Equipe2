@@ -30,6 +30,7 @@ import SupervisorLogin from './components/Supervisor/SupervisorLogin';
 import AdminLogin from './components/Admin/AdminLogin';
 import Menu from './components/Menu';
 import MonitorOfferForm from './components/Monitor/MonitorOfferForm';
+import AdminOfferForm from './components/Admin/AdminOfferForm';
 
 const App: React.FC = () => (
   <IonApp>
@@ -38,7 +39,7 @@ const App: React.FC = () => (
       <IonRouterOutlet id="main">
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
-        
+
         <Route path="/studentLogin" component={StudentLogin} exact={true} />
         <Route path="/studentRegistration" component={StudentRegistration} exact={true} />
 
@@ -50,6 +51,7 @@ const App: React.FC = () => (
         <Route path="/supervisorLogin" component={SupervisorLogin} exact={true} />
 
         <Route path="/adminLogin" component={AdminLogin} exact={true} />
+        <Route path="/adminOfferForm" component={AdminOfferForm} exact={true} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

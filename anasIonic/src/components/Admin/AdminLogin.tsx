@@ -37,7 +37,7 @@ const AdminLogin: React.FC = () => {
 
     const onSubmit = (admin: any) => {
         loginAdmin(admin.username, admin.password)
-            .then((data: any) => data.username !== null ? history.push("/Home", { admin: data }) : setShowToastAlert1(true))
+            .then((data: any) => data.username !== null ? history.push("/adminOfferForm", { admin: data }) : setShowToastAlert1(true))
             .catch(() => setShowToastAlert1(true))
     }
 
