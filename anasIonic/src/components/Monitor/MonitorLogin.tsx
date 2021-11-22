@@ -39,7 +39,7 @@ const MonitorLogin: React.FC = () => {
 
     const onSubmit = (monitor: any) => {
         loginMonitor(monitor.email, monitor.password)
-            .then((data: any) => data.email !== null ? history.push("/Home", { monitor: data }) : setShowToastAlert1(true))
+            .then((data: any) => data.email !== null ? history.push("/monitorOfferForm", { monitor: data }) : setShowToastAlert1(true))
             .catch(() => setShowToastAlert1(true))
     }
 
