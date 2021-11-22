@@ -78,9 +78,12 @@ export default {
       var student = JSON.parse(this.$route.params.student);
       if (this.$route.params.admin === undefined) {
         router.push({ name: "StudentDocuments", params: { id: student.id } });
-      } else {
+      } else if(this.$route.params.admin !== undefined) {
         var admin = JSON.parse(this.$route.params.student);
         router.push({ name: "AdminStudentCvList", params: {student: JSON.stringify({...student}), admin: JSON.stringify({...admin})  }});
+      } else {
+        var monitor = JSON.parse(this.$route.params.monitor)
+        router.push({ name: "MonitorStudentList", params: {monitor: JSON.stringify({...monitor})  }});
       }
     },
     test() {

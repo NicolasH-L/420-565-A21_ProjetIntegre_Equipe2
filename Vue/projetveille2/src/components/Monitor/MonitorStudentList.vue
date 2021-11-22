@@ -52,16 +52,19 @@ export default {
   },
   data() {
     return {
-      studentOffer: this.getStudentOffersByIdOffer(),
+      studentOffers: this.getStudentOffersByIdOffer(),
     };
   },
   methods: {
     getStudentOffersByIdOffer() {
         console.log(this.$route.params)
       MonitorService.getStudentOffersByIdOffer(this.$route.params.idOffer).then((response) => {
-        this.studentOffer = response;
+        this.studentOffers = response;
       });
     },
+    goToViewDocument(){
+        
+    }
   },
 };
 </script>
