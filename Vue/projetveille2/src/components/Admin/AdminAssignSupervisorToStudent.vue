@@ -91,16 +91,15 @@ export default {
       selectedStudentIntershipJSON: this.defaultValue,
     };
   },
-  computed:{
-      interships(){
-          return this.internships.filter(internship => this.filterInternships(internship))
-      }
-  },
   methods: {
     getInternships() {
       AdminService.getInternships().then((response) => {
         this.internships = response;
+        this.internships = this.internships2()
       });
+    },
+    internships2(){
+      return this.internships.filter(internship => this.filterInternships(internship))
     },
     getSupervisors() {
       AdminService.getSupervisors().then((response) => {
@@ -109,11 +108,9 @@ export default {
     },
     addSupervisorToInternship(internship) {
       AdminService.addSupervisorToIntership(internship).then((response) => {
-        this.internships = this.internships.map((internship1) =>
-          internship1.idInternship === internship.idInternship
-            ? { ...internship1, supervisor: response.supervisor }
-            : internship1
-        );
+        this.internships = this.internships.map(
+                (internship1) => internship1.idInternship === internship.idInternship ? { ...internship1, supervisor: response.supervisor } : internship1
+        )
       });
     },
     getSelectedSupervisor(e) {
@@ -134,7 +131,7 @@ export default {
         this.selectedSupervisorJSON !== this.defaultValue
       ) {
         this.selectedStudentIntershipJSON.supervisor = this.selectedSupervisorJSON;
-        AdminService.addSupervisorToIntership(this.selectedStudentIntershipJSON);
+        this.addSupervisorToInternship(this.selectedStudentIntershipJSON);
         alert("Superviser assigner avec succes")
       } else {
         alert("Veuillez selectionner un eleve et un superviseur");
