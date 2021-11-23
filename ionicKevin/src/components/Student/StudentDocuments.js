@@ -45,8 +45,6 @@ const StudentDocuments = () => {
         }
     }
 
-    const [showModal, setShowModal] = useState(false);
-
     return (
         <IonPage>
             <IonHeader>

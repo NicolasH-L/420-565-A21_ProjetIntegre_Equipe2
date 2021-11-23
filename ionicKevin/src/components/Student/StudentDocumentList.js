@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { IonItem, IonList, IonLabel } from '@ionic/react'
+import { IonItem, IonList, IonLabel, IonButton } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 
 const StudentDocumentList = (reloadDocumentList) => {
@@ -30,8 +30,20 @@ const StudentDocumentList = (reloadDocumentList) => {
     }
 
     /*const viewDocumentCv = async (document) => {
-        history.push("/ViewDocument", document)
+          let blob = new Blob([base64ToArrayBuffer(document.data)], {type: 'application/pdf'});
+          let blobURL = URL.createObjectURL(blob);
+          window.open(blobURL);
     }*/
+
+    /*function base64ToArrayBuffer(base64) {
+        let binary_string = window.atob(base64);
+        let len = binary_string.length;
+        let bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+      }*/
 
     return (
         <IonList className="ion-margin-vertical">
@@ -40,6 +52,13 @@ const StudentDocumentList = (reloadDocumentList) => {
                     <IonLabel>
                         <h4>{document.documentName}</h4>
                     </IonLabel>
+                    <IonButton
+                        color="primary"
+                        slot="end"
+                        onClick={e => { e.preventDefault(); /*viewDocumentCv(document)*/ }}
+                    >
+                        Consulter
+                    </IonButton>
                 </IonItem>
             ))}
         </IonList>
