@@ -7,7 +7,6 @@ const DownloadContract = ({ contract }) => {
     const [contractData, setcontractData] = useState(null)
 
     useEffect(() => {
-        console.log(contract)
         const getContract = async () => {
             const contractFromServer = await getContractPdf()
             setcontractData(contractFromServer)
