@@ -34,6 +34,7 @@ import AdminOfferForm from './components/Admin/AdminOfferForm';
 import AdminOfferList from './components/Admin/AdminOfferList';
 import MonitorOfferList from './components/Monitor/MonitorOfferList';
 import Supervisor from './components/Supervisor/Supervisor';
+import Student from './components/Student/Student';
 
 const App: React.FC = () => (
   <IonApp>
@@ -45,6 +46,7 @@ const App: React.FC = () => (
 
         <Route path="/studentLogin" component={StudentLogin} exact={true} />
         <Route path="/studentRegistration" component={StudentRegistration} exact={true} />
+        <Route path="/studentDash" component={Student} exact={true} />
 
         <Route path="/monitorRegistration" component={MonitorRegister} exact={true} />
         <Route path="/monitorLogin" component={MonitorLogin} exact={true} />
