@@ -37,7 +37,7 @@ public class ContractService {
             return Optional.empty();
         }
     }
-    
+
     public Optional<Contract> getContractByStudentIdAndSession(Integer id, String session) {
         try {
             return Optional.of(contractRepository.findContractByInternship_Student_IdAndSession(id, session));
