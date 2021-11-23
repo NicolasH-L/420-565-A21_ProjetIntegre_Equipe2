@@ -36,6 +36,10 @@ const StudentNavbar = ({ useStudent }) => {
         history.push("/Student", historyState)
     }
 
+    const goToContractList = () => {
+        history.push("/StudentContractList", historyState)
+    }
+
     const goToContract = () => {
         history.push("/StudentSignContract", historyState)
     }
@@ -60,7 +64,7 @@ const StudentNavbar = ({ useStudent }) => {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() =>goToMyProfile()}>Mon profil</button>
+                            <button className="nav-link btn btn-light" type="button" onClick={() => goToMyProfile()}>Mon profil</button>
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentUploadCV()}>Déposer CV</button>
@@ -71,11 +75,17 @@ const StudentNavbar = ({ useStudent }) => {
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={() => goToMyDocuments()}>Mes Documents</button>
                         </li>
-                        <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToContract()}>Signer mon contrat</button>
+                        <li className="dropdown show ml-2 mr-3 nav-item">
+                            <button className="btn btn-light dropdown-toggle" id="contractsDropDown" data-toggle="dropdown" aria-expanded="false">
+                                Service Contrats
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="contractsDropDown">
+                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes Contrats</button>
+                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Consulter/Signer Contrat</button>
+                            </div>
                         </li>
                         <SessionsButton />
-                        <div className="mx-3 mt-1"> 
+                        <div className="mx-3 mt-1">
                             <StudentNotifications studentState={historyState} />
                         </div>
                     </ul>
