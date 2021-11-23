@@ -24,6 +24,7 @@ const StudentLogin: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     const history = useHistory();
+    const historyState = history.location.state
     const initialValues = {
         matricule: '',
         password: ''
@@ -47,7 +48,7 @@ const StudentLogin: React.FC = () => {
     }
 
     function goToStudentRegistration() {
-        history.push("/StudentRegistration", {})
+        history.push("/StudentRegistration", historyState)
     }
 
     const logout = () => {
@@ -61,7 +62,7 @@ const StudentLogin: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle className="ion-text-center">Étudiant Login</IonTitle>
-                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                        <IonButton  onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

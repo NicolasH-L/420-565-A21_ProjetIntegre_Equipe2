@@ -8,6 +8,7 @@ const StudentRegistration: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const [showToastAlert2, setShowToastAlert2] = useState(false)
     const history = useHistory();
+    const historyState = history.location.state
     const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     const patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/
     const initialValues = {
@@ -42,7 +43,7 @@ const StudentRegistration: React.FC = () => {
     }
 
     function goToStudentLogin() {
-        history.push("/studentLogin", {})
+        history.push("/studentLogin", historyState)
     }
 
     return (
@@ -51,7 +52,7 @@ const StudentRegistration: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center">Inscription Étudiant</IonTitle>
-                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                        <IonButton onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

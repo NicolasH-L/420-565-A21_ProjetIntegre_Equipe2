@@ -22,10 +22,10 @@ const NavButtons: React.FC = () => {
                 <IonMenuButton />
             ) : (
                 <>
-                    <IonButton routerLink={"/studentLogin"} >Étudiant</IonButton>
-                    <IonButton routerLink={"/monitorLogin"} >Moniteur</IonButton>
-                    <IonButton onClick={e => {e.preventDefault(); history.push('/supervisorLogin', historyState)}} >Superviseur</IonButton>
-                    <IonButton routerLink={"/adminLogin"} >Admin</IonButton>
+                    <IonButton onClick={e => { e.preventDefault(); history.push('/studentLogin', historyState) }} >Étudiant</IonButton>
+                    <IonButton onClick={e => { e.preventDefault(); history.push('/monitorLogin', historyState) }} >Moniteur</IonButton>
+                    <IonButton onClick={e => { e.preventDefault(); history.push('/supervisorLogin', historyState) }} >Superviseur</IonButton>
+                    <IonButton onClick={e => { e.preventDefault(); history.push('/adminLogin', historyState) }} >Admin</IonButton>
                 </>
             )}
         </div>

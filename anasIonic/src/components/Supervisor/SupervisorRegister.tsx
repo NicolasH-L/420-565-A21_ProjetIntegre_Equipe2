@@ -9,6 +9,7 @@ const SupervisorRegister: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const [showToastAlert2, setShowToastAlert2] = useState(false)
     const history = useHistory();
+    const historyState = history.location.state
     const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     const patternName = /^([a-zA-ZéÉèÈïÏêÊ])(([a-zA-ZéÉèÈïÏêÊ]*|\-)[a-zA-ZéÉèÈïÏêÊ])*[a-zA-ZéÉèÈïÏêÊ]*$/
     const patternMatricule = /^[0-9]{7}$/i
@@ -44,7 +45,7 @@ const SupervisorRegister: React.FC = () => {
     }
 
     const goToSupervisorLogin = () => {
-        history.push("/supervisorLogin", {})
+        history.push("/supervisorLogin", historyState)
     }
 
     return (
@@ -53,7 +54,7 @@ const SupervisorRegister: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center">Inscription Superviseur</IonTitle>
-                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                        <IonButton  onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

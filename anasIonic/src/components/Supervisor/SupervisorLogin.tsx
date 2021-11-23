@@ -24,6 +24,7 @@ const SupervisorLogin: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
     const patternPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     const history = useHistory();
+    const historyState = history.location.state
     const initialValues = {
         matricule: '',
         password: ''
@@ -47,7 +48,7 @@ const SupervisorLogin: React.FC = () => {
     }
 
     const goToSupervisorRegistration = () => {
-        history.push("/supervisorRegistration", {})
+        history.push("/supervisorRegistration", historyState)
     }
 
     return (
@@ -56,7 +57,7 @@ const SupervisorLogin: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle className="ion-text-center">Superviseur Login</IonTitle>
-                        <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
+                        <IonButton  onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
