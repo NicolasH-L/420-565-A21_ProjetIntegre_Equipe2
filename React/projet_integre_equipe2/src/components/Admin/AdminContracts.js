@@ -102,20 +102,33 @@ const AdminContracts = () => {
                                             <td data-title="Position" >{contract.internship.offer.jobTitle}</td>
                                             <td data-title="Début stage">{contract.internship.offer.startInternshipDate}</td>
                                             <td data-title="Nom étudiant">{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
-                                            <td data-title="Étudiant" className={getStatusValue(contract.studentSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.studentSignature, "Signé", "En attente de signature")}
-                                            </td>
-                                            <td data-title="Moniteur" className={getStatusValue(contract.monitorSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.monitorSignature, "Signé", "En attente de signature")}
-                                            </td>
-                                            <td data-title="Gestionnaire" className={getStatusValue(contract.adminSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.adminSignature, "Signé", "En attente de signature")}
-                                            </td>
+                                            <td data-title="Étudiant" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.studentSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.studentSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td data-title="Moniteur" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.monitorSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.monitorSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td data-title="Gestionnaire" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.adminSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.adminSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
                                             <td className="responsiveWidth">
                                                 <div className="d-flex">
                                                     <ContractModalView
                                                         userPasswordProp={admin.password}
-                                                        currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} signature={contract.adminSignature}
+                                                        currentStatusProp={Signature.getAdminSignatureStatus()} contractProp={contract} 
+                                                        signature={contract.adminSignature}
                                                     />
                                                     {(contract.internship.status === contractCompletedStatus) ?
                                                         <DownloadContract contract={contract}></DownloadContract> : ""}

@@ -17,7 +17,7 @@
 		left: -9999px;
 	}
  
-	#no-more-tables tr { border-bottom: 5px solid #9599E2; }
+	#no-more-tables tr { border-bottom: 10px solid #9599E2; }
  
 	#no-more-tables td { 
 		/* Behave  like a "row" */
