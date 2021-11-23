@@ -33,6 +33,7 @@ import MonitorOfferForm from './components/Monitor/MonitorOfferForm';
 import AdminOfferForm from './components/Admin/AdminOfferForm';
 import AdminOfferList from './components/Admin/AdminOfferList';
 import MonitorOfferList from './components/Monitor/MonitorOfferList';
+import Supervisor from './components/Supervisor/Supervisor';
 
 const App: React.FC = () => (
   <IonApp>
@@ -52,6 +53,7 @@ const App: React.FC = () => (
 
         <Route path="/supervisorRegistration" component={SupervisorRegister} exact={true} />
         <Route path="/supervisorLogin" component={SupervisorLogin} exact={true} />
+        <Route path="/supervisorDash" component={Supervisor} exact={true} />
 
         <Route path="/adminLogin" component={AdminLogin} exact={true} />
         <Route path="/adminOfferForm" component={AdminOfferForm} exact={true} />

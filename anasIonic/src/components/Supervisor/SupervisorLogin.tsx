@@ -37,7 +37,7 @@ const SupervisorLogin: React.FC = () => {
 
     const onSubmit = (supervisor: any) => {
         loginSupervisor(supervisor.matricule, supervisor.password)
-            .then((data: any) => data.matricule !== null ? history.push("/Home", { student: data }) : setShowToastAlert1(true))
+            .then((data: any) => data.matricule !== null ? history.push("/supervisorDash", { supervisor: data }) : setShowToastAlert1(true))
             .catch(() => setShowToastAlert1(true))
     }
 

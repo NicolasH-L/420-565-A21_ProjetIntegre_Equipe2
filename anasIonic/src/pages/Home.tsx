@@ -1,8 +1,11 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonMenu, IonItem, IonList, IonButtons } from '@ionic/react';
 import NavButtons from '../components/NavButtons';
 import './Home.css';
+import { useHistory } from 'react-router-dom';
 
 const Home: React.FC = () => {
+  const history = useHistory()
+    const historyState = history.location.state
   return (
     <IonPage>
       <IonHeader>
