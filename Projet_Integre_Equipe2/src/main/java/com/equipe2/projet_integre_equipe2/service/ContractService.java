@@ -37,10 +37,10 @@ public class ContractService {
             return Optional.empty();
         }
     }
-
-    public Optional<Contract> getContractByStudentId(Integer id) {
+    
+    public Optional<Contract> getContractByStudentIdAndSession(Integer id, String session) {
         try {
-            return Optional.of(contractRepository.findContractByInternship_Student_Id(id));
+            return Optional.of(contractRepository.findContractByInternship_Student_IdAndSession(id, session));
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -65,6 +65,14 @@ public class ContractService {
     public Optional<List<Contract>> getAllContractsByMonitorIdAndStatus(Integer id, String status) {
         try {
             return Optional.of(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(id, status));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<Contract>> getAllStudentContractsByStudentId(Integer id) {
+        try {
+            return Optional.of(contractRepository.findContractsByInternship_Student_Id(id));
         } catch (Exception e) {
             return Optional.empty();
         }
