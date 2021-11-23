@@ -1,8 +1,9 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonContent, IonCard, IonCardHeader, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonDatetime, IonToast } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonContent, IonCard, IonCardHeader, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonDatetime, IonToast, IonMenuButton } from "@ionic/react";
 import { home, business, alertCircleOutline, cash, briefcase, mail, hourglass, timeOutline, calendar, arrowDown, location } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
+
 
 const AdminOfferForm: React.FC = () => {
     const [showToastAlert1, setShowToastAlert1] = useState(false)
@@ -12,7 +13,7 @@ const AdminOfferForm: React.FC = () => {
     const patternNumber = /^([0-9]+\.?[0-9]*|\.[0-9]+)$/
     const history = useHistory();
     const historyState: any = history.location.state
-    const admin: any = historyState.admin
+
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     const initialValues = {
@@ -42,7 +43,9 @@ const AdminOfferForm: React.FC = () => {
     });
 
     useEffect(() => {
-        console.log(admin.id)
+        if (historyState !== undefined) {
+            const admin: any = historyState.admin
+        }
         const getMonitors = async () => {
             const monitorsFromServer = await fetchMonitors()
             setMonitors(monitorsFromServer)
@@ -51,16 +54,16 @@ const AdminOfferForm: React.FC = () => {
     }, [])
 
     const fetchMonitors = async () => {
-        const res = await fetch('http://localhost:8888/monitors/get-all-monitors')
+        const res = await fetch('http://192.168.50.154:8888/monitors/get-all-monitors')
         return await res.json()
     }
 
 
     const onSubmit = (offer: any) => {
-        offer.monitor = 
-        postOffer(offer)
-            .then((data: any) => data.monitorEmail !== undefined ? setShowToastAlert2(true) : setShowToastAlert1(true))
-            .catch(() => setShowToastAlert1(true))
+        offer.monitor =
+            postOffer(offer)
+                .then((data: any) => data.monitorEmail !== undefined ? setShowToastAlert2(true) : setShowToastAlert1(true))
+                .catch(() => setShowToastAlert1(true))
     }
 
     const postOffer = async (offer: any) => {
@@ -89,6 +92,7 @@ const AdminOfferForm: React.FC = () => {
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center"></IonTitle>
                         <IonButton onClick={(e) => history.push('/home', {})} ><IonIcon icon={home} /></IonButton>
+                        <IonButton onClick={(e) => history.push("/adminOfferList")} >liste offres</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -131,7 +135,6 @@ const AdminOfferForm: React.FC = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={mail} style={{ marginRight: 5 }}></IonIcon>Courriel du représentant</IonLabel>
-                                {/* <IonInput type="email" {...register("monitorEmail", { required: true })}></IonInput> */}
                                 <IonSelect interface="popover" {...register("monitorEmail", { required: true })}>
                                     {monitors.map((monitor: any) => (
                                         <IonSelectOption value={monitor.email} key={monitor.id}>{monitor.email}</IonSelectOption>

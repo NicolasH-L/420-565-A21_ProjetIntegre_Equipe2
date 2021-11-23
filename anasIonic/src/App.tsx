@@ -31,6 +31,7 @@ import AdminLogin from './components/Admin/AdminLogin';
 import Menu from './components/Menu';
 import MonitorOfferForm from './components/Monitor/MonitorOfferForm';
 import AdminOfferForm from './components/Admin/AdminOfferForm';
+import AdminOfferList from './components/Admin/AdminOfferList';
 
 const App: React.FC = () => (
   <IonApp>
@@ -52,6 +53,7 @@ const App: React.FC = () => (
 
         <Route path="/adminLogin" component={AdminLogin} exact={true} />
         <Route path="/adminOfferForm" component={AdminOfferForm} exact={true} />
+        <Route path="/adminOfferList" component={AdminOfferList} exact={true} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
