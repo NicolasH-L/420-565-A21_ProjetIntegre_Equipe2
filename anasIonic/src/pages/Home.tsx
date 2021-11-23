@@ -2,10 +2,11 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonMenu, IonItem,
 import NavButtons from '../components/NavButtons';
 import './Home.css';
 import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Home: React.FC = () => {
   const history = useHistory()
-    const historyState = history.location.state
+  const historyState = history.location.state
   return (
     <IonPage>
       <IonHeader>
