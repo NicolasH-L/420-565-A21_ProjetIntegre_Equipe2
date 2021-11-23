@@ -78,14 +78,14 @@ const AdminStudentList = () => {
                                             </span>
                                         </h5>
                                     </td>
-                                    <td className="tdWidth">
+                                    <td className="responsiveWidth">
                                         <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
                                             <span className="hideButtonText">Consulter documents</span>
-                                            <i className="fas fa-book-open hideButtonIcon"></i>
+                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
                                         </button>
                                         <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
                                             <span className="hideButtonText">Valider étudiant</span>
-                                            <i className="fas fa-check hideButtonIcon"></i>
+                                            <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
                                         </button>
                                     </td>
                                 </tr>

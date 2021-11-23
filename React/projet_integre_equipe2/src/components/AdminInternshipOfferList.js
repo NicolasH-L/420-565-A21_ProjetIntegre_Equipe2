@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
 import { useHistory } from 'react-router-dom'
+import './ResponsiveTable.css'
+import './ResponsiveButtons.css'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
@@ -40,7 +42,7 @@ const AdminInternshipOfferList = () => {
 
         setOffers(
             offers.map(
-                (offer1) => offer1.idOffer === offer.idOffer ? {...offer1, valid: data.valid, state: data.state} : offer1
+                (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
         createNotificationStudent(notification)
@@ -71,7 +73,7 @@ const AdminInternshipOfferList = () => {
 
         setOffers(
             offers.map(
-                (offer1) => offer1.idOffer === offer.idOffer ? {...offer1, valid: data.valid, state: data.state} : offer1
+                (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
     }
@@ -89,7 +91,7 @@ const AdminInternshipOfferList = () => {
             <AdminNavbar />
             <h2 className="text-center">Offres de stage</h2>
             <div className="p-5">
-                <table className="table table-hover bg-light shadow-lg">
+                <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                     <thead>
                         <tr>
                             <th scope="col">Entreprise</th>
@@ -102,21 +104,36 @@ const AdminInternshipOfferList = () => {
                     </thead>
                     <tbody>
                         {offers
-                        .filter(filterOffers)
-                        .map((offer) => (
-                            <tr className={`${offer.valid ? 'table-success' : offer.state === null ? 'table-warning' : 'table-danger'}`} key={offer.idOffer}>
-                                <th>{offer.companyName}</th>
-                                <td>{offer.jobTitle}</td>
-                                <td>{offer.salary}$</td>
-                                <td>{offer.displayDate}</td>
-                                <td>{offer.state === null ? "En attente" : offer.state}</td>
-                                <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>Consulter</button>
-                                    <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>Publier</button>
-                                    <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>Retirer</button>
-                                </td>
-                            </tr>
-                        ))}
+                            .filter(filterOffers)
+                            .map((offer) => (
+                                <tr key={offer.idOffer}>
+                                    <td data-title="Entreprise">{offer.companyName}</td>
+                                    <td data-title="Poste">{offer.jobTitle}</td>
+                                    <td data-title="Salaire">{offer.salary}$</td>
+                                    <td data-title="Date d'affichage">{offer.displayDate}</td>
+                                    <td data-title="Validité">
+                                        <h5>
+                                            <span className={`badge ${offer.valid ? 'badge-success' : offer.state === null ? 'badge-warning' : 'badge-danger'}`}>
+                                                {offer.state === null ? "En attente" : offer.state}
+                                            </span>
+                                        </h5>
+                                    </td>
+                                    <td className="responsiveWidth">
+                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>
+                                            <span className="hideButtonText">Consulter</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                        </button>
+                                        <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>
+                                            <span className="hideButtonText">Publier</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                                        </button>
+                                        <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>
+                                            <span className="hideButtonText">Retirer</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-times"></i></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

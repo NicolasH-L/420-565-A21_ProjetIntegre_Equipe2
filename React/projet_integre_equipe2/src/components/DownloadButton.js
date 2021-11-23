@@ -1,6 +1,7 @@
 import React from 'react'
+import './ResponsiveButtons.css'
 
-const DownloadButton = ({byte, documentName}) => {
+const DownloadButton = ({ byte, documentName }) => {
 
     function saveByteArray() {
         console.log(byte)
@@ -13,7 +14,10 @@ const DownloadButton = ({byte, documentName}) => {
     };
 
     return (
-        <button type="button" className="btn btn-success" onClick={e => { e.preventDefault(); saveByteArray() }}>Télécharger</button>
+        <button type="button" className="btn btn-success mx-2" onClick={e => { e.preventDefault(); saveByteArray() }}>
+            <span className="hideButtonText">Télécharger</span>
+            <span className="hideButtonIcon"><i className="fas fa-download"></i></span>
+        </button>
     )
 }
 
