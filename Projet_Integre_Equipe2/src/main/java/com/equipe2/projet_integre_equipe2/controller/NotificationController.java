@@ -31,10 +31,24 @@ public class NotificationController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
     }
 
+    @PostMapping("/save-notification-for-admin")
+    public ResponseEntity<Notification> saveNotificationsForAdmin(@RequestBody Notification notification) {
+        return notificationService.saveNotificationsForAdmin(notification)
+                .map(notification1 -> ResponseEntity.status(HttpStatus.CREATED).body(notification1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
+    }
+
     @GetMapping("/get-notification-student/{id}")
     public ResponseEntity<List<Notification>> getNotifications(@PathVariable int id){
         return notificationService.getNotifications(id)
                 .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-notification-admin/{id}")
+    public ResponseEntity<Notification> getNotificationsForAdmin(@PathVariable int id){
+        return notificationService.getNotificationsForAdmin(id)
+                .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
@@ -46,6 +60,16 @@ public class NotificationController {
     @DeleteMapping("/delete-notification/{idStudent}")
     public Boolean deleteAllNotificationsForStudent(@PathVariable int idStudent) {
         return notificationService.deleteAllByStudentId(idStudent);
+    }
+
+    @DeleteMapping("/delete-notification-admin/{idNotification}")
+    public Boolean deleteNotificationsForAdmin(@PathVariable int idNotification) {
+        return notificationService.deleteNotificationsForAdmin(idNotification);
+    }
+
+    @DeleteMapping("/delete-all-notification-admin/{idAdmin}")
+    public void deleteAllNotificationsForAdmin(@PathVariable int idAdmin) {
+        notificationService.deleteAllByAdminId(idAdmin);
     }
 
 }

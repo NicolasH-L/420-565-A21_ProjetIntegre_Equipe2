@@ -13,4 +13,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     List<Notification> findAllByStudent_id(int id);
 
+    Notification findAllByAdmin_Id(int id);
+
+    Notification deleteNotificationByAdmin_Id(int id);
 }

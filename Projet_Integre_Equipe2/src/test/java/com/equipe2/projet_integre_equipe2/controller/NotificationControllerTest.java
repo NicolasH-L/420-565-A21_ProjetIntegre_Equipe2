@@ -1,5 +1,6 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
+import com.equipe2.projet_integre_equipe2.model.Admin;
 import com.equipe2.projet_integre_equipe2.model.Notification;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.NotificationService;
@@ -34,7 +35,9 @@ public class NotificationControllerTest {
     private NotificationService notificationService;
 
     private Notification notification;
+    private Notification notificationAdmin;
     private Student student;
+    private Admin admin;
 
     @BeforeEach
     void setup() {
@@ -47,12 +50,25 @@ public class NotificationControllerTest {
                 .isCvValid(true)
                 .build();
 
+        admin = Admin.adminBuilder()
+                .id(1)
+                .username("bob")
+                .build();
+
         notification = Notification.builder()
                 .id(1)
                 .typeNotification("CV")
                 .message("CV refuser")
                 .student(Arrays.asList(student))
                 .build();
+
+        notificationAdmin = Notification.builder()
+                .id(5)
+                .typeNotification("Offre")
+                .message("Offre deposer par un moniteur")
+                .admin(admin)
+                .build();
+
     }
 
     @Test
@@ -84,6 +100,20 @@ public class NotificationControllerTest {
     }
 
     @Test
+    public void saveNotificationForAdmin() throws Exception {
+        when(notificationService.saveNotificationsForAdmin(notificationAdmin)).thenReturn(Optional.of(notificationAdmin));
+
+        MvcResult result = mockMvc.perform(post("/notification/save-notification-for-admin/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(notificationAdmin))).andReturn();
+
+        var actualNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Notification>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(notificationAdmin).isEqualTo(actualNotification);
+    }
+
+    @Test
     public void getNotification() throws Exception {
         when(notificationService.getNotifications(student.getId())).thenReturn(Optional.of(getNotificationsList()));
 
@@ -95,6 +125,20 @@ public class NotificationControllerTest {
         });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualNotificationList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void getNotificationsForAdmin() throws Exception {
+        when(notificationService.getNotificationsForAdmin(admin.getId())).thenReturn(Optional.of(notificationAdmin));
+
+        MvcResult result = mockMvc.perform(get("/notification/get-notification-admin/" + admin.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualNotificationList = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Notification>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualNotificationList).isEqualTo(notificationAdmin);
     }
 
     @Test
@@ -123,12 +167,44 @@ public class NotificationControllerTest {
         assertThat(actualDeletedNotification).isEqualTo(true);
     }
 
+    @Test
+    public void deleteANotificationAdmin() throws Exception {
+        when(notificationService.deleteNotificationsForAdmin(notificationAdmin.getId())).thenReturn(true);
+        MvcResult result = mockMvc.perform(delete("/notification/delete-notification-admin/" + notificationAdmin.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualDeletedNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Boolean>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDeletedNotification).isEqualTo(true);
+    }
+
+    @Test
+    public void deleteAllNotificationsAdmin() throws Exception {
+        MvcResult result = mockMvc.perform(delete("/notification/delete-all-notification-admin/" + admin.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
     private List<Notification> getNotificationsList() {
         List<Notification> notificationList = new ArrayList<>();
         notificationList.add(Notification.builder()
                 .typeNotification("offre")
                 .message("Voici un offre")
                 .student(Arrays.asList(student))
+                .build());
+        return notificationList;
+    }
+
+    private List<Notification> getNotificationsListForAdmin() {
+        List<Notification> notificationList = new ArrayList<>();
+        notificationList.add(Notification.builder()
+                .typeNotification("offre")
+                .message("Offre deposer par un moniteur")
+                .admin(admin)
                 .build());
         return notificationList;
     }

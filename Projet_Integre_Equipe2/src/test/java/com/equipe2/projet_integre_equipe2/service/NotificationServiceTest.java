@@ -1,7 +1,9 @@
 package com.equipe2.projet_integre_equipe2.service;
 
+import com.equipe2.projet_integre_equipe2.model.Admin;
 import com.equipe2.projet_integre_equipe2.model.Notification;
 import com.equipe2.projet_integre_equipe2.model.Student;
+import com.equipe2.projet_integre_equipe2.repository.AdminRepository;
 import com.equipe2.projet_integre_equipe2.repository.NotificationRepository;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,10 +29,15 @@ public class NotificationServiceTest {
     @Mock
     private StudentRepository studentRepository;
 
+    @Mock
+    private AdminRepository adminRepository;
+
     @InjectMocks
     private NotificationService notificationService;
 
     private Student student;
+
+    private Admin admin;
 
     private Notification notification;
 
@@ -38,12 +45,19 @@ public class NotificationServiceTest {
 
     private Notification notification3;
 
+    private Notification notificationAdmin;
+
     @BeforeEach
     void setup() {
         student = Student.studentBuilder()
                 .id(1)
                 .firstName("Bob")
                 .lastName("Lajoie")
+                .build();
+
+        admin = Admin.adminBuilder()
+                .id(1)
+                .username("bob")
                 .build();
 
         notification = Notification.builder()
@@ -65,6 +79,13 @@ public class NotificationServiceTest {
                 .typeNotification("test")
                 .message("Voici un message")
                 .student(getListOfStudents2())
+                .build();
+
+        notificationAdmin = Notification.builder()
+                .id(1)
+                .typeNotification("Offre deposer")
+                .message("Offre deposer par un moniteur")
+                .admin(admin)
                 .build();
     }
 
@@ -101,6 +122,22 @@ public class NotificationServiceTest {
     }
 
     @Test
+    public void testCreateNotificationsForAdmin(){
+        when(adminRepository.findById(admin.getId())).thenReturn(Optional.of(admin));
+        when(notificationRepository.save(notificationAdmin)).thenReturn(notificationAdmin);
+        Optional<Notification> actualNotification = notificationService.saveNotificationsForAdmin(notificationAdmin);
+        assertThat(actualNotification.get()).isEqualTo(notificationAdmin);
+    }
+
+    @Test
+    public void testCreateNotificationsForAdminFails(){
+        when(adminRepository.findById(admin.getId())).thenReturn(Optional.of(admin));
+        when(notificationRepository.save(notificationAdmin)).thenReturn(null);
+        Optional<Notification> actualNotification = notificationService.saveNotificationsForAdmin(notificationAdmin);
+        assertThat(actualNotification).isEqualTo(Optional.empty());
+    }
+
+    @Test
     public void testGetNotifications(){
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(getNotificationsList());
         Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
@@ -112,6 +149,20 @@ public class NotificationServiceTest {
         when(notificationRepository.findAllByStudent_id(student.getId())).thenReturn(null);
         Optional<List<Notification>> actualNotificationList = notificationService.getNotifications(student.getId());
         assertThat(actualNotificationList).isEmpty();
+    }
+
+    @Test
+    public void testGetNotificationsForAdmin(){
+        when(notificationRepository.findAllByAdmin_Id(admin.getId())).thenReturn(notificationAdmin);
+        Optional<Notification> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
+        assertThat(actualNotification).isEqualTo(Optional.of(notificationAdmin));
+    }
+
+    @Test
+    public void testGetNotificationsForAdminFails(){
+        when(notificationRepository.findAllByAdmin_Id(admin.getId())).thenReturn(null);
+        Optional<Notification> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
+        assertThat(actualNotification).isEqualTo(Optional.empty());
     }
 
     @Test
@@ -172,6 +223,26 @@ public class NotificationServiceTest {
     public void testIsStudentListIsEmptyFails(){
         notificationService.studentListEmptyValidation(notification.getId(), notification);
         verify(notificationRepository, times(0)).deleteById(notification.getId());
+    }
+
+    @Test
+    public void testDeleteNotificationsForAdmin(){
+        when(notificationRepository.findNotificationById(notificationAdmin.getId())).thenReturn(notificationAdmin);
+        boolean deleteNotification = notificationService.deleteNotificationsForAdmin(notificationAdmin.getId());
+        assertThat(deleteNotification).isTrue();
+    }
+
+    @Test
+    public void testDeleteNotificationsForAdminFails(){
+        when(notificationRepository.findNotificationById(5)).thenReturn(null);
+        boolean deleteNotification = notificationService.deleteNotificationsForAdmin(notificationAdmin.getId());
+        assertThat(deleteNotification).isFalse();
+    }
+
+    @Test
+    public void testDeleteAllByAdminId(){
+        notificationService.deleteAllByAdminId(admin.getId());
+        verify(notificationRepository, times(1)).deleteNotificationByAdmin_Id(admin.getId());
     }
 
     private List<Notification> getNotificationsList(){
