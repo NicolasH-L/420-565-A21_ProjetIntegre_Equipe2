@@ -39,7 +39,6 @@
       </div>
     </div>
   </div>
-  <button @click="test()"></button>
 </template>
 
 <script>
@@ -75,20 +74,32 @@ export default {
       this.pageCount = this.$refs.pdfRef.pageCount;
     },
     goBack() {
-      var student = JSON.parse(this.$route.params.student);
-      if (this.$route.params.admin === undefined) {
-        router.push({ name: "StudentDocuments", params: { id: student.id } });
-      } else if(this.$route.params.admin !== undefined) {
-        var admin = JSON.parse(this.$route.params.student);
-        router.push({ name: "AdminStudentCvList", params: {student: JSON.stringify({...student}), admin: JSON.stringify({...admin})  }});
+      if (
+        this.$route.params.student !== undefined ||
+        this.$route.params.admin !== undefined
+      ) {
+        var student = JSON.parse(this.$route.params.student);
+        if (this.$route.params.student !== undefined) {
+          router.push({ name: "StudentDocuments", params: { id: student.id } });
+        } else if (this.$route.params.admin !== undefined) {
+          var admin = JSON.parse(this.$route.params.student);
+          router.push({
+            name: "AdminStudentCvList",
+            params: {
+              student: JSON.stringify({ ...student }),
+              admin: JSON.stringify({ ...admin }),
+            },
+          });
+        }
       } else {
         var monitor = JSON.parse(this.$route.params.monitor)
-        router.push({ name: "MonitorStudentList", params: {monitor: JSON.stringify({...monitor})  }});
+        router.push({
+          name: "MonitorStudentList",
+          params: { monitor: JSON.stringify({ ...monitor }),
+                    idOffer: this.$route.params.idOffer
+          },
+        });
       }
-    },
-    test() {
-      var student = JSON.parse(this.$route.params.student);
-      console.log(student);
     },
   },
 };

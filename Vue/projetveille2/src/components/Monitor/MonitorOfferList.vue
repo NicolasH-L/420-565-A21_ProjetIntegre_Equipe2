@@ -53,7 +53,6 @@ export default {
       });
     },
     getMonitorId() {
-        console.log(this.$route.params)
       if (this.$route.params.monitor !== undefined) {
         var monitor = JSON.parse(this.$route.params.monitor);
         return monitor.id;
@@ -61,9 +60,17 @@ export default {
         return this.$route.params.id;
       }
     },
+    getMonitor() {
+      if (this.$route.params.monitor !== undefined) {
+        var monitor = JSON.parse(this.$route.params.monitor);
+        return monitor;
+      } else {
+        return this.$route.params;
+      }
+    },
     goToMonitorStudentList(idOffer){
-        console.log(idOffer)
-        router.push({name:"MonitorStudentList", params: {idOffer: idOffer, } })
+        var monitor = this.getMonitor()
+        router.push({name:"MonitorStudentList", params: {idOffer: idOffer, monitor: JSON.stringify({ ...monitor }) } })
     },
   },
 };

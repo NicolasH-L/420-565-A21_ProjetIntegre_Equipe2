@@ -2,7 +2,7 @@
   <div className="grad">
     <MonitorNavbar></MonitorNavbar>
     <div className="justify-content-start d-flex mx-5">
-      <button className="btn btn-light">
+      <button className="btn btn-light" @Click="goBack()">
         <i className="fas fa-angle-double-left"></i> Retour
       </button>
     </div>
@@ -32,7 +32,7 @@
             <td>{{ studentOffer.student.matricule }}</td>
             <td>{{ studentOffer.document.documentName }}</td>
             <td className="w-25">
-              <button className="btn btn-primary mx-2">Consulter CV</button>
+              <button className="btn btn-primary mx-2" @click="goToViewDocument(studentOffer.document)" >Consulter CV</button>
             </td>
           </tr>
         </tbody>
@@ -44,6 +44,7 @@
 <script>
 import MonitorNavbar from "./MonitorNavbar.vue";
 import MonitorService from "./MonitorService";
+import router from "../../router";
 
 export default {
   name: "MonitorOfferList",
@@ -53,18 +54,27 @@ export default {
   data() {
     return {
       studentOffers: this.getStudentOffersByIdOffer(),
+      monitor: this.$route.params.monitor
     };
   },
   methods: {
     getStudentOffersByIdOffer() {
-        console.log(this.$route.params)
       MonitorService.getStudentOffersByIdOffer(this.$route.params.idOffer).then((response) => {
         this.studentOffers = response;
       });
     },
-    goToViewDocument(){
-        
-    }
+    goToViewDocument(document){
+        router.push({name:"ViewDocument", params:{
+          monitor: this.monitor,
+          document: JSON.stringify({ ...document },),
+          idOffer: this.$route.params.idOffer
+        }})
+    },
+    goBack(){
+      router.push({name:"MonitorOfferList", params:{
+        monitor: this.monitor
+      }})
+    },
   },
 };
 </script>
