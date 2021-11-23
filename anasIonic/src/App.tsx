@@ -32,6 +32,7 @@ import Menu from './components/Menu';
 import MonitorOfferForm from './components/Monitor/MonitorOfferForm';
 import AdminOfferForm from './components/Admin/AdminOfferForm';
 import AdminOfferList from './components/Admin/AdminOfferList';
+import MonitorOfferList from './components/Monitor/MonitorOfferList';
 
 const App: React.FC = () => (
   <IonApp>
@@ -47,6 +48,7 @@ const App: React.FC = () => (
         <Route path="/monitorRegistration" component={MonitorRegister} exact={true} />
         <Route path="/monitorLogin" component={MonitorLogin} exact={true} />
         <Route path="/monitorOfferForm" component={MonitorOfferForm} exact={true} />
+        <Route path="/monitorOfferList" component={MonitorOfferList} exact={true} />
 
         <Route path="/supervisorRegistration" component={SupervisorRegister} exact={true} />
         <Route path="/supervisorLogin" component={SupervisorLogin} exact={true} />

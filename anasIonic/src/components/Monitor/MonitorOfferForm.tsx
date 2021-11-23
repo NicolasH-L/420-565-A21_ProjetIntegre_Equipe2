@@ -76,6 +76,7 @@ const MonitorOfferForm: React.FC = () => {
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center"></IonTitle>
                         <IonButton onClick={(e) => history.push('/home', {})} ><IonIcon icon={home} /></IonButton>
+                        <IonButton onClick={(e) => history.push("/monitorOfferList", {monitor: monitor})} >mes offres</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
