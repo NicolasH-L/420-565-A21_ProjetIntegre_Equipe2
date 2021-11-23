@@ -47,8 +47,12 @@ public class InternshipControllerTest {
 
     private Offer offer;
 
+    private String session;
+
     @BeforeEach
     void setup() {
+        session = "winter2022";
+
         internship = Internship.builder()
                 .offer(null)
                 .student(null)
@@ -85,6 +89,7 @@ public class InternshipControllerTest {
         internship2 = Internship.builder()
                 .offer(offer)
                 .student(student)
+                .session(session)
                 .status(null)
                 .build();
     }
@@ -109,7 +114,7 @@ public class InternshipControllerTest {
 
         MvcResult result = mockMvc.perform(get("/internship/get-all-internships")
                         .contentType(MediaType.APPLICATION_JSON))
-                        .andReturn();
+                .andReturn();
 
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -117,10 +122,10 @@ public class InternshipControllerTest {
     }
 
     @Test
-    public void getInternshipByStudentIdTest() throws Exception {
-        when(internshipService.getInternshipByStudentId(student.getId())).thenReturn(Optional.of(internship2));
+    public void getInternshipByStudentIdAndSessionTest() throws Exception {
+        when(internshipService.getInternshipByStudentIdAndSession(student.getId(), session)).thenReturn(Optional.of(internship2));
 
-        MvcResult result = mockMvc.perform(get("/internship/get-internship/" + student.getId())
+        MvcResult result = mockMvc.perform(get("/internship/get-internship/{studentId}/session/{session}", student.getId(), session)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
@@ -143,11 +148,11 @@ public class InternshipControllerTest {
 
         when(internshipService.getAllInternshipBySupervisorId(supervisor.getId())).thenReturn(Optional.of(internshipList));
 
-        MvcResult result = mockMvc.perform(get("/internship/get-all-internships-by-supervisor/{idSupervisor}",1)
-                .contentType(MediaType.APPLICATION_JSON))
+        MvcResult result = mockMvc.perform(get("/internship/get-all-internships-by-supervisor/{idSupervisor}", 1)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),List.class);
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
     }
