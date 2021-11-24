@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const Notification = ({ notificationList, userProp, userSession }) => {
+export const Notification = ({ notificationList, userProp, userSession, user }) => {
     const baseUrl = "http://localhost:8888/notification"
     const [list, setList] = useState([])
 
@@ -9,12 +9,23 @@ export const Notification = ({ notificationList, userProp, userSession }) => {
     }, [notificationList.length])
 
     const deleteNotification = async (idNotification) => {
+        if(user === "Student"){
         const result = await fetch(`${baseUrl}/delete-notification/${idNotification}/${userProp.id}`,
             {
                 method: 'DELETE',
                 headers: { 'Content-type': 'application/json' }
             })
         return await result
+        }else if (user === "Monitor"){
+            console.log("sdfsdf")
+        }else if (user === "Admin"){
+            const result = await fetch(`${baseUrl}/delete-notification-admin/${idNotification}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
+        }
     }
 
     const modificationlistNotification = async (idNotification) => {
@@ -22,12 +33,24 @@ export const Notification = ({ notificationList, userProp, userSession }) => {
     }
 
     const deleteAllNotifications = async () => {
-        const result = await fetch(`${baseUrl}/delete-notification/${userProp.id}`,
-            {
-                method: 'DELETE',
-                headers: { 'Content-type': 'application/json' }
-            })
-        return await result
+        if(user === "Student"){
+            const result = await fetch(`${baseUrl}/delete-notification/${userProp.id}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
+        }else if (user === "Monitor"){
+            console.log("sdfsdf")
+        }else if (user === "Admin"){
+            const result = await fetch(`${baseUrl}/delete-all-notification-admin/${userProp.id}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
+        }
+        
     }
 
     const filterNotification = (notification) => {

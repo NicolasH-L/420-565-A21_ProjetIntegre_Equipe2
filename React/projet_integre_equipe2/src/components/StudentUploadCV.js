@@ -7,6 +7,8 @@ import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
 
 const StudentUploadCV = () => {
+  const typeNotification = "CV"
+  const message = "Un étudiant a déposé un CV"
   const [uploadFile, setUploadFile] = useState()
   const [uploadFileName, setUploadFileName] = useState()
   const history = useHistory()
@@ -18,7 +20,10 @@ const StudentUploadCV = () => {
   const winterDeadLine = 1
   const summerStart = 2
   const summerDeadLine = 5
-
+  const [notification, setNotification] = useState({
+    typeNotification: typeNotification, message: message, session: student.actualSession
+  })
+  
   const submitForm = (event) => {
     let documentSession = ""
     
@@ -40,6 +45,9 @@ const StudentUploadCV = () => {
         .then((response) => {
           alert("Cv téléverser avec succès")
         })
+        .then((response) => {
+          createNotificationAdmin(notification)
+        })
         .catch((error) => {
           alert("Une erreur est survenue lors du transfert de fichier")
         })
@@ -55,6 +63,18 @@ const StudentUploadCV = () => {
         : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
       documentSession = session
     }
+  }
+
+  const createNotificationAdmin = async (notification) => {
+    const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(notification)
+        })
+    return await result.json()
   }
 
   return (

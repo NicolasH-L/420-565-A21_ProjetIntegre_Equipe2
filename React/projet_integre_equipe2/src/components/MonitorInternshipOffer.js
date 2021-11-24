@@ -7,12 +7,14 @@ import { RegexPattern } from './RegexPattern'
 import MonitorNavbar from './MonitorNavbar'
 
 const MonitorInternshipOffer = () => {
+    const typeNotification = "Offre"
+    const message = "Une offre vient d'être déposée par un moniteur"
     const history = useHistory()
     const historyState = history.location.state
     const monitor = historyState.monitor
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-
+    
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8
@@ -41,6 +43,10 @@ const MonitorInternshipOffer = () => {
         address: "", salary: "", jobTitle: "", description: "",
         skills: "", jobSchedules: "", workingHours: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
+    })
+
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: message, session: ""
     })
 
     const findFutureDate = () => {
@@ -83,12 +89,14 @@ const MonitorInternshipOffer = () => {
             let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
                 : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
             offer.session = session
+            notification.session = session
         }
     }
 
     function submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
+        createNotificationAdmin(notification)
         history.push("/MonitorOfferList", { monitor })
     }
 
@@ -105,6 +113,18 @@ const MonitorInternshipOffer = () => {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(offer)
+            })
+        return await result.json()
+    }
+
+    const createNotificationAdmin = async (notification) => {
+        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
             })
         return await result.json()
     }
