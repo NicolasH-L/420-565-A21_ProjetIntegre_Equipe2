@@ -89,13 +89,13 @@ const MonitorInternshipOffer = () => {
             let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
                 : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
             offer.session = session
-            notification.session = session
         }
     }
 
     function submitOfferSuccess() {
         alert("Ajout de l'offre de stage avec succès")
         document.getElementById("monitorInternshipForm").reset()
+        notification.session = monitor.actualSession
         createNotificationAdmin(notification)
         history.push("/MonitorOfferList", { monitor })
     }

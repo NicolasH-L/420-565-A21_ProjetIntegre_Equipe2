@@ -14,6 +14,7 @@ const AdminInternshipOfferList = () => {
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession
     })
+    let message = ""
 
     useEffect(() => {
         const getOffers = async () => {
@@ -44,7 +45,7 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
-        const message = "Nouvelle offre de stage disponible"
+        message = "Nouvelle offre de stage disponible"
         notification.message = message
         createNotificationStudent(notification)
         message = "Une offre deposée est acceptée"
@@ -92,7 +93,7 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
-        let message = "Une offre de stage a été refusé"
+        message = "Une offre de stage a été refusé"
         notification.message = message
         createNotificationForMoniteur(notification, offer)
     }
