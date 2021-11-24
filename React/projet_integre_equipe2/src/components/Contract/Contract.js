@@ -112,14 +112,17 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
 
         if (verifyStatus(contractProp.internship.status, signatureStatusList[0])) {
             verifyPwdStudent(contract.internship.student.matricule, contractState.password)
-                .then(data => data === true ? sign(true) : data === false ?
+                .then(data => data === true ? isValid = sign() : data === false ?
                     alert("Veuillez entrer votre mot de passe correctement")
                     : alert("Veuillez entrer votre mot de passe correctement"))
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[1])) {
-            // isPasswordValidMonitor = verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
+            verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
+            .then(data => data === true ? isValid = sign() : data === false ?
+                    alert("Veuillez entrer votre mot de passe correctement")
+                    : alert("Veuillez entrer votre mot de passe correctement"))
         }
-
+        return isValid
 
     }
 
