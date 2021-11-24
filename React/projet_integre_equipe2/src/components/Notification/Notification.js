@@ -17,7 +17,12 @@ export const Notification = ({ notificationList, userProp, userSession, user }) 
                 })
             return await result
         }else if (user === "Monitor"){
-            console.log("aaaaa")
+            const result = await fetch(`${baseUrl}/delete-notification-monitor/${idNotification}/${userProp.id}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
         }else if (user === "Admin"){
             const result = await fetch(`${baseUrl}/delete-notification-admin/${idNotification}`,
                 {
@@ -41,7 +46,12 @@ export const Notification = ({ notificationList, userProp, userSession, user }) 
                 })
             return await result
         }else if (user === "Monitor"){
-            console.log("sdfsdf")
+            const result = await fetch(`${baseUrl}/delete-all-notification-monitor/${userProp.id}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
         }else if (user === "Admin"){
             const result = await fetch(`${baseUrl}/delete-all-notification-admin/${userProp.id}`,
                 {
