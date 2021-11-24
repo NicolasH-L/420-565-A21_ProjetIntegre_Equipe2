@@ -24,7 +24,7 @@ const StudentContractList = () => {
         return await res.json()
     }
 
-    const byContractCompleted = (contract) =>{
+    const byContractCompleted = (contract) => {
         return contract.studentSignature !== ""
     }
 
@@ -54,47 +54,44 @@ const StudentContractList = () => {
         <div className="grad">
             <StudentNavbar useStudent={student} />
             <h2 className="text-center">Mes contrats</h2>
-            <div className="container-fluid">
-                <div className="p-5 table-responsive">
-                    {isDisplayContracts() ?
-                        <table className="table table-hover bg-light shadow-lg">
-                            <thead>
-                                <tr className="text-center">
-                                    <th scope="col">Compagnie</th>
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Session du stage</th>
-                                    <th scope="col">Début du stage</th>
-                                    <th scope="col">Fin du stage</th>
-
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contracts
-                                    .map((contract) => (
-                                        <tr key={contract.idContract} className="text-center">
-                                            <td>{contract.internship.offer.companyName}</td>
-                                            <td>{contract.internship.offer.jobTitle}</td>
-                                            <td>{sessionValueToFrench(contract.session)}</td>
-                                            <td>{contract.internship.offer.startInternshipDate}</td>
-                                            <td>{contract.internship.offer.endInternshipDate}</td>
-                                            <td className="w-25">
+            <div className="p-5 table-responsive">
+                {isDisplayContracts() ?
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
+                        <thead>
+                            <tr className="text-center">
+                                <th scope="col">Compagnie</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Session du stage</th>
+                                <th scope="col">Début du stage</th>
+                                <th scope="col">Fin du stage</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {contracts
+                                .map((contract) => (
+                                    <tr key={contract.idContract} className="text-center">
+                                        <td data-title="Compagnie">{contract.internship.offer.companyName}</td>
+                                        <td data-title="Position">{contract.internship.offer.jobTitle}</td>
+                                        <td data-title="Session du stage">{sessionValueToFrench(contract.session)}</td>
+                                        <td data-title="Début">{contract.internship.offer.startInternshipDate}</td>
+                                        <td data-title="Date limite">{contract.internship.offer.endInternshipDate}</td>
+                                        <td className="responsiveWidth">
+                                            <div className="d-flex">
                                                 <ContractModalView userPasswordProp={student.password}
                                                     contractProp={contract} signature={contract.monitorSignature} />
-                                            </td>
-                                            <td>
                                                 {(contract.internship.status === contractCompletedStatus) ?
                                                     <div className="d-flex justify-content-center mb-4">
                                                         <DownloadContract contract={contract} />
                                                     </div>
                                                     : ""}
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        : displayEmptyErrorMessage()}
-                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                    : displayEmptyErrorMessage()}
             </div>
         </div>
     )
