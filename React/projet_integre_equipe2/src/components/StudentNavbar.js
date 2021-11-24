@@ -80,8 +80,8 @@ const StudentNavbar = ({ useStudent }) => {
                                 Service Contrats
                             </button>
                             <div className="dropdown-menu" aria-labelledby="contractsDropDown">
-                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes Contrats</button>
-                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Consulter/Signer Contrat</button>
+                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes Contrats Signés</button>
+                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Signer Contrat</button>
                             </div>
                         </li>
                         <SessionsButton />
