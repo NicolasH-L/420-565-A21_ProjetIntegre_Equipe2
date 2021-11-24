@@ -44,10 +44,13 @@ public class ContractServiceTest {
     private Document document;
     private List<Contract> contractListByMonitorId = new ArrayList<>();
     private String status;
+    private String session;
 
     @BeforeEach
     void setup() throws IOException {
         status = "Completed";
+        session = "winter2022";
+
         monitor = Monitor.monitorBuilder()
                 .id(1)
                 .password("toto")
@@ -102,6 +105,7 @@ public class ContractServiceTest {
         contract = Contract.builder()
                 .idContract(1)
                 .internship(internship)
+                .session(session)
                 .collegeResponsability("Faire ceci")
                 .companyResponsability("Faire des evaluation")
                 .studentResponsability("Montrer la capaciter")
@@ -114,7 +118,6 @@ public class ContractServiceTest {
                 .build();
 
         contractListByMonitorId.add(contract);
-
         String newFilePath = "files/test/Test.pdf";
         String actualNewFilePath = "files/test/Test2.pdf";
         PDDocument document1 = new PDDocument();
@@ -154,16 +157,16 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void testGetContractByStudentId() {
-        when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(contract);
-        Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
+    public void testGetContractByStudentIdAndSession() {
+        when(contractRepository.findContractByInternship_Student_IdAndSession(student.getId(), session)).thenReturn(contract);
+        Optional<Contract> expectedContract = contractService.getContractByStudentIdAndSession(student.getId(), session);
         assertThat(expectedContract.get()).isEqualTo(contract);
     }
 
     @Test
-    public void testGetContractByStudentIdFails() {
-        when(contractRepository.findContractByInternship_Student_Id(student.getId())).thenReturn(null);
-        Optional<Contract> expectedContract = contractService.getContractByStudentId(student.getId());
+    public void testGetContractByStudentIdAndSessionFails() {
+        when(contractRepository.findContractByInternship_Student_IdAndSession(student.getId(), session)).thenReturn(null);
+        Optional<Contract> expectedContract = contractService.getContractByStudentIdAndSession(student.getId(), session);
         assertThat(expectedContract).isEqualTo(Optional.empty());
     }
 
@@ -185,7 +188,7 @@ public class ContractServiceTest {
     @Test
     public void testGetAllContract() {
         when(contractRepository.findAll()).thenReturn(getListOfContracts());
-        final Optional<List<Contract>> allContracts = contractService.getAllContracts();
+        Optional<List<Contract>> allContracts = contractService.getAllContracts();
         assertThat(allContracts.get().size()).isEqualTo(3);
         assertThat(allContracts.get().get(0).getCompanyResponsability()).isEqualTo("Faire des evaluation1");
     }
@@ -193,7 +196,7 @@ public class ContractServiceTest {
     @Test
     public void testGetAllContractFail() {
         when(contractRepository.findAll()).thenReturn(null);
-        final Optional<List<Contract>> allContracts = contractService.getAllContracts();
+        Optional<List<Contract>> allContracts = contractService.getAllContracts();
         assertThat(allContracts).isEqualTo(Optional.empty());
     }
 
@@ -201,7 +204,7 @@ public class ContractServiceTest {
     public void testGetAllContractsByMonitorIdAndStatus() {
         when(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(monitor.getId(), status))
                 .thenReturn(getListOfCompletedContractByMonitor());
-        final Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(monitor.getId(), status);
+        Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(monitor.getId(), status);
         assertThat(allContracts.get().size()).isEqualTo(getListOfCompletedContractByMonitor().size());
         assertThat(allContracts.get()).isEqualTo(getListOfCompletedContractByMonitor());
     }
@@ -210,10 +213,27 @@ public class ContractServiceTest {
     public void testGetAllContractsByMonitorIdAndStatusFails() {
         when(contractRepository.findContractsByInternship_Offer_Monitor_IdAndInternship_Status(null, null))
                 .thenReturn(null);
-        final Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(null, null);
+        Optional<List<Contract>> allContracts = contractService.getAllContractsByMonitorIdAndStatus(null, null);
         assertThat(allContracts).isEmpty();
     }
 
+    @Test
+    public void testGetAllContractsByStudentId() {
+        List<Contract> allContracts = getListOfContractByStudent();
+        when(contractRepository.findContractsByInternship_Student_Id(student.getId())).thenReturn(allContracts);
+        Optional<List<Contract>> actuals = contractService.getAllStudentContractsByStudentId(student.getId());
+        assertThat(actuals.get().size()).isEqualTo(allContracts.size());
+        assertThat(actuals.get()).isEqualTo(allContracts);
+    }
+
+    @Test
+    public void testGetAllContractsByStudentIdFails() {
+        when(contractRepository.findContractsByInternship_Student_Id(999)).thenReturn(null);
+        Optional<List<Contract>> actuals = contractService.getAllStudentContractsByStudentId(999);
+        assertThat(actuals).isEmpty();
+    }
+
+    @Test
     public void testCreateFile() throws IOException {
         String newFilePath = "files/test/Test4.pdf";
         contractService.createFile(newFilePath, "Contract", contract);
@@ -347,5 +367,28 @@ public class ContractServiceTest {
         List<Contract> listContracts = new ArrayList<>();
         listContracts.add(contract);
         return listContracts;
+    }
+
+    private List<Contract> getListOfContractByStudent() {
+        List<Internship> listInternships = new ArrayList<>();
+        listInternships.add(Internship.builder()
+                .idInternship(100)
+                .student(student)
+                .build());
+        listInternships.add(Internship.builder()
+                .idInternship(200)
+                .student(student)
+                .build());
+
+        List<Contract> contractList = new ArrayList<>();
+        contractList.add(Contract.builder()
+                .internship(listInternships.get(0))
+                .build());
+
+        contractList.add(Contract.builder()
+                .internship(listInternships.get(1))
+                .build());
+
+        return contractList;
     }
 }
