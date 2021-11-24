@@ -5,9 +5,18 @@ import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
-  const [isRefresh, setIsRefresh] = useState()
   const history = useHistory()
   const historyState = history.location.state
+  console.log(history.location.state)
+
+  useEffect(() => {
+    const interval = setInterval(() =>{
+      console.log("asd")
+      window.location.reload()
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
   
 
   return (
