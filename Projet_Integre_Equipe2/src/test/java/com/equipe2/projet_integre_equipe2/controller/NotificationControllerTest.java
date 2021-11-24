@@ -129,16 +129,16 @@ public class NotificationControllerTest {
 
     @Test
     public void getNotificationsForAdmin() throws Exception {
-        when(notificationService.getNotificationsForAdmin(admin.getId())).thenReturn(Optional.of(notificationAdmin));
+        when(notificationService.getNotificationsForAdmin(admin.getId())).thenReturn(Optional.of(getNotificationsListForAdmin()));
 
         MvcResult result = mockMvc.perform(get("/notification/get-notification-admin/" + admin.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actualNotificationList = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Notification>() {
+        var actualNotificationList = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Notification>>() {
         });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualNotificationList).isEqualTo(notificationAdmin);
+        assertThat(actualNotificationList.size()).isEqualTo(1);
     }
 
     @Test

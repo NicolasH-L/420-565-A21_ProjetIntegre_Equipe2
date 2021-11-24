@@ -153,16 +153,16 @@ public class NotificationServiceTest {
 
     @Test
     public void testGetNotificationsForAdmin(){
-        when(notificationRepository.findAllByAdmin_Id(admin.getId())).thenReturn(notificationAdmin);
-        Optional<Notification> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
-        assertThat(actualNotification).isEqualTo(Optional.of(notificationAdmin));
+        when(notificationRepository.findAllByAdmin_Id(admin.getId())).thenReturn(getNotificationsListAdmin());
+        Optional<List<Notification>> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
+        assertThat(actualNotification.get().size()).isEqualTo(1);
     }
 
     @Test
     public void testGetNotificationsForAdminFails(){
         when(notificationRepository.findAllByAdmin_Id(admin.getId())).thenReturn(null);
-        Optional<Notification> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
-        assertThat(actualNotification).isEqualTo(Optional.empty());
+        Optional<List<Notification>> actualNotification = notificationService.getNotificationsForAdmin(admin.getId());
+        assertThat(actualNotification).isEmpty();
     }
 
     @Test
@@ -252,6 +252,17 @@ public class NotificationServiceTest {
                 .typeNotification("offre")
                 .message("Voici un offre")
                 .student(getListOfStudents())
+                .build());
+        return notificationList;
+    }
+
+    private List<Notification> getNotificationsListAdmin(){
+        List<Notification> notificationList = new ArrayList<>();
+        notificationList.add(Notification.builder()
+                .id(1)
+                .typeNotification("offre")
+                .message("Voici un offre")
+                .admin(admin)
                 .build());
         return notificationList;
     }

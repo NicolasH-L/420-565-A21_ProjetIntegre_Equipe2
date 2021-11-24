@@ -46,7 +46,7 @@ public class NotificationController {
     }
 
     @GetMapping("/get-notification-admin/{id}")
-    public ResponseEntity<Notification> getNotificationsForAdmin(@PathVariable int id){
+    public ResponseEntity<List<Notification>> getNotificationsForAdmin(@PathVariable int id){
         return notificationService.getNotificationsForAdmin(id)
                 .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());

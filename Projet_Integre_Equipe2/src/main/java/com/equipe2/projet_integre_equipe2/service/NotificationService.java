@@ -64,7 +64,7 @@ public class NotificationService {
         }
     }
 
-    public Optional<Notification> getNotificationsForAdmin(int id){
+    public Optional<List<Notification>> getNotificationsForAdmin(int id){
         try {
             return Optional.of(notificationRepository.findAllByAdmin_Id(id));
         } catch (Exception e){
