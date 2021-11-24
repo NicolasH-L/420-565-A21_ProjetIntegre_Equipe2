@@ -22,6 +22,10 @@ const MonitorNavbar = () => {
         history.push("/MonitorContracts", historyState)
     }
 
+    const goToEvaluateStudent = () =>{
+        history.push("/MonitorEvaluateStudent", historyState)
+    }
+
     const logout = () => {
         sessionStorage.setItem("userType", "")
         history.push("/")
@@ -47,6 +51,9 @@ const MonitorNavbar = () => {
                         </li>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-light" type="button" onClick={goToMonitorContracts}>Mes contrats</button>
+                        </li>
+                        <li className="nav-item mx-2">
+                            <button className="nav-link btn btn-light" type="button" onClick={goToEvaluateStudent}>Évaluation de stagiaire</button>
                         </li>
                         <SessionsButton />
                     </ul>

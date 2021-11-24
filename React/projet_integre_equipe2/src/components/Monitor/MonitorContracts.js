@@ -6,6 +6,8 @@ import MonitorNavbar from '../MonitorNavbar'
 import ContractModalView from '../Contract/ContractModalView'
 import DownloadButton from '../DownloadButton'
 import DownloadContract from '../DownloadContract'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const MonitorContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -76,56 +78,67 @@ const MonitorContracts = () => {
                 </select>
             </div>
             <h2 className="text-center">Mes contrats</h2>
-            <div className="container-fluid">
-                <div className="p-5 table-responsive">
-                    {isDisplayContracts() ?
-                        <table className="table table-hover bg-light shadow-lg">
-                            <thead>
-                                <tr className="text-center">
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Début du stage</th>
-                                    <th scope="col">Nom de l'étudiant</th>
-                                    <th scope="col">Signé par l'étudiant</th>
-                                    <th scope="col">Signé par le moniteur</th>
-                                    <th scope="col">Signé par le gestionnaire</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contracts
-                                    .filter(filterContractsBySession)
-                                    .filter(filterContractsByStatus)
-                                    .map((contract) => (
-                                        <tr key={contract.idContract} className="text-center">
-                                            <td>{contract.internship.offer.jobTitle}</td>
-                                            <td>{contract.internship.offer.startInternshipDate}</td>
-                                            <td>{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
-                                            <td className={getStatusValue(contract.studentSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.studentSignature, "Signé", "En attente de signature")}
-                                            </td>
-                                            <td className={getStatusValue(contract.monitorSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.monitorSignature, "Signé", "En attente de signature")}
-                                            </td>
-                                            <td className={getStatusValue(contract.adminSignature, "table-success", "table-warning")}>
-                                                {getStatusValue(contract.adminSignature, "Signé", "En attente de signature")}
-                                            </td>
-                                            <td className="w-25">
-                                                <ContractModalView userPasswordProp={monitor.password}
-                                                    currentStatusProp={Signature.getMonitorSignatureStatus()} contractProp={contract} signature={contract.monitorSignature} />
-                                            </td>
-                                            <td>
+            <div className="p-5 ">
+                {isDisplayContracts() ?
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
+                        <thead>
+                            <tr className="text-center">
+                                <th scope="col">Position</th>
+                                <th scope="col">Début du stage</th>
+                                <th scope="col">Nom de l'étudiant</th>
+                                <th scope="col">Signé par l'étudiant</th>
+                                <th scope="col">Signé par le moniteur</th>
+                                <th scope="col">Signé par le gestionnaire</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {contracts
+                                .filter(filterContractsBySession)
+                                .filter(filterContractsByStatus)
+                                .map((contract) => (
+                                    <tr key={contract.idContract} className="text-center">
+                                        <td data-title="Position">{contract.internship.offer.jobTitle}</td>
+                                        <td data-title="Début stage">{contract.internship.offer.startInternshipDate}</td>
+                                        <td data-title="Nom étudiant">{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
+                                        <td data-title="Étudiant" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.studentSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.studentSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td data-title="Moniteur" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.monitorSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.monitorSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td data-title="Gestionnaire" >
+                                            <h5>
+                                                <span className={`badge ${getStatusValue(contract.adminSignature, "badge-success", "badge-warning")}`}>
+                                                    {getStatusValue(contract.adminSignature, "Signé", "Non signé")}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td className="reponsiveWidth">
+                                            <div className="d-flex">
+                                                <ContractModalView
+                                                    userPasswordProp={monitor.password}
+                                                    currentStatusProp={Signature.getMonitorSignatureStatus()} contractProp={contract}
+                                                    signature={contract.monitorSignature}
+                                                />
                                                 {(contract.internship.status === contractCompletedStatus) ?
-                                                    <div className="d-flex justify-content-center mb-4">
-                                                        <DownloadContract contract={contract}></DownloadContract>
-                                                    </div>
+                                                    <DownloadContract contract={contract}></DownloadContract>
                                                     : ""}
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        : displayEmptyErrorMessage()}
-                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                    : displayEmptyErrorMessage()}
             </div>
         </div>
     )

@@ -2,10 +2,8 @@ package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.*;
 import com.equipe2.projet_integre_equipe2.service.ContractService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javassist.bytecode.ByteArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +39,12 @@ public class ContractControllerTest {
     private Monitor monitor;
     private Student student;
     private List<Contract> contractListByMonitorId = new ArrayList<>();
+    private String status;
 
     @BeforeEach
     void setup() {
+        status = "Completed";
+
         monitor = Monitor.monitorBuilder()
                 .id(1)
                 .password("toto")
@@ -142,7 +141,8 @@ public class ContractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         var actualContractListByMonitorId = new ObjectMapper().readValue(result.getResponse().getContentAsString(),
-                new TypeReference<List<Contract>>() {});
+                new TypeReference<List<Contract>>() {
+                });
 
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualContractListByMonitorId).isEqualTo(contractListByMonitorId);
@@ -168,18 +168,35 @@ public class ContractControllerTest {
         when(contractService.getAllContracts()).thenReturn(Optional.of(contractList));
 
         MvcResult result = mockMvc.perform(get("/contract/get-all-contracts/")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(),List.class);
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
     }
 
+
+    @Test
+    public void getAllContractsByMonitorIdAndStatus() throws Exception {
+        List<Contract> contractList = getListOfCompletedContractByMonitor();
+        when(contractService.getAllContractsByMonitorIdAndStatus(monitor.getId(), status))
+                .thenReturn(Optional.of(contractList));
+
+        MvcResult result = mockMvc.perform(get("/contract/get-all-by-monitor/{id}/status/{status}", monitor.getId(), status)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Contract>>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(1);
+    }
+
     @Test
     public void getContractPdfTest() throws Exception {
-        byte[] bytes = {116,101,115,116};
-        when(contractService.GenerateDocument("Contract",contract)).thenReturn(Optional.of(bytes));
+        byte[] bytes = {116, 101, 115, 116};
+        when(contractService.generateDocument("Contract", contract)).thenReturn(Optional.of(bytes));
 
         MvcResult result = mockMvc.perform(post("/contract/get-contract-pdf")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -189,7 +206,7 @@ public class ContractControllerTest {
         assertThat(actuals.getBytes(StandardCharsets.UTF_8)).isEqualTo(bytes);
     }
 
-    private List<Contract> getListOfContracts(){
+    private List<Contract> getListOfContracts() {
         List<Contract> contractList = new ArrayList<>();
         contractList.add(Contract.builder()
                 .idContract(1)
@@ -233,4 +250,28 @@ public class ContractControllerTest {
         return contractList;
     }
 
+    private List<Contract> getListOfCompletedContractByMonitor() {
+        Internship internship = Internship.builder()
+                .offer(offer)
+                .status(status)
+                .build();
+
+        Contract contract = Contract.builder()
+                .idContract(1)
+                .internship(internship)
+                .collegeResponsability("Faire ceci")
+                .companyResponsability("Faire des evaluation")
+                .studentResponsability("Montrer la capaciter")
+                .studentSignature("Signature student")
+                .monitorSignature("Signature monitor")
+                .adminSignature("Signature admin")
+                .signatureDateStudent("2021-10-25")
+                .signatureDateMonitor("2021-10-25")
+                .signatureDateAdmin("2021-10-25")
+                .build();
+
+        List<Contract> listContracts = new ArrayList<>();
+        listContracts.add(contract);
+        return listContracts;
+    }
 }

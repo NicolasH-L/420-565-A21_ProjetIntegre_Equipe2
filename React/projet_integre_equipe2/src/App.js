@@ -28,8 +28,10 @@ import StudentSignContract from './components/Student/StudentSignContract'
 import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSupervisorToStudent'
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import MonitorContracts from './components/Monitor/MonitorContracts'
+import MonitorEvaluateStudent from './components/Monitor/MonitorEvaluateStudent'
 import AdminContracts from './components/Admin/AdminContracts'
 import ErrorRoute from './components/ErrorRoute';
+import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
@@ -94,6 +96,7 @@ function App() {
         <GuardedRoute path="/MonitorOfferList" component={MonitorOfferList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorStudentList" component={MonitorStudentList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorContracts" component={MonitorContracts} auth={isMonitorAuthenticated} />
+        <GuardedRoute path="/MonitorEvaluateStudent" component={MonitorEvaluateStudent} auth={isMonitorAuthenticated}/>
 
         <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentUploadCV" component={StudentUploadCV} auth={isStudentAuthenticated} />
@@ -103,6 +106,7 @@ function App() {
 
         <GuardedRoute path='/Supervisor' component={Supervisor} auth={isSupervisorAuthenticated} />
         <GuardedRoute path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList} auth={isSupervisorAuthenticated} />
+        <GuardedRoute path="/SupervisorEvaluations" component={SupervisorEvaluations} auth={isSupervisorAuthenticated} />
 
         <Route path="/OfferView" component={OfferView} />
         <Route path="/ViewDocument" component={ViewDocument} />
