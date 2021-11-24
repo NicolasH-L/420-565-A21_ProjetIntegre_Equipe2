@@ -2,17 +2,17 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { Signature } from '../Constants/Signature'
 
-const Contract = ({ passwordUser, currentStatus, contractProp, signature, sessionState }) => {
+const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const typeNotification = "Signature"
     const message = "Veuillez signer le contrat disponible"
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
     const [notification, setNotification] = useState({
-        typeNotification: typeNotification, message: message, session: sessionState
+        typeNotification: typeNotification, message: message, session: ""
     })
-    const hasStudentSigned = false
-    const hasMonitorSigned = false
+    let hasStudentSigned = false
+    let hasMonitorSigned = false
     const baseUrl = "http://localhost:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
@@ -91,18 +91,19 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature, sessio
             setContractState({ ...contractState, isDisabled: true })
             isValid = true
 
+            notification.session = contract.session
             if(hasStudentSigned){
-                createNotificationForMonitor(notification)
+                createNotificationForMonitor(notification, contract.internship.offer.monitor.id)
             }else if(hasMonitorSigned)
-                createNotificationForAdmin(notification)
+                createNotificationForAdmin(notification, contract.internship.offer.monitor.id)
         } else {
             alert("Veuillez entrer votre mot de passe correctement")
         }
         return isValid
     }
 
-    const createNotificationForMonitor = async (notification) => {
-        const result = await fetch('http://localhost:8888/notification/save-notification-for-monitor',
+    const createNotificationForMonitor = async (notification, monitorId) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${monitorId}`,
             {
                 method: 'POST',
                 headers: {
