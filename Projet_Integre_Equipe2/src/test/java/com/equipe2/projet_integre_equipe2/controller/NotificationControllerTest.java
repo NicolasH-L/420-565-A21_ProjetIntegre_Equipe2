@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Admin;
+import com.equipe2.projet_integre_equipe2.model.Monitor;
 import com.equipe2.projet_integre_equipe2.model.Notification;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.service.NotificationService;
@@ -36,7 +37,9 @@ public class NotificationControllerTest {
 
     private Notification notification;
     private Notification notificationAdmin;
+    private Notification notificationMonitor;
     private Student student;
+    private Monitor monitor;
     private Admin admin;
 
     @BeforeEach
@@ -48,6 +51,12 @@ public class NotificationControllerTest {
                 .matricule("1234567")
                 .password("1234")
                 .isCvValid(true)
+                .build();
+
+        monitor = Monitor.monitorBuilder()
+                .id(1)
+                .lastName("Lajoie")
+                .firstName("Bob")
                 .build();
 
         admin = Admin.adminBuilder()
@@ -67,6 +76,13 @@ public class NotificationControllerTest {
                 .typeNotification("Offre")
                 .message("Offre deposer par un moniteur")
                 .admin(admin)
+                .build();
+
+        notificationMonitor = Notification.builder()
+                .id(2)
+                .typeNotification("Offre")
+                .message("Votre offre a ete refuser")
+                .monitor(monitor)
                 .build();
 
     }
@@ -114,6 +130,21 @@ public class NotificationControllerTest {
     }
 
     @Test
+    public void saveNotificationForMonitor() throws Exception {
+        when(notificationService.saveNotificationsForMonitor(notificationMonitor, monitor.getId())).thenReturn(Optional.of(notificationMonitor));
+
+        MvcResult result = mockMvc.perform(post("/notification/save-notification-for-monitor/" + monitor.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(notificationMonitor))).andReturn();
+
+        var actualNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Notification>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(notificationMonitor).isEqualTo(actualNotification);
+    }
+
+
+    @Test
     public void getNotification() throws Exception {
         when(notificationService.getNotifications(student.getId())).thenReturn(Optional.of(getNotificationsList()));
 
@@ -132,6 +163,20 @@ public class NotificationControllerTest {
         when(notificationService.getNotificationsForAdmin(admin.getId())).thenReturn(Optional.of(getNotificationsListForAdmin()));
 
         MvcResult result = mockMvc.perform(get("/notification/get-notification-admin/" + admin.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualNotificationList = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Notification>>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualNotificationList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void getNotificationsForMonitor() throws Exception {
+        when(notificationService.getNotificationsForMonitor(monitor.getId())).thenReturn(Optional.of(getNotificationsListForMonitor()));
+
+        MvcResult result = mockMvc.perform(get("/notification/get-notification-monitor/" + monitor.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
@@ -189,12 +234,44 @@ public class NotificationControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @Test
+    public void deleteANotificationMonitor() throws Exception {
+        when(notificationService.deleteNotificationsForMonitor(notificationMonitor.getId(), monitor.getId())).thenReturn(true);
+        MvcResult result = mockMvc.perform(delete("/notification/delete-notification-monitor/" + notificationMonitor.getId() + "/" + monitor.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualDeletedNotification = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<Boolean>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualDeletedNotification).isEqualTo(true);
+    }
+
+    @Test
+    public void deleteAllNotificationsMonitor() throws Exception {
+        MvcResult result = mockMvc.perform(delete("/notification/delete-all-notification-monitor/" + monitor.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
     private List<Notification> getNotificationsList() {
         List<Notification> notificationList = new ArrayList<>();
         notificationList.add(Notification.builder()
                 .typeNotification("offre")
                 .message("Voici un offre")
                 .student(Arrays.asList(student))
+                .build());
+        return notificationList;
+    }
+
+    private List<Notification> getNotificationsListForMonitor() {
+        List<Notification> notificationList = new ArrayList<>();
+        notificationList.add(Notification.builder()
+                .typeNotification("Offre")
+                .message("Votre offre a ete refuser")
+                .monitor(monitor)
                 .build());
         return notificationList;
     }

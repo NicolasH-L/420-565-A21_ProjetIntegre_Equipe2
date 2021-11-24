@@ -38,6 +38,13 @@ public class NotificationController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
     }
 
+    @PostMapping("/save-notification-for-monitor/{idMonitor}")
+    public ResponseEntity<Notification> saveNotificationsForMonitor(@RequestBody Notification notification, @PathVariable int idMonitor) {
+        return notificationService.saveNotificationsForMonitor(notification, idMonitor)
+                .map(notification1 -> ResponseEntity.status(HttpStatus.CREATED).body(notification1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Notification()));
+    }
+
     @GetMapping("/get-notification-student/{id}")
     public ResponseEntity<List<Notification>> getNotifications(@PathVariable int id){
         return notificationService.getNotifications(id)
@@ -49,6 +56,13 @@ public class NotificationController {
     public ResponseEntity<List<Notification>> getNotificationsForAdmin(@PathVariable int id){
         return notificationService.getNotificationsForAdmin(id)
                 .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-notification-monitor/{id}")
+    public ResponseEntity<List<Notification>> getNotificationsForMonitor(@PathVariable int id){
+        return notificationService.getNotificationsForMonitor(id)
+                .map(monitor1 -> ResponseEntity.status(HttpStatus.OK).body(monitor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
@@ -68,8 +82,18 @@ public class NotificationController {
     }
 
     @DeleteMapping("/delete-all-notification-admin/{idAdmin}")
-    public void deleteAllNotificationsForAdmin(@PathVariable int idAdmin) {
-        notificationService.deleteAllByAdminId(idAdmin);
+    public Boolean deleteAllNotificationsForAdmin(@PathVariable int idAdmin) {
+        return notificationService.deleteAllByAdminId(idAdmin);
+    }
+
+    @DeleteMapping("/delete-notification-monitor/{idNotification}/{idMonitor}")
+    public Boolean deleteNotificationsForMonitor(@PathVariable int idNotification, @PathVariable int idMonitor) {
+        return notificationService.deleteNotificationsForMonitor(idNotification, idMonitor);
+    }
+
+    @DeleteMapping("/delete-all-notification-monitor/{idMonitor}")
+    public Boolean deleteAllNotificationsForMonitor(@PathVariable int idMonitor) {
+        return notificationService.deleteAllByMonitorId(idMonitor);
     }
 
 }
