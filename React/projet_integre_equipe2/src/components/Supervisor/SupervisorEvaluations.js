@@ -3,6 +3,8 @@ import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const SupervisorEvaluations = () => {
     const [evaluations, setEvaluations] = useState([])
@@ -33,13 +35,12 @@ const SupervisorEvaluations = () => {
                 <SupervisorNavbar />
                 <h2 className="text-center">Liste de mes étudiants</h2>
                 <div className="p-5">
-                    <table className="table table-hover bg-light shadow-lg">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>
                             <tr>
                                 <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Nom du poste</th>
+                                <th scope="col">Poste</th>
                                 <th scope="col">Numéro de teléphone de l'étudiant</th>
                                 <th scope="col">Evaluations</th>
                             </tr>
@@ -49,13 +50,17 @@ const SupervisorEvaluations = () => {
                                 .filter(filterEvaluations)
                                 .map((evaluations) => (
                                     <tr key={evaluations.idEvaluation}>
-                                        <th>{evaluations.contract.internship.student.lastName}</th>
-                                        <th>{evaluations.contract.internship.student.firstName}</th>
-                                        <th>{evaluations.contract.internship.offer.companyName}</th>
-                                        <th>{evaluations.contract.internship.offer.jobTitle}</th>
-                                        <th>{evaluations.contract.internship.student.telephoneNumber}</th>
-                                        <td className="w-25">
-                                            <EvaluationPdfModalView evaluation={evaluations}/>
+                                        <td data-title="Nom">
+                                            {
+                                                evaluations.contract.internship.student.firstName + " " +
+                                                evaluations.contract.internship.student.lastName
+                                            }
+                                        </td>
+                                        <td data-title="Entreprise">{evaluations.contract.internship.offer.companyName}</td>
+                                        <td data-title="Poste">{evaluations.contract.internship.offer.jobTitle}</td>
+                                        <td data-title="Num. étudiant">{evaluations.contract.internship.student.telephoneNumber}</td>
+                                        <td className="responsiveWidth">
+                                            <EvaluationPdfModalView evaluation={evaluations} />
                                         </td>
                                     </tr>
                                 ))}

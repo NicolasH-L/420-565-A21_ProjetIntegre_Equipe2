@@ -2,6 +2,8 @@ import React from 'react'
 import { useHistory } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import { useState, useEffect } from 'react'
+import './ResponsiveTable.css'
+import './ResponsiveButtons.css'
 
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
@@ -23,7 +25,7 @@ const AdminStudentList = () => {
     }
 
     const viewStudentCvList = async (student) => {
-        history.push("/AdminStudentCvList", {student, admin})
+        history.push("/AdminStudentCvList", { student, admin })
     }
 
     const validateStudent = async (student) => {
@@ -39,7 +41,7 @@ const AdminStudentList = () => {
 
         setStudents(
             students.map(
-                (student1) => student1.matricule === student.matricule ? {...student1, isCvValid: data.isCvValid} : student1
+                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
             )
         )
     }
@@ -50,32 +52,44 @@ const AdminStudentList = () => {
 
     return (
         <div className="grad">
-            <AdminNavbar/>
+            <AdminNavbar />
             <h2 className="text-center">Liste des étudiants</h2>
             <div className="p-5">
-                <table className="table table-hover bg-light shadow-lg">
+                <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                     <thead>
                         <tr>
                             <th scope="col">Nom: </th>
                             <th scope="col">Matricule: </th>
                             <th scope="col">Validité: </th>
-                            <th scope="col"></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {students
-                        .filter(filterStudents)
-                        .map((student) => (
-                            <tr className={`${student.isCvValid ? 'table-success' : 'table-warning'}`} key={student.id}>
-                                <th>{student.firstName + " " + student.lastName}</th>
-                                <td>{student.matricule}</td>
-                                <td>{student.isCvValid ? "Valide" : "En attente"}</td>
-                                <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>Consulter documents</button>
-                                    <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>Valider étudiant</button>
-                                </td>
-                            </tr>
-                        ))}
+                            .filter(filterStudents)
+                            .map((student) => (
+                                <tr key={student.id}>
+                                    <td data-title="Nom">{student.firstName + " " + student.lastName}</td>
+                                    <td data-title="Matricule">{student.matricule}</td>
+                                    <td data-title="Validité">
+                                        <h5>
+                                            <span className={`badge ${student.isCvValid ? 'badge-success' : 'badge-warning'}`}>
+                                                {student.isCvValid ? "Valide" : "En attente"}
+                                            </span>
+                                        </h5>
+                                    </td>
+                                    <td className="responsiveWidth">
+                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
+                                            <span className="hideButtonText">Consulter documents</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                        </button>
+                                        <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
+                                            <span className="hideButtonText">Valider étudiant</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

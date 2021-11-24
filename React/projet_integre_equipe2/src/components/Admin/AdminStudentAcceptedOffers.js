@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './../AdminNavbar'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
@@ -129,7 +131,7 @@ const AdminStudentAcceptedOffers = () => {
     }
 
     const filterAcceptedOffers = (acceptedOffer) => {
-        return acceptedOffer.isInternshipStarted === false 
+        return acceptedOffer.isInternshipStarted === false
             && admin.actualSession === acceptedOffer.session
     }
 
@@ -137,9 +139,9 @@ const AdminStudentAcceptedOffers = () => {
         <div>
             <div className="grad">
                 <AdminNavbar />
-                <h2 className="text-center">Offres de stage acceptés</h2>
+                <h2 className="text-center">Débuter signature des offres acceptées</h2>
                 <div className="p-5">
-                    <table className="table table-hover bg-light shadow-lg">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>
                             <tr>
                                 <th scope="col">Nom de l'étudiant</th>
@@ -153,18 +155,22 @@ const AdminStudentAcceptedOffers = () => {
                                 .filter(filterAcceptedOffers)
                                 .map((acceptedOffer) => (
                                     <tr key={acceptedOffer.idStudentOffer}>
-                                        <th>{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</th>
-                                        <td>{acceptedOffer.student.matricule}</td>
-                                        <td>{acceptedOffer.offer.jobTitle}</td>
-                                        <td className="w-25">
-                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}>Consulter</button>
+                                        <td data-title="Nom étudiant">{acceptedOffer.student.firstName + " " + acceptedOffer.student.lastName}</td>
+                                        <td data-title="Matricule">{acceptedOffer.student.matricule}</td>
+                                        <td data-title="Poste">{acceptedOffer.offer.jobTitle}</td>
+                                        <td className="responsiveWidth">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(acceptedOffer.offer) }}>
+                                                <span className="hideButtonText">Consulter</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                            </button>
                                             <button className="btn btn-success mx-2"
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     startSigningProcess(acceptedOffer)
                                                         .then((data) => data.student == null ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : createContract(data))
                                                 }}>
-                                                Débuter signatures
+                                                <span className="hideButtonText">Débuter signatures</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-file-signature"></i></span>
                                             </button>
                                         </td>
                                     </tr>

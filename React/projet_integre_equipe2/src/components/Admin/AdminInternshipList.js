@@ -2,6 +2,8 @@ import React from 'react'
 import AdminNavbar from '../AdminNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const AdminInternshipList = () => {
     const [internships, setInternships] = useState([])
@@ -30,13 +32,21 @@ const AdminInternshipList = () => {
         return admin.actualSession === internship.session
     }
 
+    const signatureIcon = (user) => {
+        return (
+            <>
+                <i className="fas fa-pencil-alt"></i> {user}
+            </>
+        )
+    }
+
     return (
         <div>
             <div className="grad">
                 <AdminNavbar />
                 <h2 className="text-center">Ententes de stage</h2>
                 <div className="p-5">
-                    <table className="table table-hover bg-light shadow-lg">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>
                             <tr>
                                 <th scope="col">Nom de l'étudiant</th>
@@ -48,23 +58,32 @@ const AdminInternshipList = () => {
                         </thead>
                         <tbody>
                             {internships
-                            .filter(filterInterships)
-                            .map((internship) => (
-                                <tr key={internship.idInternship} className={internship.status == "Valide" ? 'table-success' : 'table-warning'}>
-                                    <th>{internship.student.firstName + " " + internship.student.lastName}</th>
-                                    <td>{internship.offer.jobTitle}</td>
-                                    <td>{internship.offer.companyName}</td>
-                                    <td>
-                                        {internship.status === "StudentSignature" ? "En attente : Signature étudiant"
-                                            : internship.status === "MonitorSignature" ? "En attente : Signature moniteur"
-                                            : internship.status === "AdminSignature" ? "En attente : Siganture gestionnaire" 
-                                            : internship.status === "Valide" ? "Valide" : "Erreur"}
-                                    </td>
-                                    <td className="w-25">
-                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>
-                                    </td>
-                                </tr>
-                            ))}
+                                .filter(filterInterships)
+                                .map((internship) => (
+                                    <tr key={internship.idInternship} >
+                                        <td data-title="Nom étudiant">{internship.student.firstName + " " + internship.student.lastName}</td>
+                                        <td data-title="Poste">{internship.offer.jobTitle}</td>
+                                        <td data-title="Entreprise">{internship.offer.companyName}</td>
+                                        <td data-title="Statut">
+                                            <h5>
+                                                <span className={`badge ${internship.status == "Completed" ? 'badge-success' : 'badge-warning'}`}>
+                                                    {internship.status === "StudentSignature" ? "Signature étudiant"
+                                                        : internship.status === "MonitorSignature" ? signatureIcon("Moniteur")
+                                                            : internship.status === "AdminSignature" ? "Signature gestionnaire"
+                                                                : internship.status === "Completed" ? "Signé" : "Erreur"
+                                                    }
+                                                </span>
+                                            </h5>
+
+                                        </td>
+                                        <td className="responsiveWidth">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>
+                                                <span className="hideButtonText">Consulter</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
