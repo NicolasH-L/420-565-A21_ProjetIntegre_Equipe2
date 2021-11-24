@@ -63,7 +63,6 @@ const StudentInternshipListOffers = () => {
                                             <OfferModalView newOffer={offer} />
                                             <StudentApplyToOffer newOffer={offer} />
                                         </div>
-
                                     </td>
                                 </tr>
                             ))}

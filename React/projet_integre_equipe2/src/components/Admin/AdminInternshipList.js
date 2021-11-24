@@ -32,6 +32,14 @@ const AdminInternshipList = () => {
         return admin.actualSession === internship.session
     }
 
+    const signatureIcon = (user) => {
+        return (
+            <>
+                <i className="fas fa-pencil-alt"></i> {user}
+            </>
+        )
+    }
+
     return (
         <div>
             <div className="grad">
@@ -58,11 +66,11 @@ const AdminInternshipList = () => {
                                         <td data-title="Entreprise">{internship.offer.companyName}</td>
                                         <td data-title="Statut">
                                             <h5>
-                                                <span className={`badge ${internship.status == "Valide" ? 'badge-success' : 'badge-warning'}`}>
-                                                    {internship.status === "StudentSignature" ? "En attente : Signature étudiant"
-                                                        : internship.status === "MonitorSignature" ? "En attente : Signature moniteur"
-                                                            : internship.status === "AdminSignature" ? "En attente : Siganture gestionnaire"
-                                                                : internship.status === "Completed" ? "Valide" : "Erreur"
+                                                <span className={`badge ${internship.status == "Completed" ? 'badge-success' : 'badge-warning'}`}>
+                                                    {internship.status === "StudentSignature" ? "Signature étudiant"
+                                                        : internship.status === "MonitorSignature" ? signatureIcon("Moniteur")
+                                                            : internship.status === "AdminSignature" ? "Signature gestionnaire"
+                                                                : internship.status === "Completed" ? "Signé" : "Erreur"
                                                     }
                                                 </span>
                                             </h5>

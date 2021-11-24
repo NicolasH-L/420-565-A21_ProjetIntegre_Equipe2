@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
 
-const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
+const OfferModalView = ({ newOffer }) => {
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
@@ -10,22 +9,9 @@ const OfferModalView = ({ newOffer, displayMessageBoolean }) => {
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
     
-    
-    const history = useHistory()
-    const historyState = history.location.state
-    const baseUrl = "http://localhost:8888/offers-list"
-    const student = historyState.student
-
-    
-
     useEffect(() => {
         setOffer(newOffer)
-        
     }, [])
-
-    
-
-    
 
     return (
         <div>
