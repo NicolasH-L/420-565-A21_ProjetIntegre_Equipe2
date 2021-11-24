@@ -10,14 +10,14 @@ export const Notification = ({ notificationList, userProp, userSession, user }) 
 
     const deleteNotification = async (idNotification) => {
         if(user === "Student"){
-        const result = await fetch(`${baseUrl}/delete-notification/${idNotification}/${userProp.id}`,
-            {
-                method: 'DELETE',
-                headers: { 'Content-type': 'application/json' }
-            })
-        return await result
+            const result = await fetch(`${baseUrl}/delete-notification/${idNotification}/${userProp.id}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json' }
+                })
+            return await result
         }else if (user === "Monitor"){
-            console.log("sdfsdf")
+            console.log("aaaaa")
         }else if (user === "Admin"){
             const result = await fetch(`${baseUrl}/delete-notification-admin/${idNotification}`,
                 {

@@ -90,10 +90,39 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature, sessio
             updateInternship()
             setContractState({ ...contractState, isDisabled: true })
             isValid = true
+
+            if(hasStudentSigned){
+                createNotificationForMonitor(notification)
+            }else if(hasMonitorSigned)
+                createNotificationForAdmin(notification)
         } else {
             alert("Veuillez entrer votre mot de passe correctement")
         }
         return isValid
+    }
+
+    const createNotificationForMonitor = async (notification) => {
+        const result = await fetch('http://localhost:8888/notification/save-notification-for-monitor',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
+    }
+
+    const createNotificationForAdmin = async (notification) => {
+        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const updateStatus = () => {
