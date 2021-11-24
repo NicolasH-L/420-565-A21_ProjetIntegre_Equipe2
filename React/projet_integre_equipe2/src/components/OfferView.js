@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import AdminNavbar from './AdminNavbar'
+import './Form.css'
 
 const OfferView = () => {
     const history = useHistory()
@@ -12,7 +12,7 @@ const OfferView = () => {
                 <i className="fas fa-angle-double-left"></i> Retour
             </button>
             <div className="d-flex justify-content-center">
-                <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
                     <h2 className="text-secondary text-center">Offre de stage</h2>
                     <form className="container-fluid">
                         <div className="form-group">

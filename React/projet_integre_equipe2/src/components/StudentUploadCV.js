@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useHistory } from 'react-router-dom'
 import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
+import './Form.css'
 
 const StudentUploadCV = () => {
   const [uploadFile, setUploadFile] = useState()
@@ -61,7 +62,7 @@ const StudentUploadCV = () => {
     <div className="grad">
       <StudentNavbar useStudent={student} />
       <div className="d-flex justify-content-center">
-        <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+        <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
           <form className="container-fluid" onSubmit={submitForm}>
             <h1 className="text-center text-secondary">Téléverser CV</h1>
             <div className="form-group">

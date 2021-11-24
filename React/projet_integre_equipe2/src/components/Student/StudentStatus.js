@@ -3,6 +3,7 @@ import { useHistory } from 'react-router'
 import StudentInternshipFoundStatus from './StudentInternshipFoundStatus';
 import StudentInterviewDateStatus from './StudentInterviewDateStatus';
 import StudentSearchingStatus from './StudentSearchingStatus';
+import '../Form.css'
 
 const StudentStatus = () => {
     const history = useHistory();
@@ -27,7 +28,7 @@ const StudentStatus = () => {
         <div>
             <h2 className="text-center">Bienvenue {student.firstName + " " + student.lastName}</h2>
             <div className="d-flex justify-content-center">
-                <div className="card text-center shadow w-50 my-5">
+                <div className="card text-center shadow my-5 reactivescreen">
                     <div className="card-header font-weight-bold">
                         <h5>
                             Votre statut actuel: <span className={`badge ${badgeColor}`} >{student.currentStatus + interviewStatus}</span>
