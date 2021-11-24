@@ -14,7 +14,7 @@ const StudentContractList = () => {
     useEffect(() => {
         const getAllStudentContracts = async () => {
             const contractsFromServer = await fetchContracts()
-            setContracts(contractsFromServer)
+            setContracts(contractsFromServer.filter(byContractCompleted))
         }
         getAllStudentContracts()
     }, [])
@@ -22,6 +22,10 @@ const StudentContractList = () => {
     const fetchContracts = async () => {
         const res = await fetch(`http://localhost:8888/contract/get-all-by-student/${student.id}`)
         return await res.json()
+    }
+
+    const byContractCompleted = (contract) =>{
+        return contract.studentSignature !== ""
     }
 
     const isDisplayContracts = () => {
