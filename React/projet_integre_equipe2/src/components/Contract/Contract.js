@@ -11,6 +11,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
 
     useEffect(() => {
+
         if (contractState.signature === "" && contractState.userPassword === "") {
             contractState.userPassword = passwordUser
             contractState.signature = signature
@@ -18,12 +19,15 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         setInternship(contractProp.internship)
         setContract(contractProp)
         setContractState({ ...contractState, isDisabled: currentStatus !== contractProp.internship.status })
+        console.log(currentStatus)
+        console.log(contractProp.internship.status)
     }, [])
 
     useEffect(() => {
-        if (contractState.password !== "" && contractState.signature !== ""){
+        if (contractState.password !== "" && contractState.signature !== "") {
             window.location.reload(true)
         }
+
     }, [contractState.signature, contractState.adminSignature])
 
     const updateContract = async (contract) => {
@@ -50,6 +54,16 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         return await result.json()
     }
 
+    const verifyPwdStudent = async (matricule, pwd) => {
+        const res = await fetch(`http://localhost:8888/students/verify-password/${matricule}/${pwd}`)
+        return await res.json()
+    }
+
+    const verifyPwdMonitor = async (email, pwd) => {
+        const res = await fetch(`http://localhost:8888/monitors/verify-password/${email}/${pwd}`)
+        return await res.json()
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (validateInput()) {
@@ -57,15 +71,31 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         }
     }
 
+    const verifyStatus = (actualStatus, expectedStatus) => {
+        return currentStatus === actualStatus && currentStatus === expectedStatus
+    }
+
     const validateInput = () => {
         let isValid = false
-        if (contractState.password === contractState.userPassword) {
-            if (internship.status === Signature.getStudentSignatureStatus()) {
+        let isPasswordValidStudent = false
+        let isPasswordValidMonitor = false
+        console.log(`checkpwdStudent: ${isPasswordValidStudent}`)
+        console.log(`checkpwdMonitor: ${isPasswordValidMonitor}`)
+
+        if(verifyStatus(contractProp.internship.status, signatureStatusList[0])) {
+            isPasswordValidStudent = verifyPwdStudent(contract.internship.student.matricule, contractState.password)
+        }
+        else if(verifyStatus(contractProp.internship.status, signatureStatusList[1])) {
+            isPasswordValidMonitor = verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
+        }
+        
+        if (isPasswordValidStudent || isPasswordValidMonitor) {
+            if (internship.status === Signature.getStudentSignatureStatus() && isPasswordValidStudent) {
                 contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
                 contract.signatureDateStudent = getToday()
                 contractState.signature = contract.studentSignature
 
-            } else if (internship.status === Signature.getMonitorSignatureStatus()) {
+            } else if (internship.status === Signature.getMonitorSignatureStatus() && isPasswordValidMonitor) {
                 contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
                 contract.signatureDateMonitor = getToday()
                 contractState.signature = contract.monitorSignature
@@ -77,7 +107,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                 }
                 contract.signatureDateAdmin = getToday()
                 contract.adminSignature = contractState.adminSignature
-                contractState.signature = contract.adminSignature 
+                contractState.signature = contract.adminSignature
             }
             updateStatus()
             updateInternship()

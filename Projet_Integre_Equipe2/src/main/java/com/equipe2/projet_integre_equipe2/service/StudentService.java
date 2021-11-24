@@ -33,6 +33,15 @@ public class StudentService {
         }
     }
 
+    public Optional<Boolean> verifypassword(String matricule, String pwd) {
+        try {
+            Student student = studentRepository.findByMatricule(matricule);
+            return Optional.of(passwordService.matchPassword(pwd, student.getPassword()));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Student> loginStudent(String matricule, String password) {
         try {
             Student student = studentRepository.findByMatricule(matricule);

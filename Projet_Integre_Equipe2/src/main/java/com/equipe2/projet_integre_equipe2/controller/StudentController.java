@@ -52,4 +52,13 @@ public class StudentController {
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
+
+   @GetMapping("/verify-password/{matricule}/{pwd}")
+   public ResponseEntity<Boolean> verifyPassword(@PathVariable String matricule, @PathVariable String pwd) {
+      return studentService.verifypassword(matricule, pwd)
+              .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+              .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+   }
+
+
 }

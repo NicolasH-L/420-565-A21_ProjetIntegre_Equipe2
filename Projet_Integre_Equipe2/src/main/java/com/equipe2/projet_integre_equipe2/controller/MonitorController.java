@@ -45,4 +45,11 @@ public class MonitorController {
                 .map(monitor1 -> ResponseEntity.status(HttpStatus.OK).body(monitor1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/verify-password/{email}/{pwd}")
+    public ResponseEntity<Boolean> verifyPassword(@PathVariable String email, @PathVariable String pwd) {
+        return monitorService.verifypassword(email, pwd)
+                .map(monitor1 -> ResponseEntity.status(HttpStatus.OK).body(monitor1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

@@ -38,6 +38,15 @@ public class MonitorService {
         }
     }
 
+    public Optional<Boolean> verifypassword(String email, String pwd) {
+        try {
+            Monitor monitor = monitorRepository.findMonitorByEmailIgnoreCase(email);
+            return Optional.of(passwordService.matchPassword(pwd, monitor.getPassword()));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Boolean> monitorExistsByEmail(String email){
         return Optional.of(monitorRepository.existsByEmailIgnoreCase(email));
     }
