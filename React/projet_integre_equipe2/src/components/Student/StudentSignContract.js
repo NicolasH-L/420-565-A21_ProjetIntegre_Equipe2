@@ -13,7 +13,6 @@ const StudentSignContract = () => {
     const [contract, setContract] = useState(null)
     const baseUrl = "http://localhost:8888"
     const student = historyState.student
-    const contractCompletedStatus = "Completed"
 
     useEffect(() => {
         if (historyState === undefined)
@@ -25,7 +24,7 @@ const StudentSignContract = () => {
 
         const getContract = async () => {
             await fetchContract()
-                .then((data) => data !== null ? setContract(data) : setContract(null))
+                .then((data) => data !== null ? validateContract(data) : setContract(null))
         }
         getInternship()
         getContract()
@@ -33,16 +32,20 @@ const StudentSignContract = () => {
 
     const fetchInternship = async () => {
         const res = await fetch(`${baseUrl}/internship/get-internship/${student.id}/session/${student.actualSession}`)
-        
+
         if (res.status > 200)
             return null
 
         return await res.json()
     }
 
+    const validateContract = (contract) => {
+        contract.studentSignature === "" && contract.monitorSignature !== "" ? setContract(contract) : setContract(null)
+    }
+
     const fetchContract = async () => {
         const res = await fetch(`${baseUrl}/contract/get-contract/${student.id}/session/${student.actualSession}`)
-        
+
         if (res.status > 200)
             return null
 
@@ -53,7 +56,7 @@ const StudentSignContract = () => {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center py-5">
-                    <h2 className="text-dark">Vous n'avez pas de contrats</h2>
+                    <h2 className="text-dark">Vous n'avez pas de contrat à signer</h2>
                 </div>
             </div>
         )
@@ -65,11 +68,6 @@ const StudentSignContract = () => {
             {internship !== null && contract !== null ? (
                 <div className="d-flex justify-content-center my-5 py-2">
                     <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
-                        {(contract.internship.status === contractCompletedStatus) ?
-                            <div className="d-flex justify-content-center mb-4">
-                                <DownloadContract contract={contract}></DownloadContract>
-                            </div>
-                            : ""}
                         <Contract passwordUser={student.password}
                             currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
                             signature={contract.studentSignature} />
