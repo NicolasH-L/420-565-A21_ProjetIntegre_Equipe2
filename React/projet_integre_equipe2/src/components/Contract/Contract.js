@@ -66,9 +66,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (validateInput()) {
-            updateContract(contract)
-        }
+        validateInput()
     }
 
     const verifyStatus = (actualStatus, expectedStatus) => {
@@ -76,7 +74,6 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     }
 
     const sign = () => {
-        let isValid = false
         if (internship.status === Signature.getStudentSignatureStatus()) {
             contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
             contract.signatureDateStudent = getToday()
@@ -90,7 +87,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         } else if (internship.status === Signature.getAdminSignatureStatus()) {
             if (contractState.adminSignature === "" || contractState.adminSignature === null) {
                 alert("Veuillez inscrire votre nom au complet")
-                return isValid
+                return
             }
             contract.signatureDateAdmin = getToday()
             contract.adminSignature = contractState.adminSignature
@@ -99,30 +96,24 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         updateStatus()
         updateInternship()
         setContractState({ ...contractState, isDisabled: true })
-        isValid = true
-        return isValid
+        updateContract(contract)
     }
 
     const validateInput = () => {
-        let isValid = false
-        let isPasswordValidStudent = false
-        let isPasswordValidMonitor = false
-        console.log(`checkpwdStudent: ${isPasswordValidStudent}`)
-        console.log(`checkpwdMonitor: ${isPasswordValidMonitor}`)
 
         if (verifyStatus(contractProp.internship.status, signatureStatusList[0])) {
             verifyPwdStudent(contract.internship.student.matricule, contractState.password)
-                .then(data => data === true ? isValid = sign() : data === false ?
+                .then(data => data === true ? sign() : data === false ?
                     alert("Veuillez entrer votre mot de passe correctement")
                     : alert("Veuillez entrer votre mot de passe correctement"))
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[1])) {
             verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
-            .then(data => data === true ? isValid = sign() : data === false ?
+                .then(data => data === true ? sign() : data === false ?
                     alert("Veuillez entrer votre mot de passe correctement")
                     : alert("Veuillez entrer votre mot de passe correctement"))
         }
-        return isValid
+
 
     }
 
