@@ -2,6 +2,8 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
 import { useState, useEffect } from 'react'
+import './ResponsiveTable.css'
+import './ResponsiveButtons.css'
 
 const AdminStudentCvList = () => {
     const typeNotification = "CV"
@@ -11,12 +13,12 @@ const AdminStudentCvList = () => {
     const historyState = history.location.state
     const student = historyState.student
     const admin = historyState.admin
-    
+
     const [documents, setDocuments] = useState([])
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession
     })
-    
+
     useEffect(() => {
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments(student)
@@ -73,8 +75,14 @@ const AdminStudentCvList = () => {
     const displayButtons = (document) => {
         return (
             <>
-                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, true) }}>Valider</button>
-                <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>Refuser</button>
+                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, true) }}>
+                    <span className="hideButtonText">Valider</span>
+                    <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                </button>
+                <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); updateCvStatus(document, false) }}>
+                    <span className="hideButtonText">Refuser</span>
+                    <span className="hideButtonIcon"><i className="fas fa-times"></i></span>
+                </button>
             </>
         )
     }
@@ -90,26 +98,38 @@ const AdminStudentCvList = () => {
                 <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
             </div>
             <div className="p-5">
-                <table className="table table-hover bg-light shadow-lg">
+                <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                     <thead>
                         <tr>
-                            <th scope="col">Nom: </th>
+                            <th scope="col">Nom </th>
+                            <th scope="col">Validité </th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {documents
-                        .filter(filterDocuments)
-                        .map((document) => (
-                            <tr className={`${!document.isValid && !document.isRefused ? 'table-warning' :
-                                !document.isValid && document.isRefused ? 'table-danger' : 'table-success'}`} key={document.idDocument}>
-                                <th>{document.documentName}</th>
-                                <td className="w-25">
-                                    <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>Consulter</button>
-                                    {!document.isValid && !document.isRefused ? displayButtons(document) : ""}
-                                </td>
-                            </tr>
-                        ))}
+                            .filter(filterDocuments)
+                            .map((document) => (
+                                <tr key={document.idDocument}>
+                                    <td data-title="Nom">{document.documentName}</td>
+                                    <td data-title="Validité">
+                                        <h5>
+                                            <span className={`badge ${!document.isValid && !document.isRefused ? 'badge-warning' :
+                                                !document.isValid && document.isRefused ? 'badge-danger' : 'badge-success'}`}>
+                                                {!document.isValid && !document.isRefused ? 'En attente' :
+                                                    !document.isValid && document.isRefused ? 'Réfusé' : 'Valide'}
+                                            </span>
+                                        </h5>
+                                    </td>
+                                    <td className="responsiveWidth">
+                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewDocumentCv(document) }}>
+                                            <span className="hideButtonText">Consulter</span>
+                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                        </button>
+                                        {!document.isValid && !document.isRefused ? displayButtons(document) : ""}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

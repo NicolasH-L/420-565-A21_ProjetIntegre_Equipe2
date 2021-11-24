@@ -83,10 +83,8 @@ const EvaluationReHireIntern = ({ monitor, setState, submitState, offer }) => {
     }
 
     const displayInputError = (e) => {
-        // TODO start
         reHireIntern[e.target.name] = ""
         setReHireIntern({ ...reHireIntern, [e.target.name]: "" })
-        // TODO end
         setError({ ...error, [e.target.name]: true })
     }
 

@@ -3,13 +3,14 @@ import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const SupervisorAssignedStudentList = () => {
     const [interships, setInterships] = useState([])
     const history = useHistory()
     const historyState = history.location.state
     const supervisor = historyState.supervisor
-
 
     useEffect(() => {
 
@@ -43,15 +44,14 @@ const SupervisorAssignedStudentList = () => {
                 <SupervisorNavbar />
                 <h2 className="text-center">Liste de mes étudiants</h2>
                 <div className="p-5">
-                    <table className="table table-hover bg-light shadow-lg">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>
                             <tr>
                                 <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Nom du poste</th>
+                                <th scope="col">Poste</th>
                                 <th scope="col">Numéro de teléphone de l'étudiant</th>
-                                <th scope="col">Offre</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,13 +59,15 @@ const SupervisorAssignedStudentList = () => {
                                 .filter(filterInternships)
                                 .map((internship) => (
                                     <tr key={internship.idInternship}>
-                                        <th>{internship.student.lastName}</th>
-                                        <th>{internship.student.firstName}</th>
-                                        <th>{internship.offer.companyName}</th>
-                                        <th>{internship.offer.jobTitle}</th>
-                                        <th>{internship.student.telephoneNumber}</th>
-                                        <td className="w-25">
-                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>Consulter</button>                                            
+                                        <td data-title="Nom">{internship.student.firstName + " " + internship.student.lastName}</td>
+                                        <td data-title="Entreprise">{internship.offer.companyName}</td>
+                                        <td data-title="Poste">{internship.offer.jobTitle}</td>
+                                        <td data-title="Num. étudiant">{internship.student.telephoneNumber}</td>
+                                        <td className="responsiveWidth">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>
+                                                <span className="hideButtonText">Consulter l'offre</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

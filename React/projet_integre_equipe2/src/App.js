@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import GuardedRoute from './components/GuardedRoute';
+import GuardedRoute from './components/GuardedRoute'
 import { useState, useEffect } from 'react'
 
 import Footer from './components/Footer'
@@ -30,8 +30,8 @@ import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAss
 import MonitorContracts from './components/Monitor/MonitorContracts'
 import MonitorEvaluateStudent from './components/Monitor/MonitorEvaluateStudent'
 import AdminContracts from './components/Admin/AdminContracts'
-import ErrorRoute from './components/ErrorRoute';
-import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations';
+import ErrorRoute from './components/ErrorRoute'
+import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {

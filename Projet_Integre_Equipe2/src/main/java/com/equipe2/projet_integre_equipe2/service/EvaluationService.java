@@ -54,14 +54,6 @@ public class EvaluationService {
         }
     }
 
-    public Optional<Evaluation> getEvaluationBySupervisorIdAndStudentId(Integer idSupervisor, Integer idStudent) {
-        try {
-            return Optional.of(evaluationRepository.findEvaluationByContract_Internship_Supervisor_IdAndContract_Internship_Student_Id(idSupervisor, idStudent));
-        }catch (Exception e){
-            return Optional.empty();
-        }
-    }
-
     public Optional<Evaluation> generateDocument(String fileType, InternEvaluation internEvaluation) {
         try {
             Evaluation evaluation = new Evaluation();

@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import MonitorNavbar from '../MonitorNavbar'
 import EvaluationModalView from '../Evaluation/EvaluationModalView'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const MonitorEvaluateStudent = () => {
     const history = useHistory()
@@ -84,7 +86,7 @@ const MonitorEvaluateStudent = () => {
             <div className="container-fluid">
                 <div className="p-5 table-responsive">
                     {isDisplayEvaluations() ?
-                        <table className="table table-hover bg-light shadow-lg">
+                        <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                             <thead>
                                 <tr className="text-center">
                                     <th scope="col">Position</th>
@@ -99,14 +101,18 @@ const MonitorEvaluateStudent = () => {
                                     .filter(bySession)
                                     .map((contract) => (
                                         <tr key={contract.idContract} className="text-center">
-                                            <td>{contract.internship.offer.jobTitle}</td>
-                                            <td>{contract.internship.offer.startInternshipDate}</td>
-                                            <td>{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
-                                            <td className={isInternAlreadyEvaluated(contract) !== undefined ? "table-success" : "table-warning"}>{isInternAlreadyEvaluated(contract) === true ? "Evaluation complété" : "En attente d'évaluation"}</td>
-                                            <td>
-                                                {
-                                                    displayEvaluationButtons(contract)
-                                                }
+                                            <td data-title="Position">{contract.internship.offer.jobTitle}</td>
+                                            <td data-title="Début stage">{contract.internship.offer.startInternshipDate}</td>
+                                            <td data-title="Nom étudiant">{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
+                                            <td data-title="Statut">
+                                                <h5>
+                                                    <span className={`badge ${isInternAlreadyEvaluated(contract) !== undefined ? "badge-success" : "badge-warning"}`}>
+                                                        {isInternAlreadyEvaluated(contract) !== undefined ? "Complétée" : "En attente"}
+                                                    </span>
+                                                </h5>
+                                            </td>
+                                            <td className="responsiveWidth">
+                                                {displayEvaluationButtons(contract)}
                                             </td>
                                         </tr>
                                     ))}

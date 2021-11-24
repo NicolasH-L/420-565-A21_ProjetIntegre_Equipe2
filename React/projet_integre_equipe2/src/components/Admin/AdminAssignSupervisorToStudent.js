@@ -89,7 +89,7 @@ const AdminAssignSupervisorToStudent = () => {
             <div className="grad">
                 <AdminNavbar />
                 <div className="d-flex justify-content-center">
-                    <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                    <div className="jumbotron jumbotron-fluid bg-light rounded responsiveWidth shadow reactivescreen">
                         <form className="container-fluid" onSubmit={assignSupervisorToStudent}>
                             <h1 className="text-center text-secondary">Assigner un superviseur à un étudiant</h1>
                             <div className="form-group">

@@ -21,7 +21,7 @@ const SupervisorLogin = ({ onLogin, authLogin }) => {
 
         function signIn(supervisor){
             authLogin("supervisor")
-            history.push("/Supervisor", {supervisor})
+            history.push("/SupervisorAssignedStudentList", {supervisor})
         }
     }
 

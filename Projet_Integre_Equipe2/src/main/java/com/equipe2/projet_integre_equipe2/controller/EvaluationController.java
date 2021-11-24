@@ -40,11 +40,4 @@ public class EvaluationController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @GetMapping("/get-by-supervisor-and-student/{idSupervisor}/{idStudent}")
-    public ResponseEntity<Evaluation> getEvaluationsBySupervisorId(@PathVariable Integer idSupervisor, @PathVariable Integer idStudent){
-        return evaluationService.getEvaluationBySupervisorIdAndStudentId(idSupervisor, idStudent)
-                .map(evaluation1 -> ResponseEntity.status(HttpStatus.OK).body(evaluation1))
-                .orElse(ResponseEntity.status(HttpStatus.OK).body(new Evaluation()));
-    }
-
 }
