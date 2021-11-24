@@ -32,6 +32,7 @@ import MonitorEvaluateStudent from './components/Monitor/MonitorEvaluateStudent'
 import AdminContracts from './components/Admin/AdminContracts'
 import ErrorRoute from './components/ErrorRoute';
 import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
+import StudentContractList from './components/Student/StudentContractList'
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
@@ -103,6 +104,7 @@ function App() {
         <GuardedRoute path="/StudentDocuments" component={StudentDocuments} auth={isStudentAuthenticated}/>
         <GuardedRoute path="/StudentInternshipListOffers" component={StudentInternshipListOffers} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentSignContract" component={StudentSignContract} auth={isStudentAuthenticated} />
+        <GuardedRoute path="/StudentContractList" component={StudentContractList} auth={isStudentAuthenticated} />
 
         <GuardedRoute path='/Supervisor' component={Supervisor} auth={isSupervisorAuthenticated} />
         <GuardedRoute path="/SupervisorAssignedStudentList" component={SupervisorAssignedStudentList} auth={isSupervisorAuthenticated} />

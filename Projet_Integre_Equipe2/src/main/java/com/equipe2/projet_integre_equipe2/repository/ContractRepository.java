@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
 
-    Contract findContractByInternship_Student_Id(Integer id);
+    Contract findContractByInternship_Student_IdAndSession(Integer id, String session);
+
+    List<Contract> findContractsByInternship_Student_Id(Integer id);
 
     List<Contract> findContractsByInternship_Offer_Monitor_Id(Integer id);
 

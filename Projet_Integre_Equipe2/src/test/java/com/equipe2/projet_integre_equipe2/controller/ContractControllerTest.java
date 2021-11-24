@@ -40,9 +40,11 @@ public class ContractControllerTest {
     private Student student;
     private List<Contract> contractListByMonitorId = new ArrayList<>();
     private String status;
+    private String session;
 
     @BeforeEach
     void setup() {
+        session = "winter2022";
         status = "Completed";
 
         monitor = Monitor.monitorBuilder()
@@ -91,6 +93,7 @@ public class ContractControllerTest {
         contract = Contract.builder()
                 .idContract(1)
                 .internship(internship)
+                .session(session)
                 .collegeResponsability("Faire ceci")
                 .companyResponsability("Faire des evaluation")
                 .studentResponsability("Montrer la capaciter")
@@ -119,10 +122,10 @@ public class ContractControllerTest {
     }
 
     @Test
-    public void getContractByStudentId() throws Exception {
-        when(contractService.getContractByStudentId(student.getId())).thenReturn(Optional.of(contract));
+    public void getContractByStudentIdAndSessionTest() throws Exception {
+        when(contractService.getContractByStudentIdAndSession(student.getId(), session)).thenReturn(Optional.of(contract));
 
-        MvcResult result = mockMvc.perform(get("/contract/get-contract/" + student.getId())
+        MvcResult result = mockMvc.perform(get("/contract/get-contract/{id}/session/{session}", student.getId(), session)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
@@ -134,7 +137,7 @@ public class ContractControllerTest {
     }
 
     @Test
-    public void getContractsByMonitorId() throws Exception {
+    public void getContractsByMonitorIdTest() throws Exception {
         when(contractService.getContractsByMonitorId(monitor.getId())).thenReturn(Optional.of(contractListByMonitorId));
 
         MvcResult result = mockMvc.perform(get("/contract/get-all-by-monitor/" + monitor.getId())
@@ -150,7 +153,7 @@ public class ContractControllerTest {
     }
 
     @Test
-    public void getContractsByMonitorIdFails() throws Exception {
+    public void getContractsByMonitorIdTestFails() throws Exception {
         when(contractService.getContractsByMonitorId(0)).thenReturn(Optional.empty());
 
         MvcResult result = mockMvc.perform(get("/contract/get-all-by-monitor/" + 0)
@@ -178,7 +181,7 @@ public class ContractControllerTest {
 
 
     @Test
-    public void getAllContractsByMonitorIdAndStatus() throws Exception {
+    public void getAllContractsByMonitorIdAndStatusTest() throws Exception {
         List<Contract> contractList = getListOfCompletedContractByMonitor();
         when(contractService.getAllContractsByMonitorIdAndStatus(monitor.getId(), status))
                 .thenReturn(Optional.of(contractList));
@@ -191,6 +194,22 @@ public class ContractControllerTest {
         });
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void getAllContractsByStudentTest() throws Exception {
+        List<Contract> contractList = getListOfContractByStudent();
+
+        when(contractService.getAllStudentContractsByStudentId(student.getId())).thenReturn(Optional.of(contractList));
+
+        MvcResult result = mockMvc.perform(get("/contract/get-all-by-student/{id}", student.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), new TypeReference<List<Contract>>() {
+        });
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(2);
     }
 
     @Test
@@ -273,5 +292,28 @@ public class ContractControllerTest {
         List<Contract> listContracts = new ArrayList<>();
         listContracts.add(contract);
         return listContracts;
+    }
+
+    private List<Contract> getListOfContractByStudent() {
+        List<Internship> listInternships = new ArrayList<>();
+        listInternships.add(Internship.builder()
+                .idInternship(100)
+                .student(student)
+                .build());
+        listInternships.add(Internship.builder()
+                .idInternship(200)
+                .student(student)
+                .build());
+
+        List<Contract> contractList = new ArrayList<>();
+        contractList.add(Contract.builder()
+                .internship(listInternships.get(0))
+                .build());
+
+        contractList.add(Contract.builder()
+                .internship(listInternships.get(1))
+                .build());
+
+        return contractList;
     }
 }
