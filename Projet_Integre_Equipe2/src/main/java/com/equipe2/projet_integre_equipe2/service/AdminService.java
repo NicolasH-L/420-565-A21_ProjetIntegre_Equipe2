@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.Admin;
 import com.equipe2.projet_integre_equipe2.repository.AdminRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +28,15 @@ public class AdminService {
         try {
             return Optional.of(adminRepository.findAll());
         } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Boolean> verifypassword(String username, String pwd) {
+        try {
+            Admin admin = adminRepository.findAdminByUsername(username);
+            return Optional.of(admin.getPassword().equals(pwd));
+        } catch (Exception exception) {
             return Optional.empty();
         }
     }

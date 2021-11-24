@@ -1,8 +1,11 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { Signature } from '../Constants/Signature'
 
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
+    const history = useHistory()
+    const historyState = history.location.state
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
@@ -11,7 +14,6 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
 
     useEffect(() => {
-
         if (contractState.signature === "" && contractState.userPassword === "") {
             contractState.userPassword = passwordUser
             contractState.signature = signature
@@ -64,6 +66,11 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         return await res.json()
     }
 
+    const verifyPwdAdmin = async (username, pwd) => {
+        const res = await fetch(`http://localhost:8888/admin/verify-password/${username}/${pwd}`)
+        return await res.json()
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         validateInput()
@@ -112,6 +119,12 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                 .then(data => data === true ? sign() : data === false ?
                     alert("Veuillez entrer votre mot de passe correctement")
                     : alert("Veuillez entrer votre mot de passe correctement"))
+        }
+        else if (verifyStatus(contractProp.internship.status, signatureStatusList[2])) {
+                verifyPwdAdmin(historyState.admin.username, contractState.password)
+                    .then(data => data === true ? sign() : data === false ?
+                        alert("Veuillez entrer votre mot de passe correctement")
+                        : alert("Veuillez entrer votre mot de passe correctement"))
         }
 
 
