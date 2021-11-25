@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     const [studentOffers, setStudentOffers] = useState([])
@@ -11,6 +12,30 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     const historyState = history.location.state
     const student = historyState.student
     const location = useLocation()
+
+    const fireSwalBadInternship = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'info',
+            title: 'Veuillez sélectionner le stage trouvé',
+            showConfirmButton: false,
+            timer: 2000,
+            width: "400px"
+        })
+      }
+
+      const fireSwalGoodInternship = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'offre accepté avec succès',
+            showConfirmButton: false,
+            timer: 2000,
+            width: '400px'
+        })
+      }
 
     useEffect(() => {
         const getStudentOffers = async () => {
@@ -28,7 +53,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
 
     const selectStudentOfferValue = (e) => {
         if (e.target.value === "default") {
-            alert("Veuillez sélectionner le stage trouvé")
+            fireSwalBadInternship()
             setStudentOffer(undefined)
             return
         }
@@ -43,7 +68,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
             onAddStudent(student).then((data) => history.push(location.pathname, { student: data }))
             return
         }
-        alert("Veuillez sélectionner le stage trouvé")
+        fireSwalBadInternship()
     }
 
     const updateStudentOffer = async (studentOffer) => {
@@ -57,7 +82,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
                 body: JSON.stringify(studentOffer)
             })
         const data = await res.json()
-        alert("Offre de stage acceptée avec succès")
+        fireSwalGoodInternship()
     }
 
     const filterStudentOffers = (studentOffer) => {
@@ -105,7 +130,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
                             <i className="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
                             </span>
                             <div>
-                                <button type="button" className="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary mr-2" data-dismiss="modal">Fermer</button>
                                 <button type="button" className="btn btn-primary mr-2" onClick={() => { setStudentInternship() }} hidden={isInternshipFound}>
                                     Modifier le statut
                                 </button>

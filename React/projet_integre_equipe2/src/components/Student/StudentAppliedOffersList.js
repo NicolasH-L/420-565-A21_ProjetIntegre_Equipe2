@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import OfferModalView from '../OfferModalView'
+import Swal from 'sweetalert2'
 
 const StudentAppliedOffersList = ({onSetDate}) => {
     const [studentOffers, setStudentOffers] = useState([])
@@ -28,6 +29,29 @@ const StudentAppliedOffersList = ({onSetDate}) => {
         getStudentOffers()
     }, [])
 
+    const fireSwalBadDate = () => {
+        Swal.fire({
+            title: "Veuillez choisir une date",
+            icon: 'info',
+            position: 'top',
+            toast: true,
+            timer: 2000,
+            showConfirmButton: false,
+            width: '400px',
+        })
+    }
+
+    const fireSwalGoodDate = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Date ajouté avec succès',
+            showConfirmButton: false,
+            timer: 2000
+        })
+      }
+    
     const fetchStudentOffers = async () => {
         const res = await fetch(`${baseUrl}/student-offers/student/${student.id}`)
         return await res.json()
@@ -66,7 +90,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
         }
         let interviewDate = tmpStudentOffers[index].interviewDate
         if (interviewDate === null)
-            return alert("Erreur! veuillez choisir une date.")
+            return fireSwalBadDate()
         updateStudentOfferDate(tmpStudentOffers[index])
     }
 
@@ -86,7 +110,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
                     { ...studentOffer1, interviewDate: data.interviewDate } : studentOffer1
             )
         )
-        alert("Ajout de la date d'entrevue avec succès!")
+        fireSwalGoodDate()
         student.currentStatus = "En attente"
         onSetDate(student).then((data) => history.push(location.pathname, {student: data}))
     }

@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom"
 import { useState } from 'react'
 import SessionsButton from "./SessionsButton"
 import StudentNotifications from './Student/StudentNotifications'
+import Swal from 'sweetalert2'
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -10,6 +11,18 @@ const StudentNavbar = ({ useStudent }) => {
     })
     const history = useHistory()
     const historyState = history.location.state
+
+    const fireSwalBadCV = () => {
+        Swal.fire({
+            title: "Votre CV n'est pas valide",
+            icon: 'warning',
+            position: 'top',
+            toast: true,
+            timer: 1500,
+            showConfirmButton: false,
+            width: '400px',
+        })
+    }
 
     useEffect(() => {
         if (historyState === undefined)
@@ -25,7 +38,7 @@ const StudentNavbar = ({ useStudent }) => {
         if (historyState === undefined)
             return
         verifyCvValidity(student.matricule)
-            .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : alert("Erreur! Votre CV n'est pas valide"))
+            .then((data) => data ? history.push("/StudentInternshipListOffers", historyState) : fireSwalBadCV())
     }
 
     const goToMyDocuments = () => {
