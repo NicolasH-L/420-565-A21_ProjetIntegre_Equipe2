@@ -3,6 +3,7 @@ package com.equipe2.projet_integre_equipe2.controller;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -93,6 +94,19 @@ public class StudentControllerTest {
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualStudent).isEqualTo(studentRegistered);
+    }
+
+    @Test
+    public void testVerifyPassword() throws Exception {
+        when(studentService.verifypassword(student.getMatricule(), rawPassword)).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/students/verify-password/{matricule}/{password}", student.getMatricule(), rawPassword)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var isPasswordGood = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(isPasswordGood).isTrue();
     }
 
     @Test

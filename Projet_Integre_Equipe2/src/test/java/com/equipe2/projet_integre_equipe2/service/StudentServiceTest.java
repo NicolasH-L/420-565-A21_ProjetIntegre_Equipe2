@@ -91,6 +91,20 @@ public class StudentServiceTest {
     }
 
     @Test
+    public void testVerifyPassword(){
+        when(studentRepository.findByMatricule(any())).thenReturn(studentRegistered);
+        Optional<Boolean> isPasswordGood = studentService.verifypassword(studentRegistered.getMatricule(), rawPassword);
+        assertThat(isPasswordGood.get()).isTrue();
+    }
+
+    @Test
+    public void testVerifyPasswordFails(){
+        when(studentRepository.findByMatricule(any())).thenReturn(null);
+        Optional<Boolean> isPasswordGood = studentService.verifypassword(studentRegistered.getMatricule(), "null");
+        assertThat(isPasswordGood).isEmpty();
+    }
+
+    @Test
     public void testLoginStudentFails() {
         when(studentRepository.findByMatricule(null)).thenReturn(null);
         Optional<Student> actualStudent = studentService.loginStudent(null, null);

@@ -95,6 +95,20 @@ class MonitorServiceTest {
     }
 
     @Test
+    public void testVerifyPassword(){
+        when(monitorRepository.findMonitorByEmailIgnoreCase(any())).thenReturn(monitorRegistered);
+        Optional<Boolean> isPasswordGood = monitorService.verifypassword(monitorRegistered.getEmail(), rawPassword);
+        assertThat(isPasswordGood.get()).isTrue();
+    }
+
+    @Test
+    public void testVerifyPasswordFails(){
+        when(monitorRepository.findMonitorByEmailIgnoreCase(any())).thenReturn(null);
+        Optional<Boolean> isPasswordGood = monitorService.verifypassword(monitorRegistered.getEmail(), "null");
+        assertThat(isPasswordGood).isEmpty();
+    }
+
+    @Test
     public void testLoginMonitorFails() {
         when(monitorRepository.findMonitorByEmailIgnoreCase(null)).thenReturn(null);
         Optional<Monitor> actualMonitor = monitorService.loginMonitor(null, null);

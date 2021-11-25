@@ -53,6 +53,19 @@ public class AdminControllerTest {
     }
 
     @Test
+    public void testVerifyPassword() throws Exception {
+        when(adminService.verifypassword(admin.getUsername(), admin.getPassword())).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/admin/verify-password/{username}/{password}", admin.getUsername(), admin.getPassword())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var isPasswordGood = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(isPasswordGood).isTrue();
+    }
+
+    @Test
     public void getAllAdminTest() throws Exception {
         List<Admin> adminList = getListOfAdmin();
         when(adminService.getAllAdmin()).thenReturn(Optional.of(adminList));

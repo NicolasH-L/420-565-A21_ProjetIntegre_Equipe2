@@ -50,6 +50,20 @@ public class AdminServiceTest {
     }
 
     @Test
+    public void testVerifyPassword() {
+        when(adminRepository.findAdminByUsername(admin.getUsername())).thenReturn(admin);
+        Optional<Boolean> isPasswordGood = adminService.verifypassword(admin.getUsername(), admin.getPassword());
+        assertThat(isPasswordGood.get()).isTrue();
+    }
+
+    @Test
+    public void testVerifyPasswordFails() {
+        when(adminRepository.findAdminByUsername(admin.getUsername())).thenReturn(null);
+        Optional<Boolean> isPasswordGood = adminService.verifypassword(admin.getUsername(), "null");
+        assertThat(isPasswordGood).isEmpty();
+    }
+
+    @Test
     public void testGetAllAdmin() {
         when(adminRepository.findAll()).thenReturn(getListOfAdmin());
         final Optional<List<Admin>> allAdmin = adminService.getAllAdmin();

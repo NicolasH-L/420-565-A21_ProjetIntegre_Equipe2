@@ -137,6 +137,19 @@ class MonitorControllerTest {
     }
 
     @Test
+    public void testVerifyPassword() throws Exception {
+        when(monitorService.verifypassword(monitor.getEmail(), rawPassword)).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/monitors/verify-password/{email}/{password}", monitor.getEmail(), rawPassword)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var isPasswordGood = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(isPasswordGood).isTrue();
+    }
+
+    @Test
     public void testGetAllMonitors() throws Exception {
         List<Monitor> monitorList = getListOfMonitors();
         when(monitorService.getAllMonitors()).thenReturn(Optional.of(monitorList));
