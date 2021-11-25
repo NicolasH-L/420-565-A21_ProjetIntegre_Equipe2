@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { RegexPattern } from './RegexPattern'
+import Swal from 'sweetalert2'
 
 const MonitorRegistration = ({ onAdd }) => {
     const [monitor, setMonitor] = useState({ lastName: "", firstName: "", password: "", companyName: "", telephoneNumber: "", email: "", actualSession: "" })
@@ -16,6 +17,33 @@ const MonitorRegistration = ({ onAdd }) => {
     const summerStart = 2
     const summerDeadLine = 5
 
+    const goToLogin = () => {
+        history.push("/Login")
+    }
+
+    const fireSwalBadEmail = () => {
+        Swal.fire({
+            title: 'Erreur!',
+            text: 'courriel existant',
+            icon: 'error',
+            position: 'top'
+        })
+    }
+
+    const fireSwalRegister = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Inscription réussie',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+        }).then(() => {
+            goToLogin()
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || 
@@ -28,8 +56,8 @@ const MonitorRegistration = ({ onAdd }) => {
             monitor.email = monitor.email.toLowerCase()
             setMonitorSession()
             onAdd(monitor)
-                .then((data) => data.email !== undefined ? history.push("/Login") : alert("Erreur! Email existant"))
-                .catch(() => alert("Erreur! Email existant"))
+                .then((data) => data.email !== undefined ? fireSwalRegister() : fireSwalBadEmail())
+                .catch(() => fireSwalBadEmail())
         }
 
         function setMonitorSession() {
