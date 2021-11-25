@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { Signature } from '../Constants/Signature'
+import Swal from 'sweetalert2'
 
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const history = useHistory()
@@ -19,6 +20,30 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const baseUrl = "http://localhost:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
+
+    const fireSwalBadName = () => {
+        Swal.fire({
+            title: "Veuillez inscrire votre nom au complet",
+            icon: 'info',
+            position: 'top',
+            toast: true,
+            timer: 2000,
+            showConfirmButton: false,
+            width: '400px',
+        })
+    }
+
+    const fireSwalBadPassword = () => {
+        Swal.fire({
+            title: "Veuillez entrer votre mot de passe correctement",
+            icon: 'warning',
+            position: 'top',
+            toast: true,
+            timer: 2000,
+            showConfirmButton: false,
+            width: '500px',
+        })
+    }
 
     useEffect(() => {
         if (contractState.signature === "" && contractState.userPassword === "") {
@@ -100,7 +125,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
 
         } else if (internship.status === Signature.getAdminSignatureStatus()) {
             if (contractState.adminSignature === "" || contractState.adminSignature === null) {
-                alert("Veuillez inscrire votre nom au complet")
+                fireSwalBadName()
                 return
             }
             contract.signatureDateAdmin = getToday()
@@ -123,20 +148,20 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         if (verifyStatus(contractProp.internship.status, signatureStatusList[0])) {
             verifyPwdStudent(contract.internship.student.matricule, contractState.password)
                 .then(data => data === true ? sign() : data === false ?
-                    alert("Veuillez entrer votre mot de passe correctement")
-                    : alert("Veuillez entrer votre mot de passe correctement"))
+                    fireSwalBadPassword()
+                    : fireSwalBadPassword())
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[1])) {
             verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
                 .then(data => data === true ? sign() : data === false ?
-                    alert("Veuillez entrer votre mot de passe correctement")
-                    : alert("Veuillez entrer votre mot de passe correctement"))
+                    fireSwalBadPassword()
+                    :fireSwalBadPassword())
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[2])) {
             verifyPwdAdmin(historyState.admin.username, contractState.password)
                 .then(data => data === true ? sign() : data === false ?
-                    alert("Veuillez entrer votre mot de passe correctement")
-                    : alert("Veuillez entrer votre mot de passe correctement"))
+                    fireSwalBadPassword()
+                    : fireSwalBadPassword())
         }
     }
 
