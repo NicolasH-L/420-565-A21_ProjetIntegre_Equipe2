@@ -27,4 +27,9 @@ public class Notification implements Serializable {
     @ManyToMany
     private List<Student> student;
 
+    @ManyToOne
+    private Admin admin;
+
+    @ManyToOne
+    private Monitor monitor;
 }

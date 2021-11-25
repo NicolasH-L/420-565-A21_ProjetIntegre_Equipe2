@@ -30,6 +30,7 @@ public class AdminServiceTest {
     @BeforeEach
     void setup(){
          admin = Admin.adminBuilder()
+                 .id(1)
                 .username("username")
                 .password("password")
                 .build();
@@ -81,10 +82,12 @@ public class AdminServiceTest {
     private List<Admin> getListOfAdmin(){
         List<Admin> adminList = new ArrayList<>();
         adminList.add(Admin.adminBuilder()
+                .id(1)
                 .username("admin")
                 .password("1234")
                 .build());
         adminList.add(Admin.adminBuilder()
+                .id(2)
                 .username("admin2")
                 .password("12345")
                 .build());

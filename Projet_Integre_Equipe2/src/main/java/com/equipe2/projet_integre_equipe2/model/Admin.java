@@ -20,7 +20,8 @@ public class Admin {
     private String actualSession;
 
     @Builder(builderMethodName = "adminBuilder")
-    public Admin(String username, String password, String actualSession) {
+    public Admin(Integer id, String username, String password, String actualSession) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.actualSession = actualSession;
