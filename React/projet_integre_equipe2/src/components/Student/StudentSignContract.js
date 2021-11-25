@@ -25,7 +25,7 @@ const StudentSignContract = () => {
 
         const getContract = async () => {
             await fetchContract()
-                .then((data) => data !== null ? validateContract(data) : setContract(null))
+                .then((data) => data !== null ? validateContract(data) : setContract())
         }
         getInternship()
         getContract()
@@ -41,7 +41,7 @@ const StudentSignContract = () => {
     }
 
     const validateContract = (contract) => {
-        contract.studentSignature === "" && contract.monitorSignature !== "" ? setContract(contract) : setContract(null)
+        contract.studentSignature === "" ? setContract(contract) : setContract(null)
     }
 
     const fetchContract = async () => {
