@@ -4,6 +4,7 @@ import AdminNavbar from './AdminNavbar'
 import { useHistory } from 'react-router-dom'
 import './ResponsiveTable.css'
 import './ResponsiveButtons.css'
+import Footer from './Footer'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
@@ -107,57 +108,61 @@ const AdminInternshipOfferList = () => {
     }
 
     return (
-        <div className="grad">
-            <AdminNavbar />
-            <h2 className="text-center">Offres de stage</h2>
-            <div className="p-5">
-                <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
-                    <thead>
-                        <tr>
-                            <th scope="col">Entreprise</th>
-                            <th scope="col">Poste</th>
-                            <th scope="col">Salaire</th>
-                            <th scope="col">Date d'affichage</th>
-                            <th scope="col">Validité</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {offers
-                            .filter(filterOffers)
-                            .map((offer) => (
-                                <tr key={offer.idOffer}>
-                                    <td data-title="Entreprise">{offer.companyName}</td>
-                                    <td data-title="Poste">{offer.jobTitle}</td>
-                                    <td data-title="Salaire">{offer.salary}$</td>
-                                    <td data-title="Date d'affichage">{offer.displayDate}</td>
-                                    <td data-title="Validité">
-                                        <h5>
-                                            <span className={`badge ${offer.valid ? 'badge-success' : offer.state === null ? 'badge-warning' : 'badge-danger'}`}>
-                                                {offer.state === null ? "En attente" : offer.state}
-                                            </span>
-                                        </h5>
-                                    </td>
-                                    <td className="responsiveWidth">
-                                        <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>
-                                            <span className="hideButtonText">Consulter</span>
-                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
-                                        </button>
-                                        <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>
-                                            <span className="hideButtonText">Publier</span>
-                                            <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
-                                        </button>
-                                        <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>
-                                            <span className="hideButtonText">Retirer</span>
-                                            <span className="hideButtonIcon"><i className="fas fa-times"></i></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+        <div>
+            <div className="grad">
+                <AdminNavbar />
+                <h2 className="text-center">Offres de stage</h2>
+                <div className="p-5">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
+                        <thead>
+                            <tr>
+                                <th scope="col">Entreprise</th>
+                                <th scope="col">Poste</th>
+                                <th scope="col">Salaire</th>
+                                <th scope="col">Date d'affichage</th>
+                                <th scope="col">Validité</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {offers
+                                .filter(filterOffers)
+                                .map((offer) => (
+                                    <tr key={offer.idOffer}>
+                                        <td data-title="Entreprise">{offer.companyName}</td>
+                                        <td data-title="Poste">{offer.jobTitle}</td>
+                                        <td data-title="Salaire">{offer.salary}$</td>
+                                        <td data-title="Date d'affichage">{offer.displayDate}</td>
+                                        <td data-title="Validité">
+                                            <h5>
+                                                <span className={`badge ${offer.valid ? 'badge-success' : offer.state === null ? 'badge-warning' : 'badge-danger'}`}>
+                                                    {offer.state === null ? "En attente" : offer.state}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td className="responsiveWidth">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>
+                                                <span className="hideButtonText">Consulter</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                            </button>
+                                            <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); acceptOffer(offer) }}>
+                                                <span className="hideButtonText">Publier</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                                            </button>
+                                            <button className="btn btn-danger mx-2" onClick={e => { e.preventDefault(); declineOffer(offer) }}>
+                                                <span className="hideButtonText">Retirer</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-times"></i></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <Footer></Footer>
         </div>
+
     )
 }
 

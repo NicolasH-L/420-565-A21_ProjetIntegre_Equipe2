@@ -7,6 +7,7 @@ import ContractModalView from '../Contract/ContractModalView'
 import DownloadContract from '../DownloadContract'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -142,6 +143,7 @@ const AdminContracts = () => {
                         : displayEmptyErrorMessage()}
                 </div>
             </div>
+            <Footer></Footer>
         </div>
 
     )

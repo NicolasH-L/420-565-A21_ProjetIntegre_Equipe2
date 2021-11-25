@@ -6,6 +6,7 @@ import EvaluationModalView from '../Evaluation/EvaluationModalView'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const MonitorEvaluateStudent = () => {
     const history = useHistory()
@@ -80,48 +81,52 @@ const MonitorEvaluateStudent = () => {
     }
 
     return (
-        <div className="grad">
-            <MonitorNavbar />
-            <h2 className="text-center">Mes Évaluations</h2>
-            <div className="container-fluid">
-                <div className="p-5 table-responsive">
-                    {isDisplayEvaluations() ?
-                        <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
-                            <thead>
-                                <tr className="text-center">
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Début du stage</th>
-                                    <th scope="col">Nom de l'étudiant</th>
-                                    <th scope="col">Statut</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contracts
-                                    .filter(bySession)
-                                    .map((contract) => (
-                                        <tr key={contract.idContract} className="text-center">
-                                            <td data-title="Position">{contract.internship.offer.jobTitle}</td>
-                                            <td data-title="Début stage">{contract.internship.offer.startInternshipDate}</td>
-                                            <td data-title="Nom étudiant">{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
-                                            <td data-title="Statut">
-                                                <h5>
-                                                    <span className={`badge ${isInternAlreadyEvaluated(contract) !== undefined ? "badge-success" : "badge-warning"}`}>
-                                                        {isInternAlreadyEvaluated(contract) !== undefined ? "Complétée" : "En attente"}
-                                                    </span>
-                                                </h5>
-                                            </td>
-                                            <td className="responsiveWidth">
-                                                {displayEvaluationButtons(contract)}
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        : displayEmptyErrorMessage()}
+        <div>
+            <div className="grad">
+                <MonitorNavbar />
+                <h2 className="text-center">Mes Évaluations</h2>
+                <div className="container-fluid">
+                    <div className="p-5 table-responsive">
+                        {isDisplayEvaluations() ?
+                            <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
+                                <thead>
+                                    <tr className="text-center">
+                                        <th scope="col">Position</th>
+                                        <th scope="col">Début du stage</th>
+                                        <th scope="col">Nom de l'étudiant</th>
+                                        <th scope="col">Statut</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {contracts
+                                        .filter(bySession)
+                                        .map((contract) => (
+                                            <tr key={contract.idContract} className="text-center">
+                                                <td data-title="Position">{contract.internship.offer.jobTitle}</td>
+                                                <td data-title="Début stage">{contract.internship.offer.startInternshipDate}</td>
+                                                <td data-title="Nom étudiant">{contract.internship.student.firstName + " " + contract.internship.student.lastName}</td>
+                                                <td data-title="Statut">
+                                                    <h5>
+                                                        <span className={`badge ${isInternAlreadyEvaluated(contract) !== undefined ? "badge-success" : "badge-warning"}`}>
+                                                            {isInternAlreadyEvaluated(contract) !== undefined ? "Complétée" : "En attente"}
+                                                        </span>
+                                                    </h5>
+                                                </td>
+                                                <td className="responsiveWidth">
+                                                    {displayEvaluationButtons(contract)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                            : displayEmptyErrorMessage()}
+                    </div>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
+
     )
 }
 

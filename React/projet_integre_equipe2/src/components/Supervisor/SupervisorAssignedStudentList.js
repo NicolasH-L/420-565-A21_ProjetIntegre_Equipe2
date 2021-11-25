@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const SupervisorAssignedStudentList = () => {
     const [interships, setInterships] = useState([])
@@ -75,6 +76,7 @@ const SupervisorAssignedStudentList = () => {
                     </table>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
     )
 }

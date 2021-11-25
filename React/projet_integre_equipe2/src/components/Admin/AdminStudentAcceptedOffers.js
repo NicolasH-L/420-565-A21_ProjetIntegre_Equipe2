@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import AdminNavbar from './../AdminNavbar'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
@@ -180,6 +181,7 @@ const AdminStudentAcceptedOffers = () => {
                     </table>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
     )
 }
