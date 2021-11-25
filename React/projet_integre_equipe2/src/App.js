@@ -33,6 +33,7 @@ import AdminContracts from './components/Admin/AdminContracts'
 import ErrorRoute from './components/ErrorRoute';
 import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
 import StudentContractList from './components/Student/StudentContractList'
+import HomePage from './components/Login/HomePage';
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
@@ -74,12 +75,19 @@ function App() {
       <Switch>
         <Route path="/" exact render={() => (
           <>
+            <HomePage />
+          </>
+        )} />
+        <Route path="/HomePage">
+          <Redirect to="/" />
+        </Route>
+
+        <Route path="/Login" exact render={() => (
+          <>
             <Login authGuardLogin={login} />
           </>
         )} />
-        <Route path="/Login">
-          <Redirect to="/" />
-        </Route>
+
         <Route path="/Registration" component={Registration} />
 
         <GuardedRoute path='/Admin' component={Admin} auth={isAdminAuthenticated} />
@@ -97,11 +105,11 @@ function App() {
         <GuardedRoute path="/MonitorOfferList" component={MonitorOfferList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorStudentList" component={MonitorStudentList} auth={isMonitorAuthenticated} />
         <GuardedRoute path="/MonitorContracts" component={MonitorContracts} auth={isMonitorAuthenticated} />
-        <GuardedRoute path="/MonitorEvaluateStudent" component={MonitorEvaluateStudent} auth={isMonitorAuthenticated}/>
+        <GuardedRoute path="/MonitorEvaluateStudent" component={MonitorEvaluateStudent} auth={isMonitorAuthenticated} />
 
         <GuardedRoute path='/Student' component={Student} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentUploadCV" component={StudentUploadCV} auth={isStudentAuthenticated} />
-        <GuardedRoute path="/StudentDocuments" component={StudentDocuments} auth={isStudentAuthenticated}/>
+        <GuardedRoute path="/StudentDocuments" component={StudentDocuments} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentInternshipListOffers" component={StudentInternshipListOffers} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentSignContract" component={StudentSignContract} auth={isStudentAuthenticated} />
         <GuardedRoute path="/StudentContractList" component={StudentContractList} auth={isStudentAuthenticated} />

@@ -1,0 +1,140 @@
+.col-svg-small {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    svg {
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+        margin-left: 1%;
+    }
+    
+    .home-title {
+        margin-left: 20%;
+        font-size: 250%;
+    }
+
+    .col-svg-hide {
+        display: none;
+    }
+
+    .col-svg-small {
+        display: inline-block;
+    }
+
+    .home-register-button {
+        margin-left: 30%;
+        margin-top: 15%;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 800px) {
+    svg {
+        width: 70%;
+        align-self: center;
+        justify-self: center;
+        margin-left: 15%;
+    }
+    
+    .home-title {
+        margin-left: 10%;
+        font-size: 250%;
+    }
+
+    .col-svg-hide {
+        display: none;
+    }
+
+    .col-svg-small {
+        display: inline-block;
+    }
+
+    .home-register-button {
+        margin-left: 40%;
+        margin-top: 15%;
+    }
+}
+
+@media only screen and (min-width: 801px) and (max-width: 1300px){
+    svg {
+        width: 70%;
+        align-self: center;
+        justify-self: center;
+        margin-left: 10%;
+    }
+
+    .home-title {
+        margin-left: 10%;
+        font-size: 250%;
+    }
+
+    .home-register-button {
+        margin-left: 40%;
+        margin-top: 15%;
+    }
+}
+
+@media only screen and (min-width: 1301px) and (max-width: 1500px){
+    svg {
+        width: 60%;
+        align-self: center;
+        justify-self: center;
+        margin-left: 10%;
+    }
+
+    .home-title {
+        margin-left: 20%;
+    }
+
+    .home-register-button {
+        margin-left: 40%;
+        margin-top: 15%;
+    }
+}
+
+@media only screen and (min-width: 1501px){
+    svg {
+        width: 60%;
+        align-self: center;
+        justify-self: center;
+        margin-left: 10%;
+    }
+
+    .home-title {
+        margin-left: 20%;
+    }
+
+    .home-register-button {
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+}
+
+#check {
+    animation: check-logo 2s  infinite alternate;
+    transform-origin: top;
+}
+
+#g89, #g75 {
+    animation: paper 2s ease-in-out infinite alternate;
+    transform-origin: bottom;
+}
+
+@keyframes check-logo {
+    from {
+        transform: rotateX(0deg);
+    }
+    to {
+        transform: rotateX(30deg);
+    }
+}
+
+@keyframes paper {
+    from {
+        transform: rotateX(0deg);
+    }
+    to {
+        transform: rotateX(20deg);
+    }
+}
