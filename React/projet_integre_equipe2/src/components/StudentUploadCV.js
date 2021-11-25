@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useHistory } from 'react-router-dom'
 import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
+import Footer from "./Footer"
 
 const StudentUploadCV = () => {
   const [uploadFile, setUploadFile] = useState()
@@ -21,7 +22,7 @@ const StudentUploadCV = () => {
 
   const submitForm = (event) => {
     let documentSession = ""
-    
+
     event.preventDefault()
 
     if (typeof (uploadFile) !== 'undefined' && typeof (historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
@@ -58,29 +59,33 @@ const StudentUploadCV = () => {
   }
 
   return (
-    <div className="grad">
-      <StudentNavbar useStudent={student} />
-      <div className="d-flex justify-content-center">
-        <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
-          <form className="container-fluid" onSubmit={submitForm}>
-            <h1 className="text-center text-secondary">Téléverser CV</h1>
-            <div className="form-group">
-              <label htmlFor="fileName" className="text-secondary"><i className="fas fa-file-pdf"></i> Nom du fichier :</label>
-              <input type='text' className="form-control form-control-lg" id="fileName" name="fileName" onChange={(e) => setUploadFileName(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <div className="custom-file">
-                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
-                <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
+    <div>
+      <div className="grad">
+        <StudentNavbar useStudent={student} />
+        <div className="d-flex justify-content-center">
+          <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+            <form className="container-fluid" onSubmit={submitForm}>
+              <h1 className="text-center text-secondary">Téléverser CV</h1>
+              <div className="form-group">
+                <label htmlFor="fileName" className="text-secondary"><i className="fas fa-file-pdf"></i> Nom du fichier :</label>
+                <input type='text' className="form-control form-control-lg" id="fileName" name="fileName" onChange={(e) => setUploadFileName(e.target.value)} />
               </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-block btn-primary text-white ">Envoyer</button>
-            </div>
-          </form>
+              <div className="form-group">
+                <div className="custom-file">
+                  <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
+                  <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
+                </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-block btn-primary text-white ">Envoyer</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
+
   )
 }
 export default StudentUploadCV
