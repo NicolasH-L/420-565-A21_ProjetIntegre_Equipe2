@@ -1,11 +1,21 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { Signature } from '../Constants/Signature'
 
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
+    const history = useHistory()
+    const historyState = history.location.state
+    const typeNotification = "Signature"
+    const message = "Veuillez signer le contrat disponible"
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: message, session: ""
+    })
+    let hasStudentSigned = false
+    let hasMonitorSigned = false
     const baseUrl = "http://localhost:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
@@ -21,9 +31,10 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     }, [])
 
     useEffect(() => {
-        if (contractState.password !== "" && contractState.signature !== ""){
+        if (contractState.password !== "" && contractState.signature !== "") {
             window.location.reload(true)
         }
+
     }, [contractState.signature, contractState.adminSignature])
 
     const updateContract = async (contract) => {
@@ -50,43 +61,107 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         return await result.json()
     }
 
+    const verifyPwdStudent = async (matricule, pwd) => {
+        const res = await fetch(`http://localhost:8888/students/verify-password/${matricule}/${pwd}`)
+        return await res.json()
+    }
+
+    const verifyPwdMonitor = async (email, pwd) => {
+        const res = await fetch(`http://localhost:8888/monitors/verify-password/${email}/${pwd}`)
+        return await res.json()
+    }
+
+    const verifyPwdAdmin = async (username, pwd) => {
+        const res = await fetch(`http://localhost:8888/admin/verify-password/${username}/${pwd}`)
+        return await res.json()
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if (validateInput()) {
-            updateContract(contract)
+        validateInput()
+    }
+
+    const verifyStatus = (actualStatus, expectedStatus) => {
+        return currentStatus === actualStatus && currentStatus === expectedStatus
+    }
+
+    const sign = () => {
+        if (internship.status === Signature.getStudentSignatureStatus()) {
+            contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
+            contract.signatureDateStudent = getToday()
+            contractState.signature = contract.studentSignature
+            hasStudentSigned = true
+
+        } else if (internship.status === Signature.getMonitorSignatureStatus()) {
+            contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
+            contract.signatureDateMonitor = getToday()
+            contractState.signature = contract.monitorSignature
+            hasMonitorSigned = true
+
+        } else if (internship.status === Signature.getAdminSignatureStatus()) {
+            if (contractState.adminSignature === "" || contractState.adminSignature === null) {
+                alert("Veuillez inscrire votre nom au complet")
+                return
+            }
+            contract.signatureDateAdmin = getToday()
+            contract.adminSignature = contractState.adminSignature
+            contractState.signature = contract.adminSignature
         }
+        updateStatus()
+        updateInternship()
+        setContractState({ ...contractState, isDisabled: true })
+        updateContract(contract)
+        notification.session = contract.session
+        if (hasStudentSigned) {
+            createNotificationForMonitor(notification, contract.internship.offer.monitor.id)
+        } else if (hasMonitorSigned)
+            createNotificationForAdmin(notification, contract.internship.offer.monitor.id)
     }
 
     const validateInput = () => {
-        let isValid = false
-        if (contractState.password === contractState.userPassword) {
-            if (internship.status === Signature.getStudentSignatureStatus()) {
-                contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
-                contract.signatureDateStudent = getToday()
-                contractState.signature = contract.studentSignature
 
-            } else if (internship.status === Signature.getMonitorSignatureStatus()) {
-                contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
-                contract.signatureDateMonitor = getToday()
-                contractState.signature = contract.monitorSignature
-
-            } else if (internship.status === Signature.getAdminSignatureStatus()) {
-                if (contractState.adminSignature === "" || contractState.adminSignature === null) {
-                    alert("Veuillez inscrire votre nom au complet")
-                    return isValid
-                }
-                contract.signatureDateAdmin = getToday()
-                contract.adminSignature = contractState.adminSignature
-                contractState.signature = contract.adminSignature 
-            }
-            updateStatus()
-            updateInternship()
-            setContractState({ ...contractState, isDisabled: true })
-            isValid = true
-        } else {
-            alert("Veuillez entrer votre mot de passe correctement")
+        if (verifyStatus(contractProp.internship.status, signatureStatusList[0])) {
+            verifyPwdStudent(contract.internship.student.matricule, contractState.password)
+                .then(data => data === true ? sign() : data === false ?
+                    alert("Veuillez entrer votre mot de passe correctement")
+                    : alert("Veuillez entrer votre mot de passe correctement"))
         }
-        return isValid
+        else if (verifyStatus(contractProp.internship.status, signatureStatusList[1])) {
+            verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
+                .then(data => data === true ? sign() : data === false ?
+                    alert("Veuillez entrer votre mot de passe correctement")
+                    : alert("Veuillez entrer votre mot de passe correctement"))
+        }
+        else if (verifyStatus(contractProp.internship.status, signatureStatusList[2])) {
+            verifyPwdAdmin(historyState.admin.username, contractState.password)
+                .then(data => data === true ? sign() : data === false ?
+                    alert("Veuillez entrer votre mot de passe correctement")
+                    : alert("Veuillez entrer votre mot de passe correctement"))
+        }
+    }
+
+    const createNotificationForMonitor = async (notification, monitorId) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${monitorId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
+    }
+
+    const createNotificationForAdmin = async (notification) => {
+        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const updateStatus = () => {

@@ -84,6 +84,4 @@ public class EvaluationControllerTest {
                 .build());
         return evaluationList;
     }
-
-
 }

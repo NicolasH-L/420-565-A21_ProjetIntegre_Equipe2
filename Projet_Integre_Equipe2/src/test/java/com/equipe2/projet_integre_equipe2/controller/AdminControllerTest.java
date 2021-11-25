@@ -36,6 +36,7 @@ public class AdminControllerTest {
     @BeforeEach
     void setup(){
         admin = Admin.adminBuilder()
+                .id(1)
                 .username("username")
                 .password("password")
                 .build();
@@ -50,6 +51,19 @@ public class AdminControllerTest {
         var actualAdmin = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Admin.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actualAdmin).isEqualTo(admin);
+    }
+
+    @Test
+    public void testVerifyPassword() throws Exception {
+        when(adminService.verifypassword(admin.getUsername(), admin.getPassword())).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/admin/verify-password/{username}/{password}", admin.getUsername(), admin.getPassword())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var isPasswordGood = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(isPasswordGood).isTrue();
     }
 
     @Test
@@ -69,10 +83,12 @@ public class AdminControllerTest {
     private List<Admin> getListOfAdmin(){
         List<Admin> adminList = new ArrayList<>();
         adminList.add(Admin.adminBuilder()
+                .id(1)
                 .username("admin")
                 .password("1234")
                 .build());
         adminList.add(Admin.adminBuilder()
+                .id(2)
                 .username("admin2")
                 .password("12345")
                 .build());

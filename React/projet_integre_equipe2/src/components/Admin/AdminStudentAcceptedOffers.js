@@ -87,6 +87,7 @@ const AdminStudentAcceptedOffers = () => {
         const data = await res.json()
         alert("Processus de signature commencé")
         createNotificationStudent(internship, notification)
+        return data
     }
 
     const createNotificationStudent = async (internship, notification) => {

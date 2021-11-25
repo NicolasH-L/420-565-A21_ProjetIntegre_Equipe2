@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import SessionsButton from './SessionsButton'
+import AdminNotifications from './Admin/AdminNotifications'
 
 const AdminNavbar = () => {
     const history = useHistory()
@@ -78,6 +79,9 @@ const AdminNavbar = () => {
                                 <a className="nav-link btn btn-light" onClick={() => goToAdminContracts()}>Mes contrats</a>
                             </li>
                             <SessionsButton />
+                            <div className="mx-3 mt-1"> 
+                                <AdminNotifications adminState={historyState} />
+                            </div>
                         </ul>
                     <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>

@@ -1,6 +1,7 @@
 package com.equipe2.projet_integre_equipe2.controller;
 
 import com.equipe2.projet_integre_equipe2.model.Supervisor;
+import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.SupervisorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,42 +35,55 @@ public class SupervisorControllerTest {
     private SupervisorService supervisorService;
 
     private Supervisor supervisor;
+    private Supervisor supervisorRegistered;
+    private PasswordService passwordService;
+    private String rawPassword = "toto1!";
 
     @BeforeEach
     void setup() {
+        passwordService = new PasswordService();
+        String encodedPassword = passwordService.encodePassword(rawPassword);
         supervisor = Supervisor.supervisorBuilder()
                 .id(1)
                 .firstName("toto")
                 .lastName("toto")
                 .matricule("1234567")
-                .password("toto1!")
+                .password(rawPassword)
+                .build();
+
+        supervisorRegistered = Supervisor.supervisorBuilder()
+                .id(1)
+                .firstName("toto")
+                .lastName("toto")
+                .matricule("1234567")
+                .password(encodedPassword)
                 .build();
     }
 
     @Test
     public void subscribeSupervisorTest() throws Exception {
-        when(supervisorService.registerSupervisor(supervisor)).thenReturn(Optional.of(supervisor));
+        when(supervisorService.registerSupervisor(supervisor)).thenReturn(Optional.of(supervisorRegistered));
 
         MvcResult result = mockMvc.perform(post("/supervisors/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(supervisor))).andReturn();
+                .content(new ObjectMapper().writeValueAsString(supervisorRegistered))).andReturn();
 
         var actualSupervisor = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(supervisor).isEqualTo(actualSupervisor);
+        assertThat(actualSupervisor).isEqualTo(supervisorRegistered);
     }
 
     @Test
     public void loginSupervisorTest() throws Exception {
-        when(supervisorService.loginSupervisor(supervisor.getMatricule(), supervisor.getPassword())).thenReturn(Optional.of(supervisor));
+        when(supervisorService.loginSupervisor(supervisor.getMatricule(), supervisor.getPassword())).thenReturn(Optional.of(supervisorRegistered));
 
-        MvcResult result = mockMvc.perform(get("/supervisors/1234567/toto1!")
+        MvcResult result = mockMvc.perform(get("/supervisors/{matricule}/{password}", supervisor.getMatricule(), supervisor.getPassword())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Supervisor.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actualStudent).isEqualTo(supervisor);
+        assertThat(actualStudent).isEqualTo(supervisorRegistered);
     }
 
     @Test

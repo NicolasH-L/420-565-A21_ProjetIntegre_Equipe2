@@ -30,4 +30,11 @@ public class AdminController {
                 .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/verify-password/{username}/{pwd}")
+    public ResponseEntity<Boolean> verifyPassword(@PathVariable String username, @PathVariable String pwd) {
+        return adminService.verifypassword(username, pwd)
+                .map(admin1 -> ResponseEntity.status(HttpStatus.OK).body(admin1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

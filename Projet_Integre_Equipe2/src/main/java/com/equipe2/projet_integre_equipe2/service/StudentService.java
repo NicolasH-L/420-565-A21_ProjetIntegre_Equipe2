@@ -2,6 +2,10 @@ package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
+import com.equipe2.projet_integre_equipe2.security.PasswordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +16,27 @@ public class StudentService {
 
     public StudentRepository studentRepository;
 
+    private PasswordService passwordService;
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+        this.passwordService = new PasswordService();
     }
 
     public Optional<Student> registerStudent(Student student) {
         try {
+            if(student.getPassword().length() <= 16 )
+                student.setPassword(passwordService.encodePassword(student.getPassword()));
             return Optional.of(studentRepository.save(student));
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Boolean> verifypassword(String matricule, String pwd) {
+        try {
+            Student student = studentRepository.findByMatricule(matricule);
+            return Optional.of(passwordService.matchPassword(pwd, student.getPassword()));
         } catch (Exception exception) {
             return Optional.empty();
         }
@@ -26,7 +44,8 @@ public class StudentService {
 
     public Optional<Student> loginStudent(String matricule, String password) {
         try {
-            return Optional.of(studentRepository.findByMatriculeAndPassword(matricule, password));
+            Student student = studentRepository.findByMatricule(matricule);
+            return passwordService.matchPassword(password, student.getPassword()) ? Optional.of(student) : Optional.empty();
         } catch (Exception exception) {
             return Optional.empty();
         }

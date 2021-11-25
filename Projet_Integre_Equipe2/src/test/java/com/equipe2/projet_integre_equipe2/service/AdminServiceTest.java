@@ -30,6 +30,7 @@ public class AdminServiceTest {
     @BeforeEach
     void setup(){
          admin = Admin.adminBuilder()
+                 .id(1)
                 .username("username")
                 .password("password")
                 .build();
@@ -47,6 +48,20 @@ public class AdminServiceTest {
         when(adminRepository.findAdminByUsernameAndPassword("", "")).thenReturn(null);
         Optional<Admin> actualAdmin = adminService.login("", "");
         assertThat(actualAdmin).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void testVerifyPassword() {
+        when(adminRepository.findAdminByUsername(admin.getUsername())).thenReturn(admin);
+        Optional<Boolean> isPasswordGood = adminService.verifypassword(admin.getUsername(), admin.getPassword());
+        assertThat(isPasswordGood.get()).isTrue();
+    }
+
+    @Test
+    public void testVerifyPasswordFails() {
+        when(adminRepository.findAdminByUsername(admin.getUsername())).thenReturn(null);
+        Optional<Boolean> isPasswordGood = adminService.verifypassword(admin.getUsername(), "null");
+        assertThat(isPasswordGood).isEmpty();
     }
 
     @Test
@@ -81,10 +96,12 @@ public class AdminServiceTest {
     private List<Admin> getListOfAdmin(){
         List<Admin> adminList = new ArrayList<>();
         adminList.add(Admin.adminBuilder()
+                .id(1)
                 .username("admin")
                 .password("1234")
                 .build());
         adminList.add(Admin.adminBuilder()
+                .id(2)
                 .username("admin2")
                 .password("12345")
                 .build());
