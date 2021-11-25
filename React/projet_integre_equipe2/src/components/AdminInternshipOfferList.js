@@ -7,14 +7,14 @@ import './ResponsiveButtons.css'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
-    const message = "Nouvelle offre de stage disponible"
     const history = useHistory()
     const admin = history.location.state.admin
 
     const [offers, setOffers] = useState([])
     const [notification, setNotification] = useState({
-        typeNotification: typeNotification, message: message, session: admin.actualSession
+        typeNotification: typeNotification, message: "", session: admin.actualSession
     })
+    let message = ""
 
     useEffect(() => {
         const getOffers = async () => {
@@ -45,11 +45,28 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
+        message = "Nouvelle offre de stage disponible"
+        notification.message = message
         createNotificationStudent(notification)
+        message = "Une offre deposée est acceptée"
+        notification.message = message
+        createNotificationForMoniteur(notification, offer)
     }
 
     const createNotificationStudent = async (notification) => {
         const result = await fetch(`http://localhost:8888/notification/save-notification/`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
+    }
+
+    const createNotificationForMoniteur = async (notification, offer) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${offer.monitor.id}`,
             {
                 method: 'POST',
                 headers: {
@@ -76,6 +93,9 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
+        message = "Une offre de stage a été refusé"
+        notification.message = message
+        createNotificationForMoniteur(notification, offer)
     }
 
     const viewOffer = async (offer) => {

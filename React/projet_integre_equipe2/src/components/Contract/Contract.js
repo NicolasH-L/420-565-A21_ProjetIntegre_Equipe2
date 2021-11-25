@@ -6,9 +6,16 @@ import { Signature } from '../Constants/Signature'
 const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     const history = useHistory()
     const historyState = history.location.state
+    const typeNotification = "Signature"
+    const message = "Veuillez signer le contrat disponible"
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
     const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
+    const [notification, setNotification] = useState({
+        typeNotification: typeNotification, message: message, session: ""
+    })
+    let hasStudentSigned = false
+    let hasMonitorSigned = false
     const baseUrl = "http://localhost:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
@@ -83,11 +90,13 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
             contract.studentSignature = internship.student.firstName + " " + internship.student.lastName
             contract.signatureDateStudent = getToday()
             contractState.signature = contract.studentSignature
+            hasStudentSigned = true
 
         } else if (internship.status === Signature.getMonitorSignatureStatus()) {
             contract.monitorSignature = internship.offer.monitor.firstName + " " + internship.offer.monitor.lastName
             contract.signatureDateMonitor = getToday()
             contractState.signature = contract.monitorSignature
+            hasMonitorSigned = true
 
         } else if (internship.status === Signature.getAdminSignatureStatus()) {
             if (contractState.adminSignature === "" || contractState.adminSignature === null) {
@@ -102,6 +111,11 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         updateInternship()
         setContractState({ ...contractState, isDisabled: true })
         updateContract(contract)
+        notification.session = contract.session
+        if (hasStudentSigned) {
+            createNotificationForMonitor(notification, contract.internship.offer.monitor.id)
+        } else if (hasMonitorSigned)
+            createNotificationForAdmin(notification, contract.internship.offer.monitor.id)
     }
 
     const validateInput = () => {
@@ -119,13 +133,35 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
                     : alert("Veuillez entrer votre mot de passe correctement"))
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[2])) {
-                verifyPwdAdmin(historyState.admin.username, contractState.password)
-                    .then(data => data === true ? sign() : data === false ?
-                        alert("Veuillez entrer votre mot de passe correctement")
-                        : alert("Veuillez entrer votre mot de passe correctement"))
+            verifyPwdAdmin(historyState.admin.username, contractState.password)
+                .then(data => data === true ? sign() : data === false ?
+                    alert("Veuillez entrer votre mot de passe correctement")
+                    : alert("Veuillez entrer votre mot de passe correctement"))
         }
+    }
 
+    const createNotificationForMonitor = async (notification, monitorId) => {
+        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${monitorId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
+    }
 
+    const createNotificationForAdmin = async (notification) => {
+        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(notification)
+            })
+        return await result.json()
     }
 
     const updateStatus = () => {

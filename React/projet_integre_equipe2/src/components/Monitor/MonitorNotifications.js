@@ -2,32 +2,32 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { Notification } from '../Notification/Notification'
 
-const StudentNotifications = ({studentState}) => {
+const MonitorNotifications = ({monitorState}) => {
     const baseUrl = "http://localhost:8888"
     const [notificationList, setNotificationList] = useState([])
-    const user = "Student"
+    const user = "Monitor"
 
     useEffect(() => {
         getNotifications()
     }, [notificationList.length])
 
     const getNotifications = async () => {
-        const notificationFromServer = await fetchNotificationStudent(studentState.student.id)
+        const notificationFromServer = await fetchNotificationMonitor(monitorState.monitor.id)
         setNotificationList(notificationFromServer)
     }
 
-    const fetchNotificationStudent = async (studentId) => {
-        const res = await fetch(`${baseUrl}/notification/get-notification-student/${studentId}`)
+    const fetchNotificationMonitor = async (monitorId) => {
+        const res = await fetch(`${baseUrl}/notification/get-notification-monitor/${monitorId}`)
         return await res.json()
     }
     
     return (
         <div>
             {notificationList !== undefined ?
-                <Notification notificationList={notificationList} userProp={studentState.student} userSession={studentState.student.actualSession} user={user}/>
+                <Notification notificationList={notificationList} userProp={monitorState.monitor} userSession={monitorState.monitor.actualSession} user={user}/>
             : ""}
         </div>
     )
 }
 
-export default StudentNotifications
+export default MonitorNotifications

@@ -1,6 +1,7 @@
 import { useHistory, Link } from "react-router-dom"
 import React from 'react'
 import SessionsButton from "./SessionsButton"
+import MonitorNotifications from "./Monitor/MonitorNotifications"
 
 const MonitorNavbar = () => {
     let history = useHistory()
@@ -56,6 +57,9 @@ const MonitorNavbar = () => {
                             <button className="nav-link btn btn-light" type="button" onClick={goToEvaluateStudent}>Évaluation de stagiaire</button>
                         </li>
                         <SessionsButton />
+                        <div className="mx-3 mt-1"> 
+                            <MonitorNotifications monitorState={historyState} />
+                        </div>
                     </ul>
                     <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>

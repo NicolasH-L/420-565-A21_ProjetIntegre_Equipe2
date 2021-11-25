@@ -24,9 +24,9 @@ public class ContractController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Contract()));
     }
 
-    @GetMapping("/get-contract/{id}")
-    public ResponseEntity<Contract> getContractByStudentId(@PathVariable Integer id) {
-        return contractService.getContractByStudentId(id)
+    @GetMapping("/get-contract/{id}/session/{session}")
+    public ResponseEntity<Contract> getContractByStudentIdAndSession(@PathVariable Integer id, @PathVariable String session) {
+        return contractService.getContractByStudentIdAndSession(id, session)
                 .map(contracts1 -> ResponseEntity.status(HttpStatus.OK).body(contracts1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
@@ -48,6 +48,13 @@ public class ContractController {
     @GetMapping("/get-all-by-monitor/{id}/status/{status}")
     public ResponseEntity<List<Contract>> getAllContractsByMonitorIdAndStatus(@PathVariable Integer id, @PathVariable String status) {
         return contractService.getAllContractsByMonitorIdAndStatus(id, status)
+                .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-all-by-student/{id}")
+    public ResponseEntity<List<Contract>> getAllContractsByStudentId(@PathVariable Integer id){
+        return contractService.getAllStudentContractsByStudentId(id)
                 .map(contract1 -> ResponseEntity.status(HttpStatus.OK).body(contract1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

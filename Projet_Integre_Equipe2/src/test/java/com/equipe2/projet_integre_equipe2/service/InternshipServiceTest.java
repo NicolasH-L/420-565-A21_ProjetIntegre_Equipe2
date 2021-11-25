@@ -38,8 +38,12 @@ public class InternshipServiceTest {
 
     private Supervisor supervisor;
 
+    private String session;
+
     @BeforeEach
     void setup() {
+        session = "winter2022";
+
         internship = Internship.builder()
                 .offer(null)
                 .student(null)
@@ -77,6 +81,7 @@ public class InternshipServiceTest {
         internship2 = Internship.builder()
                 .offer(offer)
                 .student(student)
+                .session(session)
                 .status(null)
                 .build();
 
@@ -91,21 +96,21 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void testSaveInternship(){
+    public void testSaveInternship() {
         when(internshipRepository.save(internship)).thenReturn(internship);
         Optional<Internship> actualInternship = internshipService.saveInternship(internship);
         assertThat(actualInternship.get()).isEqualTo(internship);
     }
 
     @Test
-    public void testSaveInternshipFails(){
+    public void testSaveInternshipFails() {
         when(internshipRepository.save(internship)).thenReturn(null);
         Optional<Internship> actualInternship = internshipService.saveInternship(internship);
         assertThat(actualInternship).isEmpty();
     }
 
     @Test
-    public void testGetListofIntershipsBySupervisorId(){
+    public void testGetListofIntershipsBySupervisorId() {
         when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(getListOfInternships());
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships.get().size()).isEqualTo(3);
@@ -113,7 +118,7 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void testGetListofIntershipsBySupervisorIdFails(){
+    public void testGetListofIntershipsBySupervisorIdFails() {
         when(internshipRepository.findInternshipsBySupervisor_Id(supervisor.getId())).thenReturn(null);
         final Optional<List<Internship>> allInternships = internshipService.getAllInternshipBySupervisorId(supervisor.getId());
         assertThat(allInternships).isEqualTo(Optional.empty());
@@ -135,16 +140,16 @@ public class InternshipServiceTest {
     }
 
     @Test
-    public void testGetInternshipByStudentId() {
-        when(internshipRepository.findInternshipByStudent_Id(student.getId())).thenReturn(internship2);
-        Optional<Internship> actualInternship = internshipService.getInternshipByStudentId(student.getId());
+    public void testGetInternshipByStudentIdAndSession() {
+        when(internshipRepository.findInternshipByStudent_IdAndSession(student.getId(), session)).thenReturn(internship2);
+        Optional<Internship> actualInternship = internshipService.getInternshipByStudentIdAndSession(student.getId(), session);
         assertThat(actualInternship.get()).isEqualTo(internship2);
     }
 
     @Test
-    public void testGetInternshipByStudentIdFails() {
-        when(internshipRepository.findInternshipByStudent_Id(student.getId())).thenReturn(null);
-        Optional<Internship> actualInternship = internshipService.getInternshipByStudentId(student.getId());
+    public void testGetInternshipByStudentIdSessionFails() {
+        when(internshipRepository.findInternshipByStudent_IdAndSession(student.getId(), session)).thenReturn(null);
+        Optional<Internship> actualInternship = internshipService.getInternshipByStudentIdAndSession(student.getId(), session);
         assertThat(actualInternship).isEmpty();
     }
 

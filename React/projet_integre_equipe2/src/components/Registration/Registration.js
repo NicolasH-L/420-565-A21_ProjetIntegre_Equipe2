@@ -46,7 +46,7 @@ const Registration = () => {
     <div className="grad">
       <NavbarRegistrationLogin />
       <div className="d-flex justify-content-center ">
-        <div className="jumbotron jumbotron-fluid bg-light w-50 rounded shadow reactivescreen">
+        <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
           <h2 className="text-center text-secondary">Inscription</h2>
           <ul className="nav nav-tabs justify-content-center mb-3" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">

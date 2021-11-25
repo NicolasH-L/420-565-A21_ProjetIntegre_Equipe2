@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import './Form.css'
 
 const AdminStats = () => {
     const [students, setStudents] = useState([])
@@ -81,7 +82,7 @@ const AdminStats = () => {
         <div>
             <h2 className="text-center mb-5">Bonjour {admin.username}</h2>
             <div className="d-flex justify-content-center">
-                <div className="jumbotron jumbotron-fluid bg-light rounded w-50 shadow reactivescreen">
+                <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
                     <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>
                     <div className="container-fluid">
                         <ul className="list-group">
