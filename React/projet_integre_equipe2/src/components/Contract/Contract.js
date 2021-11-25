@@ -21,8 +21,6 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
         setInternship(contractProp.internship)
         setContract(contractProp)
         setContractState({ ...contractState, isDisabled: currentStatus !== contractProp.internship.status })
-        console.log(currentStatus)
-        console.log(contractProp.internship.status)
     }, [])
 
     useEffect(() => {
