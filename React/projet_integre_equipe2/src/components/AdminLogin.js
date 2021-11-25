@@ -2,11 +2,24 @@ import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const AdminLogin = ({ onLogin, authLogin }) => {
     const [admin, setAdmin] = useState({username: "", password: ""})
     const [error, setError] = useState({credentials:""})
     const history = useHistory()
+
+    const fireSwalError = () => {
+        Swal.fire({
+            title: 'Nom d\'utilisateur ou mot de passe incorrect',
+            icon: 'error',
+            position: 'top',
+            toast: true,
+            timer: 1500,
+            showConfirmButton: false,
+            width: '480px'
+        })
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -15,7 +28,7 @@ const AdminLogin = ({ onLogin, authLogin }) => {
             return
         } else {
             onLogin(admin.username, admin.password) 
-                .then((data) => data.username != null ? signIn(data) : alert("Nom d'utilisateur ou mot de passe incorrect"))
+                .then((data) => data.username != null ? signIn(data) : fireSwalError())
         }
 
         function signIn(admin){

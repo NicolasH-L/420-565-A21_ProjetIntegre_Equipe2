@@ -2,11 +2,24 @@ import _ from 'lodash'
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router'
+import Swal from 'sweetalert2'
 
 const MonitorLogin = ({ onLogin, authLogin }) => {
     const [monitor, setMonitor] = useState({ password: "", email: "" })
     const [error, setError] = useState({ credentials: "" })
     const history = useHistory()
+
+    const fireSwalError = () => {
+        Swal.fire({
+            title: 'courriel ou mot de passe incorrect',
+            icon: 'error',
+            position: 'top',
+            toast: true,
+            timer: 1500,
+            showConfirmButton: false,
+            width: '400px'
+        })
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -16,7 +29,7 @@ const MonitorLogin = ({ onLogin, authLogin }) => {
         } else {
             monitor.email = monitor.email.toLowerCase()
             onLogin(monitor.email, monitor.password)
-                .then((data) => data.email != null ? signIn(data) : alert("Email ou mot de passe incorrect"))
+                .then((data) => data.email != null ? signIn(data) : fireSwalError())
         }
 
         function signIn(monitor){
