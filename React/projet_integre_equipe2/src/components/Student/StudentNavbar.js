@@ -87,7 +87,7 @@ const StudentNavbar = ({ useStudent }) => {
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-sm btn-light" type="button" onClick={() => goToMyDocuments()}>Portfolio</button>
                         </li>
-                        <li className="dropdown mt-1 show ml-2 mr-3 nav-item">
+                        <li className="dropdown mt-1 ml-2 mr-3 ">
                             <button className="btn btn-light btn-sm dropdown-toggle" id="contractsDropDown" data-toggle="dropdown" aria-expanded="false">
                                 Contrats
                             </button>
