@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { useHistory, Link } from "react-router-dom"
-import { useState } from 'react'
-import SessionsButton from "./SessionsButton"
-import StudentNotifications from './Student/StudentNotifications'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from "react-router-dom"
+import SessionsButton from "../SessionsButton"
+import StudentNotifications from './StudentNotifications'
 import Swal from 'sweetalert2'
 
 const StudentNavbar = ({ useStudent }) => {

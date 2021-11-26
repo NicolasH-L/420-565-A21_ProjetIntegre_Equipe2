@@ -1,6 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import SupervisorNavbar from './Supervisor/SupervisorNavbar'
+import SupervisorNavbar from './SupervisorNavbar'
 
 const Supervisor = () => {
     return (

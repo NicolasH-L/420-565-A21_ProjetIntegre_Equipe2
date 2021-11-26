@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import ContractModalView from '../Contract/ContractModalView'
 import DownloadContract from '../DownloadContract'
 import Footer from '../Footer'
-import StudentNavbar from '../StudentNavbar'
+import StudentNavbar from './StudentNavbar'
 
 const StudentContractList = () => {
     const history = useHistory()

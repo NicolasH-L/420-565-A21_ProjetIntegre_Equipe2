@@ -1,12 +1,11 @@
 import axios from "axios"
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash'
 import { useHistory } from 'react-router-dom'
 import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
-import Footer from "./Footer"
-import './Form.css'
+import Footer from "../Footer"
+import '../Form.css'
 import Swal from 'sweetalert2'
 
 const StudentUploadCV = () => {

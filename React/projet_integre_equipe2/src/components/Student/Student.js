@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import StudentNavbar from './StudentNavbar'
-import StudentStatus from './Student/StudentStatus'
-import Footer from './Footer'
+import StudentStatus from './StudentStatus'
+import Footer from '../Footer'
 
 const Student = () => {
     const history = useHistory()

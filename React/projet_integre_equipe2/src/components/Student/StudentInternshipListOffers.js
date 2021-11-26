@@ -1,12 +1,11 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import StudentNavbar from './StudentNavbar'
-import OfferModalView from './OfferModalView'
+import OfferModalView from '../OfferModalView'
 import { useHistory } from 'react-router'
-import './ResponsiveTable.css'
-import './ResponsiveButtons.css'
-import StudentApplyToOffer from './Student/StudentApplyToOffer'
-import Footer from './Footer'
+import '../ResponsiveTable.css'
+import '../ResponsiveButtons.css'
+import StudentApplyToOffer from './StudentApplyToOffer'
+import Footer from '../Footer'
 
 const StudentInternshipListOffers = () => {
     const [offers, setOffers] = useState([])

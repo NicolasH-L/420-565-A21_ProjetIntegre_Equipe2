@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import StudentAppliedOffersList from '../Student/StudentAppliedOffersList'
+import StudentAppliedOffersList from './StudentAppliedOffersList'
 
 const StudentInterviewDateStatus = ({onAddStudent}) => {
     const history = useHistory()

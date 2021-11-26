@@ -1,6 +1,5 @@
-import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
 const StudentInternshipFoundStatus = ({ onAddStudent }) => {
