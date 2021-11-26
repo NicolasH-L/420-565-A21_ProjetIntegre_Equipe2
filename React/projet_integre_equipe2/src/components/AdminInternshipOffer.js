@@ -5,6 +5,7 @@ import AdminNavbar from './AdminNavbar'
 import './Form.css'
 import { RegexPattern } from './RegexPattern'
 import './Form.css'
+import Swal from 'sweetalert2'
 
 const AdminInternshipOffer = () => {
     const [offer, setOffer] = useState({
@@ -23,7 +24,7 @@ const AdminInternshipOffer = () => {
     const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    
+
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8
@@ -36,6 +37,42 @@ const AdminInternshipOffer = () => {
         futureDate.setDate(futureDate.getDate() + 220)
         let futureDateFormat = futureDate.toISOString().split('T')[0]
         return futureDateFormat
+    }
+
+    const fireSwalOfferSuccess = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Offre de stage ajoutée avec succès',
+            showConfirmButton: false,
+            timer: 2000,
+            width: '400px'
+        })
+    }
+
+    const fireSwalError = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'error',
+            title: "Impossible de créer l'offre, veuillez réessayer!",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+    }
+
+    const fireSwalBadFields = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'warning',
+            title: "Veuillez remplir tous les champs correctement",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
     }
 
     useEffect(() => {
@@ -62,7 +99,7 @@ const AdminInternshipOffer = () => {
             _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail ||
                 _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
 
-            alert("Veuillez remplir tous les champs correctement!")
+            fireSwalBadFields()
             return
         } else {
             setOfferSession()
@@ -72,11 +109,11 @@ const AdminInternshipOffer = () => {
 
         function submitOffer() {
             addOffer(offer)
-                .then((data) => data.jobTitle != null ? submitOfferSuccess() : alert("Impossible de créer l'offre, veuillez réessayer!"))
+                .then((data) => data.jobTitle != null ? submitOfferSuccess() : fireSwalError())
         }
 
         function submitOfferSuccess() {
-            alert("Offre déposée avec succès")
+            fireSwalOfferSuccess()
             document.getElementById("AdminInternshipOfferForm").reset()
         }
 

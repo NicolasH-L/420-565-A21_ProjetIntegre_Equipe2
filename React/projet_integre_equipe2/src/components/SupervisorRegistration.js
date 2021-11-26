@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from "react-router-dom"
 import { RegexPattern } from './RegexPattern'
+import Swal from 'sweetalert2'
 
 const SupervisorRegistration = ({ onAdd }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "", actualSession: "" })
@@ -16,17 +17,56 @@ const SupervisorRegistration = ({ onAdd }) => {
     const summerStart = 2
     const summerDeadLine = 5
 
+    const goToLogin = () => {
+        history.push("/Login")
+    }
+
+    const fireSwalBadMaticule = () => {
+        Swal.fire({
+            title: 'Erreur!',
+            text: 'Matricule existant',
+            icon: 'error',
+            position: 'top'
+        })
+    }
+
+    const fireSwalRegister = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Inscription réussie',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+        }).then(() => {
+            goToLogin()
+        })
+    }
+
+    const fireSwalBadFields = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'warning',
+            title: "Veuillez remplir tous les champs correctement",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.matricule) ||
             _.isEmpty(supervisor.firstName) || _.isEmpty(supervisor.lastName) || _.isEmpty(supervisor.password) || _.isEmpty(supervisor.matricule)) {
-            alert("Veuillez remplir tous les champs correctement!")
+            fireSwalBadFields()
             return
         } else {
             setSupervisorSession()
             onAdd(supervisor)
-                .then((data) => data.matricule !== undefined ? history.push("/Login") : alert("Erreur! matricule existant"))
-                .catch(() => alert("Erreur! matricule existant"))
+                .then((data) => data.matricule !== undefined ? fireSwalRegister() : fireSwalBadMaticule())
+                .catch(() => fireSwalBadMaticule())
         }
 
         function setSupervisorSession() {
