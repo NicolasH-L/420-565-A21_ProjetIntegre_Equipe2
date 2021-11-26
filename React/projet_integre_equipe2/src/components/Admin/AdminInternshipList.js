@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const AdminInternshipList = () => {
     const [internships, setInternships] = useState([])
@@ -88,6 +89,7 @@ const AdminInternshipList = () => {
                     </table>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

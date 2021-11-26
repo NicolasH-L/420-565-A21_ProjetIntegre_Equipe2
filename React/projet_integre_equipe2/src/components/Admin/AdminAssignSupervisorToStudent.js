@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from '../AdminNavbar'
+import Footer from '../Footer'
 import '../Form.css'
 import Swal from 'sweetalert2'
 
@@ -133,6 +134,7 @@ const AdminAssignSupervisorToStudent = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

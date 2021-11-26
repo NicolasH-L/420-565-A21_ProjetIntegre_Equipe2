@@ -51,7 +51,7 @@ const SessionsButton = () => {
 
     return (
         <div className="btn-group">
-            <button type="button" className="btn btn-primary dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+            <button type="button" className="btn btn-primary btn-sm dropdown-toggle " id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                 Sessions
             </button>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -59,7 +59,7 @@ const SessionsButton = () => {
                     <button
                         type="button"
                         key={session.idSession}
-                        className={`dropdown-item ${session.session === user.actualSession ? 'active' : ''}`}
+                        className={`dropdown-item btn-sm ${session.session === user.actualSession ? 'active' : ''}`}
                         onClick={(e) => { e.preventDefault(); changeSession(session.session) }}>
                         {sessionValueToFrench(session.session)}
                     </button>

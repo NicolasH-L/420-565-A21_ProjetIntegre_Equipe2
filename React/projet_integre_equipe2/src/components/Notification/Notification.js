@@ -69,7 +69,7 @@ export const Notification = ({ notificationList, userProp, userSession, user }) 
 
     return (
         <div className="btn-group mr-5">
-            <button type="button" className="btn btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
+            <button type="button" className="btn btn-sm btn-primary rounded" data-toggle="modal" data-target="#notificationsModal" >
                 {list !== undefined || list !== null || list !== "" ?
                     <i className="fas fa-bell" aria-hidden="true"> {list.filter(filterNotification).length} </i>
                     : ""}

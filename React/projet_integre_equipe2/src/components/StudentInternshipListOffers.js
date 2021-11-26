@@ -6,6 +6,7 @@ import { useHistory } from 'react-router'
 import './ResponsiveTable.css'
 import './ResponsiveButtons.css'
 import StudentApplyToOffer from './Student/StudentApplyToOffer'
+import Footer from './Footer'
 
 const StudentInternshipListOffers = () => {
     const [offers, setOffers] = useState([])
@@ -33,43 +34,47 @@ const StudentInternshipListOffers = () => {
     }
 
     return (
-        <div className="grad">
-            <StudentNavbar useStudent={student} />
-            <h2 className="text-center">Offres de stage</h2>
-            <div className="p-5 table-responsive">
-                <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
-                    <thead>
-                        <tr>
-                            <th scope="col" className="text-center">Entreprise</th>
-                            <th scope="col" className="text-center">Poste</th>
-                            <th scope="col" className="text-center">Salaire</th>
-                            <th scope="col" className="text-center">Date d'affichage</th>
-                            <th scope="col" className="text-center">Date limite d'affichage</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {offers
-                            .filter(filterOffers)
-                            .map((offer) => (
-                                <tr key={offer.idOffer}>
-                                    <td data-title="Entreprise" className="text-center">{offer.companyName}</td>
-                                    <td data-title="Poste" className="text-center">{offer.jobTitle}</td>
-                                    <td data-title="Salaire" className="text-center">{offer.salary}$</td>
-                                    <td data-title="Date d'affichage" className="text-center">{offer.displayDate}</td>
-                                    <td data-title="Date limite" className="text-center">{offer.deadlineDate}</td>
-                                    <td className="responsiveWidth">
-                                        <div className="d-flex">
-                                            <OfferModalView newOffer={offer} />
-                                            <StudentApplyToOffer newOffer={offer} />
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+        <div>
+            <div className="grad">
+                <StudentNavbar useStudent={student} />
+                <h2 className="text-center">Offres de stage</h2>
+                <div className="p-5 table-responsive">
+                    <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
+                        <thead>
+                            <tr>
+                                <th scope="col" className="text-center">Entreprise</th>
+                                <th scope="col" className="text-center">Poste</th>
+                                <th scope="col" className="text-center">Salaire</th>
+                                <th scope="col" className="text-center">Date d'affichage</th>
+                                <th scope="col" className="text-center">Date limite d'affichage</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {offers
+                                .filter(filterOffers)
+                                .map((offer) => (
+                                    <tr key={offer.idOffer}>
+                                        <td data-title="Entreprise" className="text-center">{offer.companyName}</td>
+                                        <td data-title="Poste" className="text-center">{offer.jobTitle}</td>
+                                        <td data-title="Salaire" className="text-center">{offer.salary}$</td>
+                                        <td data-title="Date d'affichage" className="text-center">{offer.displayDate}</td>
+                                        <td data-title="Date limite" className="text-center">{offer.deadlineDate}</td>
+                                        <td className="responsiveWidth">
+                                            <div className="d-flex">
+                                                <OfferModalView newOffer={offer} />
+                                                <StudentApplyToOffer newOffer={offer} />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <Footer/>
         </div>
+
     )
 }
 

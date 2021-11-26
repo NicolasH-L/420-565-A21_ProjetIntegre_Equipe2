@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import ContractModalView from '../Contract/ContractModalView'
 import DownloadContract from '../DownloadContract'
+import Footer from '../Footer'
 import StudentNavbar from '../StudentNavbar'
 
 const StudentContractList = () => {
@@ -93,7 +94,9 @@ const StudentContractList = () => {
                     </table>
                     : displayEmptyErrorMessage()}
             </div>
+            <Footer/>
         </div>
+
     )
 }
 

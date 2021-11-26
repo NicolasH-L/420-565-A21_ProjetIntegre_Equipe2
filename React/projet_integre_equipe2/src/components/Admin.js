@@ -1,14 +1,19 @@
 import React from 'react'
 import AdminNavbar from './AdminNavbar'
 import AdminStats from './AdminStats'
+import Footer from './Footer'
 
 const Admin = () => {
 
     return (
-        <div className="grad">
-            <AdminNavbar/>
-            <AdminStats/>
+        <div>
+            <div className="grad">
+                <AdminNavbar />
+                <AdminStats />
+            </div>
+            <Footer/>
         </div>
+
     )
 }
 

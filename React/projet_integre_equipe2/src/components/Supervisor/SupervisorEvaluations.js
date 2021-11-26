@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const SupervisorEvaluations = () => {
     const [evaluations, setEvaluations] = useState([])
@@ -68,6 +69,7 @@ const SupervisorEvaluations = () => {
                     </table>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

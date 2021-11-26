@@ -2,6 +2,10 @@
     background: linear-gradient(135deg, #5984aa, #366996);
 }
 
+.icon-color{
+    color: #382ec0;
+}
+
 select option[disabled]:first-child {
 	display: none;
 }

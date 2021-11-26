@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './ResponsiveTable.css'
 import './ResponsiveButtons.css'
+import Footer from './Footer'
 
 const StudentDocuments = () => {
     const [documents, setDocuments] = useState([])
@@ -73,7 +74,9 @@ const StudentDocuments = () => {
                     </tbody>
                 </table>
             </div>
+            <Footer/>
         </div>
+
     )
 }
 

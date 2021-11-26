@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useHistory } from 'react-router-dom'
 import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
+import Footer from "./Footer"
 import './Form.css'
 import Swal from 'sweetalert2'
 
@@ -26,6 +27,7 @@ const StudentUploadCV = () => {
     typeNotification: typeNotification, message: message, session: student.actualSession
   })
 
+<<<<<<< HEAD
   const fireSwalGoodCV = () => {
     Swal.fire({
         toast: true,
@@ -49,9 +51,11 @@ const StudentUploadCV = () => {
     })
 }
   
+=======
+>>>>>>> 631ca18cc1f5dee1d7e46e970f925da27475be4e
   const submitForm = (event) => {
     let documentSession = ""
-    
+
     event.preventDefault()
 
     if (typeof (uploadFile) !== 'undefined' && typeof (historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
@@ -92,40 +96,44 @@ const StudentUploadCV = () => {
 
   const createNotificationAdmin = async (notification) => {
     const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
-        {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(notification)
-        })
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(notification)
+      })
     return await result.json()
   }
 
   return (
-    <div className="grad">
-      <StudentNavbar useStudent={student} />
-      <div className="d-flex justify-content-center">
-        <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
-          <form className="container-fluid" onSubmit={submitForm}>
-            <h1 className="text-center text-secondary">Téléverser CV</h1>
-            <div className="form-group">
-              <label htmlFor="fileName" className="text-secondary"><i className="fas fa-file-pdf"></i> Nom du fichier :</label>
-              <input type='text' className="form-control form-control-lg" id="fileName" name="fileName" onChange={(e) => setUploadFileName(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <div className="custom-file">
-                <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
-                <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
+    <div>
+      <div className="grad">
+        <StudentNavbar useStudent={student} />
+        <div className="d-flex justify-content-center">
+          <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
+            <form className="container-fluid" onSubmit={submitForm}>
+              <h1 className="text-center text-secondary">Téléverser CV</h1>
+              <div className="form-group">
+                <label htmlFor="fileName" className="text-secondary"><i className="fas fa-file-pdf"></i> Nom du fichier :</label>
+                <input type='text' className="form-control form-control-lg" id="fileName" name="fileName" onChange={(e) => setUploadFileName(e.target.value)} />
               </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-block btn-primary text-white ">Envoyer</button>
-            </div>
-          </form>
+              <div className="form-group">
+                <div className="custom-file">
+                  <input type="file" className="custom-file-input" accept="application/pdf" id="customFileLangHTML" onChange={(e) => { setUploadFile(e.target.files[0]); bsCustomFileInput.init() }} />
+                  <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="Parcourir">Sélectionner un fichier</label>
+                </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-block btn-primary text-white ">Envoyer</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+      <Footer/>
     </div>
+
   )
 }
 export default StudentUploadCV

@@ -7,6 +7,7 @@ import { RegexPattern } from './RegexPattern'
 import MonitorNavbar from './MonitorNavbar'
 import './Form.css'
 import Swal from 'sweetalert2'
+import Footer from './Footer'
 
 const MonitorInternshipOffer = () => {
     const typeNotification = "Offre"
@@ -194,86 +195,90 @@ const MonitorInternshipOffer = () => {
     }
 
     return (
-        <div className="grad">
-            <MonitorNavbar />
-            <div className="d-flex justify-content-center">
-                <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
-                    <h2 className="text-secondary text-center mb-3">Déposer offre de stage</h2>
-                    <form className="container-fluid" id="monitorInternshipForm" onSubmit={onSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
-                            <input type="text" className="form-control text-center" id="companyName" name="companyName" value={company} disabled />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
-                            {error.address !== "" ? error.address : ""}
-                            <input type="text" className="form-control text-center" id="address" name="address" placeholder="Entrez l'adresse des bureaux" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="salary" className="text-secondary"><i className="fas fa-money-bill-wave"></i> Salaire: </label>
-                            {error.salary !== undefined ? error.salary : undefined}
-                            <input type="text" className="form-control text-center" id="salary" name="salary" placeholder="Entrez le salaire proposé" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="jobTitle" className="text-secondary"><i className="fas fa-briefcase"></i> Position: </label>
-                            {error.jobTitle !== "" ? error.jobTitle : ""}
-                            <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" placeholder="Entrez le nom de la position" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
-                            {error.description !== "" ? error.description : ""}
-                            <textarea type="text" className="form-control" id="description" name="description" rows="3" placeholder="Entrez la description" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="skills" className="text-secondary"><i className="fas fa-book"></i> Compétences: </label>
-                            {error.skills !== "" ? error.skills : ""}
-                            <textarea type="text" className="form-control" id="skills" name="skills" rows="3" placeholder="Entrez les compétences" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Représentant de l'entreprise (email): </label>
-                            <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
-                            {error.workingHours !== undefined ? error.workingHours : undefined}
-                            <input type="text" className="form-control text-center" id="workingHours" name="workingHours" placeholder="Entrez le nombre d'heures de travail" onChange={validateInput} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="jobSchedules" className="text-secondary"><i className="fas fa-calendar-alt"></i> Horaire de travail: </label>
-                            {error.jobSchedules !== "" ? error.jobSchedules : ""}
-                            <select defaultValue={'DEFAULT'} className="form-control text-center" id="jobSchedules" name="jobSchedules" onChange={validateInput} required>
-                                <option value="DEFAULT">Veuillez choisir le type d'horaire</option>
-                                <option value="Temps plein">Temps plein</option>
-                                <option value="Temps partiel">Temps partiel</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
-                            {error.displayDate !== "" ? error.displayDate : ""}
-                            <input type="date" min={today} max={findFutureDate()} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
-                            {error.deadlineDate !== "" ? error.deadlineDate : ""}
-                            <input type="date" min={today} max={findFutureDate()} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
-                            {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
-                            <input type="date" min={today} max={findFutureDate()} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
-                            {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
-                            <input type="date" min={today} max={findFutureDate()} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
-                        </div>
-                    </form>
+        <div>
+            <div className="grad">
+                <MonitorNavbar />
+                <div className="d-flex justify-content-center">
+                    <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
+                        <h2 className="text-secondary text-center mb-3">Déposer offre de stage</h2>
+                        <form className="container-fluid" id="monitorInternshipForm" onSubmit={onSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>
+                                <input type="text" className="form-control text-center" id="companyName" name="companyName" value={company} disabled />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="address" className="text-secondary"><i className="fas fa-map-marker-alt"></i> Adresse: </label>
+                                {error.address !== "" ? error.address : ""}
+                                <input type="text" className="form-control text-center" id="address" name="address" placeholder="Entrez l'adresse des bureaux" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="salary" className="text-secondary"><i className="fas fa-money-bill-wave"></i> Salaire: </label>
+                                {error.salary !== undefined ? error.salary : undefined}
+                                <input type="text" className="form-control text-center" id="salary" name="salary" placeholder="Entrez le salaire proposé" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="jobTitle" className="text-secondary"><i className="fas fa-briefcase"></i> Position: </label>
+                                {error.jobTitle !== "" ? error.jobTitle : ""}
+                                <input type="text" className="form-control text-center" id="jobTitle" name="jobTitle" placeholder="Entrez le nom de la position" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="description" className="text-secondary"><i className="fas fa-clipboard"></i> Description: </label>
+                                {error.description !== "" ? error.description : ""}
+                                <textarea type="text" className="form-control" id="description" name="description" rows="3" placeholder="Entrez la description" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="skills" className="text-secondary"><i className="fas fa-book"></i> Compétences: </label>
+                                {error.skills !== "" ? error.skills : ""}
+                                <textarea type="text" className="form-control" id="skills" name="skills" rows="3" placeholder="Entrez les compétences" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="monitorEmail" className="text-secondary"><i className="fas fa-at"></i> Représentant de l'entreprise (email): </label>
+                                <input type="email" className="form-control text-center" id="monitorEmail" name="monitorEmail" value={emailMonitor} disabled />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="workingHours" className="text-secondary"><i className="fas fa-business-time"></i> Heures de travail: </label>
+                                {error.workingHours !== undefined ? error.workingHours : undefined}
+                                <input type="text" className="form-control text-center" id="workingHours" name="workingHours" placeholder="Entrez le nombre d'heures de travail" onChange={validateInput} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="jobSchedules" className="text-secondary"><i className="fas fa-calendar-alt"></i> Horaire de travail: </label>
+                                {error.jobSchedules !== "" ? error.jobSchedules : ""}
+                                <select defaultValue={'DEFAULT'} className="form-control text-center" id="jobSchedules" name="jobSchedules" onChange={validateInput} required>
+                                    <option value="DEFAULT">Veuillez choisir le type d'horaire</option>
+                                    <option value="Temps plein">Temps plein</option>
+                                    <option value="Temps partiel">Temps partiel</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="displayDate" className="text-secondary"><i className="fas fa-calendar"></i> Date d'affichage:</label>
+                                {error.displayDate !== "" ? error.displayDate : ""}
+                                <input type="date" min={today} max={findFutureDate()} id="displayDate" name="displayDate" className="form-control text-center" onChange={validateInput} required></input>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="deadlineDate" className="text-secondary"><i className="fas fa-calendar"></i> Date limite:</label>
+                                {error.deadlineDate !== "" ? error.deadlineDate : ""}
+                                <input type="date" min={today} max={findFutureDate()} id="deadlineDate" name="deadlineDate" className="form-control text-center" onChange={validateInput} required></input>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="startInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Début stage</label>
+                                {error.startInternshipDate !== "" ? error.startInternshipDate : ""}
+                                <input type="date" min={today} max={findFutureDate()} id="startInternshipDate" name="startInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="endInternshipDate" className="text-secondary"><i className="fas fa-calendar"></i> Fin stage</label>
+                                {error.endInternshipDate !== "" ? error.endInternshipDate : ""}
+                                <input type="date" min={today} max={findFutureDate()} id="endInternshipDate" name="endInternshipDate" className="form-control text-center" onChange={validateInput} required></input>
+                            </div>
+                            <div className="d-flex justify-content-center">
+                                <button type="submit" className="btn btn-block grad text-white">Soumettre</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <Footer/>
         </div>
+
     )
 }
 

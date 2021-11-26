@@ -5,6 +5,7 @@ import { Signature } from '../Constants/Signature'
 import StudentNavbar from '../StudentNavbar'
 import Contract from '../Contract/Contract'
 import '../Form.css'
+import Footer from '../Footer'
 
 const StudentSignContract = () => {
     const history = useHistory()
@@ -63,17 +64,20 @@ const StudentSignContract = () => {
     }
 
     return (
-        <div className="grad">
-            <StudentNavbar useStudent={student} />
-            {internship !== null && contract !== null ? (
-                <div className="d-flex justify-content-center my-5 py-2">
-                    <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
-                        <Contract currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
-                            signature={contract.studentSignature} />
+        <div>
+            <div className="grad">
+                <StudentNavbar useStudent={student} />
+                {internship !== null && contract !== null ? (
+                    <div className="d-flex justify-content-center my-5 py-2">
+                        <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
+                            <Contract currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
+                                signature={contract.studentSignature} />
+                        </div>
                     </div>
-                </div>
-            )
-                : displayEmptyErrorMessage()}
+                )
+                    : displayEmptyErrorMessage()}
+            </div>
+            <Footer />
         </div>
     )
 }
