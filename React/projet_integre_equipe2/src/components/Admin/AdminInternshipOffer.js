@@ -2,11 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import _ from 'lodash'
 import AdminNavbar from './AdminNavbar'
-import './Form.css'
-import { RegexPattern } from './RegexPattern'
-import './Form.css'
+import { RegexPattern } from '../RegexPattern'
+import './../Form.css'
 import Swal from 'sweetalert2'
-import Footer from './Footer'
+import Footer from '../Footer'
 
 const AdminInternshipOffer = () => {
     const [offer, setOffer] = useState({

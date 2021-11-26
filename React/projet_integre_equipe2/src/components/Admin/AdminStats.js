@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import './Form.css'
+import '../Form.css'
 
 const AdminStats = () => {
     const [students, setStudents] = useState([])

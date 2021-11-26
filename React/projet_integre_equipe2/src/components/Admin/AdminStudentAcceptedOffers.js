@@ -1,14 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import AdminNavbar from './../AdminNavbar'
+import AdminNavbar from './AdminNavbar'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
-<<<<<<< HEAD
 import Swal from 'sweetalert2'
-=======
 import Footer from '../Footer'
->>>>>>> 631ca18cc1f5dee1d7e46e970f925da27475be4e
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."

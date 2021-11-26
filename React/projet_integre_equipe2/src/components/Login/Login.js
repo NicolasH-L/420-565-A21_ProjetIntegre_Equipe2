@@ -1,7 +1,7 @@
 import React from 'react'
 import MonitorLogin from '../MonitorLogin'
 import SupervisorLogin from '../SupervisorLogin'
-import AdminLogin from '../AdminLogin'
+import AdminLogin from '../Admin/AdminLogin'
 import StudentLogin from '../StudentLogin'
 import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin'

@@ -2,9 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
 import { useHistory } from 'react-router-dom'
-import './ResponsiveTable.css'
-import './ResponsiveButtons.css'
-import Footer from './Footer'
+import '../ResponsiveTable.css'
+import '../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"

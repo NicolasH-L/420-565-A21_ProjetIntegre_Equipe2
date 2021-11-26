@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import SessionsButton from './SessionsButton'
-import AdminNotifications from './Admin/AdminNotifications'
+import SessionsButton from '../SessionsButton'
+import AdminNotifications from './AdminNotifications'
 
 const AdminNavbar = () => {
     const history = useHistory()

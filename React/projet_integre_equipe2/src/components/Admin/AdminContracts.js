@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminNavbar from '../AdminNavbar'
+import AdminNavbar from './AdminNavbar'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'

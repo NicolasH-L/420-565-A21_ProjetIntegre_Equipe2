@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminNavbar from './AdminNavbar'
 import AdminStats from './AdminStats'
-import Footer from './Footer'
+import Footer from '../Footer'
 
 const Admin = () => {
 

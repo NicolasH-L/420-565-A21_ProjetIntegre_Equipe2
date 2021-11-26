@@ -27,7 +27,6 @@ const StudentUploadCV = () => {
     typeNotification: typeNotification, message: message, session: student.actualSession
   })
 
-<<<<<<< HEAD
   const fireSwalGoodCV = () => {
     Swal.fire({
         toast: true,
@@ -51,8 +50,6 @@ const StudentUploadCV = () => {
     })
 }
   
-=======
->>>>>>> 631ca18cc1f5dee1d7e46e970f925da27475be4e
   const submitForm = (event) => {
     let documentSession = ""
 
