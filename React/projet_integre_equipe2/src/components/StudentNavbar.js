@@ -14,13 +14,13 @@ const StudentNavbar = ({ useStudent }) => {
 
     const fireSwalBadCV = () => {
         Swal.fire({
-            title: "Votre CV n'est pas valide",
+            title: "En attente de validation de votre premier CV",
             icon: 'warning',
             position: 'top',
             toast: true,
             timer: 1500,
             showConfirmButton: false,
-            width: '400px',
+            width: '500px',
         })
     }
 
