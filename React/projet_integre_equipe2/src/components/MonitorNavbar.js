@@ -23,7 +23,7 @@ const MonitorNavbar = () => {
         history.push("/MonitorContracts", historyState)
     }
 
-    const goToEvaluateStudent = () =>{
+    const goToEvaluateStudent = () => {
         history.push("/MonitorEvaluateStudent", historyState)
     }
 
@@ -44,12 +44,16 @@ const MonitorNavbar = () => {
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-sm btn-light" type="button" onClick={goToMonitorDashboard}><i className="fas fa-home fa-lg"></i></button>
                         </li>
-                        <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={goToMonitorOffer}>Déposer une offre</button>
-                        </li>
-                        <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
-                        </li>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light btn-sm mx-1 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Offres
+                            </button>
+                            <div class="dropdown-menu">
+                                <button className="nav-link btn btn-sm" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
+                                <button className="nav-link btn btn-sm" type="button" onClick={goToMonitorOffer}>Déposer une offre</button>
+                            </div>
+                        </div>
                         <li className="nav-item mx-2">
                             <button className="nav-link btn btn-sm btn-light" type="button" onClick={goToMonitorContracts}>Mes contrats</button>
                         </li>
@@ -59,7 +63,7 @@ const MonitorNavbar = () => {
                         <li className="mt-1">
                             <SessionsButton />
                         </li>
-                        <li className="mx-3 mt-1"> 
+                        <li className="mx-3 mt-1">
                             <MonitorNotifications monitorState={historyState} />
                         </li>
                     </ul>

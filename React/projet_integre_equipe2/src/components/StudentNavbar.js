@@ -91,7 +91,7 @@ const StudentNavbar = ({ useStudent }) => {
                             <StudentNotifications studentState={historyState} />
                         </li>
                     </ul>
-                    <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
+                    <button className="btn btn-danger btn-sm my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>
             </nav>
         </div>
