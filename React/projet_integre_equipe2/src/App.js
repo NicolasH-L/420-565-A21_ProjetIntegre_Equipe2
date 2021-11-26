@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import GuardedRoute from './components/GuardedRoute'
+import GuardedRoute from './components/Routes/GuardedRoute'
 import { useState, useEffect } from 'react'
 
 import Footer from './components/Footer'
@@ -35,9 +35,9 @@ import Supervisor from './components/Supervisor/Supervisor'
 import SupervisorAssignedStudentList from './components/Supervisor/SupervisorAssignedStudentList'
 import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations'
 
-import OfferView from './components/OfferView'
+import OfferView from './components/Offer/OfferView'
 import ViewDocument from './components/ViewDocument'
-import ErrorRoute from './components/ErrorRoute'
+import ErrorRoute from './components/Routes/ErrorRoute'
 import HomePage from './components/HomePage/HomePage';
 
 window.onload = function () {
