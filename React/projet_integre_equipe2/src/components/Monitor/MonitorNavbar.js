@@ -1,7 +1,7 @@
-import { useHistory, Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import React from 'react'
-import SessionsButton from "./SessionsButton"
-import MonitorNotifications from "./Monitor/MonitorNotifications"
+import SessionsButton from "../SessionsButton"
+import MonitorNotifications from "./MonitorNotifications"
 
 const MonitorNavbar = () => {
     let history = useHistory()

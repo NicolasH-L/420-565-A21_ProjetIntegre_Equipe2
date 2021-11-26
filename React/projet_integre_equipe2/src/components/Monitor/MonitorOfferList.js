@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import './Form.css'
+import React, { useState, useEffect } from 'react'
+import '../Form.css'
 import { useHistory } from 'react-router-dom'
 import MonitorNavbar from './MonitorNavbar'
-import './ResponsiveTable.css'
-import './ResponsiveButtons.css'
-import Footer from './Footer'
+import '../ResponsiveTable.css'
+import '../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const MonitorOfferList = () => {
     const [offers, setOffers] = useState([])

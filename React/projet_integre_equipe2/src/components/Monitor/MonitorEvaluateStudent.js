@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import MonitorNavbar from '../MonitorNavbar'
+import MonitorNavbar from './MonitorNavbar'
 import EvaluationModalView from '../Evaluation/EvaluationModalView'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'

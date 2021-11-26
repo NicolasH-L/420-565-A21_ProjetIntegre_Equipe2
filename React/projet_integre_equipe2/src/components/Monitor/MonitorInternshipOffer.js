@@ -1,13 +1,11 @@
 import _ from 'lodash'
-import './Form.css'
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from "react-router-dom"
-import { RegexPattern } from './RegexPattern'
+import { RegexPattern } from '../RegexPattern'
 import MonitorNavbar from './MonitorNavbar'
-import './Form.css'
+import '../Form.css'
 import Swal from 'sweetalert2'
-import Footer from './Footer'
+import Footer from '../Footer'
 
 const MonitorInternshipOffer = () => {
     const typeNotification = "Offre"

@@ -1,9 +1,8 @@
-import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import MonitorNavbar from './MonitorNavbar'
-import './ResponsiveTable.css'
-import './ResponsiveButtons.css'
+import '../ResponsiveTable.css'
+import '../ResponsiveButtons.css'
 
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])

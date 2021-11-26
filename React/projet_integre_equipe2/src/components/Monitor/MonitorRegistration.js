@@ -1,8 +1,7 @@
 import _ from 'lodash'
-import React from 'react'
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { RegexPattern } from './RegexPattern'
+import { RegexPattern } from '../RegexPattern'
 import Swal from 'sweetalert2'
 
 const MonitorRegistration = ({ onAdd }) => {

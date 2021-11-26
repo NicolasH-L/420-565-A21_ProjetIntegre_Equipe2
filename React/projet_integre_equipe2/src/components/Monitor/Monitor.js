@@ -2,8 +2,8 @@ import React from 'react'
 import MonitorNavbar from './MonitorNavbar'
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import './Form.css'
-import Footer from './Footer'
+import '../Form.css'
+import Footer from '../Footer'
 
 const Monitor = () => {
     const [offers, setOffers] = useState({ offerList: [], studentNumbers: new Map() })
