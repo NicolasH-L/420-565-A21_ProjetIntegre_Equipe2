@@ -143,7 +143,7 @@ const AdminContracts = () => {
                         : displayEmptyErrorMessage()}
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer />
         </div>
 
     )

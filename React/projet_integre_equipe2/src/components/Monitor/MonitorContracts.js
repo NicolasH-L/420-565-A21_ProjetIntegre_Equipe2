@@ -143,7 +143,7 @@ const MonitorContracts = () => {
                         : displayEmptyErrorMessage()}
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )

@@ -104,7 +104,7 @@ const StudentUploadCV = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer/>
     </div>
 
   )

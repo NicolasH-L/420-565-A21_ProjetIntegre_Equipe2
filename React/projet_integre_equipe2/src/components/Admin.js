@@ -11,7 +11,7 @@ const Admin = () => {
                 <AdminNavbar />
                 <AdminStats />
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )

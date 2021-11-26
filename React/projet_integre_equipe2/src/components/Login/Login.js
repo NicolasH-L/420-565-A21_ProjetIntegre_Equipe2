@@ -59,7 +59,7 @@ const Login = ({ authGuardLogin }) => {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
 

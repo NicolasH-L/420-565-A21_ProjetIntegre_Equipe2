@@ -57,37 +57,39 @@ const StudentNavbar = ({ useStudent }) => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h3>Stage Équipe 2</h3></a>
+                <a className="navbar-brand text-secondary"><h5>Stage Équipe 2</h5></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToMyProfile()}>Mon profil</button>
+                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={() => goToMyProfile()}>Mon profil</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentUploadCV()}>Déposer CV</button>
+                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={() => goToStudentUploadCV()}>Déposer CV</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToStudentInternshipOffers()}>Offres de stages</button>
+                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={() => goToStudentInternshipOffers()}>Offres</button>
                         </li>
                         <li className="nav-item mx-2">
-                            <button className="nav-link btn btn-light" type="button" onClick={() => goToMyDocuments()}>Mes Documents</button>
+                            <button className="nav-link btn btn-sm btn-light" type="button" onClick={() => goToMyDocuments()}>Portfolio</button>
                         </li>
-                        <li className="dropdown show ml-2 mr-3 nav-item">
-                            <button className="btn btn-light dropdown-toggle" id="contractsDropDown" data-toggle="dropdown" aria-expanded="false">
-                                Service Contrats
+                        <li className="dropdown mt-1 show ml-2 mr-3 nav-item">
+                            <button className="btn btn-light btn-sm dropdown-toggle" id="contractsDropDown" data-toggle="dropdown" aria-expanded="false">
+                                Contrats
                             </button>
                             <div className="dropdown-menu" aria-labelledby="contractsDropDown">
-                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes Contrats Signés</button>
-                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Signer Contrat</button>
+                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes contrats signés</button>
+                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Signer un contrat</button>
                             </div>
                         </li>
-                        <SessionsButton />
-                        <div className="mx-3 mt-1">
+                        <li className="mt-1">
+                            <SessionsButton />
+                        </li>
+                        <li className="mx-3 mt-1">
                             <StudentNotifications studentState={historyState} />
-                        </div>
+                        </li>
                     </ul>
                     <button className="btn btn-danger my-2 mx-2" onClick={() => logout()}>Déconnexion</button>
                 </div>

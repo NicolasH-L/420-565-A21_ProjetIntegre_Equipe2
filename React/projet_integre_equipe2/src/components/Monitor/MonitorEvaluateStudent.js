@@ -124,7 +124,7 @@ const MonitorEvaluateStudent = () => {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )

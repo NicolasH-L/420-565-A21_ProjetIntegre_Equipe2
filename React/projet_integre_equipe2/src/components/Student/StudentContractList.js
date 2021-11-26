@@ -96,7 +96,7 @@ const StudentContractList = () => {
                         : displayEmptyErrorMessage()}
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )

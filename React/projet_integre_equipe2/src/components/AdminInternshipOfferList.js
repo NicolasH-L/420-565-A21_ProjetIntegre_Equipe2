@@ -160,7 +160,7 @@ const AdminInternshipOfferList = () => {
                     </table>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )

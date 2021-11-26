@@ -76,7 +76,7 @@ const SupervisorAssignedStudentList = () => {
                     </table>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
     )
 }

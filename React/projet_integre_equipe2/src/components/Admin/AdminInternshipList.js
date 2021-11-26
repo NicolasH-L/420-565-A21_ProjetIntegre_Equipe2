@@ -89,7 +89,7 @@ const AdminInternshipList = () => {
                     </table>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer />
         </div>
     )
 }

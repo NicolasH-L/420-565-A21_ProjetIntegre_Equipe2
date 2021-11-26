@@ -15,7 +15,7 @@ const Student = () => {
                 <StudentNavbar useStudent={student} />
                 <StudentStatus />
             </div>
-            <Footer></Footer>
+            <Footer/>
         </div>
 
     )
