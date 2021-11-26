@@ -79,7 +79,7 @@ const StudentContractList = () => {
                                         <td className="responsiveWidth">
                                             <div className="d-flex">
                                                 <ContractModalView userPasswordProp={student.password}
-                                                    contractProp={contract} signature={contract.monitorSignature} />
+                                                    contractProp={contract} signature={contract.studentSignature} />
                                                 {(contract.internship.status === contractCompletedStatus) ?
                                                     <div className="d-flex justify-content-center mb-4">
                                                         <DownloadContract contract={contract} />

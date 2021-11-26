@@ -4,14 +4,14 @@ import { useHistory } from 'react-router'
 import { Signature } from '../Constants/Signature'
 import Swal from 'sweetalert2'
 
-const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
+const Contract = ({ currentStatus, contractProp, signature }) => {
     const history = useHistory()
     const historyState = history.location.state
     const typeNotification = "Signature"
     const message = "Veuillez signer le contrat disponible"
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
-    const [contractState, setContractState] = useState({ password: "", userPassword: "", isDisabled: false, signature: "", adminSignature: "" })
+    const [contractState, setContractState] = useState({ password: "", isDisabled: false, signature: "", adminSignature: "" })
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: message, session: ""
     })
@@ -46,8 +46,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
     }
 
     useEffect(() => {
-        if (contractState.signature === "" && contractState.userPassword === "") {
-            contractState.userPassword = passwordUser
+        if (contractState.signature === "") {
             contractState.signature = signature
         }
         setInternship(contractProp.internship)
