@@ -44,16 +44,28 @@ const StudentRegistration = ({ onAdd }) => {
         })
     }
 
+    const fireSwalBadFields = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'warning',
+            title: "Veuillez remplir tous les champs correctement",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || !_.isEmpty(error.matricule) || !_.isEmpty(error.telephoneNumber) ||
             _.isEmpty(student.lastName) || _.isEmpty(student.firstName) || _.isEmpty(student.password) || _.isEmpty(student.matricule) || _.isEmpty(student.telephoneNumber)) {
-            alert("Veuillez remplir tous les champs correctement!")
+            fireSwalBadFields()
             return
         } else {
             setStudentSession()
             onAdd(student)
-                .then((data) => data.matricule !== undefined ? fireSwalRegister()  : fireSwalBadMaticule())
+                .then((data) => data.matricule !== undefined ? fireSwalRegister() : fireSwalBadMaticule())
                 .catch(() => fireSwalBadMaticule())
         }
 

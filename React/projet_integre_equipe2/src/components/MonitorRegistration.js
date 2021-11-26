@@ -44,13 +44,25 @@ const MonitorRegistration = ({ onAdd }) => {
         })
     }
 
+    const fireSwalBadFields = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'warning',
+            title: "Veuillez remplir tous les champs correctement",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) || 
+        if (!_.isEmpty(error.lastName) || !_.isEmpty(error.firstName) || !_.isEmpty(error.password) ||
             !_.isEmpty(error.companyName) || !_.isEmpty(error.telephoneNumber) || !_.isEmpty(error.email) ||
-            _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) || 
+            _.isEmpty(monitor.firstName) || _.isEmpty(monitor.lastName) || _.isEmpty(monitor.password) ||
             _.isEmpty(monitor.companyName) || _.isEmpty(monitor.telephoneNumber) || _.isEmpty(monitor.email)) {
-            alert("Veuillez remplir tous les champs correctement!")
+            fireSwalBadFields()
             return
         } else {
             monitor.email = monitor.email.toLowerCase()

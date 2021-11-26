@@ -4,6 +4,7 @@ import EvaluationBehaviorList from './EvaluationBehaviorList'
 import EvaluationRecipient from './EvaluationRecipient'
 import EvaluationAppreciations from './EvaluationAppreciations'
 import EvaluationReHireIntern from './EvaluationReHireIntern'
+import Swal from 'sweetalert2'
 
 const EvaluationForm = ({ contractProp }) => {
     const [contract, setContract] = useState(null)
@@ -17,6 +18,45 @@ const EvaluationForm = ({ contractProp }) => {
 
     const baseUrl = "http://localhost:8888"
 
+    const fireSwalError = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'error',
+            title: 'Erreur! Impossible de créer l\'évaluation',
+            showConfirmButton: false,
+            timer: 3000,
+            width: '500px'
+        })
+    }
+
+    const fireSwalBadFields = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'warning',
+            title: "Veuillez remplir les champs obligatoires",
+            showConfirmButton: false,
+            timer: 2000,
+            width: '450px'
+        })
+    }
+
+    const fireSwalEvaluationSuccess = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: "Évaluation envoyée avec succès",
+            showConfirmButton: false,
+            timerProgressBar: true,
+            timer: 2000,
+            width: '450px'
+        }).then(() => {
+            window.location.reload(true)
+        })
+    }
+
     useEffect(() => {
         setContract(contractProp)
         setSubmit({ ...submit, isSubmit: false, isSubmitValid: false })
@@ -28,7 +68,7 @@ const EvaluationForm = ({ contractProp }) => {
         setSubmit({ ...submit, isSubmit: true })
         validateSubmit()
         if (submit.isSubmit === false || submit.isSubmitValid === false) {
-            alert("Veuillez remplir les champs obligatoires")
+            fireSwalBadFields()
             return
         }
 
@@ -41,12 +81,11 @@ const EvaluationForm = ({ contractProp }) => {
         submit.isSubmit = false
         setSubmit({ ...submit, isSubmit: false })
         saveEvaluation(internEvaluation)
-            .then((data) => data.contract !== null ? reloadPage() : alert("Erreur, l'évaluation ne c'est pas créer!"))
+            .then((data) => data.contract !== null ? reloadPage() : fireSwalError())
     }
 
-    const reloadPage = () =>{
-        window.confirm("Évaluation envoyée avec succès")
-        window.location.reload(true)
+    const reloadPage = () => {
+        fireSwalEvaluationSuccess()
     }
 
     const saveEvaluation = async (contract) => {

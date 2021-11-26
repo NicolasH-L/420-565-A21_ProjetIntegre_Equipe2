@@ -29,7 +29,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
             toast: true,
             timer: 2000,
             showConfirmButton: false,
-            width: '400px',
+            width: '450px',
         })
     }
 
@@ -155,7 +155,7 @@ const Contract = ({ passwordUser, currentStatus, contractProp, signature }) => {
             verifyPwdMonitor(contract.internship.offer.monitor.email, contractState.password)
                 .then(data => data === true ? sign() : data === false ?
                     fireSwalBadPassword()
-                    :fireSwalBadPassword())
+                    : fireSwalBadPassword())
         }
         else if (verifyStatus(contractProp.internship.status, signatureStatusList[2])) {
             verifyPwdAdmin(historyState.admin.username, contractState.password)

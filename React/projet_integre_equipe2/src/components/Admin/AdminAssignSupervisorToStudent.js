@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from '../AdminNavbar'
 import '../Form.css'
+import Swal from 'sweetalert2'
 
 const AdminAssignSupervisorToStudent = () => {
     const [internships, setInterships] = useState([])
@@ -13,6 +14,18 @@ const AdminAssignSupervisorToStudent = () => {
     const defaultValue = "default"
     let selectedSupervisorJSON = defaultValue
     let selectedStudentIntershipJSON = defaultValue
+
+    const fireSwalInfo = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'info',
+            title: 'Veuillez sélectionner un superviseur et un élève',
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+    }
 
     useEffect(() => {
         const getInterships = async () => {
@@ -75,13 +88,13 @@ const AdminAssignSupervisorToStudent = () => {
             selectedStudentIntershipJSON.supervisor = selectedSupervisorJSON
             addSupervisorToIntership(selectedStudentIntershipJSON)
         } else {
-            alert("Veuillez sélectionner un élève et un superviseur")
+            fireSwalInfo()
         }
     }
 
     const filterInterships = (internship) => {
-        return (internship.supervisor === null 
-            && internship.status === "Completed" 
+        return (internship.supervisor === null
+            && internship.status === "Completed"
             && admin.actualSession === internship.session)
     }
 
