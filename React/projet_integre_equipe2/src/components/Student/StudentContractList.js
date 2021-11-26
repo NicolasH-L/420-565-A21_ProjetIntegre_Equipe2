@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import ContractModalView from '../Contract/ContractModalView'
-import DownloadContract from '../DownloadContract'
+import DownloadContract from '../Contract/DownloadContract'
 import Footer from '../Footer'
 import StudentNavbar from './StudentNavbar'
 

@@ -1,6 +1,5 @@
-import React from 'react'
-import DownloadButton from './DownloadButton';
-import { useEffect, useState } from 'react'
+import DownloadButton from '../DownloadButton';
+import React, { useEffect, useState } from 'react'
 
 const DownloadContract = ({ contract }) => {
     const documentName = "Contract"

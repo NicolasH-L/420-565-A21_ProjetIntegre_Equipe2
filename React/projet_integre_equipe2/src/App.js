@@ -38,7 +38,7 @@ import SupervisorEvaluations from './components/Supervisor/SupervisorEvaluations
 import OfferView from './components/OfferView'
 import ViewDocument from './components/ViewDocument'
 import ErrorRoute from './components/ErrorRoute'
-import HomePage from './components/Login/HomePage';
+import HomePage from './components/HomePage/HomePage';
 
 window.onload = function () {
   if (window.history.state === null && sessionStorage.getItem("userType") !== "") {
