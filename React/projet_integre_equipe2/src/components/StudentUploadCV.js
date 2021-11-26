@@ -7,6 +7,7 @@ import bsCustomFileInput from 'bs-custom-file-input'
 import StudentNavbar from "./StudentNavbar"
 import Footer from "./Footer"
 import './Form.css'
+import Swal from 'sweetalert2'
 
 const StudentUploadCV = () => {
   const typeNotification = "CV"
@@ -26,6 +27,29 @@ const StudentUploadCV = () => {
     typeNotification: typeNotification, message: message, session: student.actualSession
   })
 
+  const fireSwalGoodCV = () => {
+    Swal.fire({
+        toast: true,
+        position: 'top',
+        icon: 'success',
+        title: 'CV téléversé avec succès',
+        showConfirmButton: false,
+        timer: 2000
+    })
+  }
+  
+  const fireSwalError= () => {
+    Swal.fire({
+        title: "Une erreur est survenue \n lors du transfert de fichier",
+        icon: 'error',
+        position: 'top',
+        toast: true,
+        timer: 2000,
+        showConfirmButton: false,
+        width: '400px',
+    })
+}
+  
   const submitForm = (event) => {
     let documentSession = ""
 
@@ -45,16 +69,16 @@ const StudentUploadCV = () => {
           },
         })
         .then((response) => {
-          alert("Cv téléverser avec succès")
+          fireSwalGoodCV()
         })
         .then((response) => {
           createNotificationAdmin(notification)
         })
         .catch((error) => {
-          alert("Une erreur est survenue lors du transfert de fichier")
+          fireSwalError()
         })
     } else {
-      alert("Une erreur est survenue lors du transfert de fichier")
+      fireSwalError()
     }
 
     function setDocumentSession() {

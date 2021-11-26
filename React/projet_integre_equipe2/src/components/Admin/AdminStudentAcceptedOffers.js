@@ -5,6 +5,7 @@ import AdminNavbar from './../AdminNavbar'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
+import Swal from 'sweetalert2'
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
@@ -38,6 +39,30 @@ const AdminStudentAcceptedOffers = () => {
     const winterDeadLine = 1
     const summerStart = 2
     const summerDeadLine = 5
+
+    const fireSwalStartSignature = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Processus de signature commencé',
+            showConfirmButton: false,
+            timer: 2000,
+            width: '400px'
+        })
+      }
+
+      const fireSwalError= () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'error',
+            title: 'Une erreur est survenue, veuillez réessayer plus tard',
+            showConfirmButton: false,
+            timer: 2000,
+            width: '500px'
+        })
+      }
 
     useEffect(() => {
         const getAcceptedOffers = async () => {
@@ -86,7 +111,7 @@ const AdminStudentAcceptedOffers = () => {
                 body: JSON.stringify(contract)
             })
         const data = await res.json()
-        alert("Processus de signature commencé")
+        fireSwalStartSignature()
         createNotificationStudent(internship, notification)
         return data
     }
@@ -169,7 +194,7 @@ const AdminStudentAcceptedOffers = () => {
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     startSigningProcess(acceptedOffer)
-                                                        .then((data) => data.student == null ? alert("Une erreur est survenue, veuillez réessayer plus tard!") : createContract(data))
+                                                        .then((data) => data.student == null ? fireSwalError(): createContract(data))
                                                 }}>
                                                 <span className="hideButtonText">Débuter signatures</span>
                                                 <span className="hideButtonIcon"><i className="fas fa-file-signature"></i></span>

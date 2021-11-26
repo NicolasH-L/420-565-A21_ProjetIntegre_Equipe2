@@ -2,11 +2,24 @@ import _ from 'lodash';
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router';
+import Swal from 'sweetalert2'
 
 const SupervisorLogin = ({ onLogin, authLogin }) => {
     const [supervisor, setSupervisor] = useState({ lastName: "", firstName: "", matricule: "", password: "" })
     const [error, setError] = useState({ credentials: "" })
     const history = useHistory()
+
+    const fireSwalError = () => {
+        Swal.fire({
+            title: 'Matricule ou mot de passe incorrect',
+            icon: 'error',
+            position: 'top',
+            toast: true,
+            timer: 1500,
+            showConfirmButton: false,
+            width: '400px'
+        })
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -15,13 +28,13 @@ const SupervisorLogin = ({ onLogin, authLogin }) => {
             return
         } else {
             onLogin(supervisor.matricule, supervisor.password)
-                .then((data) => data.matricule != null ? signIn(data) : alert("Erreur de matricule ou mot de passe"))
+                .then((data) => data.matricule != null ? signIn(data) : fireSwalError())
                 .catch((err) => console.log(err))
         }
 
-        function signIn(supervisor){
+        function signIn(supervisor) {
             authLogin("supervisor")
-            history.push("/SupervisorAssignedStudentList", {supervisor})
+            history.push("/SupervisorAssignedStudentList", { supervisor })
         }
     }
 
