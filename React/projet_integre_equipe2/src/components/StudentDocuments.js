@@ -58,7 +58,7 @@ const StudentDocuments = () => {
                                             <span className={`badge ${!document.isValid && !document.isRefused ? 'badge-warning' :
                                                 !document.isValid && document.isRefused ? 'badge-danger' : 'badge-success'}`}>
                                                 {!document.isValid && !document.isRefused ? 'En attente' :
-                                                    !document.isValid && document.isRefused ? 'Réfusé' : 'Valide'}
+                                                    !document.isValid && document.isRefused ? 'Refusé' : 'Valide'}
                                             </span>
                                         </h5>
                                     </td>

@@ -30,7 +30,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
             toast: true,
             position: 'top',
             icon: 'success',
-            title: 'offre accepté avec succès',
+            title: 'offre acceptée avec succès',
             showConfirmButton: false,
             timer: 2000,
             width: '400px'

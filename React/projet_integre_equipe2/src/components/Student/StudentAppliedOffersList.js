@@ -46,7 +46,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
             toast: true,
             position: 'top',
             icon: 'success',
-            title: 'Date ajouté avec succès',
+            title: 'Date ajoutée avec succès',
             showConfirmButton: false,
             timer: 2000
         })
