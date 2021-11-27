@@ -158,6 +158,18 @@ public class StudentControllerTest {
         assertThat(invalidCvStudent).isEqualTo(actualStudent);
     }
 
+    @Test
+    public void getStudentByMatrivuleTest() throws Exception {
+        when(studentService.getStudentByMatricule(student.getMatricule())).thenReturn(Optional.of(student));
+
+        MvcResult result = mockMvc.perform(get("/students/getStudent/{matricule}", student.getMatricule())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
+        assertThat(actualStudent).isEqualTo(student);
+    }
+
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
