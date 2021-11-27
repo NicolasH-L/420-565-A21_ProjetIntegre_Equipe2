@@ -162,7 +162,7 @@ public class StudentControllerTest {
     public void getStudentByMatrivuleTest() throws Exception {
         when(studentService.getStudentByMatricule(student.getMatricule())).thenReturn(Optional.of(student));
 
-        MvcResult result = mockMvc.perform(get("/students/getStudent/{matricule}", student.getMatricule())
+        MvcResult result = mockMvc.perform(get("/students/get-student/{matricule}", student.getMatricule())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 

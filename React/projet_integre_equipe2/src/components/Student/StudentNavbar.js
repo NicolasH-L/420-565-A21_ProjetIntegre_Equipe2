@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import SessionsButton from "../SessionsButton"
 import StudentNotifications from './StudentNotifications'
 import Swal from 'sweetalert2'
@@ -10,6 +10,8 @@ const StudentNavbar = ({ useStudent }) => {
     })
     const history = useHistory()
     const historyState = history.location.state
+    const studentState = historyState.student
+    const location = useLocation()
 
     const fireSwalBadCV = () => {
         Swal.fire({
@@ -28,6 +30,23 @@ const StudentNavbar = ({ useStudent }) => {
             return
         setStudent(useStudent)
     }, [])
+
+    useEffect(() => {
+        const getStudent = async () => {
+            const studentFromServer = await fetchStudent()
+            if (studentState !== studentFromServer){
+                history.push(location.pathname, {student: studentFromServer})
+            }
+        }
+        if (sessionStorage.getItem("userType") === "student"){
+            getStudent()
+        }
+    }, [location.pathname])
+
+    const fetchStudent = async () => {
+        const res = await fetch(`http://localhost:8888/students/get-student/${studentState.matricule}`)
+        return await res.json()
+    }
 
     const goToStudentUploadCV = () => {
         history.push("/StudentUploadCV", historyState)

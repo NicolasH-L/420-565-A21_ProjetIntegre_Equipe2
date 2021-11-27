@@ -60,7 +60,7 @@ public class StudentController {
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
 
-   @GetMapping("/getStudent/{matricule}")
+   @GetMapping("/get-student/{matricule}")
    public ResponseEntity<Student> getStudent(@PathVariable String matricule){
       return studentService.getStudentByMatricule(matricule)
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
