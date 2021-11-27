@@ -6,7 +6,7 @@ import java.util.List;
 public enum EvaluationEnums {
 
     STUDY_PROGRAM("Technique en Informatique"),
-    HIRED("yes"), REJECTED("no"),
+    HIRED("yes"), REJECTED("no"), MAYBE("maybe"),
     FILE_TYPE("Evaluation"), FILE_NAME_START("evaluation-stage-"),
     FILE_TEMPLATE("evaluation-stagiaire-template.pdf"), FORM_EXPECTATION("exp"),
     FORM_HIRE_AGAIN("hireAgain"), FORM_HIRE_DESC("hireDescription"),
@@ -36,4 +36,13 @@ public enum EvaluationEnums {
         return Arrays.asList(HEADERS);
     }
 
+    public static List<String> getCapabilityValues(){
+        final String [] CAPABILITY_VALUES = new String[]{"1", "2", "3", "4", "5"};
+        return Arrays.asList(CAPABILITY_VALUES);
+    }
+
+    public static List<String> getAppreciaitionsResults(){
+        final String [] APPRECIATION_RESULTS = new String[]{"1", "2", "3", "4", "5"};
+        return Arrays.asList(APPRECIATION_RESULTS);
+    }
 }

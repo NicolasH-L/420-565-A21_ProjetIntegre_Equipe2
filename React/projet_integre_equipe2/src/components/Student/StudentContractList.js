@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import ContractModalView from '../Contract/ContractModalView'
-import DownloadContract from '../DownloadContract'
+import DownloadContract from '../Contract/DownloadContract'
 import Footer from '../Footer'
-import StudentNavbar from '../StudentNavbar'
+import StudentNavbar from './StudentNavbar'
 
 const StudentContractList = () => {
     const history = useHistory()
@@ -54,7 +54,7 @@ const StudentContractList = () => {
     return (
         <div className="grad">
             <StudentNavbar useStudent={student} />
-            <h2 className="text-center">Mes contrats</h2>
+            <h2 className="text-center text-light">Mes contrats</h2>
             <div className="p-5 table-responsive">
                 {isDisplayContracts() ?
                     <table className="table table-hover bg-light shadow-lg" id="no-more-tables">

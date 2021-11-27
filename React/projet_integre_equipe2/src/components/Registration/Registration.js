@@ -1,7 +1,7 @@
 import React from 'react'
-import StudentRegistration from '../StudentRegistration'
-import MonitorRegistration from '../MonitorRegistration'
-import SupervisorRegistration from '../SupervisorRegistration'
+import StudentRegistration from '../Student/StudentRegistration'
+import MonitorRegistration from '../Monitor/MonitorRegistration'
+import SupervisorRegistration from '../Supervisor/SupervisorRegistration'
 import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin'
 

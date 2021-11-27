@@ -2,10 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
-import MonitorNavbar from '../MonitorNavbar'
+import MonitorNavbar from './MonitorNavbar'
 import ContractModalView from '../Contract/ContractModalView'
-import DownloadButton from '../DownloadButton'
-import DownloadContract from '../DownloadContract'
+import DownloadContract from '../Contract/DownloadContract'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
@@ -79,7 +78,7 @@ const MonitorContracts = () => {
                         <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
                     </select>
                 </div>
-                <h2 className="text-center">Mes contrats</h2>
+                <h2 className="text-center text-light">Mes contrats</h2>
                 <div className="p-5 ">
                     {isDisplayContracts() ?
                         <table className="table table-hover bg-light shadow-lg" id="no-more-tables">

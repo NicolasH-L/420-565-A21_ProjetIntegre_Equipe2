@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import AdminNavbar from './../AdminNavbar'
+import AdminNavbar from './AdminNavbar'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
-import Footer from '../Footer'
 import Swal from 'sweetalert2'
+import Footer from '../Footer'
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
@@ -166,7 +166,7 @@ const AdminStudentAcceptedOffers = () => {
         <div>
             <div className="grad">
                 <AdminNavbar />
-                <h2 className="text-center">Débuter signature des offres acceptées</h2>
+                <h2 className="text-center text-light">Débuter signature des offres acceptées</h2>
                 <div className="p-5">
                     <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>

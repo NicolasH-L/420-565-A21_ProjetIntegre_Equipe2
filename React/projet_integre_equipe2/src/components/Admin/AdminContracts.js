@@ -1,10 +1,10 @@
 import React from 'react'
-import AdminNavbar from '../AdminNavbar'
+import AdminNavbar from './AdminNavbar'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
 import ContractModalView from '../Contract/ContractModalView'
-import DownloadContract from '../DownloadContract'
+import DownloadContract from '../Contract/DownloadContract'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
@@ -78,7 +78,7 @@ const AdminContracts = () => {
                         <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
                     </select>
                 </div>
-                <h2 className="text-center">Mes contrats</h2>
+                <h2 className="text-center text-light">Mes contrats</h2>
 
                 <div className="p-5">
                     {isDisplayContracts() ?

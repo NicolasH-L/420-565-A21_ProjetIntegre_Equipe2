@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import MonitorNavbar from '../MonitorNavbar'
+import MonitorNavbar from './MonitorNavbar'
 import EvaluationModalView from '../Evaluation/EvaluationModalView'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
@@ -84,7 +84,7 @@ const MonitorEvaluateStudent = () => {
         <div>
             <div className="grad">
                 <MonitorNavbar />
-                <h2 className="text-center">Mes Évaluations</h2>
+                <h2 className="text-center text-light">Mes Évaluations</h2>
                 <div className="container-fluid">
                     <div className="p-5 table-responsive">
                         {isDisplayEvaluations() ?
