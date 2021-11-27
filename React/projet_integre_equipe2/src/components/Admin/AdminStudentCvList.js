@@ -96,7 +96,7 @@ const AdminStudentCvList = () => {
         <div className="grad">
             <AdminNavbar />
             <div>
-                <h2 className="text-center">Étudiant: {student.firstName + " " + student.lastName}</h2>
+                <h2 className="text-center text-light">Étudiant: {student.firstName + " " + student.lastName}</h2>
             </div>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg" id="no-more-tables">

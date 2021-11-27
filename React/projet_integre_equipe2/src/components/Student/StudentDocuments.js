@@ -37,7 +37,7 @@ const StudentDocuments = () => {
     return (
         <div className="grad">
             <StudentNavbar useStudent={student} />
-            <h2 className="text-center">Portfolio</h2>
+            <h2 className="text-center text-light">Portfolio</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                     <thead>

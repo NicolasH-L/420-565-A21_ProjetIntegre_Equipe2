@@ -185,7 +185,7 @@ const AdminInternshipOffer = () => {
                 <AdminNavbar />
                 <div className="d-flex justify-content-center">
                     <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
-                        <h2 className="text-secondary text-center mb-3">Déposer offre de stage</h2>
+                        <h2 className="text-secondary text-center mb-3">Déposer une offre de stage</h2>
                         <form className="container-fluid" id="AdminInternshipOfferForm" onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="companyName" className="text-secondary"><i className="fas fa-building"></i> Nom de l'entreprise: </label>

@@ -50,8 +50,8 @@ const MonitorNavbar = () => {
                                 Offres
                             </button>
                             <div class="dropdown-menu">
-                                <button className="nav-link btn btn-sm" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
-                                <button className="nav-link btn btn-sm" type="button" onClick={goToMonitorOffer}>Déposer une offre</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={goToMonitorOffer}>Déposer une offre</button>
                             </div>
                         </div>
                         <li className="nav-item mx-2">

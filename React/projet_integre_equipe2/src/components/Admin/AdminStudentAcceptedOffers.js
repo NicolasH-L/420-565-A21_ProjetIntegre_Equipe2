@@ -166,7 +166,7 @@ const AdminStudentAcceptedOffers = () => {
         <div>
             <div className="grad">
                 <AdminNavbar />
-                <h2 className="text-center">Débuter signature des offres acceptées</h2>
+                <h2 className="text-center text-light">Débuter signature des offres acceptées</h2>
                 <div className="p-5">
                     <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>

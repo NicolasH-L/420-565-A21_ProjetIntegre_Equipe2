@@ -1,11 +1,10 @@
 import React from 'react'
-import SupervisorNavbar from './SupervisorNavbar'
+import SupervisorAssignedStudentList from './SupervisorAssignedStudentList'
 
 const Supervisor = () => {
     return (
         <div className="grad">
-            <SupervisorNavbar/>
-            
+            <SupervisorAssignedStudentList/>
         </div>
     )
 }

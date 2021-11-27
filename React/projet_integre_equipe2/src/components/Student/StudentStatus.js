@@ -26,7 +26,7 @@ const StudentStatus = () => {
 
     return (
         <div>
-            <h2 className="text-center">Bienvenue {student.firstName + " " + student.lastName}</h2>
+            <h2 className="text-center text-light">Bienvenue {student.firstName + " " + student.lastName}</h2>
             <div className="d-flex justify-content-center">
                 <div className="card text-center shadow my-5 reactivescreen">
                     <div className="card-header font-weight-bold">

@@ -36,7 +36,7 @@ const StudentInternshipListOffers = () => {
         <div>
             <div className="grad">
                 <StudentNavbar useStudent={student} />
-                <h2 className="text-center">Offres de stage</h2>
+                <h2 className="text-center text-light">Offres de stage</h2>
                 <div className="p-5 table-responsive">
                     <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>

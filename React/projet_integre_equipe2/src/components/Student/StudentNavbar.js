@@ -69,7 +69,7 @@ const StudentNavbar = ({ useStudent }) => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h5>Stage Équipe 2</h5></a>
+                <a className="navbar-brand text-secondary"><h5>Alterna Stage</h5></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>

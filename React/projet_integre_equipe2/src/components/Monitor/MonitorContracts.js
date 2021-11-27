@@ -78,7 +78,7 @@ const MonitorContracts = () => {
                         <option className="bg-light text-dark" value={Signature.getCompleteSignatureStatus()}>Afficher les contrats signés par tout le monde</option>
                     </select>
                 </div>
-                <h2 className="text-center">Mes contrats</h2>
+                <h2 className="text-center text-light">Mes contrats</h2>
                 <div className="p-5 ">
                     {isDisplayContracts() ?
                         <table className="table table-hover bg-light shadow-lg" id="no-more-tables">

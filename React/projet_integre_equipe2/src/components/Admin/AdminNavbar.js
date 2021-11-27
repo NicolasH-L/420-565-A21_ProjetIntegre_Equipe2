@@ -65,7 +65,7 @@ const AdminNavbar = () => {
                                 <div class="dropdown-menu">
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffersList()}>Mes offres</button>
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffer()}>Déposer offre</button>
-                                    <button className="nav-link btn btn-sm btn-light" onClick={() => goToAdminStudentAcceptedOffers()}>Offres acceptées</button>
+                                    <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminStudentAcceptedOffers()}>Offres acceptées</button>
                                 </div>
                             </div>
                         </li>

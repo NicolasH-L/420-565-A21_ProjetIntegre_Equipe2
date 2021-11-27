@@ -84,7 +84,7 @@ const MonitorEvaluateStudent = () => {
         <div>
             <div className="grad">
                 <MonitorNavbar />
-                <h2 className="text-center">Mes Évaluations</h2>
+                <h2 className="text-center text-light">Mes Évaluations</h2>
                 <div className="container-fluid">
                     <div className="p-5 table-responsive">
                         {isDisplayEvaluations() ?

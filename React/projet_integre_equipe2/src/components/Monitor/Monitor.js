@@ -52,7 +52,7 @@ const Monitor = () => {
         <div>
             < div className="grad">
                 <MonitorNavbar />
-                <h2 className="text-center mb-5">Bonjour {monitor.firstName + " " + monitor.lastName}</h2>
+                <h2 className="text-center mb-5 text-light">Bonjour {monitor.firstName + " " + monitor.lastName}</h2>
                 <div className="d-flex justify-content-center">
                     <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
                         <h2 className="text-center mb-3">Statistiques <i className="fas fa-chart-line text-success"></i></h2>

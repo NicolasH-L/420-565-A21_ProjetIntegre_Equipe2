@@ -55,7 +55,7 @@ const AdminStudentList = () => {
         <div>
             <div className="grad">
                 <AdminNavbar />
-                <h2 className="text-center">Liste des étudiants</h2>
+                <h2 className="text-center text-light">Liste des étudiants</h2>
                 <div className="p-5">
                     <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                         <thead>
