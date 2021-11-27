@@ -72,4 +72,12 @@ public class StudentService {
             return Optional.empty();
         }
     }
+
+    public Optional<Student> getStudentByMatricule(String matricule){
+        try {
+            return Optional.of(studentRepository.findByMatricule(matricule));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
 }

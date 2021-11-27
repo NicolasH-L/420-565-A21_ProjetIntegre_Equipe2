@@ -161,6 +161,20 @@ public class StudentServiceTest {
         assertThat(actualStudent).isEmpty();
     }
 
+    @Test
+    public void testGetStudentByMatricule(){
+        when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(student);
+        Optional<Student> actualStudent = studentService.getStudentByMatricule(student.getMatricule());
+        assertThat(actualStudent.get().getMatricule()).isEqualTo(student.getMatricule());
+    }
+
+    @Test
+    public void testGetStudentByMatriculeFails(){
+        when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(null);
+        Optional<Student> actualStudent = studentService.getStudentByMatricule(student.getMatricule());
+        assertThat(actualStudent).isEmpty();
+    }
+
     private List<Student> getListOfStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(Student.studentBuilder()
