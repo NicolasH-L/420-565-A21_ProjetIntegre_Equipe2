@@ -65,7 +65,7 @@ const StudentStatus = () => {
                             </div>
                         </div>
                     </div>
-                    : <h5 className="text-center text-warning">Profil de stage non disponible avec cette session</h5>
+                    : <h4 className="text-center text-warning my-5">Profil de stage non disponible avec cette session</h4>
                 }
             </div>
         </div>
