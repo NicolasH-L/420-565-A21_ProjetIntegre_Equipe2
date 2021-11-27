@@ -34,7 +34,7 @@ const StudentNavbar = ({ useStudent }) => {
     useEffect(() => {
         const getStudent = async () => {
             const studentFromServer = await fetchStudent()
-            if (studentState !== studentFromServer){
+            if (studentState.isCvValid !== studentFromServer.isCvValid){
                 history.push(location.pathname, {student: studentFromServer})
             }
         }
