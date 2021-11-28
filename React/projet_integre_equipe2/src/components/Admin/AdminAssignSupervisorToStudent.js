@@ -71,16 +71,14 @@ const AdminAssignSupervisorToStudent = () => {
 
     const getSelectedSupervisor = (e) => {
         e.preventDefault()
-        if (e.target.value !== "default") {
+        if (e.target.value !== "default") 
             selectedSupervisorJSON = JSON.parse(e.target.value)
-        }
     }
 
     const getSelectedStudentIntership = (e) => {
         e.preventDefault()
-        if (e.target.value !== "default") {
+        if (e.target.value !== "default") 
             selectedStudentIntershipJSON = JSON.parse(e.target.value)
-        }
     }
 
     const assignSupervisorToStudent = (e) => {

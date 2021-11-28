@@ -18,9 +18,9 @@ const AdminContracts = () => {
     const contractCompletedStatus = "Completed"
 
     useEffect(() => {
-        if (filters.signatureStatus === "") {
+        if (filters.signatureStatus === "") 
             setFilters({ ...filters, signatureStatus: "default" })
-        }
+
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
             setContracts(contractsFromServer)
@@ -79,7 +79,6 @@ const AdminContracts = () => {
                     </select>
                 </div>
                 <h2 className="text-center text-light">Mes contrats</h2>
-
                 <div className="p-5">
                     {isDisplayContracts() ?
                         <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
@@ -143,7 +142,6 @@ const AdminContracts = () => {
             </div>
             <Footer />
         </div>
-
     )
 }
 

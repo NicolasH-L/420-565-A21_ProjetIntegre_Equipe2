@@ -16,7 +16,6 @@ const AdminStudentAcceptedOffers = () => {
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
-
     const [acceptedOffers, setAcceptedOffers] = useState([])
     const [internship, setInternship] = useState({
         isSignedByStudent: false, isSignedByMonitor: false, status: "",
@@ -28,11 +27,9 @@ const AdminStudentAcceptedOffers = () => {
         studentResponsability: studentTerms, studentSignature: "", monitorSignature: "", adminSignature: "",
         signatureDateStudent: "", signatureDateMonitor: "", signatureDateAdmin: "", session: ""
     })
-
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: message, session: admin.actualSession
     })
-
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8
@@ -50,9 +47,9 @@ const AdminStudentAcceptedOffers = () => {
             timer: 2000,
             width: '400px'
         })
-      }
+    }
 
-      const fireSwalError= () => {
+    const fireSwalError = () => {
         Swal.fire({
             toast: true,
             position: 'top',
@@ -62,7 +59,7 @@ const AdminStudentAcceptedOffers = () => {
             timer: 2000,
             width: '500px'
         })
-      }
+    }
 
     useEffect(() => {
         const getAcceptedOffers = async () => {
