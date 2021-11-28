@@ -93,8 +93,8 @@ const StudentNavbar = ({ useStudent }) => {
                                 Contrats
                             </button>
                             <div className="dropdown-menu" aria-labelledby="contractsDropDown">
-                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes contrats signés</button>
-                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Signer un contrat</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={() => goToContractList()}>Mes contrats signés</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={() => goToContract()}>Signer un contrat</button>
                             </div>
                         </li>
                         <li className="mt-1">
