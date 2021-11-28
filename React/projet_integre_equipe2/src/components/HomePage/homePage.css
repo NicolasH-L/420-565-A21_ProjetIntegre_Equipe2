@@ -11,7 +11,6 @@
     }
     
     .home-title {
-        margin-left: 20%;
         font-size: 250%;
     }
 
@@ -24,8 +23,11 @@
     }
 
     .home-register-button {
-        margin-left: 30%;
         margin-top: 15%;
+    }
+
+    .home-logo{
+        width: 40%;
     }
 }
 
@@ -38,7 +40,6 @@
     }
     
     .home-title {
-        margin-left: 10%;
         font-size: 250%;
     }
 
@@ -51,8 +52,11 @@
     }
 
     .home-register-button {
-        margin-left: 40%;
         margin-top: 15%;
+    }
+
+    .home-logo{
+        width: 50%;
     }
 }
 
@@ -65,13 +69,15 @@
     }
 
     .home-title {
-        margin-left: 10%;
         font-size: 250%;
     }
 
     .home-register-button {
-        margin-left: 40%;
         margin-top: 15%;
+    }
+
+    .home-logo{
+        width: 50%;
     }
 }
 
@@ -83,13 +89,12 @@
         margin-left: 10%;
     }
 
-    .home-title {
-        margin-left: 20%;
+    .home-register-button {
+        margin-top: 15%;
     }
 
-    .home-register-button {
-        margin-left: 40%;
-        margin-top: 15%;
+    .home-logo{
+        width: 50%;
     }
 }
 
@@ -101,13 +106,12 @@
         margin-left: 10%;
     }
 
-    .home-title {
-        margin-left: 20%;
+    .home-register-button {
+        margin-top: 10%;
     }
 
-    .home-register-button {
-        margin-left: 40%;
-        margin-top: 10%;
+    .home-logo{
+        width: 50%;
     }
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import SessionsButton from '../SessionsButton'
 import AdminNotifications from './AdminNotifications'
+import logo from '../../images/logo-projet2.png'
 
 const AdminNavbar = () => {
     const history = useHistory()
@@ -48,7 +49,7 @@ const AdminNavbar = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h5>Stage Équipe 2</h5></a>
+            <a className="navbar-brand text-secondary"><img className="" width="30" src={logo} /> </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>
@@ -63,7 +64,7 @@ const AdminNavbar = () => {
                                     Offres
                                 </button>
                                 <div class="dropdown-menu">
-                                    <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffersList()}>Mes offres</button>
+                                    <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffersList()}>Offres</button>
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffer()}>Déposer offre</button>
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminStudentAcceptedOffers()}>Offres acceptées</button>
                                 </div>
