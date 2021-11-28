@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom"
 import SessionsButton from "../SessionsButton"
 import StudentNotifications from './StudentNotifications'
 import Swal from 'sweetalert2'
+import logo from '../../images/logo-projet2.png'
 
 const StudentNavbar = ({ useStudent }) => {
     const [student, setStudent] = useState({
@@ -88,7 +89,7 @@ const StudentNavbar = ({ useStudent }) => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h5>Alterna Stage</h5></a>
+                <a className="navbar-brand text-secondary"><img className="" width="30" src={logo}/> </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>
@@ -111,8 +112,8 @@ const StudentNavbar = ({ useStudent }) => {
                                 Contrats
                             </button>
                             <div className="dropdown-menu" aria-labelledby="contractsDropDown">
-                                <button className="dropdown-item" type="button" onClick={() => goToContractList()}>Mes contrats signés</button>
-                                <button className="dropdown-item" type="button" onClick={() => goToContract()}>Signer un contrat</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={() => goToContractList()}>Mes contrats signés</button>
+                                <button className="dropdown-item btn btn-sm" type="button" onClick={() => goToContract()}>Signer un contrat</button>
                             </div>
                         </li>
                         <li className="mt-1">

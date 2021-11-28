@@ -10,7 +10,6 @@ const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
     const history = useHistory()
     const admin = history.location.state.admin
-
     const [offers, setOffers] = useState([])
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession

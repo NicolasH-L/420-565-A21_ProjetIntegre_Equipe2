@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom"
 import React from 'react'
 import SessionsButton from "../SessionsButton"
 import MonitorNotifications from "./MonitorNotifications"
+import logo from '../../images/logo-projet2.png'
 
 const MonitorNavbar = () => {
     let history = useHistory()
@@ -35,7 +36,7 @@ const MonitorNavbar = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand text-secondary"><h5>Stage Équipe 2</h5></a>
+                <a className="navbar-brand text-secondary"><img className="" width="30" src={logo} /> </a>
                 <button className=" navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>

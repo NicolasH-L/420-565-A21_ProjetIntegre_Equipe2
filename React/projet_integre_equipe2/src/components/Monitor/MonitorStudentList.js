@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import MonitorNavbar from './MonitorNavbar'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
+import Footer from '../Footer'
 
 const MonitorStudentList = () => {
     const [studentOffers, setStudentOffers] = useState([])
@@ -34,7 +35,8 @@ const MonitorStudentList = () => {
     }
 
     return (
-        <div className="grad">
+        <div>
+            <div className="grad">
             <MonitorNavbar />
             <div className="justify-content-start d-flex mx-5">
                 <button className="btn btn-light" onClick={e => { e.preventDefault(); history.goBack() }}>
@@ -72,6 +74,9 @@ const MonitorStudentList = () => {
                 </table>
             </div>
         </div>
+        <Footer/>
+        </div>
+        
     )
 }
 

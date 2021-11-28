@@ -98,7 +98,6 @@ const AdminStudentList = () => {
             </div>
             <Footer/>
         </div>
-
     )
 }
 

@@ -75,7 +75,6 @@ const AdminInternshipList = () => {
                                                     }
                                                 </span>
                                             </h5>
-
                                         </td>
                                         <td className="responsiveWidth">
                                             <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(internship.offer) }}>

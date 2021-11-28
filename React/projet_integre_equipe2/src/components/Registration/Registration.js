@@ -4,6 +4,7 @@ import MonitorRegistration from '../Monitor/MonitorRegistration'
 import SupervisorRegistration from '../Supervisor/SupervisorRegistration'
 import '../Form.css'
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin'
+import Footer from '../Footer'
 
 const Registration = () => {
   const addStudent = async (student) => {
@@ -43,7 +44,8 @@ const Registration = () => {
   }
 
   return (
-    <div className="grad">
+    <div>
+      <div className="grad">
       <NavbarRegistrationLogin />
       <div className="d-flex justify-content-center ">
         <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
@@ -67,6 +69,9 @@ const Registration = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </div>
+    
   )
 }
 

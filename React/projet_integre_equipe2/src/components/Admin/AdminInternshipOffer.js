@@ -24,7 +24,6 @@ const AdminInternshipOffer = () => {
     const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8
@@ -266,7 +265,6 @@ const AdminInternshipOffer = () => {
             </div>
             <Footer/>
         </div>
-
     )
 }
 
