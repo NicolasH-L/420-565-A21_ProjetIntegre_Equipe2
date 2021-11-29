@@ -8,7 +8,6 @@ const StudentRegistration = ({ onAdd }) => {
     const [student, setStudent] = useState({ lastName: "", firstName: "", password: "", matricule: "", telephoneNumber: "", actualSession: "" })
     const [error, setError] = useState({ lastName: "", firstName: "", password: "", matricule: "", telephoneNumber: "" })
     const history = useHistory()
-
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8

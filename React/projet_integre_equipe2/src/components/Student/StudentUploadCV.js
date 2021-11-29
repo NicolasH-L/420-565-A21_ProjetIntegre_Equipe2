@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 const StudentUploadCV = () => {
   const typeNotification = "CV"
   const message = "Un étudiant a déposé un CV"
+  const undefined = "undefined"
   const [uploadFile, setUploadFile] = useState()
   const [uploadFileName, setUploadFileName] = useState()
   const history = useHistory()
@@ -28,33 +29,32 @@ const StudentUploadCV = () => {
 
   const fireSwalGoodCV = () => {
     Swal.fire({
-        toast: true,
-        position: 'top',
-        icon: 'success',
-        title: 'CV téléversé avec succès',
-        showConfirmButton: false,
-        timer: 2000
+      toast: true,
+      position: 'top',
+      icon: 'success',
+      title: 'CV téléversé avec succès',
+      showConfirmButton: false,
+      timer: 2000
     })
   }
-  
-  const fireSwalError= () => {
+
+  const fireSwalError = () => {
     Swal.fire({
-        title: "Une erreur est survenue \n lors du transfert de fichier",
-        icon: 'error',
-        position: 'top',
-        toast: true,
-        timer: 2000,
-        showConfirmButton: false,
-        width: '400px',
+      title: "Une erreur est survenue \n lors du transfert de fichier",
+      icon: 'error',
+      position: 'top',
+      toast: true,
+      timer: 2000,
+      showConfirmButton: false,
+      width: '400px',
     })
-}
-  
+  }
+
   const submitForm = (event) => {
     let documentSession = ""
-
     event.preventDefault()
 
-    if (typeof (uploadFile) !== 'undefined' && typeof (historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
+    if (typeof (uploadFile) !== undefined && typeof (historyState) !== undefined && !_.isEmpty(uploadFileName)) {
       setDocumentSession()
       var fileSignature = uploadFileName + ":" + student.id + ":" + documentSession
       var fileSignatureJSON = JSON.stringify(fileSignature)
@@ -127,9 +127,9 @@ const StudentUploadCV = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
-
   )
 }
+
 export default StudentUploadCV

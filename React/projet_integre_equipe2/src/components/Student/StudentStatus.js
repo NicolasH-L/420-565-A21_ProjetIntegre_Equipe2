@@ -39,7 +39,7 @@ const StudentStatus = () => {
                         <p className="card-text">Cliquez sur l'option qui vous correspond!</p>
                         <div className="d-flex justify-content-center">
                             <StudentSearchingStatus onAddStudent={addStudent} />
-                            <StudentInterviewDateStatus onAddStudent={addStudent}/>
+                            <StudentInterviewDateStatus onAddStudent={addStudent} />
                             <StudentInternshipFoundStatus onAddStudent={addStudent} />
                         </div>
                     </div>

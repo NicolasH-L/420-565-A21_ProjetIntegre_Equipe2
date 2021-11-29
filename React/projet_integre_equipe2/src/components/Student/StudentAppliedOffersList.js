@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import OfferModalView from '../Offer/OfferModalView'
+import _ from 'lodash'
 import Swal from 'sweetalert2'
+import OfferModalView from '../Offer/OfferModalView'
 
 const StudentAppliedOffersList = ({onSetDate}) => {
     const [studentOffers, setStudentOffers] = useState([])

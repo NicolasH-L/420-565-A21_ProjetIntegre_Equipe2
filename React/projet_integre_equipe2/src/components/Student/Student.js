@@ -17,7 +17,6 @@ const Student = () => {
             </div>
             <Footer/>
         </div>
-
     )
 }
 
