@@ -11,8 +11,8 @@ const Student = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Étudiant</IonTitle>
                     <IonButtons slot="end">
+                        <IonTitle></IonTitle>
                         <IonButton  onClick={(e) => history.push('/studentCV', historyState)} >Déposer CV</IonButton>
                         <IonButton disabled onClick={(e) => history.push('/home', {})} >Offres</IonButton>
                         <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>

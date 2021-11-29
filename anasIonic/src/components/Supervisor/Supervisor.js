@@ -12,8 +12,8 @@ const Supervisor = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Superviseur</IonTitle>
                     <IonButtons slot="end">
+                        <IonTitle></IonTitle>
                         <IonButton disabled onClick={(e) => history.push('/home', {})} >Étudiants</IonButton>
                         <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
                     </IonButtons>

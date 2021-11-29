@@ -54,7 +54,7 @@ const MonitorRegister: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons>
-                        <IonTitle size="large" className="ion-text-center">Inscription Moniteur</IonTitle>
+                        <IonTitle className="ion-text-center">Inscription Moniteur</IonTitle>
                         <IonButton routerLink={"/home"} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>

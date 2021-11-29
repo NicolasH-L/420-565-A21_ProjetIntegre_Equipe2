@@ -51,7 +51,7 @@ const StudentRegistration: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons>
-                        <IonTitle size="large" className="ion-text-center">Inscription Étudiant</IonTitle>
+                        <IonTitle className="ion-text-center">Inscription Étudiant</IonTitle>
                         <IonButton onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>

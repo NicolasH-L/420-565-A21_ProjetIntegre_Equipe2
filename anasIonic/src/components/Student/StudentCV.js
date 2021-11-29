@@ -56,8 +56,8 @@ const StudentCV = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Étudiant</IonTitle>
                     <IonButtons slot="end">
+                        <IonTitle></IonTitle>
                         <IonButton onClick={(e) => history.push('/studentDash', historyState)} ><IonIcon icon={home} /></IonButton>
                         <IonButton disabled onClick={(e) => history.push('/home', {})} >Offres</IonButton>
                         <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
@@ -87,7 +87,7 @@ const StudentCV = () => {
                     color="success"
                     isOpen={showToastAlert2}
                     onDidDismiss={() => setShowToastAlert2(false)}
-                    message="Cv televerse avec succes!"
+                    message="CV téléversé avec succès!"
                     duration={3000}
                 />
             </IonContent>

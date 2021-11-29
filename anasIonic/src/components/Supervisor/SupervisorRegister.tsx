@@ -53,7 +53,7 @@ const SupervisorRegister: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons>
-                        <IonTitle size="large" className="ion-text-center">Inscription Superviseur</IonTitle>
+                        <IonTitle  className="ion-text-center">Inscription Superviseur</IonTitle>
                         <IonButton  onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>

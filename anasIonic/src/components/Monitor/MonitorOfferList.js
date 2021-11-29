@@ -28,7 +28,7 @@ const MonitorOfferList = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons>
-                        <IonTitle size="large" className="ion-text-center">Liste offres</IonTitle>
+                        <IonTitle size="large" className="ion-text-center"></IonTitle>
                         <IonButton onClick={(e) => history.push('/monitorOfferForm', { monitor: monitor })} >Déposer offre</IonButton>
                         <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
                     </IonButtons>
