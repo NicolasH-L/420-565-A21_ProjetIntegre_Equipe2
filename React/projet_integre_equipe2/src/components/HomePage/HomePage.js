@@ -23,9 +23,6 @@ const HomePage = () => {
                     <SvgImage />
                 </div>
             </div>
-
-
-
         </div>
     )
 }
