@@ -67,13 +67,13 @@ const StudentCV = () => {
             <IonContent >
                 <IonCard>
                     <IonCardHeader>
-                        <IonCardTitle className="">Televerser CV</IonCardTitle>
+                        <IonCardTitle className="">Téléverser CV</IonCardTitle>
                     </IonCardHeader>
                     <IonCardContent>
                         <IonItem className='ion-margin-vertical'>
                             <input type='file' accept='application/pdf' onChange={(e) => setFile(e.target)} ></input>
                         </IonItem>
-                        <IonButton color="success" type="submit" className="ion-margin" onClick={(e) => { e.preventDefault(); uploadCV() }}>Déposer<IonIcon icon={arrowUp} style={{ marginLeft: 5 }}></IonIcon></IonButton>
+                        <IonButton color="success" type="submit" className="ion-margin" onClick={(e) => { e.preventDefault(); uploadCV() }}>Téléverser<IonIcon icon={arrowUp} style={{ marginLeft: 5 }}></IonIcon></IonButton>
                     </IonCardContent>
                 </IonCard>
                 <IonToast
