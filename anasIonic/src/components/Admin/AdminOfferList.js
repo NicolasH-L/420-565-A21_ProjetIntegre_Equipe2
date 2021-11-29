@@ -1,5 +1,5 @@
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonContent, IonCard, IonCardHeader, IonCardContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonDatetime, IonToast, IonCardTitle, IonText } from "@ionic/react";
-import { home, business, alertCircleOutline, cash, briefcase, mail, hourglass, timeOutline, calendar, today, arrowDown, checkmark, close } from "ionicons/icons";
+import { home, business, alertCircleOutline, cash, briefcase, mail, hourglass, timeOutline, calendar, today, arrowDown, checkmark, close, document, book } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
@@ -62,14 +62,18 @@ const AdminOfferList = () => {
         setShowToastAlert2(true)
     }
 
+    const viewOffer = (offer) => {
+        history.push("/adminOfferView", { offer: offer })
+    }
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center">Liste offres</IonTitle>
-                        <IonButton onClick={(e) => history.push('/adminOfferForm')} >Déposer offre</IonButton>
-                        <IonButton onClick={(e) => history.push('/home', {})} >log out</IonButton>
+                        <IonButton onClick={(e) => history.push('/adminOfferForm', historyState)} >Déposer offre</IonButton>
+                        <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -93,6 +97,7 @@ const AdminOfferList = () => {
                                     </div>
                                     <IonButton color="success" onClick={e => { e.preventDefault(); acceptOffer(offer) }} className="ion-margin" size="small">Publier<IonIcon icon={checkmark} style={{ marginLeft: 5 }}></IonIcon></IonButton>
                                     <IonButton color="danger" onClick={e => { e.preventDefault(); declineOffer(offer) }} className="ion-margin" size="small">Retirer<IonIcon icon={close} style={{ marginLeft: 5 }}></IonIcon></IonButton>
+                                    <IonButton color="primary" onClick={e => { e.preventDefault(); viewOffer(offer) }} className="ion-margin" size="small">Consulter<IonIcon icon={book} style={{ marginLeft: 5 }}></IonIcon></IonButton>
                                 </IonText>
                             </IonItem>
                         </IonCardContent>

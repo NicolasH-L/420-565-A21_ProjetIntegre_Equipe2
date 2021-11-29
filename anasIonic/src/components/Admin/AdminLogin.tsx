@@ -53,7 +53,7 @@ const AdminLogin: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle className="ion-text-center">Admin Login</IonTitle>
-                        <IonButton  onClick={e => {e.preventDefault(); history.push('/home', historyState)}} ><IonIcon icon={home} /></IonButton>
+                        <IonButton onClick={e => { e.preventDefault(); history.push('/home', historyState) }} ><IonIcon icon={home} /></IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

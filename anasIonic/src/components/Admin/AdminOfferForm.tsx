@@ -91,8 +91,8 @@ const AdminOfferForm: React.FC = () => {
                 <IonToolbar>
                     <IonButtons>
                         <IonTitle size="large" className="ion-text-center"></IonTitle>
-                        <IonButton onClick={(e) => history.push("/adminOfferList")} >liste offres</IonButton>
-                        <IonButton onClick={(e) => history.push('/home', {})} >log out</IonButton>
+                        <IonButton onClick={(e) => history.push("/adminOfferList", historyState)} >liste offres</IonButton>
+                        <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
