@@ -66,4 +66,11 @@ public class StudentController {
               .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
               .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
    }
+
+   @PutMapping("/reset-student-account/{matricule}")
+   public ResponseEntity<Student> resetStudentAccount(@PathVariable String matricule){
+      return studentService.resetStudentAccount(matricule)
+              .map(student1 -> ResponseEntity.status(HttpStatus.OK).body(student1))
+              .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+   }
 }

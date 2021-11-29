@@ -46,6 +46,7 @@ public class StudentServiceTest {
                 .lastName("Tata")
                 .matricule("1234567")
                 .password(rawPassword)
+                .currentStatus("Stage trouvé")
                 .isCvValid(true)
                 .build();
 
@@ -172,6 +173,22 @@ public class StudentServiceTest {
     public void testGetStudentByMatriculeFails(){
         when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(null);
         Optional<Student> actualStudent = studentService.getStudentByMatricule(student.getMatricule());
+        assertThat(actualStudent).isEmpty();
+    }
+
+    @Test
+    public void testResetStudentAccount(){
+        when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(student);
+        when(studentRepository.save(student)).thenReturn(student);
+        Optional<Student> actualStudent = studentService.resetStudentAccount(student.getMatricule());
+        assertThat(actualStudent.get().getIsCvValid()).isFalse();
+        assertThat(actualStudent.get().getCurrentStatus()).isEqualTo("En recherche");
+    }
+
+    @Test
+    public void testResetStudentAccountFails(){
+        when(studentRepository.findByMatricule(student.getMatricule())).thenReturn(null);
+        Optional<Student> actualStudent = studentService.resetStudentAccount(student.getMatricule());
         assertThat(actualStudent).isEmpty();
     }
 

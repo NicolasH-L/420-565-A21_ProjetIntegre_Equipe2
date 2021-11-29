@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
 import Footer from '../Footer';
+import AdminResetStudentAccount from './AdminResetStudentAccount';
 
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
@@ -31,6 +32,24 @@ const AdminStudentList = () => {
 
     const validateStudent = async (student) => {
         const res = await fetch(`http://localhost:8888/students/validate-student/${student.matricule}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        const data = await res.json()
+
+        setStudents(
+            students.map(
+                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
+            )
+        )
+    }
+
+    const resetStudentAccount = async (student) => {
+        const res = await fetch(`http://localhost:8888/students/reset-student-account/${student.matricule}`,
             {
                 method: 'PUT',
                 headers: {
@@ -81,14 +100,17 @@ const AdminStudentList = () => {
                                             </h5>
                                         </td>
                                         <td className="responsiveWidth">
-                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
-                                                <span className="hideButtonText">Consulter documents</span>
-                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
-                                            </button>
-                                            <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
-                                                <span className="hideButtonText">Valider étudiant</span>
-                                                <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
-                                            </button>
+                                            <div className="d-flex">
+                                                <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
+                                                    <span className="hideButtonText">Consulter documents</span>
+                                                    <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                                </button>
+                                                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
+                                                    <span className="hideButtonText">Valider étudiant</span>
+                                                    <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                                                </button>
+                                                <AdminResetStudentAccount resetAccount={resetStudentAccount} student={student}/>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -96,7 +118,7 @@ const AdminStudentList = () => {
                     </table>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

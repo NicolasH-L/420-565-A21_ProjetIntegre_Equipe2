@@ -48,6 +48,7 @@ public class StudentControllerTest {
                 .lastName("Tata")
                 .matricule("1234567")
                 .password(rawPassword)
+                .currentStatus("Stage trouve")
                 .isCvValid(true)
                 .build();
 
@@ -57,6 +58,7 @@ public class StudentControllerTest {
                 .lastName("Tata")
                 .matricule("1234567")
                 .password(encodedPassword)
+                .currentStatus("Stage trouve")
                 .isCvValid(true)
                 .build();
 
@@ -65,6 +67,7 @@ public class StudentControllerTest {
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("7654321")
+                .currentStatus("En recherche")
                 .password("1234")
                 .isCvValid(false)
                 .build();
@@ -168,6 +171,21 @@ public class StudentControllerTest {
 
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
         assertThat(actualStudent).isEqualTo(student);
+    }
+
+    @Test
+    public void resetStudentAccountTest() throws Exception {
+        when(studentService.resetStudentAccount(student.getMatricule())).thenReturn(Optional.of(invalidCvStudent));
+
+        MvcResult result = mockMvc.perform(put("/students/reset-student-account/1234567")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
+        System.out.println(actualStudent);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualStudent.getCurrentStatus()).isEqualTo("En recherche");
+        assertThat(actualStudent.getIsCvValid()).isFalse();
     }
 
     private List<Student> getListOfStudents() {
