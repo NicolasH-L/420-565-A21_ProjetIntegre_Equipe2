@@ -120,7 +120,7 @@ const AdminOfferForm: React.FC = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={briefcase} style={{ marginRight: 5 }}></IonIcon>Position</IonLabel>
-                                <IonTextarea {...register("jobTitle", { required: true, pattern: patternGeneral })}></IonTextarea>
+                                <IonInput type='text' {...register("jobTitle", { required: true, pattern: patternGeneral })}></IonInput>
                                 {errors.jobTitle && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Position invalide</p>}
                             </IonItem>
                             <IonItem>
@@ -130,7 +130,7 @@ const AdminOfferForm: React.FC = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={briefcase} style={{ marginRight: 5 }}></IonIcon>Compétences</IonLabel>
-                                <IonInput type="text" {...register("skills", { required: true, pattern: patternGeneral })}></IonInput>
+                                <IonTextarea  {...register("skills", { required: true, pattern: patternGeneral })}></IonTextarea>
                                 {errors.skills && <p style={{ color: "red", fontWeight: 600 }}><IonIcon icon={alertCircleOutline}></IonIcon> Compétences invalide</p>}
                             </IonItem>
                             <IonItem>

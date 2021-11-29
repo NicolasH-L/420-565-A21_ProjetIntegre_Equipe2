@@ -37,7 +37,7 @@ const OfferView = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={briefcase} style={{ marginRight: 5 }}></IonIcon>Position</IonLabel>
-                                <IonTextarea readonly value={historyState.offer.jobTitle} ></IonTextarea>
+                                <IonInput type='text' readonly value={historyState.offer.jobTitle}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={briefcase} style={{ marginRight: 5 }}></IonIcon>Description</IonLabel>
@@ -45,7 +45,7 @@ const OfferView = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={briefcase} style={{ marginRight: 5 }}></IonIcon>Compétences</IonLabel>
-                                <IonInput readonly type="text" value={historyState.offer.skills} />
+                                <IonTextarea readonly  value={historyState.offer.skills} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={mail} style={{ marginRight: 5 }}></IonIcon>Courriel du représentant</IonLabel>
@@ -61,19 +61,19 @@ const OfferView = () => {
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={calendar} style={{ marginRight: 5 }}></IonIcon>Date d'affichage</IonLabel>
-                                <IonInput readonly type="text" value={historyState.offer.displayDate} />
+                                <IonInput readonly type="text" value={historyState.offer.displayDate.split('T')[0]} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={calendar} style={{ marginRight: 5 }}></IonIcon>Date limite</IonLabel>
-                                <IonInput readonly type="text" value={historyState.offer.deadlineDate} />
+                                <IonInput readonly type="text" value={historyState.offer.deadlineDate.split('T')[0]} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={calendar} style={{ marginRight: 5 }}></IonIcon>Début Stage</IonLabel>
-                                <IonInput readonly type="text" value={historyState.offer.startInternshipDate} />
+                                <IonInput readonly type="text" value={historyState.offer.startInternshipDate.split('T')[0]} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="floating"><IonIcon icon={calendar} style={{ marginRight: 5 }}></IonIcon>Fin Stage</IonLabel>
-                                <IonInput readonly type="text" value={historyState.offer.endInternshipDate} />
+                                <IonInput readonly type="text" value={historyState.offer.endInternshipDate.split('T')[0]} />
                             </IonItem>
                         </IonCardContent>
                     </form>
