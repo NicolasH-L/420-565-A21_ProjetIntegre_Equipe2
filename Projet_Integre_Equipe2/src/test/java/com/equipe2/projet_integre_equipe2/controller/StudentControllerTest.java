@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.controller;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
