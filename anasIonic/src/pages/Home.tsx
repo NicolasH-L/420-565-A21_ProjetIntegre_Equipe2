@@ -7,16 +7,15 @@ import React, { useEffect, useState } from "react";
 const Home: React.FC = () => {
   const history = useHistory()
   const historyState = history.location.state
-  console.log(history.location.state)
 
-  useEffect(() => {
-    const interval = setInterval(() =>{
-      console.log("asd")
-      window.location.reload()
-    }, 1000)
+  // useEffect(() => {
+  //   const interval = setInterval(() =>{
+  //     console.log("asd")
+  //     window.location.reload()
+  //   }, 1000)
 
-    return () => clearInterval(interval)
-  }, [])
+  //   return () => clearInterval(interval)
+  // }, [])
   
 
   return (

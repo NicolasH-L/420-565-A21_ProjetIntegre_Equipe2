@@ -13,7 +13,7 @@ const Student = () => {
                 <IonToolbar>
                     <IonTitle>Étudiant</IonTitle>
                     <IonButtons slot="end">
-                        <IonButton disabled onClick={(e) => history.push('/home', {})} >Déposer CV</IonButton>
+                        <IonButton  onClick={(e) => history.push('/studentCV', historyState)} >Déposer CV</IonButton>
                         <IonButton disabled onClick={(e) => history.push('/home', {})} >Offres</IonButton>
                         <IonButton onClick={(e) => history.push('/home', historyState)} >log out</IonButton>
                     </IonButtons>
