@@ -1,5 +1,6 @@
 import DownloadButton from '../DownloadButton';
 import React, { useEffect, useState } from 'react'
+import DocumentMethods from '../Document/DocumentMethods'
 
 const DownloadContract = ({ contract }) => {
     const documentName = "Contract"
@@ -9,18 +10,18 @@ const DownloadContract = ({ contract }) => {
         const getContract = async () => {
             const contractFromServer = await getContractPdf()
             setcontractData(contractFromServer)
-            
+
         }
         getContract()
     }, [])
 
     const getContractPdf = () => {
         if (contract.pdf !== null) {
-            const pdfToArrayBuffer = base64ToArrayBuffer(contract.pdf)
+            const pdfToArrayBuffer = DocumentMethods.base64ToArrayBytes(contract.pdf)
             return pdfToArrayBuffer
         } else {
             return getContractData(contract)
-        } 
+        }
     }
 
     const getContractData = async (contract) => {
@@ -35,17 +36,6 @@ const DownloadContract = ({ contract }) => {
 
         const data = await result.arrayBuffer()
         return data
-    }
-
-    const base64ToArrayBuffer = (base64) => {
-        var binaryString = window.atob(base64)
-        var binaryLen = binaryString.length
-        var bytes = new Uint8Array(binaryLen)
-        for (var i = 0; i < binaryLen; i++) {
-            var ascii = binaryString.charCodeAt(i)
-            bytes[i] = ascii
-        }
-        return bytes
     }
 
     return (
