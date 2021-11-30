@@ -44,6 +44,10 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
+        createNotificationValide(offer)
+    }
+
+    const createNotificationValide = (offer) => {
         message = "Nouvelle offre de stage disponible"
         notification.message = message
         createNotificationStudent(notification)
@@ -92,6 +96,10 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
+        createNotificationInvalid(offer)
+    }
+
+    const createNotificationInvalid = (offer) => {
         message = "Une offre de stage a été refusé"
         notification.message = message
         createNotificationForMoniteur(notification, offer)

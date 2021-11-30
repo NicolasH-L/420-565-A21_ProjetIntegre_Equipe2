@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { RegexPattern } from '../RegexPattern'
+import { SessionPattern } from '../SessionPattern'
 import AdminNavbar from './AdminNavbar'
 import _ from 'lodash'
 import Swal from 'sweetalert2'
@@ -22,20 +23,14 @@ const AdminInternshipOffer = () => {
     const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    const sessionPrefix = ["winter", "summer"]
-    const errorMessage = "Erreur"
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
     const timeMillisecond = 2000
     const dayslimit = 220
+    const letterSplit = 'T'
 
     const findFutureDate = () => {
         let futureDate = new Date(timeElapsed)
         futureDate.setDate(futureDate.getDate() + dayslimit)
-        let futureDateFormat = futureDate.toISOString().split('T')[0]
+        let futureDateFormat = futureDate.toISOString().split(letterSplit)[0]
         return futureDateFormat
     }
 
@@ -103,7 +98,7 @@ const AdminInternshipOffer = () => {
             fireSwalBadFields()
             return
         } else {
-            setOfferSession()
+            offer.session = SessionPattern.getSession()
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : "")
         }
@@ -116,15 +111,6 @@ const AdminInternshipOffer = () => {
         function submitOfferSuccess() {
             fireSwalOfferSuccess()
             document.getElementById("AdminInternshipOfferForm").reset()
-        }
-
-        function setOfferSession() {
-            let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
-                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : errorMessage
-            offer.session = session
         }
     }
 
