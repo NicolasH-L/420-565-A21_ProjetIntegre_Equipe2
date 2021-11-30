@@ -7,13 +7,15 @@ import '../ResponsiveButtons.css'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
+    const messageOfferAvailable = "Nouvelle offre de stage disponible"
+    const messageOfferAccepted = "Une offre deposée est acceptée"
+    const messageOfferRejected = "Une offre de stage a été refusé"
     const history = useHistory()
     const admin = history.location.state.admin
     const [offers, setOffers] = useState([])
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession
     })
-    let message = ""
 
     useEffect(() => {
         const getOffers = async () => {
@@ -48,11 +50,9 @@ const AdminInternshipOfferList = () => {
     }
 
     const createNotificationValide = (offer) => {
-        message = "Nouvelle offre de stage disponible"
-        notification.message = message
+        notification.message = messageOfferAvailable
         createNotificationStudent(notification)
-        message = "Une offre deposée est acceptée"
-        notification.message = message
+        notification.message = messageOfferAccepted
         createNotificationForMoniteur(notification, offer)
     }
 
@@ -100,8 +100,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const createNotificationInvalid = (offer) => {
-        message = "Une offre de stage a été refusé"
-        notification.message = message
+        notification.message = messageOfferRejected
         createNotificationForMoniteur(notification, offer)
     }
 
