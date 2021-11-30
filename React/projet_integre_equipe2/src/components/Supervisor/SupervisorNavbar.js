@@ -30,11 +30,11 @@ const SupervisorNavbar = () => {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-light btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <div className="btn-group">
+                                <button type="button" className="btn btn-light btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     Étudiants
                                 </button>
-                                <div class="dropdown-menu">
+                                <div className="dropdown-menu">
                                     <button className="dropdown-item btn btn-sm btn-light" type="button" onClick={() => goToSupervisorEvaluations()}>Évaluations étudiants</button>
                                     <button className="dropdown-item btn btn-sm btn-light" type="button" onClick={() => goToSupervisorAssignedStudentList()}>Mes étudiants</button>
                                 </div>

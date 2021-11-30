@@ -26,7 +26,8 @@ const SupervisorEvaluations = () => {
     }
 
     const filterEvaluations = (evaluation) => {
-        return evaluation.session === supervisor.actualSession
+        return evaluation.session === supervisor.actualSession 
+        && supervisor.id === evaluation.contract.internship.supervisor.id
     }
 
     return (

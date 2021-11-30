@@ -86,7 +86,7 @@ const MonitorRegistration = ({ onAdd }) => {
         let inputError
         let patternEmail = RegexPattern.getPatternEmail()
         let patternName = RegexPattern.getPatternName()
-        let patternCompany = RegexPattern.getPatternCompany()
+        let patternCompany = RegexPattern.getPatternGeneral()
         let patternTelephone = RegexPattern.getPatternTelephone()
         let patternPassword = RegexPattern.getPatternPassword()
 
