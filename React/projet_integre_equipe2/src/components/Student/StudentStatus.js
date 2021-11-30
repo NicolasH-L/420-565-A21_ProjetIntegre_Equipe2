@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import StudentInternshipFoundStatus from './StudentInternshipFoundStatus';
-import StudentInterviewDateStatus from './StudentInterviewDateStatus';
-import StudentSearchingStatus from './StudentSearchingStatus';
+import { useHistory } from 'react-router-dom'
+import StudentInternshipFoundStatus from './StudentInternshipFoundStatus'
+import StudentInterviewDateStatus from './StudentInterviewDateStatus'
+import StudentSearchingStatus from './StudentSearchingStatus'
 import '../Form.css'
+import Error from '../Constants/Error'
 
 const StudentStatus = () => {
     const history = useHistory();
     const historyState = history.location.state
     const student = historyState.student
-    const location = useLocation()
     const [isActualSession, setIsActualSession] = useState(true)
 
     const badgeColor = student.currentStatus === "Stage trouvé" ? 'badge-success' : 'badge-primary'
     const interviewStatus = student.currentStatus === "En attente" ? " d'une entrevue" : ""
+    const emptyMesage = "Profil de stage non disponible avec cette session"
 
     useEffect(() => {
         fetchSessions().then((data) => getActualSession(data))
@@ -65,7 +66,7 @@ const StudentStatus = () => {
                             </div>
                         </div>
                     </div>
-                    : <h4 className="text-center text-warning my-5">Profil de stage non disponible avec cette session</h4>
+                    : Error.displayEmptyErrorMessage(emptyMesage)
                 }
             </div>
         </div>

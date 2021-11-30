@@ -5,6 +5,7 @@ import StudentNavbar from './StudentNavbar'
 import Contract from '../Contract/Contract'
 import '../Form.css'
 import Footer from '../Footer'
+import Error from '../Constants/Error'
 
 const StudentSignContract = () => {
     const history = useHistory()
@@ -13,6 +14,7 @@ const StudentSignContract = () => {
     const [contract, setContract] = useState(null)
     const baseUrl = "http://localhost:8888"
     const student = historyState.student
+    const emptyMesage = "Vous n'avez pas de contrat à signer"
 
     useEffect(() => {
         const getInternship = async () => {
@@ -48,16 +50,6 @@ const StudentSignContract = () => {
         return await res.json()
     }
 
-    const displayEmptyErrorMessage = () => {
-        return (
-            <div className="container">
-                <div className="d-flex justify-content-center py-5">
-                    <h4 className="text-warning">Vous n'avez pas de contrat à signer</h4>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div>
             <div className="grad">
@@ -70,7 +62,7 @@ const StudentSignContract = () => {
                         </div>
                     </div>
                 )
-                    : displayEmptyErrorMessage()}
+                    : Error.displayEmptyErrorMessage(emptyMesage)}
             </div>
             <Footer />
         </div>

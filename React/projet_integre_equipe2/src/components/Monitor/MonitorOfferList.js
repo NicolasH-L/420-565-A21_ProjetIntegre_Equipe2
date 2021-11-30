@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import '../Form.css'
 import { useHistory } from 'react-router-dom'
 import MonitorNavbar from './MonitorNavbar'
+import Footer from '../Footer'
+import '../Form.css'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
-import Footer from '../Footer'
 
 const MonitorOfferList = () => {
     const [offers, setOffers] = useState([])
@@ -86,7 +86,6 @@ const MonitorOfferList = () => {
             </div>
             <Footer />
         </div>
-
     )
 }
 
