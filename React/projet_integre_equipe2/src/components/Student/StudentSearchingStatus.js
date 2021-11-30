@@ -6,9 +6,11 @@ const StudentSearchingStatus = ({ onAddStudent }) => {
     const historyState = history.location.state
     const student = historyState.student
     const location = useLocation()
+    const enRecherche = "En recherche"
+    const stageTrouve = "Stage trouvé"
 
     const setStudentToSearching = async () => {
-        student.currentStatus = "En recherche"
+        student.currentStatus = enRecherche
         onAddStudent(student).then((data) => history.push(location.pathname, { student: data }))
     }
 
@@ -18,9 +20,9 @@ const StudentSearchingStatus = ({ onAddStudent }) => {
                 href="#"
                 className="btn btn-primary mx-2"
                 data-toggle="modal"
-                data-target="#studentSearchStatus" 
-                disabled={student.currentStatus === "En recherche" ? true : false}
-                hidden={student.currentStatus === "Stage trouvé" ? true : false}>
+                data-target="#studentSearchStatus"
+                disabled={student.currentStatus === enRecherche ? true : false}
+                hidden={student.currentStatus === stageTrouve ? true : false}>
                 <i className="fas fa-hourglass-start mr-2"></i> En recherche
             </button>
             <div className="modal fade" id="studentSearchStatus" tabIndex="-1" aria-labelledby="studentSearchStatusLabel" aria-hidden="true">
@@ -41,7 +43,7 @@ const StudentSearchingStatus = ({ onAddStudent }) => {
                                 type="button"
                                 className="btn btn-primary"
                                 onClick={() => { setStudentToSearching() }}
-                                disabled={student.currentStatus === "En recherche" ? true : false}>
+                                disabled={student.currentStatus === enRecherche ? true : false}>
                                 Modifier le statut
                             </button>
                         </div>

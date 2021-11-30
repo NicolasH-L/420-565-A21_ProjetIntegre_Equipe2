@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash'
 import { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import OfferModalView from '../Offer/OfferModalView'
+import _ from 'lodash'
 import Swal from 'sweetalert2'
+import OfferModalView from '../Offer/OfferModalView'
 
 const StudentAppliedOffersList = ({onSetDate}) => {
     const [studentOffers, setStudentOffers] = useState([])
@@ -12,14 +12,11 @@ const StudentAppliedOffersList = ({onSetDate}) => {
     const historyState = history.location.state
     const student = historyState.student
     const location = useLocation()
-
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
     const baseUrl = 'http://localhost:8888/offers-list'
 
     useEffect(() => {
-        if (historyState === undefined)
-            return
         const getStudentOffers = async () => {
             const studentOffersFromServer = await fetchStudentOffers()
             setStudentOffers(studentOffersFromServer)
@@ -50,7 +47,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
             showConfirmButton: false,
             timer: 2000
         })
-      }
+    }
     
     const fetchStudentOffers = async () => {
         const res = await fetch(`${baseUrl}/student-offers/student/${student.id}`)
@@ -75,8 +72,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
         for (let i = 0; i < studentOffersArray.length; i++) {
             if (studentOffersArray[i].idStudentOffer !== studentOffer.idStudentOffer) {
                 index++
-            }
-            else {
+            } else {
                 break
             }
         }
@@ -89,8 +85,9 @@ const StudentAppliedOffersList = ({onSetDate}) => {
             return
         }
         let interviewDate = tmpStudentOffers[index].interviewDate
-        if (interviewDate === null)
+        if (interviewDate === null){
             return fireSwalBadDate()
+        }   
         updateStudentOfferDate(tmpStudentOffers[index])
     }
 

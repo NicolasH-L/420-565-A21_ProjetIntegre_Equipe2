@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Notification } from '../Notification/Notification'
 
 const StudentNotifications = ({studentState}) => {
-    const baseUrl = "http://localhost:8888"
     const [notificationList, setNotificationList] = useState([])
     const user = "Student"
 
@@ -16,7 +15,7 @@ const StudentNotifications = ({studentState}) => {
     }
 
     const fetchNotificationStudent = async (studentId) => {
-        const res = await fetch(`${baseUrl}/notification/get-notification-student/${studentId}`)
+        const res = await fetch(`http://localhost:8888/notification/get-notification-student/${studentId}`)
         return await res.json()
     }
     

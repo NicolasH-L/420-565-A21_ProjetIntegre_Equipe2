@@ -14,8 +14,6 @@ const StudentInternshipListOffers = () => {
     const student = historyState.student
 
     useEffect(() => {
-        if (historyState === undefined)
-            return
         const getOffers = async () => {
             const offersFromServer = await fetchOffers()
             setOffers(offersFromServer)
@@ -73,7 +71,6 @@ const StudentInternshipListOffers = () => {
             </div>
             <Footer/>
         </div>
-
     )
 }
 

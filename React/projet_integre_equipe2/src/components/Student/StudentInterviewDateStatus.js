@@ -6,6 +6,7 @@ const StudentInterviewDateStatus = ({onAddStudent}) => {
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
+    const stageTrouve = "Stage trouvé"
 
     return (
         <div>
@@ -14,7 +15,7 @@ const StudentInterviewDateStatus = ({onAddStudent}) => {
                 className="btn btn-primary mx-2"
                 data-toggle="modal"
                 data-target="#studentInterviewDateStatus"
-                hidden={student.currentStatus === "Stage trouvé" ? true : false}>
+                hidden={student.currentStatus === stageTrouve ? true : false}>
                 <i className="fas fa-calendar-alt mr-2"></i> Date d'entrevue
             </button>
             <div className="modal fade" id="studentInterviewDateStatus" tabIndex="-1" aria-labelledby="studentInterviewDateStatusLabel" aria-hidden="true">

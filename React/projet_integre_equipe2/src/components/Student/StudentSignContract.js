@@ -15,8 +15,6 @@ const StudentSignContract = () => {
     const student = historyState.student
 
     useEffect(() => {
-        if (historyState === undefined)
-            return
         const getInternship = async () => {
             await fetchInternship()
                 .then((data) => data !== null ? setInternship(data) : setInternship(null))
@@ -35,7 +33,6 @@ const StudentSignContract = () => {
 
         if (res.status > 200)
             return null
-
         return await res.json()
     }
 
@@ -48,7 +45,6 @@ const StudentSignContract = () => {
 
         if (res.status > 200)
             return null
-
         return await res.json()
     }
 

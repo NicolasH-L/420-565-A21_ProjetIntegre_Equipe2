@@ -5,7 +5,6 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
-
     const [offer, setOffer] = useState({
         companyName: "", address: "", salary: "",
         jobTitle: "", description: "", skills: "",
@@ -18,7 +17,6 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     const [documents, setDocuments] = useState([])
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
     const baseUrl = "http://localhost:8888/offers-list"
-
     const sessionPrefix = ["winter", "summer"]
     const lastMonthOfTheYear = 11
     const winterStart = 8
@@ -38,7 +36,6 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
         offerId = newOffer.idOffer
         setApplyMessage()
         getDocuments()
-
     }, [])
 
     const fetchDocuments = async () => {
@@ -124,7 +121,6 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
                 <span className="hideButtonIcon"><i className="fas fa-paper-plane"></i></span>
             </button>
         )
-
     }
 
     const appliedMessage = () => {

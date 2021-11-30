@@ -12,8 +12,6 @@ const StudentDocuments = () => {
     const student = historyState.student
 
     useEffect(() => {
-        if (historyState === undefined)
-            return
         const getDocuments = async () => {
             const documentsFromServer = await fetchDocuments(student.id)
             setDocuments(documentsFromServer)

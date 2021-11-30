@@ -6,7 +6,6 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     const [studentOffers, setStudentOffers] = useState([])
     const [studentOffer, setStudentOffer] = useState(undefined)
     const [isInternshipFound, setIsInternshipFound] = useState(false)
-
     const history = useHistory()
     const historyState = history.location.state
     const student = historyState.student
@@ -80,8 +79,8 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
                 },
                 body: JSON.stringify(studentOffer)
             })
-        const data = await res.json()
         fireSwalGoodInternship()
+        return await res.json()
     }
 
     const filterStudentOffers = (studentOffer) => {
@@ -90,7 +89,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
 
     return (
         <div>
-            <a href="#" className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInternshipFoundStatus">
+            <a className="btn btn-primary mx-2" data-toggle="modal" data-target="#studentInternshipFoundStatus">
                 <i className="fas fa-handshake mr-2"></i> Stage trouvé
             </a>
             <div className="modal fade" id="studentInternshipFoundStatus" tabIndex="-1" aria-labelledby="studentInternshipFindedStatusLabel" aria-hidden="true">
