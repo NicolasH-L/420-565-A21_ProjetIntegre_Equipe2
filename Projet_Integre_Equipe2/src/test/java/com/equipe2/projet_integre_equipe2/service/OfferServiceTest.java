@@ -151,20 +151,20 @@ public class OfferServiceTest {
     }
 
     @Test
-    public void testGetAllOffersValidByMonitor_Id() {
+    public void testGetAllOffersByMonitor_Id() {
         when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
-        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(getListOfOffersByMonitor());
+        when(offerRepository.findOfferByMonitor_Id(monitor.getId())).thenReturn(getListOfOffersByMonitor());
         final Optional<List<Offer>> expectedMonitorOffer = Optional.of(offerRepository.saveAll(getListOfOffersByMonitor()));
-        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersByMonitor_Id(monitor.getId());
         assertThat(monitorOffers.get().size()).isEqualTo(expectedMonitorOffer.get().size());
     }
 
     @Test
-    public void testGetAllOffersValidByMonitor_IdFails() {
+    public void testGetAllOffersByMonitor_IdFails() {
         when(offerRepository.saveAll(getListOfOffersByMonitor())).thenReturn(getListOfOffersByMonitor());
-        when(offerRepository.findOfferByIsValidTrueAndMonitor_Id(monitor.getId())).thenReturn(null);
+        when(offerRepository.findOfferByMonitor_Id(monitor.getId())).thenReturn(null);
         offerRepository.saveAll(getListOfOffersByMonitor());
-        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersValidByMonitor_Id(monitor.getId());
+        final Optional<List<Offer>> monitorOffers = offerService.getAllOffersByMonitor_Id(monitor.getId());
         assertThat(monitorOffers).isEqualTo(Optional.empty());
     }
 
