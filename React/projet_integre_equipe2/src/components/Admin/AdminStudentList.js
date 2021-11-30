@@ -5,15 +5,20 @@ import { useState, useEffect } from 'react'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
 import Footer from '../Footer';
-import AdminResetStudentAccount from './AdminResetStudentAccount';
+import Swal from 'sweetalert2'
+
 
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
-
-    useEffect(() => {
+    const resetAlertText = 
+        "Cette option permet de réinitilaiser un compte étudiant lorsque celui-ci est rendu à une nouvelle session de stage." +
+        " Il est possible, également, de réinitialiser un compte qui contient des erreurs." +
+        " À noter qu'il n'efface pas les données de l'étudiant, cette option permet simplement de remettre le statut de l'étudiant à \"En recherche\" et d'invalider son compte."
+    
+        useEffect(() => {
         const getStudents = async () => {
             const studentsFromServer = await fetchStudents()
             setStudents(studentsFromServer)
@@ -49,6 +54,7 @@ const AdminStudentList = () => {
     }
 
     const resetStudentAccount = async (student) => {
+        console.log(student)
         const res = await fetch(`http://localhost:8888/students/reset-student-account/${student.matricule}`,
             {
                 method: 'PUT',
@@ -58,12 +64,31 @@ const AdminStudentList = () => {
                 body: JSON.stringify(student)
             })
         const data = await res.json()
+        console.log(data)
 
         setStudents(
             students.map(
                 (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
             )
         )
+    }
+
+    const resetAccountAlert = async (student) => {
+        Swal.fire({
+            title: 'Réinitialiser un compte étudiant?',
+            showCancelButton: true,
+            confirmButtonText: 'Réinitialiser',
+            confirmButtonColor: '#FF0000',
+            text: resetAlertText,
+            footer: `
+            <span class="text-danger">
+                <i class="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
+            </span>`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resetStudentAccount(student)
+            }
+        })
     }
 
     const filterStudents = (student) => {
@@ -109,7 +134,12 @@ const AdminStudentList = () => {
                                                     <span className="hideButtonText">Valider étudiant</span>
                                                     <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
                                                 </button>
-                                                <AdminResetStudentAccount resetAccount={resetStudentAccount} student={student}/>
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={e => { e.preventDefault(); resetAccountAlert(student) }}
+                                                >
+                                                    Réinitialiser
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>

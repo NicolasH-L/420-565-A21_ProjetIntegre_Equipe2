@@ -26,6 +26,7 @@ public class SessionVerificationTest {
         calculatedSession2 = "summer2022";
 
         admin = Admin.adminBuilder()
+                .id(1)
                 .username("username")
                 .password("password")
                 .actualSession("winter2022")
