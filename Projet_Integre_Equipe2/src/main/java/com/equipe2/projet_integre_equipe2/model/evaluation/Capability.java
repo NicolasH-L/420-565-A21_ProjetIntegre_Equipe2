@@ -13,5 +13,4 @@ public class Capability {
 
     private String capability;
     private String value;
-
 }

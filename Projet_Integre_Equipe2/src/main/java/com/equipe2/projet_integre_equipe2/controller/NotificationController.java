@@ -95,5 +95,4 @@ public class NotificationController {
     public Boolean deleteAllNotificationsForMonitor(@PathVariable int idMonitor) {
         return notificationService.deleteAllByMonitorId(idMonitor);
     }
-
 }

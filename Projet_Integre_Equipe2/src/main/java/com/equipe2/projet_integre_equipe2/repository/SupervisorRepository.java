@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SupervisorRepository extends JpaRepository<Supervisor, Integer> {
 
-    Supervisor findByMatriculeAndPassword(String matricule, String password);
     Supervisor findByMatricule(String matricule);
-
 }

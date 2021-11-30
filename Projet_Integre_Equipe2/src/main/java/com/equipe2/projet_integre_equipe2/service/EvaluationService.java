@@ -121,7 +121,6 @@ public class EvaluationService {
         setBehaviors(fields, internEvaluation);
         setAppreciations(fields, internEvaluation);
         setHireAgain(fields, internEvaluation);
-
     }
 
 
@@ -139,7 +138,6 @@ public class EvaluationService {
             String comments = (behaviors.get(i).getComments() == "" || behaviors.get(i).getComments() == null) ? NO_COMMENTS.getStringValue() : behaviors.get(i).getComments();
             fields.get(FORM_COMMENTS.getStringValue() + "-" + (i + 1)).setValue(comments);
         }
-
     }
 
     private void setAppreciations(Map<String, PdfFormField> fields, InternEvaluation internEvaluation) {
@@ -150,7 +148,6 @@ public class EvaluationService {
         fields.get(FORM_EXPECTATION.getStringValue() + "-" + expectationValue).setValue(FORM_CHECK.getStringValue());
         fields.get(FORM_APPRECIATION.getStringValue()).setValue(appreciation.getAppreciations());
         fields.get(FORM_DISCUSSED.getStringValue() + "-" + discussValue).setValue(FORM_CHECK.getStringValue());
-
     }
 
     private void setHireAgain(Map<String, PdfFormField> fields, InternEvaluation internEvaluation) {
@@ -167,5 +164,4 @@ public class EvaluationService {
         File deleteFile = new File(newFilePath);
         deleteFile.delete();
     }
-
 }
