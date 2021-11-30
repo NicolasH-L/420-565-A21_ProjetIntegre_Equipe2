@@ -85,7 +85,7 @@ const StudentNavbar = ({ useStudent }) => {
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
-                <a className="navbar-brand"><img className="" width="30" src={logo}/> </a>
+                <a className="navbar-brand"><img className="" alt="" width="30" src={logo}/></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="fas fa-bars btn btn-light"></span>
                 </button>

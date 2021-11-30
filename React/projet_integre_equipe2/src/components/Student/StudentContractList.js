@@ -98,8 +98,6 @@ const StudentContractList = () => {
             </div>
             <Footer />
         </div>
-
-
     )
 }
 
