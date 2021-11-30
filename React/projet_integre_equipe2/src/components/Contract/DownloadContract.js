@@ -1,4 +1,4 @@
-import DownloadButton from '../DownloadButton';
+import DownloadButton from '../DownloadButton'
 import React, { useEffect, useState } from 'react'
 import DocumentMethods from '../Document/DocumentMethods'
 
