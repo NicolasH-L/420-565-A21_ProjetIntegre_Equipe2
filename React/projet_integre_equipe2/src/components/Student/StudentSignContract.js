@@ -52,7 +52,7 @@ const StudentSignContract = () => {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center py-5">
-                    <h2 className="text-dark">Vous n'avez pas de contrat à signer</h2>
+                    <h2 className="text-light">Vous n'avez pas de contrat à signer</h2>
                 </div>
             </div>
         )
