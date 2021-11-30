@@ -15,7 +15,7 @@ export default class Error {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center">
-                    <h2 className="text-light">{errorMessage}</h2>
+                    <h2 className="text-warning">{errorMessage}</h2>
                 </div>
             </div>
         )

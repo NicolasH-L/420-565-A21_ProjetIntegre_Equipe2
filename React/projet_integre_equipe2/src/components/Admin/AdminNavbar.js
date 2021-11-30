@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import SessionsButton from '../SessionsButton'
 import AdminNotifications from './AdminNotifications'
 import logo from '../../images/logo-projet2.png'
@@ -7,7 +7,6 @@ import logo from '../../images/logo-projet2.png'
 const AdminNavbar = () => {
     const history = useHistory()
     const historyState = history.location.state
-    const location = useLocation()
 
     const goToAdminDashboard = () => {
         history.push("/Admin", historyState)
@@ -27,10 +26,6 @@ const AdminNavbar = () => {
 
     const goToAdminStudentAcceptedOffers = () => {
         history.push("/AdminStudentAcceptedOffers", historyState)
-    }
-
-    const goToAdminInternshipList = () => {
-        history.push("/AdminInternshipList", historyState)
     }
 
     const goToAdminAssignSupervisorToStudent = () => {
@@ -59,11 +54,11 @@ const AdminNavbar = () => {
                             <button className="nav-link btn btn-sm btn-light mx-1" onClick={() => goToAdminDashboard()}><i className="fas fa-home fa-lg"></i></button>
                         </li>
                         <li>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-light mt-1 btn-sm mx-1 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <div className="btn-group">
+                                <button type="button" className="btn btn-light mt-1 btn-sm mx-1 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     Offres
                                 </button>
-                                <div class="dropdown-menu">
+                                <div className="dropdown-menu">
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffersList()}>Offres</button>
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminOffer()}>Déposer offre</button>
                                     <button className="dropdown-item btn btn-sm btn-light" onClick={() => goToAdminStudentAcceptedOffers()}>Offres acceptées</button>

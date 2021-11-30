@@ -12,5 +12,4 @@ public interface InternshipRepository extends JpaRepository<Internship, Integer>
     Internship findInternshipByStudent_IdAndSession(Integer id, String session);
 
     List<Internship> findInternshipsBySupervisor_Id(Integer id);
-
 }

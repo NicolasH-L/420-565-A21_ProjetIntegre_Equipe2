@@ -1,11 +1,11 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import _ from 'lodash'
-import AdminNavbar from './AdminNavbar'
+import React, { useState, useEffect } from 'react'
 import { RegexPattern } from '../RegexPattern'
-import './../Form.css'
+import { SessionPattern } from '../SessionPattern'
+import AdminNavbar from './AdminNavbar'
+import _ from 'lodash'
 import Swal from 'sweetalert2'
 import Footer from '../Footer'
+import './../Form.css'
 
 const AdminInternshipOffer = () => {
     const [offer, setOffer] = useState({
@@ -20,21 +20,17 @@ const AdminInternshipOffer = () => {
         jobSchedules: "", workingHours: "", monitorEmail: "",
         displayDate: "", deadlineDate: "", startInternshipDate: "", endInternshipDate: ""
     })
-
     const [monitors, setMonitors] = useState([])
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    const sessionPrefix = ["winter", "summer"]
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
+    const timeMillisecond = 2000
+    const dayslimit = 220
+    const letterSplit = 'T'
 
     const findFutureDate = () => {
         let futureDate = new Date(timeElapsed)
-        futureDate.setDate(futureDate.getDate() + 220)
-        let futureDateFormat = futureDate.toISOString().split('T')[0]
+        futureDate.setDate(futureDate.getDate() + dayslimit)
+        let futureDateFormat = futureDate.toISOString().split(letterSplit)[0]
         return futureDateFormat
     }
 
@@ -45,7 +41,7 @@ const AdminInternshipOffer = () => {
             icon: 'success',
             title: 'Offre de stage ajoutée avec succès',
             showConfirmButton: false,
-            timer: 2000,
+            timer: timeMillisecond,
             width: '400px'
         })
     }
@@ -57,7 +53,7 @@ const AdminInternshipOffer = () => {
             icon: 'error',
             title: "Impossible de créer l'offre, veuillez réessayer!",
             showConfirmButton: false,
-            timer: 2000,
+            timer: timeMillisecond,
             width: '500px'
         })
     }
@@ -69,7 +65,7 @@ const AdminInternshipOffer = () => {
             icon: 'warning',
             title: "Veuillez remplir tous les champs correctement",
             showConfirmButton: false,
-            timer: 2000,
+            timer: timeMillisecond,
             width: '500px'
         })
     }
@@ -92,18 +88,19 @@ const AdminInternshipOffer = () => {
         if (!_.isEmpty(error.companyName) || !_.isEmpty(error.address) || !_.isEmpty(error.salary) ||
             !_.isEmpty(error.jobTitle) || !_.isEmpty(error.description) || !_.isEmpty(error.skills) ||
             !_.isEmpty(error.jobSchedules) || !_.isEmpty(error.workingHours) || !_.isEmpty(error.monitorEmail) ||
-            !_.isEmpty(error.displayDate) || !_.isEmpty(error.deadlineDate) || !_.isEmpty(error.startInternshipDate) || !_.isEmpty(error.endInternshipDate) ||
+            !_.isEmpty(error.displayDate) || !_.isEmpty(error.deadlineDate) || !_.isEmpty(error.startInternshipDate) ||
+            !_.isEmpty(error.endInternshipDate) ||
             _.isEmpty(offer.companyName) || _.isEmpty(offer.address) || _.isEmpty(offer.salary) ||
             _.isEmpty(offer.jobTitle) || _.isEmpty(offer.description) || _.isEmpty(offer.skills) ||
             _.isEmpty(offer.jobSchedules) || _.isEmpty(offer.workingHours) || _.isEmpty(offer.monitorEmail ||
-                _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) || _.isEmpty(offer.endInternshipDate))) {
-
+                _.isEmpty(offer.displayDate) || _.isEmpty(offer.deadlineDate) || _.isEmpty(offer.startInternshipDate) ||
+                _.isEmpty(offer.endInternshipDate))) {
             fireSwalBadFields()
             return
         } else {
-            setOfferSession()
+            offer.session = SessionPattern.getSession()
             verifyMonitorExists(offer.monitorEmail)
-                .then((data) => data ? submitOffer() : alert("Aucun compte moniteur existant avec ce email!"))
+                .then((data) => data ? submitOffer() : "")
         }
 
         function submitOffer() {
@@ -114,15 +111,6 @@ const AdminInternshipOffer = () => {
         function submitOfferSuccess() {
             fireSwalOfferSuccess()
             document.getElementById("AdminInternshipOfferForm").reset()
-        }
-
-        function setOfferSession() {
-            let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
-                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
-            offer.session = session
         }
     }
 
@@ -263,7 +251,7 @@ const AdminInternshipOffer = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

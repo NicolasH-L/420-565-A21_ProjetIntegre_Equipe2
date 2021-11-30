@@ -3,6 +3,7 @@ import NavbarRegistrationLogin from '../NavbarRegistrationLogin'
 import './homePage.css'
 import SvgImage from './SvgImage'
 import logo from '../../images/logo-projet1.png'
+import { Link } from 'react-router-dom'
 
 const HomePage = () => {
     return (
@@ -14,7 +15,7 @@ const HomePage = () => {
                     <h3 className="text-light text-center">Alterna Stage</h3>
                     <h1 className="text-light home-title mt-5">Trouve le <span className="badge badge-light">meilleur</span> stage,</h1>
                     <h1 className="text-light home-title">Sur ta plateforme <span className="badge badge-light">préférée!</span></h1>
-                    <button className="btn btn-lg btn-light home-register-button shadow">Inscris-toi!</button>
+                        <Link className="btn btn-lg btn-light home-register-button shadow" to="/Registration">Inscris-toi !</Link>
                     <div className="col-svg-small">
                         <SvgImage />
                     </div>
@@ -23,9 +24,6 @@ const HomePage = () => {
                     <SvgImage />
                 </div>
             </div>
-
-
-
         </div>
     )
 }

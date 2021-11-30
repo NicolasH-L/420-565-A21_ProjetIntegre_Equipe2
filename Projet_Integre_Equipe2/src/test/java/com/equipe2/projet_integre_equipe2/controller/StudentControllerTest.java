@@ -3,7 +3,6 @@ package com.equipe2.projet_integre_equipe2.controller;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.security.PasswordService;
 import com.equipe2.projet_integre_equipe2.service.StudentService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +47,7 @@ public class StudentControllerTest {
                 .lastName("Tata")
                 .matricule("1234567")
                 .password(rawPassword)
+                .currentStatus("Stage trouve")
                 .isCvValid(true)
                 .build();
 
@@ -57,6 +57,7 @@ public class StudentControllerTest {
                 .lastName("Tata")
                 .matricule("1234567")
                 .password(encodedPassword)
+                .currentStatus("Stage trouve")
                 .isCvValid(true)
                 .build();
 
@@ -65,6 +66,7 @@ public class StudentControllerTest {
                 .firstName("Toto")
                 .lastName("Tata")
                 .matricule("7654321")
+                .currentStatus("En recherche")
                 .password("1234")
                 .isCvValid(false)
                 .build();
@@ -156,6 +158,33 @@ public class StudentControllerTest {
         var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(invalidCvStudent).isEqualTo(actualStudent);
+    }
+
+    @Test
+    public void getStudentByMatrivuleTest() throws Exception {
+        when(studentService.getStudentByMatricule(student.getMatricule())).thenReturn(Optional.of(student));
+
+        MvcResult result = mockMvc.perform(get("/students/get-student/{matricule}", student.getMatricule())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
+        assertThat(actualStudent).isEqualTo(student);
+    }
+
+    @Test
+    public void resetStudentAccountTest() throws Exception {
+        when(studentService.resetStudentAccount(student.getMatricule())).thenReturn(Optional.of(invalidCvStudent));
+
+        MvcResult result = mockMvc.perform(put("/students/reset-student-account/1234567")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualStudent = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Student.class);
+        System.out.println(actualStudent);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualStudent.getCurrentStatus()).isEqualTo("En recherche");
+        assertThat(actualStudent.getIsCvValid()).isFalse();
     }
 
     private List<Student> getListOfStudents() {
