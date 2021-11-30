@@ -7,6 +7,7 @@ import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
+import Error from '../Constants/Error'
 
 const MonitorEvaluateStudent = () => {
     const history = useHistory()
@@ -15,6 +16,7 @@ const MonitorEvaluateStudent = () => {
     const status = "Completed"
     const [contracts, setContracts] = useState([])
     const [evaluations, setEvaluations] = useState([])
+    const emptyMessage = "Vous n'avez pas de stagiaire à évaluer"
 
     useEffect(() => {
         const getAllInternships = async () => {
@@ -49,16 +51,6 @@ const MonitorEvaluateStudent = () => {
 
     const isDisplayEvaluations = () => {
         return (contracts !== undefined || contracts !== null) && contracts.length > 0
-    }
-
-    const displayEmptyErrorMessage = () => {
-        return (
-            <div className="container">
-                <div className="d-flex justify-content-center">
-                    <h2 className="text-dark">Vous n'avez pas de stagiaire à évaluer</h2>
-                </div>
-            </div>
-        )
     }
 
     const isInternAlreadyEvaluated = (contract) => {
@@ -120,13 +112,12 @@ const MonitorEvaluateStudent = () => {
                                         ))}
                                 </tbody>
                             </table>
-                            : displayEmptyErrorMessage()}
+                            : Error.displayEmptyErrorMessage(emptyMessage)}
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-
     )
 }
 

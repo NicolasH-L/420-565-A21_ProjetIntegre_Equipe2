@@ -8,6 +8,7 @@ import DownloadContract from '../Contract/DownloadContract'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
+import Error from '../Constants/Error'
 
 const MonitorContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -16,6 +17,7 @@ const MonitorContracts = () => {
     const historyState = history.location.state
     const monitor = historyState.monitor
     const contractCompletedStatus = "Completed"
+    const emptyMessage = "Vous n'avez pas de contrats"
 
     useEffect(() => {
         if (filters.signatureStatus === "") {
@@ -53,16 +55,6 @@ const MonitorContracts = () => {
 
     const changeStatusFilter = (e) => {
         setFilters({ ...filters, signatureStatus: e.target.value })
-    }
-
-    const displayEmptyErrorMessage = () => {
-        return (
-            <div className="container">
-                <div className="d-flex justify-content-center">
-                    <h2 className="text-dark">Vous n'avez pas de contrats</h2>
-                </div>
-            </div>
-        )
     }
 
     return (
@@ -139,12 +131,11 @@ const MonitorContracts = () => {
                                     ))}
                             </tbody>
                         </table>
-                        : displayEmptyErrorMessage()}
+                        : Error.displayEmptyErrorMessage(emptyMessage)}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-
     )
 }
 

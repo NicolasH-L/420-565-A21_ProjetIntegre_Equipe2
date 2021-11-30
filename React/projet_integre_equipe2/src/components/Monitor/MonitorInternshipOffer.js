@@ -6,6 +6,7 @@ import MonitorNavbar from './MonitorNavbar'
 import '../Form.css'
 import Swal from 'sweetalert2'
 import Footer from '../Footer'
+import Error from '../Constants/Error'
 
 const MonitorInternshipOffer = () => {
     const typeNotification = "Offre"
@@ -116,7 +117,6 @@ const MonitorInternshipOffer = () => {
         function submitOffer() {
             addOffer(offer)
                 .then((data) => data.jobTitle !== null ? submitOfferSuccess() : fireSwalError())
-                .catch((err) => console.log(err))
         }
 
         function setOfferSession() {
@@ -180,12 +180,10 @@ const MonitorInternshipOffer = () => {
 
         if (pattern === undefined && e.target.name === "jobSchedules" && e.target.value === "DEFAULT" ||
             pattern !== undefined && !pattern.test(e.target.value) || e.target.value === "") {
-            e.target.style.borderColor = "red"
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
+            Error.setErrorInputStyles(e, true)
             inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
         } else {
-            e.target.style.borderColor = "#ced4da"
-            e.target.style.boxShadow = "none"
+            Error.setErrorInputStyles(e, false)
             inputError = ""
             setOffer({ ...offer, [e.target.name]: e.target.value })
         }
@@ -274,7 +272,7 @@ const MonitorInternshipOffer = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
 
     )
