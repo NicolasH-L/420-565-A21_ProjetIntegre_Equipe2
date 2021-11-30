@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useState } from 'react'
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 const SupervisorLogin = ({ onLogin, authLogin }) => {

@@ -22,9 +22,9 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
             timer: 2000,
             width: "400px"
         })
-      }
+    }
 
-      const fireSwalGoodInternship = () => {
+    const fireSwalGoodInternship = () => {
         Swal.fire({
             toast: true,
             position: 'top',
@@ -34,7 +34,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
             timer: 2000,
             width: '400px'
         })
-      }
+    }
 
     useEffect(() => {
         const getStudentOffers = async () => {
@@ -115,18 +115,18 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
                                     required>
                                     <option value="default" className="font-weight-bold">Veuillez sélectionner le stage trouvé</option>
                                     {studentOffers
-                                    .filter(filterStudentOffers)
-                                    .map((studentOffer) => (
-                                        <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer} className="font-weight-bold">
-                                            {studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}
-                                        </option>
-                                    ))}
+                                        .filter(filterStudentOffers)
+                                        .map((studentOffer) => (
+                                            <option value={JSON.stringify(studentOffer)} key={studentOffer.idStudentOffer} className="font-weight-bold">
+                                                {studentOffer.offer.companyName + " - "}  {studentOffer.offer.jobTitle}
+                                            </option>
+                                        ))}
                                 </select>
                             </div>
                         </div>
                         <div className="modal-footer justify-content-between">
                             <span className="text-danger">
-                            <i className="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
+                                <i className="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
                             </span>
                             <div>
                                 <button type="button" className="btn btn-secondary mr-2" data-dismiss="modal">Fermer</button>

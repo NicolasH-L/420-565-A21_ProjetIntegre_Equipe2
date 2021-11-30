@@ -56,6 +56,7 @@ public class SessionTaskTest {
                 .build();
 
         admin = Admin.adminBuilder()
+                .id(1)
                 .username("username")
                 .password("password")
                 .actualSession("winter2022")

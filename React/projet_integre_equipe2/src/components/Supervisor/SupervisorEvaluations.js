@@ -1,7 +1,6 @@
-import React from 'react'
 import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import EvaluationPdfModalView from '../Evaluation/EvaluationPdfModalView'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'

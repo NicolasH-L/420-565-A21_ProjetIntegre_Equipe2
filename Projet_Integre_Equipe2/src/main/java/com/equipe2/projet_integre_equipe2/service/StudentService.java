@@ -72,4 +72,23 @@ public class StudentService {
             return Optional.empty();
         }
     }
+
+    public Optional<Student> getStudentByMatricule(String matricule){
+        try {
+            return Optional.of(studentRepository.findByMatricule(matricule));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Student> resetStudentAccount(String matricule){
+        try {
+            Student student = studentRepository.findByMatricule(matricule);
+            student.setIsCvValid(false);
+            student.setCurrentStatus("En recherche");
+            return Optional.of(studentRepository.save(student));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
 }

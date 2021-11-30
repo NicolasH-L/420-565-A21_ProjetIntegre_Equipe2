@@ -1,7 +1,6 @@
-import React from 'react'
 import SupervisorNavbar from './SupervisorNavbar'
 import { useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
 import Footer from '../Footer'
@@ -13,7 +12,6 @@ const SupervisorAssignedStudentList = () => {
     const supervisor = historyState.supervisor
 
     useEffect(() => {
-
         const getInternships = async () => {
             const internshipsFromServer = await fetchInternships(supervisor.id)
             setInterships(internshipsFromServer)
@@ -32,10 +30,6 @@ const SupervisorAssignedStudentList = () => {
 
     const filterInternships = (internship) => {
         return internship.session === supervisor.actualSession
-    }
-
-    const viewDocumentCv = async (document) => {
-        history.push("/ViewDocument", document)
     }
     
     return (

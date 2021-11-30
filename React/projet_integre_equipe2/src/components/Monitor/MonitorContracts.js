@@ -59,7 +59,7 @@ const MonitorContracts = () => {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center">
-                    <h2 className="text-dark">Vous n'avez pas de contrats</h2>
+                    <h4 className="text-warning">Vous n'avez pas de contrats</h4>
                 </div>
             </div>
         )
