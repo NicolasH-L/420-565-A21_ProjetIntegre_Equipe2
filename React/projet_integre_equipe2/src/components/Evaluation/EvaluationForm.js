@@ -5,6 +5,7 @@ import EvaluationRecipient from './EvaluationRecipient'
 import EvaluationAppreciations from './EvaluationAppreciations'
 import EvaluationReHireIntern from './EvaluationReHireIntern'
 import Swal from 'sweetalert2'
+import Error from '../Constants/Error'
 
 const EvaluationForm = ({ contractProp }) => {
     const [contract, setContract] = useState(null)
@@ -162,10 +163,6 @@ const EvaluationForm = ({ contractProp }) => {
         setInternEvaluation({ ...internEvaluation, [e.target.name]: e.target.value })
     }
 
-    const getInputStyles = (errorValue) => {
-        return errorValue === true ? { borderColor: 'red', boxShadow: '0 1px 1px red inset, 0 0 8px red' } : { borderColor: '#ced4da', boxShadow: 'none' }
-    }
-
     return (
         <div className="my-5">
             {contract !== null ?
@@ -196,7 +193,7 @@ const EvaluationForm = ({ contractProp }) => {
                         <EvaluationAppreciations setState={setAppreciation} submitState={submit} />
                         <div className="formGroup mt-5 text-left">
                             <label htmlFor="weeklyHours">Veuillez indiquer le nombre d'heures réel par semaine d'encadrement accordé au stagiaire <span className="text-danger font-weight-bold">*</span></label>
-                            <input className="form-control text-center" type="number" name="actualWeeklyHours" min="0" max="168" placeholder="Entrez le nombre d'heures par semaine entre 0 et 168" onChange={onValueChanged} style={getInputStyles(error.hasError)} />
+                            <input className="form-control text-center" type="number" name="actualWeeklyHours" min="0" max="168" placeholder="Entrez le nombre d'heures par semaine entre 0 et 168" onChange={onValueChanged} style={Error.getInputStyles(error.hasError)} />
                         </div>
                         <EvaluationReHireIntern monitor={contract.internship.offer.monitor} setState={setReHireIntern} submitState={submit} offer={contract.internship.offer} />
                         <EvaluationRecipient contract={contract} />

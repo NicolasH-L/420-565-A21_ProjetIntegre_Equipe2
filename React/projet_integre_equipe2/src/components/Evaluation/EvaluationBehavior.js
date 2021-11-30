@@ -4,6 +4,7 @@ import EvaluationCapability from './EvaluationCapability'
 
 const EvaluationBehavior = ({ newBehavior, submitState }) => {
     const [behavior, setBehavior] = useState(null)
+    const defaultValue = "default"
 
     useEffect(() => {
         if (behavior === null)
@@ -12,7 +13,7 @@ const EvaluationBehavior = ({ newBehavior, submitState }) => {
 
     const onChangeMethod = (e) => {
         e.preventDefault()
-        if (e.target.value === "default")
+        if (e.target.value === defaultValue)
             return
         behavior[e.target.name] = e.target.value
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import EvaluationCapabilityRatingChoices from './EvaluationCapabilityRatingChoices'
+import Error from '../Constants/Error'
 
 const EvaluationCapability = ({ newCapability, submitState }) => {
     const [error, setError] = useState({ hasError: false })
@@ -27,7 +28,7 @@ const EvaluationCapability = ({ newCapability, submitState }) => {
 
     const setCapabilityValue = (e) => {
         e.preventDefault()
-        if (e.target.value === "default") {
+        if (e.target.value === defaultValue) {
             capability[e.target.name] = ""
             setCapability({...capability, [e.target.name]: ""})
             error.hasError = true
@@ -36,8 +37,7 @@ const EvaluationCapability = ({ newCapability, submitState }) => {
         }
 
         if (error.hasError) {
-            e.target.style.borderColor = "#ced4da"
-            e.target.style.boxShadow = "none"
+            Error.setErrorInputStyles(e, false)
             error.hasError = false
         }
 

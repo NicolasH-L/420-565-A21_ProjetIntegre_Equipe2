@@ -3,18 +3,9 @@ import DownloadButton from '../DownloadButton'
 import EvaluationPdf from './EvaluationPdf'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
+import DocumentMethods from '../Document/DocumentMethods'
 
 const EvaluationPdfModalView = ({ evaluation }) => {
-    const base64ToArrayBuffer = (base64) => {
-        var binaryString = window.atob(base64)
-        var binaryLen = binaryString.length
-        var bytes = new Uint8Array(binaryLen)
-        for (var i = 0; i < binaryLen; i++) {
-            var ascii = binaryString.charCodeAt(i)
-            bytes[i] = ascii
-        }
-        return bytes
-    }
 
     return (
         <div className="d-flex">
@@ -34,7 +25,7 @@ const EvaluationPdfModalView = ({ evaluation }) => {
                     </div>
                 </div>
             </div>
-            <DownloadButton byte={base64ToArrayBuffer(evaluation.pdf)} documentName={evaluation.evaluationName} />
+            <DownloadButton byte={DocumentMethods.base64ToArrayBytes(evaluation.pdf)} documentName={evaluation.evaluationName} />
         </div>
     )
 }
