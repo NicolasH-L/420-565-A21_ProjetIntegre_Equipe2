@@ -25,7 +25,7 @@ const MonitorOfferList = () => {
     }, [monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
-        const res = await fetch(`http://localhost:8888/offer/get-all-valid-offers/${monitor.id}`)
+        const res = await fetch(`http://localhost:8888/offer/get-all-offers/${monitor.id}`)
         return await res.json()
     }
 
@@ -67,10 +67,16 @@ const MonitorOfferList = () => {
                                             </h5>
                                         </td>
                                         <td className="responsiveWidth">
-                                            <button className="btn btn-primary mx-2" onClick={(e) => goToMonitorStudentList(offer.idOffer)}>
-                                                <span className="hideButtonText">Voir étudiants</span>
-                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
-                                            </button>
+                                            {
+                                                offer.valid ?
+                                                    <>
+                                                        <button className="btn btn-primary mx-2" onClick={(e) => goToMonitorStudentList(offer.idOffer)}>
+                                                            <span className="hideButtonText">Voir étudiants</span>
+                                                            <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                                        </button>
+                                                    </>
+                                                    : ""
+                                            }
                                         </td>
                                     </tr>
                                 ))}
@@ -78,7 +84,7 @@ const MonitorOfferList = () => {
                     </table>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
 
     )
