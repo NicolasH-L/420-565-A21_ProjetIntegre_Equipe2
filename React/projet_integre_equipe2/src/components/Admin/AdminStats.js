@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import '../Form.css'
 
@@ -15,7 +14,6 @@ const AdminStats = () => {
     const admin = historyState.admin
 
     useEffect(() => {
-
         const getAllStudents = async () => {
             const studentsFromServer = await fetchAllStudents()
             setStudents(studentsFromServer.filter((student) => student.actualSession === admin.actualSession))
@@ -52,7 +50,6 @@ const AdminStats = () => {
         getAllDocuments()
         getAllInvalidDocuments()
         getAllPendingDocuments()
-
     }, [admin.actualSession, offers.length, documents.length])
 
     const fetchAllStudents = async () => {

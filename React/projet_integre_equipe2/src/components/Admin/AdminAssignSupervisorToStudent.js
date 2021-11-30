@@ -1,10 +1,9 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
 import Footer from '../Footer'
-import '../Form.css'
 import Swal from 'sweetalert2'
+import '../Form.css'
 
 const AdminAssignSupervisorToStudent = () => {
     const [internships, setInterships] = useState([])
@@ -13,6 +12,8 @@ const AdminAssignSupervisorToStudent = () => {
     const historyState = history.location.state
     const admin = historyState.admin
     const defaultValue = "default"
+    const statusCompleted = "Completed"
+    const timeMillisecond = 2000
     let selectedSupervisorJSON = defaultValue
     let selectedStudentIntershipJSON = defaultValue
 
@@ -23,7 +24,7 @@ const AdminAssignSupervisorToStudent = () => {
             icon: 'info',
             title: 'Veuillez sélectionner un superviseur et un élève',
             showConfirmButton: false,
-            timer: 2000,
+            timer: timeMillisecond,
             width: '500px'
         })
     }
@@ -71,13 +72,13 @@ const AdminAssignSupervisorToStudent = () => {
 
     const getSelectedSupervisor = (e) => {
         e.preventDefault()
-        if (e.target.value !== "default") 
+        if (e.target.value !== defaultValue) 
             selectedSupervisorJSON = JSON.parse(e.target.value)
     }
 
     const getSelectedStudentIntership = (e) => {
         e.preventDefault()
-        if (e.target.value !== "default") 
+        if (e.target.value !== defaultValue) 
             selectedStudentIntershipJSON = JSON.parse(e.target.value)
     }
 
@@ -93,7 +94,7 @@ const AdminAssignSupervisorToStudent = () => {
 
     const filterInterships = (internship) => {
         return (internship.supervisor === null
-            && internship.status === "Completed"
+            && internship.status === statusCompleted
             && admin.actualSession === internship.session)
     }
 

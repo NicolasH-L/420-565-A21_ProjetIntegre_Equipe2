@@ -1,13 +1,12 @@
-import React from 'react'
-import AdminNavbar from './AdminNavbar'
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Signature } from '../Constants/Signature'
+import AdminNavbar from './AdminNavbar'
 import ContractModalView from '../Contract/ContractModalView'
 import DownloadContract from '../Contract/DownloadContract'
+import Footer from '../Footer'
 import './../ResponsiveTable.css'
 import './../ResponsiveButtons.css'
-import Footer from '../Footer'
 
 const AdminContracts = () => {
     const [contracts, setContracts] = useState([])
@@ -16,10 +15,11 @@ const AdminContracts = () => {
     const historyState = history.location.state
     const admin = historyState.admin
     const contractCompletedStatus = "Completed"
+    const defaultStatus = "default"
 
     useEffect(() => {
         if (filters.signatureStatus === "") 
-            setFilters({ ...filters, signatureStatus: "default" })
+            setFilters({ ...filters, signatureStatus: defaultStatus })
 
         const getAllContracts = async () => {
             const contractsFromServer = await fetchContracts()
@@ -38,7 +38,7 @@ const AdminContracts = () => {
     }
 
     const filterContractsByStatus = (contract) => {
-        return filters.signatureStatus !== "default" ? filters.signatureStatus === contract.internship.status : true
+        return filters.signatureStatus !== defaultStatus ? filters.signatureStatus === contract.internship.status : true
     }
 
     const getStatusValue = (userSignature, trueValue, falseValue) => {

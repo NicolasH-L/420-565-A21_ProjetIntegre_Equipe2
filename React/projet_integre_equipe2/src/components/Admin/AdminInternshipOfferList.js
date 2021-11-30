@@ -1,10 +1,9 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import AdminNavbar from './AdminNavbar'
+import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import AdminNavbar from './AdminNavbar'
+import Footer from '../Footer'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
-import Footer from '../Footer'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
@@ -159,9 +158,8 @@ const AdminInternshipOfferList = () => {
                     </table>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-
     )
 }
 

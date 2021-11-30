@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
-import './../ResponsiveTable.css'
-import './../ResponsiveButtons.css'
 import Swal from 'sweetalert2'
 import Footer from '../Footer'
+import './../ResponsiveTable.css'
+import './../ResponsiveButtons.css'
 
 const AdminStudentAcceptedOffers = () => {
     const collegeTerms = "Communiquer avec le stagiaire pour lui donner toutes les ressources disponibles qu'il/elle a besoin lors de son stage ainsi que donner tous les renseignements nécessaires pour l'entreprise."
@@ -13,6 +12,12 @@ const AdminStudentAcceptedOffers = () => {
     const studentTerms = "Accomplir ou réaliser les tâches demandées par le moniteur. Améliorer ou continuer à développer les besoins auprès de l'équipe et s'assurer que tout est conforme."
     const typeNotification = "Signature"
     const message = "Veuillez signer le contrat disponible"
+    const sessionPrefix = ["winter", "summer"]
+    const lastMonthOfTheYear = 11
+    const winterStart = 8
+    const winterDeadLine = 1
+    const summerStart = 2
+    const summerDeadLine = 5
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
@@ -30,12 +35,6 @@ const AdminStudentAcceptedOffers = () => {
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: message, session: admin.actualSession
     })
-    const sessionPrefix = ["winter", "summer"]
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
 
     const fireSwalStartSignature = () => {
         Swal.fire({
