@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack'
+import DocumentMethods from './Document/DocumentMethods'
 
 const ViewDocument = () => {
   const [numPages, setNumPages] = useState(null);
@@ -15,33 +16,23 @@ const ViewDocument = () => {
     cMapPacked: true,
   };
 
-  function changePage(offset) {
+  const changePage = (offset) => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   }
 
-  function previousPage() {
+  const previousPage = () => {
     changePage(-1);
   }
 
-  function nextPage() {
+  const nextPage = () => {
     changePage(1);
   }
 
-  function onDocumentLoadSuccess({ numPages }) {
+  const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
   }
 
-  function base64ToArrayBuffer(base64) {
-    let binary_string = window.atob(base64);
-    let len = binary_string.length;
-    let bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
-    }
-    return bytes.buffer;
-  }
-
-  const content = base64ToArrayBuffer(data)
+  const content = DocumentMethods.base64ToArrayBuffer(data)
 
   return (
     <div className="grad">
