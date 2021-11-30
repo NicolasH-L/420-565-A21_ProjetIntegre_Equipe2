@@ -7,6 +7,7 @@ import '../Form.css'
 import Swal from 'sweetalert2'
 import Footer from '../Footer'
 import Error from '../Constants/Error'
+import {SessionPattern} from '../SessionPattern'
 
 const MonitorInternshipOffer = () => {
     const typeNotification = "Offre"
@@ -109,7 +110,7 @@ const MonitorInternshipOffer = () => {
             fireSwalBadFields()
             return
         } else {
-            setOfferSession()
+            offer.session = SessionPattern.getSession()
             verifyMonitorExists(offer.monitorEmail)
                 .then((data) => data ? submitOffer() : alert("Aucun moniteur existant avec cet email!"))
         }
@@ -117,15 +118,6 @@ const MonitorInternshipOffer = () => {
         function submitOffer() {
             addOffer(offer)
                 .then((data) => data.jobTitle !== null ? submitOfferSuccess() : fireSwalError())
-        }
-
-        function setOfferSession() {
-            let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
-                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
-            offer.session = session
         }
     }
 
