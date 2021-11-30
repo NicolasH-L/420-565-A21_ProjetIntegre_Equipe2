@@ -1,9 +1,7 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Notification } from '../Notification/Notification'
 
 const AdminNotifications = ({adminState}) => {
-    const baseUrl = "http://localhost:8888"
     const [notificationList, setNotificationList] = useState([])
     const user = "Admin"
 
@@ -17,7 +15,7 @@ const AdminNotifications = ({adminState}) => {
     }
 
     const fetchNotificationAdmin = async (adminId) => {
-        const res = await fetch(`${baseUrl}/notification/get-notification-admin/${adminId}`)
+        const res = await fetch(`http://localhost:8888/notification/get-notification-admin/${adminId}`)
         return await res.json()
     }
     

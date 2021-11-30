@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
-import { useState, useEffect } from 'react'
-import '../ResponsiveTable.css'
-import '../ResponsiveButtons.css'
 import Footer from '../Footer';
 import Swal from 'sweetalert2'
-
+import '../ResponsiveTable.css'
+import '../ResponsiveButtons.css'
 
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])

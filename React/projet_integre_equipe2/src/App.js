@@ -13,7 +13,6 @@ import AdminInternshipOfferList from './components/Admin/AdminInternshipOfferLis
 import AdminStudentCvList from './components/Admin/AdminStudentCvList'
 import AdminStudentList from './components/Admin/AdminStudentList'
 import AdminStudentAcceptedOffers from './components/Admin/AdminStudentAcceptedOffers'
-import AdminInternshipList from './components/Admin/AdminInternshipList'
 import AdminAssignSupervisorToStudent from './components/Admin/AdminAssignSupervisorToStudent'
 import AdminContracts from './components/Admin/AdminContracts'
 
@@ -101,7 +100,6 @@ function App() {
         <GuardedRoute path="/AdminStudentList" component={AdminStudentList} auth={isAdminAuthenticated} />
         <GuardedRoute path="/AdminStudentCvList" component={AdminStudentCvList} auth={isAdminAuthenticated} />
         <GuardedRoute path="/AdminStudentAcceptedOffers" component={AdminStudentAcceptedOffers} auth={isAdminAuthenticated} />
-        <GuardedRoute path="/AdminInternshipList" component={AdminInternshipList} auth={isAdminAuthenticated} />
         <GuardedRoute path="/AdminAssignSupervisorToStudent" component={AdminAssignSupervisorToStudent} auth={isAdminAuthenticated} />
         <GuardedRoute path="/AdminContracts" component={AdminContracts} auth={isAdminAuthenticated} />
 
