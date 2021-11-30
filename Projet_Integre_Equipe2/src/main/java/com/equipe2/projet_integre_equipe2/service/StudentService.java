@@ -3,9 +3,6 @@ package com.equipe2.projet_integre_equipe2.service;
 import com.equipe2.projet_integre_equipe2.model.Student;
 import com.equipe2.projet_integre_equipe2.repository.StudentRepository;
 import com.equipe2.projet_integre_equipe2.security.PasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +66,25 @@ public class StudentService {
             student.setIsCvValid(true);
             return Optional.of(studentRepository.saveAndFlush(student));
         } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Student> getStudentByMatricule(String matricule){
+        try {
+            return Optional.of(studentRepository.findByMatricule(matricule));
+        } catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Student> resetStudentAccount(String matricule){
+        try {
+            Student student = studentRepository.findByMatricule(matricule);
+            student.setIsCvValid(false);
+            student.setCurrentStatus("En recherche");
+            return Optional.of(studentRepository.save(student));
+        } catch (Exception e){
             return Optional.empty();
         }
     }

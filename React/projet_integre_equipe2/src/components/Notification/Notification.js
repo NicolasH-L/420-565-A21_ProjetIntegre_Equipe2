@@ -85,9 +85,9 @@ export const Notification = ({ notificationList, userProp, userSession, user }) 
                         </div>
                         <div className="modal-body list-group">
                             {list !== undefined || list !== null || list.length !== 0 || list !== "" ? list.filter(filterNotification).map((notification) => (
-                                <li className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.id}>
+                                <div className="list-group-item list-group-item-action justify-content-between d-flex list-group-item-light text-dark" style={{ fontFamily: "Arial", fontSize: "17px" }} key={notification.id}>
                                     {notification.message} <button className="btn btn-danger round btn-sm btn-icon mx-3" style={{ borderRadius: "100px", fontSize: "12px" }} onClick={() => deleteNotification(notification.id).then((data) => data ? modificationlistNotification(notification.id) : "")}><i className="fas fa-times fa-lg align-middle"></i></button>
-                                </li>
+                                </div>
                             )) : ""}
                         </div>
                         <div className="modal-footer">

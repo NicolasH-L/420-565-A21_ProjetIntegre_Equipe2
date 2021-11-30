@@ -17,5 +17,4 @@ public class ReHireIntern {
     private String signature;
     private String jobTitle;
     private String date;
-
 }

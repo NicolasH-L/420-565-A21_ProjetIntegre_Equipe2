@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +14,4 @@ public class Appreciation {
     private String expectationResult;
     private String appreciations;
     private boolean isDiscussed;
-
 }

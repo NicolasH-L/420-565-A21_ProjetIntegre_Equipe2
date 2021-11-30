@@ -4,7 +4,6 @@ import AdminStats from './AdminStats'
 import Footer from '../Footer'
 
 const Admin = () => {
-
     return (
         <div>
             <div className="grad">
@@ -13,7 +12,6 @@ const Admin = () => {
             </div>
             <Footer/>
         </div>
-
     )
 }
 

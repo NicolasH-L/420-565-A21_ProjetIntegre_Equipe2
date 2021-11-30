@@ -1,21 +1,21 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import AdminNavbar from './AdminNavbar'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import AdminNavbar from './AdminNavbar'
+import Footer from '../Footer'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
-import Footer from '../Footer'
 
 const AdminInternshipOfferList = () => {
     const typeNotification = "Offre"
+    const messageOfferAvailable = "Nouvelle offre de stage disponible"
+    const messageOfferAccepted = "Une offre deposée est acceptée"
+    const messageOfferRejected = "Une offre de stage a été refusé"
     const history = useHistory()
     const admin = history.location.state.admin
-
     const [offers, setOffers] = useState([])
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession
     })
-    let message = ""
 
     useEffect(() => {
         const getOffers = async () => {
@@ -46,11 +46,13 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
-        message = "Nouvelle offre de stage disponible"
-        notification.message = message
+        createNotificationValide(offer)
+    }
+
+    const createNotificationValide = (offer) => {
+        notification.message = messageOfferAvailable
         createNotificationStudent(notification)
-        message = "Une offre deposée est acceptée"
-        notification.message = message
+        notification.message = messageOfferAccepted
         createNotificationForMoniteur(notification, offer)
     }
 
@@ -94,8 +96,11 @@ const AdminInternshipOfferList = () => {
                 (offer1) => offer1.idOffer === offer.idOffer ? { ...offer1, valid: data.valid, state: data.state } : offer1
             )
         )
-        message = "Une offre de stage a été refusé"
-        notification.message = message
+        createNotificationInvalid(offer)
+    }
+
+    const createNotificationInvalid = (offer) => {
+        notification.message = messageOfferRejected
         createNotificationForMoniteur(notification, offer)
     }
 
@@ -160,9 +165,8 @@ const AdminInternshipOfferList = () => {
                     </table>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-
     )
 }
 

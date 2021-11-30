@@ -18,7 +18,6 @@ public class EvaluationController {
     @Autowired
     private EvaluationService evaluationService;
 
-
     @PostMapping("/save-evaluation")
     public ResponseEntity<Evaluation> saveEvaluation(@RequestBody InternEvaluation internEvaluation) {
         return evaluationService.registerEvaluation(internEvaluation)
@@ -39,5 +38,4 @@ public class EvaluationController {
                 .map(evaluations -> ResponseEntity.status(HttpStatus.OK).body(evaluations))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
-
 }

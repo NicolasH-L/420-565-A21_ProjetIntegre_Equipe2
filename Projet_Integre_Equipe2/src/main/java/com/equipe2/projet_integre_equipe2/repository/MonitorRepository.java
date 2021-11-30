@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MonitorRepository extends JpaRepository<Monitor, Integer> {
 
-    Monitor findMonitorByEmailIgnoreCaseAndPassword(String email, String password);
-
     Monitor findMonitorByEmailIgnoreCase(String email);
 
     boolean existsByEmailIgnoreCase(String email);

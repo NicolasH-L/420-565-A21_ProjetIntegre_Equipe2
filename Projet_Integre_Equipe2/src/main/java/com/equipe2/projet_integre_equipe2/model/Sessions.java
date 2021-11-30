@@ -22,5 +22,4 @@ public class Sessions implements Serializable {
     private Integer idSession;
 
     private String session;
-
 }

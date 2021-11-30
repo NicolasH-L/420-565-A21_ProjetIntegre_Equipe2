@@ -44,5 +44,4 @@ public class InternshipController {
                 .map(internship1 -> ResponseEntity.status(HttpStatus.OK).body(internship1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
-
 }

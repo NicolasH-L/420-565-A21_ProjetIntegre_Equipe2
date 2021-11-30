@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
-import { useState, useEffect } from 'react'
+import Footer from '../Footer'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
-import Footer from '../Footer'
 
 const AdminStudentCvList = () => {
     const typeNotification = "CV"
@@ -14,7 +13,6 @@ const AdminStudentCvList = () => {
     const historyState = history.location.state
     const student = historyState.student
     const admin = historyState.admin
-
     const [documents, setDocuments] = useState([])
     const [notification, setNotification] = useState({
         typeNotification: typeNotification, message: "", session: admin.actualSession
@@ -53,7 +51,10 @@ const AdminStudentCvList = () => {
                 (document1) => document1.idDocument === document.idDocument ? { ...document1, isValid: data.isValid, isRefused: data.isRefused } : document1
             )
         )
+        isDocumentValid(isValid)
+    }
 
+    const isDocumentValid = (isValid) => {
         if (!isValid)
             notification.message = messageInvalidCV
         else
@@ -143,8 +144,6 @@ const AdminStudentCvList = () => {
             </div>
             <Footer />
         </div>
-
-
     )
 }
 

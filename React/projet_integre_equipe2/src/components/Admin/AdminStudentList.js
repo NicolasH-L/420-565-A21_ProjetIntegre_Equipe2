@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
-import { useState, useEffect } from 'react'
+import Footer from '../Footer';
+import Swal from 'sweetalert2'
 import '../ResponsiveTable.css'
 import '../ResponsiveButtons.css'
-import Footer from '../Footer';
 
 const AdminStudentList = () => {
     const [students, setStudents] = useState([])
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
+    const resetAlertText =
+        `Cette option permet de réinitialiser un compte étudiant lorsque celui-ci est rendu à une nouvelle session de stage.
+         Il est possible également de réinitialiser un compte qui contient des erreurs.
+         À noter qu'il n'efface pas les données de l'étudiant, cette option permet simplement de remettre le statut de l'étudiant à "En recherche" et d'invalider son compte.`
 
     useEffect(() => {
         const getStudents = async () => {
@@ -47,6 +51,46 @@ const AdminStudentList = () => {
         )
     }
 
+    const resetStudentAccount = async (student) => {
+        console.log(student)
+        const res = await fetch(`http://localhost:8888/students/reset-student-account/${student.matricule}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            })
+        const data = await res.json()
+        console.log(data)
+
+        setStudents(
+            students.map(
+                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
+            )
+        )
+    }
+
+    const resetAccountAlert = async (student) => {
+        Swal.fire({
+            title: 'Réinitialiser un compte étudiant?',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Réinitialiser',
+            confirmButtonColor: '#FF0000',
+            html: `<p class="text-justify text-dark">${resetAlertText}</p>`,
+            width: '800px',
+            footer: `
+            <span class="text-danger">
+                <i class="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible
+            </span>`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resetStudentAccount(student)
+            }
+        })
+    }
+
     const filterStudents = (student) => {
         return student.actualSession === admin.actualSession
     }
@@ -81,14 +125,22 @@ const AdminStudentList = () => {
                                             </h5>
                                         </td>
                                         <td className="responsiveWidth">
-                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
-                                                <span className="hideButtonText">Consulter documents</span>
-                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
-                                            </button>
-                                            <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
-                                                <span className="hideButtonText">Valider étudiant</span>
-                                                <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
-                                            </button>
+                                            <div className="d-flex">
+                                                <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewStudentCvList(student) }}>
+                                                    <span className="hideButtonText">Consulter documents</span>
+                                                    <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                                </button>
+                                                <button className="btn btn-success mx-2" onClick={e => { e.preventDefault(); validateStudent(student) }}>
+                                                    <span className="hideButtonText">Valider étudiant</span>
+                                                    <span className="hideButtonIcon"><i className="fas fa-check"></i></span>
+                                                </button>
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={e => { e.preventDefault(); resetAccountAlert(student) }}
+                                                >
+                                                    Réinitialiser
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -96,9 +148,8 @@ const AdminStudentList = () => {
                     </table>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-
     )
 }
 

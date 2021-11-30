@@ -55,7 +55,7 @@ const MonitorEvaluateStudent = () => {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center">
-                    <h2 className="text-dark">Vous n'avez pas de stagiaire à évaluer</h2>
+                    <h4 className="text-warning">Vous n'avez pas de stagiaire à évaluer</h4>
                 </div>
             </div>
         )
