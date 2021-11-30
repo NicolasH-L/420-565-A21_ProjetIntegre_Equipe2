@@ -11,5 +11,5 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
     List<Offer> findOffersByIsValidTrue();
 
-    List<Offer> findOfferByIsValidTrueAndMonitor_Id(Integer id);
+    List<Offer> findOfferByMonitor_Id(Integer id);
 }
