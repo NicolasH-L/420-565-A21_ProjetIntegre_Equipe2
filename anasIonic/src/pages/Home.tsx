@@ -8,16 +8,6 @@ const Home: React.FC = () => {
   const history = useHistory()
   const historyState = history.location.state
 
-  // useEffect(() => {
-  //   const interval = setInterval(() =>{
-  //     console.log("asd")
-  //     window.location.reload()
-  //   }, 1000)
-
-  //   return () => clearInterval(interval)
-  // }, [])
-  
-
   return (
     <IonPage>
       <IonHeader>
