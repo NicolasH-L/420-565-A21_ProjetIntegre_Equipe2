@@ -28,7 +28,6 @@ const SupervisorLogin = ({ onLogin, authLogin }) => {
         } else {
             onLogin(supervisor.matricule, supervisor.password)
                 .then((data) => data.matricule != null ? signIn(data) : fireSwalError())
-                .catch((err) => console.log(err))
         }
 
         function signIn(supervisor) {
