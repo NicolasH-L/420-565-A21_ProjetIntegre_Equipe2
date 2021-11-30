@@ -3,8 +3,7 @@ import './ResponsiveButtons.css'
 
 const DownloadButton = ({ byte, documentName }) => {
 
-    function saveByteArray() {
-        console.log(byte)
+    const saveByteArray = () => {
         var blob = new Blob([byte], { type: "application/pdf" });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
