@@ -15,8 +15,6 @@ const EvaluationForm = ({ contractProp }) => {
     const [internEvaluation, setInternEvaluation] = useState({ contract: "", behaviors: [], actualWeeklyHours: "", appreciation: "", reHireIntern: "" })
     const [submit, setSubmit] = useState({ isSubmit: "", isSubmitValid: "" })
     const [error, setError] = useState({ hasError: false })
-
-
     const baseUrl = "http://localhost:8888"
 
     const fireSwalError = () => {
