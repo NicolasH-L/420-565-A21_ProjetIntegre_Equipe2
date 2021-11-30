@@ -46,11 +46,11 @@ const MonitorNavbar = () => {
                             <button className="nav-link btn btn-sm btn-light" type="button" onClick={goToMonitorDashboard}><i className="fas fa-home fa-lg"></i></button>
                         </li>
 
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-light btn-sm mx-1 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-light btn-sm mx-1 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 Offres
                             </button>
-                            <div class="dropdown-menu">
+                            <div className="dropdown-menu">
                                 <button className="dropdown-item btn btn-sm" type="button" onClick={goToMonitorOfferList}>Mes offres</button>
                                 <button className="dropdown-item btn btn-sm" type="button" onClick={goToMonitorOffer}>Déposer une offre</button>
                             </div>
