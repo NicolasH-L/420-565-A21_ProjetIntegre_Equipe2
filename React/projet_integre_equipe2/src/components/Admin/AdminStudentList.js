@@ -11,12 +11,12 @@ const AdminStudentList = () => {
     const history = useHistory()
     const historyState = history.location.state
     const admin = historyState.admin
-    const resetAlertText = 
-        "Cette option permet de réinitilaiser un compte étudiant lorsque celui-ci est rendu à une nouvelle session de stage." +
-        " Il est possible, également, de réinitialiser un compte qui contient des erreurs." +
-        " À noter qu'il n'efface pas les données de l'étudiant, cette option permet simplement de remettre le statut de l'étudiant à \"En recherche\" et d'invalider son compte."
-    
-        useEffect(() => {
+    const resetAlertText =
+        `Cette option permet de réinitialiser un compte étudiant lorsque celui-ci est rendu à une nouvelle session de stage.
+         Il est possible également de réinitialiser un compte qui contient des erreurs.
+         À noter qu'il n'efface pas les données de l'étudiant, cette option permet simplement de remettre le statut de l'étudiant à "En recherche" et d'invalider son compte.`
+
+    useEffect(() => {
         const getStudents = async () => {
             const studentsFromServer = await fetchStudents()
             setStudents(studentsFromServer)
@@ -75,9 +75,11 @@ const AdminStudentList = () => {
         Swal.fire({
             title: 'Réinitialiser un compte étudiant?',
             showCancelButton: true,
+            cancelButtonText: 'Annuler',
             confirmButtonText: 'Réinitialiser',
             confirmButtonColor: '#FF0000',
-            text: resetAlertText,
+            html: `<p class="text-justify text-dark">${resetAlertText}</p>`,
+            width: '800px',
             footer: `
             <span class="text-danger">
                 <i class="fas fa-exclamation-circle mr-2"></i>Veuillez noter que cette action est irréversible

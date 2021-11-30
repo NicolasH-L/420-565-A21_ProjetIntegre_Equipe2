@@ -47,5 +47,4 @@ public class InternshipService {
             return Optional.empty();
         }
     }
-
 }

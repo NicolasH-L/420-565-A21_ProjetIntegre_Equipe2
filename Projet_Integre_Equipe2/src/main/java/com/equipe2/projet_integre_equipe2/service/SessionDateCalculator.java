@@ -1,7 +1,5 @@
 package com.equipe2.projet_integre_equipe2.service;
 
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

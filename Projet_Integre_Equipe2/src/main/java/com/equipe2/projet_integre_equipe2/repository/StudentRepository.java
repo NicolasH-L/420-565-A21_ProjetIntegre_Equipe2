@@ -9,12 +9,9 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
-    Student findByMatriculeAndPassword(String matricule, String password);
-
     boolean existsByMatriculeAndIsCvValidTrue(String matricule);
 
     Student findByMatricule(String matricule);
 
     List<Student> findAllByIsCvValidTrue();
-
 }

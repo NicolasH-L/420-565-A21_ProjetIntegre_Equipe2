@@ -1,7 +1,6 @@
 package com.equipe2.projet_integre_equipe2.service;
 
 import com.equipe2.projet_integre_equipe2.model.*;
-import lombok.Data;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +9,7 @@ import java.util.List;
 
 @Component
 public class SessionTask{
+
     private final String[] SESSION_PREFIX = {"winter", "summer"};
     private final int LAST_MONTH_OF_THE_YEAR = 12;
     private final int WINTER_START = 9;
@@ -56,7 +56,6 @@ public class SessionTask{
         monitorList = monitorService.getAllMonitors().get();
         supervisorList = supervisorService.getAllSupervisors().get();
         String calculatedSession = sessionDateCalculator.calculateSession();
-
 
         setSessionList(calculatedSession, sessionsList, sessionVerification);
 
