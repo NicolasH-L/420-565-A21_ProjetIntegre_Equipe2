@@ -11,7 +11,6 @@ import Swal from 'sweetalert2'
 const StudentUploadCV = () => {
   const typeNotification = "CV"
   const message = "Un étudiant a déposé un CV"
-  const undefined = "undefined"
   const [uploadFile, setUploadFile] = useState()
   const [uploadFileName, setUploadFileName] = useState()
   const history = useHistory()
@@ -54,7 +53,7 @@ const StudentUploadCV = () => {
     let documentSession = ""
     event.preventDefault()
 
-    if (typeof (uploadFile) !== undefined && typeof (historyState) !== undefined && !_.isEmpty(uploadFileName)) {
+    if (typeof (uploadFile) !== 'undefined' && typeof (historyState) !== 'undefined' && !_.isEmpty(uploadFileName)) {
       setDocumentSession()
       var fileSignature = uploadFileName + ":" + student.id + ":" + documentSession
       var fileSignatureJSON = JSON.stringify(fileSignature)

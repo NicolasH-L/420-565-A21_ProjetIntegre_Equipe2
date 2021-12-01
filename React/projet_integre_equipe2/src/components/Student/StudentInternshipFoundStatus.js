@@ -59,7 +59,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     }
 
     const setStudentInternship = () => {
-        if (studentOffer != undefined && !isInternshipFound) {
+        if (studentOffer !== undefined && !isInternshipFound) {
             updateStudentOffer(studentOffer)
             setIsInternshipFound(true)
             student.currentStatus = "Stage trouvé"

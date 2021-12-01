@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import SessionPattern from "../SessionPattern"
 
 const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     const history = useHistory()
@@ -17,12 +18,6 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     const [documents, setDocuments] = useState([])
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
     const baseUrl = "http://localhost:8888/offers-list"
-    const sessionPrefix = ["winter", "summer"]
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
 
     let offerId
 
@@ -44,7 +39,7 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     }
 
     const addStudentOffer = async () => {
-        setStudentOfferSession()
+        studentOfferApplication.session = SessionPattern.getSession()
         const result = await fetch(baseUrl + '/save-student-offer',
             {
                 method: 'POST',
@@ -54,19 +49,10 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
                 body: JSON.stringify(studentOfferApplication)
             })
         return await result.json()
-
-        function setStudentOfferSession() {
-            let sessionDate = new Date()
-            let sessionMonth = sessionDate.getMonth() <= winterDeadLine ? lastMonthOfTheYear : sessionDate.getMonth()
-            let sessionYear = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionDate.getFullYear() + 1 : sessionDate.getFullYear()
-            let session = sessionMonth >= winterStart && sessionMonth <= lastMonthOfTheYear ? sessionPrefix[0] + sessionYear
-                : sessionMonth >= summerStart && sessionMonth <= summerDeadLine ? sessionPrefix[1] + sessionYear : "Erreur"
-            studentOfferApplication.session = session
-        }
     }
 
     const checkDocumentChosen = (e) => {
-        if (e.target.name === "document" && e.target.value != "DEFAULT") {
+        if (e.target.name === "document" && e.target.value !== "DEFAULT") {
             setApplyOfferButton({ ...applyOfferButton, buttonDisable: false })
             for (let index = 0; index < documents.length; index++) {
                 const element = documents[index];
