@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import SessionPattern from "../SessionPattern"
+import { SessionPattern } from "../SessionPattern"
 
 const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     const history = useHistory()
