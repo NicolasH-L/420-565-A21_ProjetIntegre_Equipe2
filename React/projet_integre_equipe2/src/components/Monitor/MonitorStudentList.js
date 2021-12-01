@@ -30,7 +30,6 @@ const MonitorStudentList = () => {
     }
 
     const filterStudents = (studentOffer) => {
-        console.log(studentOffer)
         return studentOffer.student.actualSession == monitor.actualSession
     }
 
@@ -43,7 +42,7 @@ const MonitorStudentList = () => {
                     <i className="fas fa-angle-double-left"></i> Retour
                 </button>
             </div>
-            <h2 className="text-center mt-4">Candidatures</h2>
+            <h2 className="text-center mt-4 text-light">Candidatures</h2>
             <div className="p-5">
                 <table className="table table-hover bg-light shadow-lg" id="no-more-tables">
                     <thead>
