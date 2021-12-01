@@ -10,22 +10,22 @@ const SessionsButton = () => {
     const location = useLocation()
 
     useEffect(() => {
-        setUser(historyState.monitor != undefined ? historyState.monitor
-            : historyState.student != undefined ? historyState.student
-            : historyState.supervisor != undefined ? historyState.supervisor
-                : historyState.admin != undefined ? historyState.admin : "")
+        setUser(historyState.monitor !== undefined ? historyState.monitor
+            : historyState.student !== undefined ? historyState.student
+            : historyState.supervisor !== undefined ? historyState.supervisor
+                : historyState.admin !== undefined ? historyState.admin : "")
         getSessions()
     }, [])
 
     const changeSession = (selectedSession) => {
         user.actualSession = selectedSession
-        if (historyState.student != undefined){
+        if (historyState.student !== undefined){
             historyState.student = user
-        } else if (historyState.monitor != undefined) {
+        } else if (historyState.monitor !== undefined) {
             historyState.monitor = user
-        } else if (historyState.supervisor != undefined) {
+        } else if (historyState.supervisor !== undefined) {
             historyState.supervisor = user
-        } else if (historyState.admin != undefined) {
+        } else if (historyState.admin !== undefined) {
             historyState.admin = user
         }
         history.push(location.pathname, historyState)
