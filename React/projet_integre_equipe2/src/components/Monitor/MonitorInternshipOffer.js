@@ -54,13 +54,6 @@ const MonitorInternshipOffer = () => {
         })
     }
 
-    const sessionPrefix = ["winter", "summer"]
-    const lastMonthOfTheYear = 11
-    const winterStart = 8
-    const winterDeadLine = 1
-    const summerStart = 2
-    const summerDeadLine = 5
-
     let emailMonitor
     let company
     let telephoneNumberMonitor
