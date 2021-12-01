@@ -4,6 +4,7 @@ import { SessionPattern } from '../SessionPattern'
 import AdminNavbar from './AdminNavbar'
 import _ from 'lodash'
 import Swal from 'sweetalert2'
+import Error from '../Constants/Error'
 import Footer from '../Footer'
 import './../Form.css'
 
@@ -153,12 +154,10 @@ const AdminInternshipOffer = () => {
             return
 
         if (!pattern.test(e.target.value) || e.target.value === "") {
-            e.target.style.borderColor = "red"
-            e.target.style.boxShadow = "0 1px 1px red inset, 0 0 8px red"
+            Error.setErrorInputStyles(e, true)
             inputError = <strong className="text-danger"> Erreur <i className="fas fa-exclamation-circle text-danger fa-sm" ></i></strong>
         } else {
-            e.target.style.borderColor = "#ced4da"
-            e.target.style.boxShadow = "none"
+            Error.setErrorInputStyles(e, false)
             inputError = ""
             setOffer({ ...offer, [e.target.name]: e.target.value })
         }
