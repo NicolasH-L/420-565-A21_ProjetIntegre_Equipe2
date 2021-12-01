@@ -65,7 +65,7 @@ const AdminStudentAcceptedOffers = () => {
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://localhost:8888/offers-list/get-all-accepted-offers')
+        const res = await fetch('http://10.10.68.10:8888/offers-list/get-all-accepted-offers')
         return await res.json()
     }
 
@@ -78,7 +78,7 @@ const AdminStudentAcceptedOffers = () => {
         internship.student = acceptedOffer.student
         internship.status = "StudentSignature"
         internship.session = SessionPattern.getSession()
-        const res = await fetch('http://localhost:8888/internship/save-internship',
+        const res = await fetch('http://10.10.68.10:8888/internship/save-internship',
             {
                 method: 'POST',
                 headers: {
@@ -94,7 +94,7 @@ const AdminStudentAcceptedOffers = () => {
     const createContract = async (internship) => {
         contract.internship = internship
         contract.session = internship.session
-        const res = await fetch('http://localhost:8888/contract/save-contract',
+        const res = await fetch('http://10.10.68.10:8888/contract/save-contract',
             {
                 method: 'POST',
                 headers: {
@@ -110,7 +110,7 @@ const AdminStudentAcceptedOffers = () => {
 
     const createNotificationStudent = async (internship, notification) => {
         let idStudent = internship.student.id
-        const result = await fetch(`http://localhost:8888/notification/save-notification-for-student/${idStudent}`,
+        const result = await fetch(`http://10.10.68.10:8888/notification/save-notification-for-student/${idStudent}`,
             {
                 method: 'POST',
                 headers: {
@@ -123,7 +123,7 @@ const AdminStudentAcceptedOffers = () => {
 
     const confirmStudentOfferInternship = async (acceptedOffer) => {
         acceptedOffer.isInternshipStarted = true
-        const res = await fetch('http://localhost:8888/offers-list/save-student-offer',
+        const res = await fetch('http://10.10.68.10:8888/offers-list/save-student-offer',
             {
                 method: 'POST',
                 headers: {

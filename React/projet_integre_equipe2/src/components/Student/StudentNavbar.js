@@ -43,7 +43,7 @@ const StudentNavbar = ({ useStudent }) => {
     }, [location.pathname])
 
     const fetchStudent = async () => {
-        const res = await fetch(`http://localhost:8888/students/get-student/${studentState.matricule}`)
+        const res = await fetch(`http://10.10.68.10:8888/students/get-student/${studentState.matricule}`)
         return await res.json()
     }
 
@@ -73,7 +73,7 @@ const StudentNavbar = ({ useStudent }) => {
     }
 
     const verifyCvValidity = async (matricule) => {
-        const res = await fetch('http://localhost:8888/students/valid-cv/' + matricule)
+        const res = await fetch('http://10.10.68.10:8888/students/valid-cv/' + matricule)
         return await res.json()
     }
 

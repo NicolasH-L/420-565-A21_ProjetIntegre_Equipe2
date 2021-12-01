@@ -17,7 +17,7 @@ const Contract = ({ currentStatus, contractProp, signature }) => {
     })
     let hasStudentSigned = false
     let hasMonitorSigned = false
-    const baseUrl = "http://localhost:8888"
+    const baseUrl = "http://10.10.68.10:8888"
     const signatureStatusList = [Signature.getStudentSignatureStatus(), Signature.getMonitorSignatureStatus(),
     Signature.getAdminSignatureStatus(), Signature.getCompleteSignatureStatus()]
 
@@ -86,17 +86,17 @@ const Contract = ({ currentStatus, contractProp, signature }) => {
     }
 
     const verifyPwdStudent = async (matricule, pwd) => {
-        const res = await fetch(`http://localhost:8888/students/verify-password/${matricule}/${pwd}`)
+        const res = await fetch(`http://10.10.68.10:8888/students/verify-password/${matricule}/${pwd}`)
         return await res.json()
     }
 
     const verifyPwdMonitor = async (email, pwd) => {
-        const res = await fetch(`http://localhost:8888/monitors/verify-password/${email}/${pwd}`)
+        const res = await fetch(`http://10.10.68.10:8888/monitors/verify-password/${email}/${pwd}`)
         return await res.json()
     }
 
     const verifyPwdAdmin = async (username, pwd) => {
-        const res = await fetch(`http://localhost:8888/admin/verify-password/${username}/${pwd}`)
+        const res = await fetch(`http://10.10.68.10:8888/admin/verify-password/${username}/${pwd}`)
         return await res.json()
     }
 
@@ -165,7 +165,7 @@ const Contract = ({ currentStatus, contractProp, signature }) => {
     }
 
     const createNotificationForMonitor = async (notification, monitorId) => {
-        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${monitorId}`,
+        const result = await fetch(`http://10.10.68.10:8888/notification/save-notification-for-monitor/${monitorId}`,
             {
                 method: 'POST',
                 headers: {
@@ -177,7 +177,7 @@ const Contract = ({ currentStatus, contractProp, signature }) => {
     }
 
     const createNotificationForAdmin = async (notification) => {
-        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+        const result = await fetch('http://10.10.68.10:8888/notification/save-notification-for-admin',
             {
                 method: 'POST',
                 headers: {

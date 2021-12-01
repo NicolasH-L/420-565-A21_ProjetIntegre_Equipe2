@@ -130,12 +130,12 @@ const MonitorInternshipOffer = () => {
     }
 
     const verifyMonitorExists = async (email) => {
-        const res = await fetch(`http://localhost:8888/monitors/monitorEmailExists/${email}`)
+        const res = await fetch(`http://10.10.68.10:8888/monitors/monitorEmailExists/${email}`)
         return await res.json()
     }
 
     const addOffer = async (offer) => {
-        const result = await fetch('http://localhost:8888/offer/saveOffer',
+        const result = await fetch('http://10.10.68.10:8888/offer/saveOffer',
             {
                 method: 'POST',
                 headers: {
@@ -147,7 +147,7 @@ const MonitorInternshipOffer = () => {
     }
 
     const createNotificationAdmin = async (notification) => {
-        const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+        const result = await fetch('http://10.10.68.10:8888/notification/save-notification-for-admin',
             {
                 method: 'POST',
                 headers: {

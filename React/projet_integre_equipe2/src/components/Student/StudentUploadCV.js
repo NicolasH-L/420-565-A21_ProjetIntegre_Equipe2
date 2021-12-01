@@ -61,7 +61,7 @@ const StudentUploadCV = () => {
       formData.append("uploadFile", uploadFile, fileSignatureJSON)
 
       axios
-        .post("http://localhost:8888/uploadcv", formData, {
+        .post("http://10.10.68.10:8888/uploadcv", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },
@@ -90,7 +90,7 @@ const StudentUploadCV = () => {
   }
 
   const createNotificationAdmin = async (notification) => {
-    const result = await fetch('http://localhost:8888/notification/save-notification-for-admin',
+    const result = await fetch('http://10.10.68.10:8888/notification/save-notification-for-admin',
       {
         method: 'POST',
         headers: {

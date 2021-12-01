@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/supervisors")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://10.10.68.10:3000"})
 public class SupervisorController {
 
     @Autowired

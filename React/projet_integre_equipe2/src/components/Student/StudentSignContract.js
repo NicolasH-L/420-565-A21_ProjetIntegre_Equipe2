@@ -12,7 +12,7 @@ const StudentSignContract = () => {
     const historyState = history.location.state
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
-    const baseUrl = "http://localhost:8888"
+    const baseUrl = "http://10.10.68.10:8888"
     const student = historyState.student
     const emptyMesage = "Vous n'avez pas de contrat à signer"
 
@@ -54,7 +54,7 @@ const StudentSignContract = () => {
         <div>
             <div className="grad">
                 <StudentNavbar useStudent={student} />
-                {internship !== null && contract !== null ? (
+                {internship !== null && contract !== null && contract !== undefined ? (
                     <div className="d-flex justify-content-center my-5 py-2">
                         <div className="jumbotron jumbotron-fluid bg-light rounded shadow reactivescreen">
                             <Contract currentStatus={Signature.getStudentSignatureStatus()} contractProp={contract}
