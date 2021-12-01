@@ -21,7 +21,7 @@ const StudentContractList = () => {
     }, [])
 
     const fetchContracts = async () => {
-        const res = await fetch(`http://10.10.68.10:8888/contract/get-all-by-student/${student.id}`)
+        const res = await fetch(`http://localhost:8888/contract/get-all-by-student/${student.id}`)
         return await res.json()
     }
 

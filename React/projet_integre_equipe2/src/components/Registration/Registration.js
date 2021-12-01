@@ -8,7 +8,7 @@ import Footer from '../Footer'
 
 const Registration = () => {
   const addStudent = async (student) => {
-    const result = await fetch('http://10.10.68.10:8888/students/register',
+    const result = await fetch('http://localhost:8888/students/register',
       {
         method: 'POST',
         headers: {
@@ -20,7 +20,7 @@ const Registration = () => {
   }
 
   const addMonitor = async (monitor) => {
-    const result = await fetch('http://10.10.68.10:8888/monitors/register',
+    const result = await fetch('http://localhost:8888/monitors/register',
       {
         method: 'POST',
         headers: {
@@ -32,7 +32,7 @@ const Registration = () => {
   }
 
   const addSupervisor = async (supervisor) => {
-    const result = await fetch('http://10.10.68.10:8888/supervisors/register',
+    const result = await fetch('http://localhost:8888/supervisors/register',
       {
         method: 'POST',
         headers: {

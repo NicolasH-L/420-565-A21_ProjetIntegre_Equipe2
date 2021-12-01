@@ -37,7 +37,7 @@ const SessionsButton = () => {
     }
 
     const fetchSessions = async () => {
-        const res = await fetch('http://10.10.68.10:8888/sessions/get-all-sessions')
+        const res = await fetch('http://localhost:8888/sessions/get-all-sessions')
         return await res.json()
     }
 

@@ -25,7 +25,7 @@ const AdminStudentList = () => {
     }, [])
 
     const fetchStudents = async () => {
-        const res = await fetch('http://10.10.68.10:8888/students/get-all-students')
+        const res = await fetch('http://localhost:8888/students/get-all-students')
         return await res.json()
     }
 
@@ -34,7 +34,7 @@ const AdminStudentList = () => {
     }
 
     const validateStudent = async (student) => {
-        const res = await fetch(`http://10.10.68.10:8888/students/validate-student/${student.matricule}`,
+        const res = await fetch(`http://localhost:8888/students/validate-student/${student.matricule}`,
             {
                 method: 'PUT',
                 headers: {
@@ -53,7 +53,7 @@ const AdminStudentList = () => {
 
     const resetStudentAccount = async (student) => {
         console.log(student)
-        const res = await fetch(`http://10.10.68.10:8888/students/reset-student-account/${student.matricule}`,
+        const res = await fetch(`http://localhost:8888/students/reset-student-account/${student.matricule}`,
             {
                 method: 'PUT',
                 headers: {
@@ -66,7 +66,7 @@ const AdminStudentList = () => {
 
         setStudents(
             students.map(
-                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
+                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid, currentStatus: data.currentStatus } : student1
             )
         )
     }

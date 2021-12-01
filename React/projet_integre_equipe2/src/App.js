@@ -52,10 +52,8 @@ function App() {
   const [isMonitorAuthenticated, setIsMonitorAuthenticated] = useState(sessionStorage.getItem("userType") === "monitor")
   const [isSupervisorAuthenticated, setIsSupervisorAuthenticated] = useState(sessionStorage.getItem("userType") === "supervisor")
 
-  let userType
-
   useEffect(() => {
-    userType = sessionStorage.getItem("userType")
+    let userType = sessionStorage.getItem("userType")
     if (userType === null) {
       sessionStorage.setItem("userType", "")
     }

@@ -31,7 +31,7 @@ const MonitorContracts = () => {
     }, [filters.signatureStatus])
 
     const fetchContracts = async () => {
-        const res = await fetch(`http://10.10.68.10:8888/contract/get-all-by-monitor/${monitor.id}`)
+        const res = await fetch(`http://localhost:8888/contract/get-all-by-monitor/${monitor.id}`)
         return await res.json()
     }
 

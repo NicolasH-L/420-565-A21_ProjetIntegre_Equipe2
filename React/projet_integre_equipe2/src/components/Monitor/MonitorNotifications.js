@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Notification } from '../Notification/Notification'
 
 const MonitorNotifications = ({monitorState}) => {
-    const baseUrl = "http://10.10.68.10:8888"
+    const baseUrl = "http://localhost:8888"
     const [notificationList, setNotificationList] = useState([])
     const user = "Monitor"
 

@@ -29,7 +29,7 @@ const AdminContracts = () => {
     }, [filters.signatureStatus])
 
     const fetchContracts = async () => {
-        const res = await fetch(`http://10.10.68.10:8888/contract/get-all-contracts/`)
+        const res = await fetch(`http://localhost:8888/contract/get-all-contracts/`)
         return await res.json()
     }
 
