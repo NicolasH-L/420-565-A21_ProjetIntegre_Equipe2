@@ -107,6 +107,7 @@ const AdminStudentList = () => {
                                 <th scope="col">Nom: </th>
                                 <th scope="col">Matricule: </th>
                                 <th scope="col">Validité: </th>
+                                <th scope="col">Statut: </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -121,6 +122,13 @@ const AdminStudentList = () => {
                                             <h5>
                                                 <span className={`badge ${student.isCvValid ? 'badge-success' : 'badge-warning'}`}>
                                                     {student.isCvValid ? "Valide" : "En attente"}
+                                                </span>
+                                            </h5>
+                                        </td>
+                                        <td data-title="Validité">
+                                            <h5>
+                                                <span className={`badge ${student.currentStatus === "Stage trouvé" ? 'badge-success' : 'badge-primary'}`}>
+                                                    {student.currentStatus === "En attente" ? "Entrevue" : student.currentStatus}
                                                 </span>
                                             </h5>
                                         </td>

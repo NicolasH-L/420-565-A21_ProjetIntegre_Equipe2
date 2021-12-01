@@ -136,7 +136,6 @@ const AdminInternshipOffer = () => {
         let inputError
         let patternGeneral = RegexPattern.getPatternGeneral()
         let patternEmail = RegexPattern.getPatternEmail()
-        let patternCompany = RegexPattern.getPatternCompany()
         let patternNumber = RegexPattern.getPatternNumber()
 
         if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
@@ -144,7 +143,7 @@ const AdminInternshipOffer = () => {
             e.target.name === "startInternshipDate" || e.target.name === "endInternshipDate")
             pattern = new RegExp(patternGeneral)
         else if (e.target.name === "companyName")
-            pattern = new RegExp(patternCompany)
+            pattern = new RegExp(patternGeneral)
         else if (e.target.name === "monitorEmail")
             pattern = new RegExp(patternEmail)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
