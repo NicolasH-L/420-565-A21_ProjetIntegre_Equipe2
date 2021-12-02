@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { RegexPattern } from '../RegexPattern'
 import Error from '../Constants/Error'
 
 const EvaluationAppreciations = ({ setState, submitState }) => {
@@ -19,12 +18,11 @@ const EvaluationAppreciations = ({ setState, submitState }) => {
     }, [appreciation, submitState.isSubmit])
 
     const verifyInputValuesOnSubmit = () => {
-        let pattern = new RegExp(RegexPattern.getPatternGeneral())
 
         let isExpectationValid = (appreciation.expectationResult === "" || appreciation.expectationResult === defaultValue)
         isExpectationValid ? setErrorByNameAndHasError(expectationResultName, true) : setErrorByNameAndHasError(expectationResultName, false)
 
-        let isAppreciationsValid = (appreciation.appreciations === "" || (appreciation.appreciations !== "" && !pattern.test(appreciation.appreciations)))
+        let isAppreciationsValid = (appreciation.appreciations === "" || (appreciation.appreciations !== ""))
         isAppreciationsValid ? setErrorByNameAndHasError(appreciationsName, true) : setErrorByNameAndHasError(appreciationsName, false)
 
         let isDiscussedValid = (appreciation.isDiscussed !== "")
@@ -49,8 +47,7 @@ const EvaluationAppreciations = ({ setState, submitState }) => {
                 isValid = false
             }
         } else if (e.target.name === appreciationsName) {
-            let pattern = new RegExp(RegexPattern.getPatternGeneral())
-            if (!pattern.test(e.target.value) || e.target.value === "") {
+            if (e.target.value === "") {
                 isValid = false
             }
         }
