@@ -17,7 +17,7 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     })
     const [documents, setDocuments] = useState([])
     const [applyOfferButton, setApplyOfferButton] = useState({ buttonDisable: true, message: "" })
-    const baseUrl = "http://localhost:8888/offers-list"
+    const baseUrl = "http://3.16.148.156:8888/offers-list"
 
     let offerId
 
@@ -34,7 +34,7 @@ const StudentApplyToOffer = ({ newOffer, displayMessageBoolean }) => {
     }, [])
 
     const fetchDocuments = async () => {
-        const res = await fetch(`http://localhost:8888/document/get-all-documents-valid/${student.id}`)
+        const res = await fetch(`http://3.16.148.156:8888/document/get-all-documents-valid/${student.id}`)
         return await res.json()
     }
 

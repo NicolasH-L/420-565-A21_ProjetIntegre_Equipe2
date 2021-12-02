@@ -43,7 +43,7 @@ const AdminAssignSupervisorToStudent = () => {
     }, [])
 
     const addSupervisorToIntership = async (internship) => {
-        const result = await fetch('http://localhost:8888/internship/save-internship',
+        const result = await fetch('http://3.16.148.156:8888/internship/save-internship',
             {
                 method: 'POST',
                 headers: {
@@ -61,12 +61,12 @@ const AdminAssignSupervisorToStudent = () => {
     }
 
     const fetchInternships = async () => {
-        const res = await fetch('http://localhost:8888/internship/get-all-internships')
+        const res = await fetch('http://3.16.148.156:8888/internship/get-all-internships')
         return await res.json()
     }
 
     const fetchSupervisors = async () => {
-        const res = await fetch('http://localhost:8888/supervisors/get-all-supervisors')
+        const res = await fetch('http://3.16.148.156:8888/supervisors/get-all-supervisors')
         return await res.json()
     }
 

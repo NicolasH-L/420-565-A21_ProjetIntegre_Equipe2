@@ -45,7 +45,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
     }, [])
 
     const fetchStudentOffers = async () => {
-        const res = await fetch(`http://localhost:8888/offers-list/student-offers/student/${student.id}`)
+        const res = await fetch(`http://3.16.148.156:8888/offers-list/student-offers/student/${student.id}`)
         return await res.json()
     }
 
@@ -71,7 +71,7 @@ const StudentInternshipFoundStatus = ({ onAddStudent }) => {
 
     const updateStudentOffer = async (studentOffer) => {
         studentOffer.isAccepted = true;
-        const res = await fetch(`http://localhost:8888/offers-list/save-student-offer`,
+        const res = await fetch(`http://3.16.148.156:8888/offers-list/save-student-offer`,
             {
                 method: 'POST',
                 headers: {

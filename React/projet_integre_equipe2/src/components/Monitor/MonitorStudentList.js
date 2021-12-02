@@ -25,7 +25,7 @@ const MonitorStudentList = () => {
     }, [])
 
     const fetchStudentOffersByIdOffer = async () => {
-        const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
+        const res = await fetch(`http://3.16.148.156:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
         return await res.json()
     }
 

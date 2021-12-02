@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 export const Notification = ({ notificationList, userProp, userSession, user }) => {
-    const baseUrl = "http://localhost:8888/notification"
+    const baseUrl = "http://3.16.148.156:8888/notification"
     const [list, setList] = useState([])
 
     useEffect(() => {

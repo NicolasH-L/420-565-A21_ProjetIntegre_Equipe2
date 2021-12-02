@@ -25,7 +25,7 @@ const DownloadContract = ({ contract }) => {
     }
 
     const getContractData = async (contract) => {
-        const result = await fetch('http://localhost:8888/contract/get-contract-pdf',
+        const result = await fetch('http://3.16.148.156:8888/contract/get-contract-pdf',
             {
                 method: 'POST',
                 headers: {

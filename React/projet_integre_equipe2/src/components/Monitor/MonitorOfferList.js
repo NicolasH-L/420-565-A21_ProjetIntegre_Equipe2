@@ -25,7 +25,7 @@ const MonitorOfferList = () => {
     }, [monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
-        const res = await fetch(`http://localhost:8888/offer/get-all-offers/${monitor.id}`)
+        const res = await fetch(`http://3.16.148.156:8888/offer/get-all-offers/${monitor.id}`)
         return await res.json()
     }
 

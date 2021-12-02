@@ -20,7 +20,7 @@ const SupervisorAssignedStudentList = () => {
     }, [])
 
     const fetchInternships = async (idSuperviseur) => {
-        const res = await fetch(`http://localhost:8888/internship/get-all-internships-by-supervisor/${idSuperviseur}`)
+        const res = await fetch(`http://3.16.148.156:8888/internship/get-all-internships-by-supervisor/${idSuperviseur}`)
         return await res.json()
     }
 

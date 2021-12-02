@@ -26,12 +26,12 @@ const AdminInternshipOfferList = () => {
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://localhost:8888/offer/get-all-offers')
+        const res = await fetch('http://3.16.148.156:8888/offer/get-all-offers')
         return await res.json()
     }
 
     const acceptOffer = async (offer) => {
-        const res = await fetch(`http://localhost:8888/offer/accept-offer/${offer.idOffer}`,
+        const res = await fetch(`http://3.16.148.156:8888/offer/accept-offer/${offer.idOffer}`,
             {
                 method: 'PUT',
                 headers: {
@@ -57,7 +57,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const createNotificationStudent = async (notification) => {
-        const result = await fetch(`http://localhost:8888/notification/save-notification/`,
+        const result = await fetch(`http://3.16.148.156:8888/notification/save-notification/`,
             {
                 method: 'POST',
                 headers: {
@@ -69,7 +69,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const createNotificationForMoniteur = async (notification, offer) => {
-        const result = await fetch(`http://localhost:8888/notification/save-notification-for-monitor/${offer.monitor.id}`,
+        const result = await fetch(`http://3.16.148.156:8888/notification/save-notification-for-monitor/${offer.monitor.id}`,
             {
                 method: 'POST',
                 headers: {
@@ -81,7 +81,7 @@ const AdminInternshipOfferList = () => {
     }
 
     const declineOffer = async (offer) => {
-        const res = await fetch(`http://localhost:8888/offer/decline-offer/${offer.idOffer}`,
+        const res = await fetch(`http://3.16.148.156:8888/offer/decline-offer/${offer.idOffer}`,
             {
                 method: 'PUT',
                 headers: {
