@@ -29,6 +29,18 @@ const AdminAssignSupervisorToStudent = () => {
         })
     }
 
+    const fireSwalAdminSuccess = () => {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Superviseur assigné avec succès!',
+            showConfirmButton: false,
+            timer: timeMillisecond,
+            width: '500px'
+        })
+    }
+
     useEffect(() => {
         const getInterships = async () => {
             const intershipsFromServer = await fetchInternships()
@@ -87,6 +99,7 @@ const AdminAssignSupervisorToStudent = () => {
         if (selectedStudentIntershipJSON !== defaultValue && selectedSupervisorJSON !== defaultValue) {
             selectedStudentIntershipJSON.supervisor = selectedSupervisorJSON
             addSupervisorToIntership(selectedStudentIntershipJSON)
+            fireSwalAdminSuccess()
         } else {
             fireSwalInfo()
         }
