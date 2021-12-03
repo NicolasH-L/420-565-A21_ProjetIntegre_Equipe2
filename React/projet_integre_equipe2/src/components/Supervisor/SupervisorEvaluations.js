@@ -21,7 +21,7 @@ const SupervisorEvaluations = () => {
     }, [supervisor.actualSession])
 
     const fetchAllEvaluations = async () => {
-        const res = await fetch(`http://localhost:8888/evaluation/get-all-evaluations`)
+        const res = await fetch(`http://10.10.68.10:8888/evaluation/get-all-evaluations`)
         return await res.json()
     }
 

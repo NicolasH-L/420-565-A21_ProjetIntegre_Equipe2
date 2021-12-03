@@ -27,7 +27,7 @@ const AdminStudentCvList = () => {
     }, [])
 
     const fetchDocuments = async (student) => {
-        const res = await fetch(`http://localhost:8888/document/get-all-documents/${student.id}`)
+        const res = await fetch(`http://10.10.68.10:8888/document/get-all-documents/${student.id}`)
         return await res.json()
     }
 
@@ -36,7 +36,7 @@ const AdminStudentCvList = () => {
     }
 
     const updateCvStatus = async (document, isValid) => {
-        const res = await fetch(`http://localhost:8888/document/update-document/${document.idDocument}/status/${isValid}`,
+        const res = await fetch(`http://10.10.68.10:8888/document/update-document/${document.idDocument}/status/${isValid}`,
             {
                 method: 'PUT',
                 headers: {
@@ -63,7 +63,7 @@ const AdminStudentCvList = () => {
     }
 
     const createNotificationStudent = async (notification) => {
-        const result = await fetch(`http://localhost:8888/notification/save-notification-for-student/${student.id}`,
+        const result = await fetch(`http://10.10.68.10:8888/notification/save-notification-for-student/${student.id}`,
             {
                 method: 'POST',
                 headers: {
