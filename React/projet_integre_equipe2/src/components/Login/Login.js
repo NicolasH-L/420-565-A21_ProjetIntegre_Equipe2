@@ -10,22 +10,22 @@ import Footer from '../Footer'
 const Login = ({ authGuardLogin }) => {
 
     const studentLogin = async (matricule, password) => {
-        const res = await fetch(`http://localhost:8888/students/${matricule}/${password}`)
+        const res = await fetch(`http://10.10.68.10:8888/students/${matricule}/${password}`)
         return await res.json()
     }
 
     const supervisorLogin = async (matricule, password) => {
-        const res = await fetch(`http://localhost:8888/supervisors/${matricule}/${password}`)
+        const res = await fetch(`http://10.10.68.10:8888/supervisors/${matricule}/${password}`)
         return await res.json()
     }
 
     const adminLogin = async (username, password) => {
-        const res = await fetch(`http://localhost:8888/admin/${username}/${password}`)
+        const res = await fetch(`http://10.10.68.10:8888/admin/${username}/${password}`)
         return await res.json()
     }
 
     const monitorLogin = async (email, password) => {
-        const res = await fetch(`http://localhost:8888/monitors/${email}/${password}`)
+        const res = await fetch(`http://10.10.68.10:8888/monitors/${email}/${password}`)
         return await res.json()
     }
 

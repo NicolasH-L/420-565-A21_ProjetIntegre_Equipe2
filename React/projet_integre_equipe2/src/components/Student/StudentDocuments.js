@@ -20,7 +20,7 @@ const StudentDocuments = () => {
     }, [])
 
     const fetchDocuments = async (studentId) => {
-        const res = await fetch(`http://localhost:8888/document/get-all-documents/${studentId}`)
+        const res = await fetch(`http://10.10.68.10:8888/document/get-all-documents/${studentId}`)
         return await res.json()
     }
 

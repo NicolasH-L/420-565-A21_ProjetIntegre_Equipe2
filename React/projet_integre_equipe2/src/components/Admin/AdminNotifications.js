@@ -15,7 +15,7 @@ const AdminNotifications = ({adminState}) => {
     }
 
     const fetchNotificationAdmin = async (adminId) => {
-        const res = await fetch(`http://localhost:8888/notification/get-notification-admin/${adminId}`)
+        const res = await fetch(`http://10.10.68.10:8888/notification/get-notification-admin/${adminId}`)
         return await res.json()
     }
     
