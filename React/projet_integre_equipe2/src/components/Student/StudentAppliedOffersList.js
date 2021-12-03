@@ -14,7 +14,7 @@ const StudentAppliedOffersList = ({onSetDate}) => {
     const location = useLocation()
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed).toISOString().split('T')[0]
-    const baseUrl = 'http://3.16.148.156:8888/offers-list'
+    const baseUrl = 'http://localhost:8888/offers-list'
 
     useEffect(() => {
         const getStudentOffers = async () => {

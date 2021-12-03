@@ -21,7 +21,7 @@ const StudentStatus = () => {
     }, [student.actualSession])
 
     const addStudent = async (student) => {
-        const result = await fetch('http://3.16.148.156:8888/students/register',
+        const result = await fetch('http://localhost:8888/students/register',
             {
                 method: 'POST',
                 headers: {
@@ -41,7 +41,7 @@ const StudentStatus = () => {
     }
 
     const fetchSessions = async () => {
-        const res = await fetch('http://3.16.148.156:8888/sessions/get-all-sessions')
+        const res = await fetch('http://localhost:8888/sessions/get-all-sessions')
         return await res.json()
     }
 

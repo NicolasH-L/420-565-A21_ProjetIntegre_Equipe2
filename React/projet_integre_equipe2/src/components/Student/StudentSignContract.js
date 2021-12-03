@@ -12,7 +12,7 @@ const StudentSignContract = () => {
     const historyState = history.location.state
     const [internship, setInternship] = useState(null)
     const [contract, setContract] = useState(null)
-    const baseUrl = "http://3.16.148.156:8888"
+    const baseUrl = "http://localhost:8888"
     const student = historyState.student
     const emptyMesage = "Vous n'avez pas de contrat à signer"
 

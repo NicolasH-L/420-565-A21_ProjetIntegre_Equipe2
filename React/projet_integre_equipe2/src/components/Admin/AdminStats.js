@@ -53,17 +53,17 @@ const AdminStats = () => {
     }, [admin.actualSession, offers.length, documents.length])
 
     const fetchAllStudents = async () => {
-        const res = await fetch("http://3.16.148.156:8888/students/get-all-students")
+        const res = await fetch("http://localhost:8888/students/get-all-students")
         return await res.json()
     }
 
     const fetchAllOffers = async () => {
-        const res = await fetch("http://3.16.148.156:8888/offer/get-all-offers")
+        const res = await fetch("http://localhost:8888/offer/get-all-offers")
         return await res.json()
     }
 
     const fetchAllDocuments = async () => {
-        const res = await fetch("http://3.16.148.156:8888/document/get-all-documents")
+        const res = await fetch("http://localhost:8888/document/get-all-documents")
         return await res.json()
     }
 

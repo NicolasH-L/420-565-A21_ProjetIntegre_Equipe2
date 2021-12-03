@@ -25,8 +25,12 @@ const MonitorOfferList = () => {
     }, [monitor.actualSession])
 
     const fetchOffersByMonitor = async () => {
-        const res = await fetch(`http://3.16.148.156:8888/offer/get-all-offers/${monitor.id}`)
+        const res = await fetch(`http://localhost:8888/offer/get-all-offers/${monitor.id}`)
         return await res.json()
+    }
+
+    const viewOffer = async (offer) => {
+        history.push("/OfferView", offer)
     }
 
     const filterOffers = (offer) => {
@@ -48,6 +52,7 @@ const MonitorOfferList = () => {
                                 <th scope="col">Date d'affichage</th>
                                 <th scope="col">Validité</th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,10 +72,14 @@ const MonitorOfferList = () => {
                                             </h5>
                                         </td>
                                         <td className="responsiveWidth">
+                                            <button className="btn btn-primary mx-2" onClick={e => { e.preventDefault(); viewOffer(offer) }}>
+                                                <span className="hideButtonText">Consulter</span>
+                                                <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
+                                            </button>
                                             {
                                                 offer.valid ?
                                                     <>
-                                                        <button className="btn btn-primary mx-2" onClick={(e) => goToMonitorStudentList(offer.idOffer)}>
+                                                        <button className="btn btn-info mx-2" onClick={(e) => goToMonitorStudentList(offer.idOffer)}>
                                                             <span className="hideButtonText">Voir étudiants</span>
                                                             <span className="hideButtonIcon"><i className="fas fa-book-open"></i></span>
                                                         </button>

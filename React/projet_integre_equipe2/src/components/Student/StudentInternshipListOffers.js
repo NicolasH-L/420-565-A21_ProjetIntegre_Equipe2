@@ -22,7 +22,7 @@ const StudentInternshipListOffers = () => {
     }, [])
 
     const fetchOffers = async () => {
-        const res = await fetch('http://3.16.148.156:8888/offer/get-all-valid-offers/')
+        const res = await fetch('http://localhost:8888/offer/get-all-valid-offers/')
         return await res.json()
     }
 

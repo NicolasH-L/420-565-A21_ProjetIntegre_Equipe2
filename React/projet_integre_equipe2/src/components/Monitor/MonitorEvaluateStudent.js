@@ -32,12 +32,12 @@ const MonitorEvaluateStudent = () => {
     }, [monitor.actualSession])
 
     const fetchContracts = async () => {
-        const res = await fetch(`http://3.16.148.156:8888/contract/get-all-by-monitor/${monitor.id}/status/${status}`)
+        const res = await fetch(`http://localhost:8888/contract/get-all-by-monitor/${monitor.id}/status/${status}`)
         return await res.json()
     }
 
     const fetchEvaluations = async () => {
-        const res = await fetch(`http://3.16.148.156:8888/evaluation/get-all-by-monitor/${monitor.id}`)
+        const res = await fetch(`http://localhost:8888/evaluation/get-all-by-monitor/${monitor.id}`)
         return await res.json()
     }
 

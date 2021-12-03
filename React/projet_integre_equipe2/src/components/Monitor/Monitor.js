@@ -31,12 +31,12 @@ const Monitor = () => {
     }, [offers.offerList.length])
 
     const fetchOffersByMonitor = async () => {
-        const res = await fetch(`http://3.16.148.156:8888/offer/get-all-offers/${monitor.id}`)
+        const res = await fetch(`http://localhost:8888/offer/get-all-offers/${monitor.id}`)
         return await res.json()
     }
 
     const fetchStudentOffersByIdOffer = async (idOffer) => {
-        const res = await fetch(`http://3.16.148.156:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
+        const res = await fetch(`http://localhost:8888/offers-list/get-all-studentOffersByIdOffer/${idOffer}`)
         return await res.json()
     }
 
