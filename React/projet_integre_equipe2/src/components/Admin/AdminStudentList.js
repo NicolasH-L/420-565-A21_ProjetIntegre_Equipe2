@@ -66,7 +66,7 @@ const AdminStudentList = () => {
 
         setStudents(
             students.map(
-                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid, currentStatus: data.currentStatus } : student1
+                (student1) => student1.matricule === student.matricule ? { ...student1, isCvValid: data.isCvValid } : student1
             )
         )
     }
