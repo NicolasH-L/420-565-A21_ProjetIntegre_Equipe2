@@ -15,7 +15,7 @@ const StudentNotifications = ({studentState}) => {
     }
 
     const fetchNotificationStudent = async (studentId) => {
-        const res = await fetch(`http://localhost:8888/notification/get-notification-student/${studentId}`)
+        const res = await fetch(`http://10.10.68.10:8888/notification/get-notification-student/${studentId}`)
         return await res.json()
     }
     
