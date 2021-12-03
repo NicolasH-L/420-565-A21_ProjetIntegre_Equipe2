@@ -157,8 +157,7 @@ const MonitorInternshipOffer = () => {
         let patternGeneral = RegexPattern.getPatternGeneral()
         let patternNumber = RegexPattern.getPatternNumber()
 
-        if (e.target.name === "address" || e.target.name === "jobTitle" || e.target.name === "description" ||
-            e.target.name === "skills")
+        if (e.target.name === "address" || e.target.name === "jobTitle")
             pattern = new RegExp(patternGeneral)
         else if (e.target.name === "salary" || e.target.name === "workingHours")
             pattern = new RegExp(patternNumber)

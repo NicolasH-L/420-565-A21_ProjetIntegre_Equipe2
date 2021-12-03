@@ -55,8 +55,7 @@ const EvaluationReHireIntern = ({ monitor, setState, submitState, offer }) => {
         if (e.target.name === hireAgainName && e.target.value === defaultValue) {
             isValid = false
         } else if ((e.target.name === descriptionName)) {
-            let pattern = new RegExp(RegexPattern.getPatternGeneral())
-            if (!pattern.test(e.target.value) || e.target.value === "") {
+            if (e.target.value === "") {
                 isValid = false
             }
         }
